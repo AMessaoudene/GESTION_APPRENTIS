@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('diplomes', function (Blueprint $table) {
+        Schema::create("pv_installations", function (Blueprint $table) {
             $table->id();
-            $table->string('nom')->unique();
-            $table->integer('duree');
-            $table->text('description')->nullable();
+            $table->string("direction");
+            $table->date("dateinstallationapprenti");
+            $table->string("directionaffection");
+            $table->string("serviceaffectation");
             $table->timestamps();
         });
+           
+
     }
 
     /**
@@ -25,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('diplomes');
+        //
     }
 };

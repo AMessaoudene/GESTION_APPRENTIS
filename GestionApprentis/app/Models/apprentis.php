@@ -19,6 +19,8 @@ class apprentis extends Model
         'telephone',
         'niveauscolaire',
         'specialite',
+        'datenaissance',
+        'diplomes_id',
         'status',
     ];
 

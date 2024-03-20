@@ -22,6 +22,8 @@ return new class extends Migration
             $table->enum('nationalite',['algerienne','etrangere']);
             $table->enum('niveauscolaire', ['primaire', 'moyen', 'secondaire']); // Example of enum column
             $table->string('specialite');
+            $table->unsignedBigInteger('diplomes_id')->nullable();
+            $table->foreign('diplomes_id')->references('id')->on('diplomes')->onDelete('cascade');
             $table->enum('status', ['actif', 'inactif'])->default('actif'); // Example of enum column with default value
             $table->timestamps();
         });

@@ -9,6 +9,7 @@ class maitre_apprentis extends Model
 {
     protected $table = 'maitre_apprentis';
     protected $fillable = [
+        'matricule',
         'nom',
         'prenom',
         'civilite',
@@ -18,6 +19,8 @@ class maitre_apprentis extends Model
         'fonction',
         'numapprentissupervises',
         'daterecrutement',
+        'status',
+        'apprentis_id',
     ];
     use HasFactory;
 }

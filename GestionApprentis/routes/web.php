@@ -9,15 +9,19 @@ use App\Http\Controllers\DiplomesController;
 Route::get('/', function () {
     return view('welcome');
 });
+//Apprentis
 Route::get('/apprentis/ajouter', [ApprentisController::class, 'index']);
 Route::post('/apprentis/ajouter', [ApprentisController::class, 'submit'])->name('apprentis.submit');
 Route::put('/apprentis/ajouter', [ApprentisController::class, 'submit'])->name('apprentis.submit');
+//Maitre Apprentis
 Route::get('/maitreapprentis/ajouter', [MaitreApprentisController::class, 'index']);
 Route::post('/maitreapprentis/ajouter', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
 Route::put('/maitreapprentis/ajouter', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
+//Diplomes
 Route::get('/diplomes/ajouter', [DiplomesController::class, 'index']);
 Route::post('/diplomes/ajouter', [DiplomesController::class, 'submit'])->name('diplomes.submit');
 Route::put('/diplomes/ajouter', [DiplomesController::class, 'submit'])->name('diplomes.submit');
+//Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

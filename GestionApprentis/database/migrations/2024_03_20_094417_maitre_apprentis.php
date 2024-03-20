@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('maitre_apprentis', function (Blueprint $table) {
             $table->id();
+            $table->string('matricule');
             $table->string('nom');
             $table->string('prenom');
             $table->enum('civilite', ['Homme', 'Femme']);
@@ -22,6 +23,9 @@ return new class extends Migration
             $table->string('fonction');
             $table->string('numapprentissupervises');
             $table->date('daterecrutement');
+            $table->enum('statut', ['formé', 'non formé'])->default('formé');
+            $table->unsignedBigInteger('apprentis_id')->nullable();
+            $table->foreign('apprentis_id')->references('id')->on('apprentis')->onDelete('cascade');
             $table->timestamps();
         });
     }

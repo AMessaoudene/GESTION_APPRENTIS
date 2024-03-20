@@ -16,6 +16,7 @@ class MaitreApprentisController extends Controller
     {
         // Validation rules
         $rules = [
+            'matricule' => 'required',
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'civilite' => 'required',
@@ -29,6 +30,7 @@ class MaitreApprentisController extends Controller
 
         // Custom error messages
         $messages = [
+            'matricule.required' => 'Le matricule est obligatoire.',
             'nom.required' => 'The name field is required.',
             'prenom.required' => 'The surname field is required.',
             'civilite.required' => 'The gender field is required.',
@@ -46,11 +48,10 @@ class MaitreApprentisController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return redirect('/maitre_apprentis/ajouter')
-                ->withErrors($validator)
-                ->withInput();
+            return redirect('/maitreapprentis/ajouter')->withErrors($validator)->withInput();
         } else {
             $maitre_apprentis = new maitre_apprentis;
+            $maitre_apprentis->matricule = $request->matricule;
             $maitre_apprentis->nom = $request->nom;
             $maitre_apprentis->prenom = $request->prenom;
             $maitre_apprentis->civilite = $request->civilite;
@@ -60,8 +61,9 @@ class MaitreApprentisController extends Controller
             $maitre_apprentis->fonction = $request->fonction;
             $maitre_apprentis->numapprentissupervises = $request->numapprentissupervises;
             $maitre_apprentis->daterecrutement = $request->daterecrutement;
+            $maitre_apprentis->statut = $request->statut;
             $maitre_apprentis->save();
-            return redirect('/maitre_apprentis');
+            return redirect('/dashboard');
         }
     }
 }
