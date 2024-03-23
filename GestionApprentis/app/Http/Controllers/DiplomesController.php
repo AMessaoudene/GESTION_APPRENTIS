@@ -40,4 +40,14 @@ class DiplomesController extends Controller
             return redirect()->back();
         }
     }
+    //afficher les details d'un diplome
+    public function details($id)
+    {
+        $diplome = diplomes::find($id);
+        return view('diplomes.details',['diplome'=>$diplome]);
+    }
+    public function consulter(){
+        $diplomes = diplomes::all();
+        return view('diplomes.consulter',['diplomes'=>$diplomes]);
+    }
 }

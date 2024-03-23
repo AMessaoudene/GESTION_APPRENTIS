@@ -20,7 +20,8 @@ class maitre_apprentis extends Model
         'numapprentissupervises',
         'daterecrutement',
         'status',
-        'apprentis_id',
+        'apprenti1_id',
+        'apprenti2_id',
     ];
     use HasFactory;
 }

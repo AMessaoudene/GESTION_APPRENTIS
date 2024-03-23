@@ -21,11 +21,13 @@ return new class extends Migration
             $table->string('telephonepro');
             $table->string('adresse');
             $table->string('fonction');
-            $table->string('numapprentissupervises');
+            $table->unsignedBigInteger('apprenti1_id')->unique()->nullable();
+            $table->foreign('apprenti1_id')->references('id')->on('apprentis')->onDelete('cascade');
+            $table->unsignedBigInteger('apprenti2_id')->unique()->nullable();
+            $table->foreign('apprenti2_id')->references('id')->on('apprentis')->onDelete('cascade');
+            $table->integer('numapprentissupervises');
             $table->date('daterecrutement');
             $table->enum('statut', ['formé', 'non formé'])->default('formé');
-            $table->unsignedBigInteger('apprentis_id')->nullable();
-            $table->foreign('apprentis_id')->references('id')->on('apprentis')->onDelete('cascade');
             $table->timestamps();
         });
     }
