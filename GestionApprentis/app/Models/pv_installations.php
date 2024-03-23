@@ -10,7 +10,6 @@ class pv_installations extends Model
     protected $table = 'pv_installations';
     protected $fillable = [
         'reference',
-        'apprenti_id',
         'maitreapprenti_id',
         'contratapprenti_id',
         'direction',

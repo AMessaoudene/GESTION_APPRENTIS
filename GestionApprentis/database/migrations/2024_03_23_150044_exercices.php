@@ -11,7 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('exercices', function (Blueprint $table) {
+            $table->id();
+            $table->year('annee');
+            $table->date('datedebut');
+            $table->date('datefin');
+            $table->integer('nombrebesoins');
+            $table->float('massesalariaire');
+            $table->float('budget');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('exercices');
     }
 };
