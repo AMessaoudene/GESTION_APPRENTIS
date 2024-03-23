@@ -5,12 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class structures extends Model
+class exercices extends Model
 {
-    protected $table = 'structures';
-    protected $fillable = [
-        'nom',
-        'adressecourriel',
-    ];
     use HasFactory;
 }

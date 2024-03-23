@@ -21,9 +21,13 @@ return new class extends Migration
             $table->string('telephone');
             $table->enum('nationalite',['algerienne','etrangere']);
             $table->enum('niveauscolaire', ['primaire', 'moyen', 'secondaire']); // Example of enum column
+            $table->unsignedBigInteger('structures_id')->nullable();
+            $table->foreign('structures_id')->references('id')->on('structures')->onDelete('cascade');
             $table->string('specialite');
-            $table->unsignedBigInteger('diplomes_id')->nullable();
-            $table->foreign('diplomes_id')->references('id')->on('diplomes')->onDelete('cascade');
+            $table->unsignedBigInteger('diplome1_id')->nullable();
+            $table->foreign('diplome1_id')->references('id')->on('diplomes')->onDelete('cascade');
+            $table->unsignedBigInteger('diplome2_id')->nullable();
+            $table->foreign('diplome2_id')->references('id')->on('diplomes')->onDelete('cascade');
             $table->enum('status', ['actif', 'inactif'])->default('actif'); // Example of enum column with default value
             $table->timestamps();
         });

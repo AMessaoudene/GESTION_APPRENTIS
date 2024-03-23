@@ -11,7 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::create('avenants', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('contrat_id');
+            $table->foreign('contrat_id')->references('id')->on('contrats_apprentis');
+            $table->enum('type',['rattrapage','passerelle']);
+            $table->date('date');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -19,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        //
+        Schema::dropIfExists('avenants');
     }
 };

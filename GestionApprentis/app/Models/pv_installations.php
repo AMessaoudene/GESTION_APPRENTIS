@@ -15,7 +15,7 @@ class pv_installations extends Model
         'contratapprenti_id',
         'direction',
         'dateinstallationapprenti',
-        'directionaffection',
+        'directionaffectation',
         'serviceaffectation',
         'pdf',
         'status',

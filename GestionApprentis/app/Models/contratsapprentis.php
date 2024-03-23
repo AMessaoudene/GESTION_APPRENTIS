@@ -17,6 +17,7 @@ class contratsapprentis extends Model
         'datetransfert',
         'pdf',
         'status',
+        //affectation
     ];
     use HasFactory;
 }
