@@ -41,9 +41,15 @@ class DiplomesController extends Controller
         }
     }
     //afficher les details d'un diplome
-    public function details($id)
-    {
+    public function details($id){
         $diplome = diplomes::find($id);
+
+        // Check if $diplome is null
+        if (!$diplome) {
+            // If the diplome with the given ID does not exist, redirect to an error page or return a message
+            return redirect()->route('diplomes.index'); // Adjust this to your error page route
+        }
+
         return view('diplomes.details',['diplome'=>$diplome]);
     }
     public function consulter(){

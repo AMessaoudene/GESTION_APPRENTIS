@@ -48,7 +48,7 @@ class MaitreApprentisController extends Controller
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->fails()) {
-            return redirect('/maitreapprentis/ajouter')->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         } else {
             $maitre_apprentis = new maitre_apprentis;
             $maitre_apprentis->matricule = $request->matricule;
@@ -63,7 +63,7 @@ class MaitreApprentisController extends Controller
             $maitre_apprentis->daterecrutement = $request->daterecrutement;
             $maitre_apprentis->statut = $request->statut;
             $maitre_apprentis->save();
-            return redirect('/dashboard');
+            return redirect()->back()->with('success', 'Maitre d\'apprentissage ajoute avec succes');
         }
     }
 }

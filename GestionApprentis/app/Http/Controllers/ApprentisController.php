@@ -38,21 +38,21 @@ class ApprentisController extends Controller
 
         // Custom error messages
         $messages = [
-            'nom.required' => 'The name field is required.',
-            'prenom.required' => 'The surname field is required.',
-            'civilite.required' => 'The gender field is required.',
-            'nationalite.required' => 'The nationality field is required.',
-            'email.required' => 'The email field is required.',
-            'telephone.required' => 'The telephone field is required.',
-            'adresse.required' => 'The address field is required.',
-            'niveauscolaire.required' => 'The level of study field is required.',
-            'specialite.required' => 'The specialty field is required.',
-            'datenaissance.required' => 'required',
-            'diplomes_id.required' => '',
-            'status.required' => 'The status field is required.',
-            'email.email' => 'The email must be a valid email address.',
-            'telephone.numeric' => 'The telephone must be a valid number.',
-            'maitre_apprenti.required' => 'Please select a master apprentice.',
+            'nom.required' => 'Le champ nom est requis.',
+            'prenom.required' => 'Le champ prénom est requis.',
+            'civilite.required' => 'Le champ civilité est requis.',
+            'nationalite.required' => 'Le champ nationalité est requis.',
+            'email.required' => 'Le champ email est requis.',
+            'email.email' => 'L\'email doit être une adresse email valide.',
+            'telephone.required' => 'Le champ téléphone est requis.',
+            'telephone.numeric' => 'Le téléphone doit être un numéro valide.',
+            'adresse.required' => 'Le champ adresse est requis.',
+            'niveauscolaire.required' => 'Le champ niveau scolaire est requis.',
+            'specialite.required' => 'Le champ spécialité est requis.',
+            'datenaissance.required' => 'Le champ date de naissance est requis.',
+            'diplomes_id.required' => 'Le champ diplôme est requis.',
+            'status.required' => 'Le champ statut est requis.',
+            'maitre_apprenti.required' => 'Veuillez sélectionner un maître d\'apprentis.',
         ];
 
         // Validate the incoming request
@@ -67,12 +67,27 @@ class ApprentisController extends Controller
         try {
             // Create a new apprentice record
             $apprenti = new apprentis();
-            $apprenti->fill($request->all());
+            $apprenti->nom = $request->nom;
+            $apprenti->prenom = $request->prenom;
+            $apprenti->civilite = $request->civilite;
+            $apprenti->nationalite = $request->nationalite;
+            $apprenti->datenaissance = $request->datenaissance;
+            $apprenti->email = $request->email;
+            $apprenti->telephone = $request->telephone;
+            $apprenti->adresse = $request->adresse;
+            $apprenti->niveauscolaire = $request->niveauscolaire;
+            $apprenti->specialite = $request->specialite;
+            $apprenti->diplomes_id = $request->diplomes_id;
+            $apprenti->status = $request->status;
             $apprenti->save();
             
             // Find the master apprentice based on the selected ID and update the apprentice_id field
             $maitreApprenti = maitre_apprentis::find($request->maitre_apprenti);
-            $maitreApprenti->apprentis_id = $apprenti->id; // Use the newly created apprentice's ID
+            if($maitreApprenti->apprenti1_id==null){
+                $maitreApprenti->apprenti1_id = $apprenti->id;
+            }else if($maitreApprenti->apprenti2_id==null){
+                $maitreApprenti->apprenti2_id = $apprenti->id;
+            }
             $maitreApprenti->save();
             
             return redirect('/')->with('success', 'Apprenti ajouté avec succès');

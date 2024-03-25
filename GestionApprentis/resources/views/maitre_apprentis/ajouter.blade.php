@@ -3,14 +3,6 @@
 @section('content')
 <div class="container">
     <h1 class="mt-5 mb-4 text-center">Ajouter un maitre des apprentis</h1>
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
-
-    @if(session('error'))
-        <div class="alert alert-danger">{{ session('error') }}</div>
-    @endif
-
     @if($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -72,10 +64,6 @@
             <div class="col-md-6">
                 <label for="fonction" class="form-label">Fonction</label>
                 <input type="text" class="form-control" id="fonction" name="fonction" required>
-            </div>
-            <div class="col-md-3">
-                <label for="numapprentissupervises" class="form-label">Nombre d'apprentis supervisés</label>
-                <input type="number" class="form-control" id="numapprentissupervises" name="numapprentissupervises" required min="0" max="2">
             </div>
             <div class="col-md-3">
                 <label for="daterecrutement" class="form-label">Date de recrutement</label>
