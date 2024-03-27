@@ -24,7 +24,6 @@ class MaitreApprentisController extends Controller
             'telephonepro' => 'required|string|max:20',
             'adresse' => 'required|string|max:255',
             'fonction' => 'required|string|max:255',
-            'numapprentissupervises' => 'required|int',
             'daterecrutement' => 'required|date|max:255',
         ];
 
@@ -38,9 +37,7 @@ class MaitreApprentisController extends Controller
             'telephonepro.required' => 'The telephone field is required.',
             'adresse.required' => 'The address field is required.',
             'fonction.required' => 'The work function field is required.',
-            'numapprentissupervises.required' => 'The number of apprentices field is required.',
             'daterecrutement.required' => 'The recruitment date field is required.',
-            'numapprentissupervises.integer' => 'The number of apprentices must be an integer.',
             'daterecrutement.date' => 'The recruitment date must be a valid date.',            
         ];
 
@@ -59,7 +56,7 @@ class MaitreApprentisController extends Controller
             $maitre_apprentis->telephonepro = $request->telephonepro;
             $maitre_apprentis->adresse = $request->adresse;
             $maitre_apprentis->fonction = $request->fonction;
-            $maitre_apprentis->numapprentissupervises = $request->numapprentissupervises;
+            $maitre_apprentis->numapprentissupervises = 0;
             $maitre_apprentis->daterecrutement = $request->daterecrutement;
             $maitre_apprentis->statut = $request->statut;
             $maitre_apprentis->save();

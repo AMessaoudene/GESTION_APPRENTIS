@@ -13,16 +13,10 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('structure_id');
-            $table->foreign('structure_id')->references('id')->on('structures');
-            $table->string('nomresponsable'); // Add 'nom' column
-            $table->string('prenomresponsable'); // Add 'prenom' column
-            $table->enum('civilite', ['homme', 'femme']); // Add 'civilite' enum column
-            $table->string('numfixe')->nullable(); // Add 'numfixe' column
+            $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->enum('role', ['DFP', 'DRH', 'SA', 'EvaluateurN+1']); // Add 'role' enum column
             $table->rememberToken();
             $table->timestamps();
         });

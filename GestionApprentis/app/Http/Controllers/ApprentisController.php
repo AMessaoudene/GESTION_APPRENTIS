@@ -78,6 +78,7 @@ class ApprentisController extends Controller
             $apprenti->niveauscolaire = $request->niveauscolaire;
             $apprenti->specialite = $request->specialite;
             $apprenti->diplomes_id = $request->diplomes_id;
+            $apprenti->maitre_apprentis->$request->maitre_apprentis;
             $apprenti->status = $request->status;
             $apprenti->save();
             
@@ -87,6 +88,8 @@ class ApprentisController extends Controller
                 $maitreApprenti->apprenti1_id = $apprenti->id;
             }else if($maitreApprenti->apprenti2_id==null){
                 $maitreApprenti->apprenti2_id = $apprenti->id;
+            }else{
+                return redirect('/')->with('error', 'Le maitre d\'apprenti est déjà indisponible');
             }
             $maitreApprenti->save();
             

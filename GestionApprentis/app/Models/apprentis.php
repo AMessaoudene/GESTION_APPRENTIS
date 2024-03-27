@@ -10,17 +10,23 @@ class apprentis extends Model
     protected $table = 'apprentis';
     protected $fillable = [
         'id',
+        'numcontrat',
+        'datecontrat',
+        'datedebut',
+        'datefin',
         'nom',
         'prenom',
         'civilite',
+        'datenaissance',
         'nationalite',
         'adresse',
         'email',
         'telephone',
         'niveauscolaire',
         'specialite',
-        'datenaissance',
-        'diplomes_id',
+        'structure_id',
+        'diplome1_id',
+        'diplome2_id',
         'status',
     ];
 

@@ -17,11 +17,12 @@ class maitre_apprentis extends Model
         'telephonepro',
         'adresse',
         'fonction',
-        'numapprentissupervises',
-        'daterecrutement',
-        'status',
         'apprenti1_id',
         'apprenti2_id',
+        'numapprentissupervises',
+        'daterecrutement',
+        'affectation',
+        'status',
     ];
     use HasFactory;
 }

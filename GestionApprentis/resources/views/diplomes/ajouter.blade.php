@@ -10,9 +10,11 @@
         font-family: Font;
     }
 </style>
+<link  href="https://cdn.datatables.net/2.0.3/css/jquery.dataTables.min.css" rel="stylesheet">
+<script src="https://cdn.datatables.net/2.0.3/js/jquery.dataTables.min.js"></script>
 <h1 class="text-center mt-4 mb-4">AJOUTER UN DIPLOME</h1>
-<div class="container mt-5 mb-5">
-    <form action="{{ route('diplomes.submit') }}" method="POST">
+<div id="formemodal">
+    <form NAME="forme" id="forme" action="{{ route('diplomes.submit') }}" method="POST">
         @csrf
         <div class="form-group mb-3">
             <label for="nom">Nom</label>

@@ -14,6 +14,8 @@ class assiduites extends Model
         'datedebut',
         'datefin',
         'motif',
+        'preuve',
+        'statut',
     ];
     use HasFactory;
 }

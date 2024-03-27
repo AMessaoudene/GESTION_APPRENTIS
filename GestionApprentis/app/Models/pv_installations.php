@@ -11,11 +11,16 @@ class pv_installations extends Model
     protected $fillable = [
         'reference',
         'maitreapprenti_id',
-        'contratapprenti_id',
+        'apprenti_id',
         'direction',
-        'dateinstallationapprenti',
+        'datepv',
+        'dateinstallationchiffre',
+        'anneeinstallationlettre',
+        'moisinstallationlettre',
+        'jourinstallationlettre',
         'directionaffectation',
         'serviceaffectation',
+        'dotations',
         'pdf',
         'status',
     ];

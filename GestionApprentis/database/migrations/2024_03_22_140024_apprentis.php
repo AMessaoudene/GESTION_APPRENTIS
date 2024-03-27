@@ -13,16 +13,21 @@ return new class extends Migration
     {
         Schema::create('apprentis', function (Blueprint $table) {
             $table->id();
+            $table->string('numcontrat');
+            $table->date('datecontrat');
+            $table->date('datedebut');
+            $table->date('datefin');
             $table->string('nom');
             $table->string('prenom');
             $table->enum('civilite', ['Homme', 'Femme']); // Example of enum column
+            $table->date('datenaissance');
             $table->string('adresse');
             $table->string('email')->unique();
             $table->string('telephone');
             $table->enum('nationalite',['algerienne','etrangere']);
             $table->enum('niveauscolaire', ['primaire', 'moyen', 'secondaire']); // Example of enum column
-            $table->unsignedBigInteger('structures_id')->nullable();
-            $table->foreign('structures_id')->references('id')->on('structures')->onDelete('cascade');
+            $table->unsignedBigInteger('structure_id')->nullable();
+            $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade');
             $table->string('specialite');
             $table->unsignedBigInteger('diplome1_id')->nullable();
             $table->foreign('diplome1_id')->references('id')->on('diplomes')->onDelete('cascade');

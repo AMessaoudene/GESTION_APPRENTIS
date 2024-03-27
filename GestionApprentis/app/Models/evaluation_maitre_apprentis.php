@@ -10,6 +10,7 @@ class evaluation_maitre_apprentis extends Model
     protected $table = 'evaluation_maitre_apprentis';
     protected $fillable = [
         'reference',
+        'maitreapprenti_id',
         'structureattache',
         'datedebut',
         'datefin',
