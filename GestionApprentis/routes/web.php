@@ -7,6 +7,7 @@ use App\Http\Controllers\ApprentisController;
 use App\Http\Controllers\StructuresController;
 use App\Http\Controllers\MaitreApprentisController;
 use App\Http\Controllers\DiplomesController;
+use App\Http\Controllers\AssiduitesController;
 use App\Http\Controllers\EvaluationApprentisController;
 use App\Http\Controllers\EvaluationMaitreApprentisController;
 
@@ -45,6 +46,12 @@ Route::put('/evaluation_apprentis/ajouter', [EvaluationApprentisController::clas
 //Structures
 Route::get('/structures/ajouter', [StructuresController::class, 'index'])->name('structures.index');
 Route::post('/structures/ajouter', [StructuresController::class, 'submit'])->name('structures.submit');
+//Assiduites
+Route::get('/assiduites/ajouter', [AssiduitesController::class, 'index'])->name('assiduites.index');
+Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
+Route::get('/assiduites/consulter', [AssiduitesController::class, 'show'])->name('assiduites.consulter');
+Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
+Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
 //Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
