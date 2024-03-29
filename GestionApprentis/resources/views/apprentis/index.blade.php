@@ -31,6 +31,10 @@
                                 <input type="date" class="form-control" id="datecontrat" name="datecontrat" required>
                             </div>
                         </div>
+                        <label>Date debut et fin d'apprentissage <span> Du </span>
+                            <input type="date" name="datedebut" required> <span> Au </span>
+                            <input type="date" name="datefin" required>
+                        </label>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="nom" class="form-label">Nom</label>
@@ -41,11 +45,6 @@
                                 <input type="text" class="form-control" id="prenom" name="prenom" required>
                             </div>
                         </div>
-                        <select name="niveauscolaire" required>
-                            <option value="primaire">primaire</option>
-                            <option value="moyen">moyen</option>
-                            <option value="secondaire">secondaire</option>
-                        </select>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="civilite" class="form-label">Civilité</label>
@@ -81,65 +80,70 @@
                                 <input type="text" class="form-control" id="telephone" name="telephone" required pattern="[0-9]{10}">
                             </div>
                         </div>
-                        <div>
-                            <div>
-                                <label></label>
-                                <select name="maitre_apprentis">
-                                    @foreach($maitre_apprentis as $maitre_apprenti)
-                                        <option value="{{ $maitre_apprenti->id }}">{{ $maitre_apprenti->nom }} {{ $maitre_apprenti->prenom }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <label>Date debut et fin d'apprentissage <span> Du </span>
-                            <input type="date" name="datedebut"> <span> Au </span>
-                            <input type="date" name="datefin">
-                        </label>
-                        <label>Date de transfert
-                        <input type="date" name="datetransfert">
-                        </label>
-                        <label> Num PV d'installation
-                            <input type="date" name="numpv">
-                            <span>Date PV d'installation</span>
-                            <input type="date" name="dateov">
-                        </label>
-                        <label>Afféct(é) à
-                            <input type="text" name="directionaffectation">
-                        </label>
+                        <select name="niveauscolaire" required>
+                            <option value="primaire">primaire</option>
+                            <option value="moyen">moyen</option>
+                            <option value="secondaire">secondaire</option>
+                        </select>
                         <label>spécialité
                             <select name="specialite" required>
                                 <option value="secretariat">secretariat</option>
                                 <option value="marketing">marketing</option>
                                 <option value="grh">grh</option>
                                 <option value="comptabilite">comptabilite</option>
-                                <option value="exploitation informatique">exploitation</option>
-                                <option value="base de données informatique">base de données</option>
-                                <option value="documentation et archives">documentation et archives</option>
-                                <option value="sécurité reseaux">sécurité reseaux</option>
-                                <option value="operateur micro informatique">operateur micro</option>
-                                <option value="agent de saisie">agent de saisie</option>
-                                <option value="maintenance materiels informatique">maintenance</option>
-                                <option value="gestion de stock">gestion de stock</option>
+                                <option value="exploitationinformatique">exploitation</option>
+                                <option value="basededonnéesinformatique">base de données</option>
+                                <option value="documentationetarchives">documentation et archives</option>
+                                <option value="sécuritéreseaux">sécurité reseaux</option>
+                                <option value="operateurmicroinformatique">operateur micro</option>
+                                <option value="agentdesaisie">agent de saisie</option>
+                                <option value="maintenancematerielsinformatique">maintenance</option>
+                                <option value="gestiondestock">gestion de stock</option>
                                 <option value="electromecanique">electromecanique</option>
-                                <option value="electricité auto">electricite</option>
+                                <option value="electricitéauto">electricite</option>
                                 <option value="plomberie">plomberie</option>
-                                <option value="developpeur web">developpeur web</option>
+                                <option value="developpeurweb">developpeur web</option>
                                 <option value="cuisine">cuisine</option>
-                                <option value="electricité industrielle">electricite industrielle</option>
+                                <option value="electricitéindustrielle">electricite industrielle</option>
                                 <option value="telecommunications">telecommunications</option>
                                 <option value="assurance">assurance</option>
                                 <option value="magasinier">magasinier</option>
                             </select>
-                            <label>Autres</label>
-                            <input type="text" name="specialite">
                         </label>
+                        <select name="structure_id" required>
+                            @foreach($structures as $structure)
+                                <option value="{{$structure->id}}">{{ $structure->nom }}</option>
+                            @endforeach
+                        </select><br/><br/>
                         <label>Diplome
-                            <select name="diplome">
+                            <select name="diplome1_id" required>
                                 @foreach($diplomes as $diplome)
                                     <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option><br>
                                 @endforeach
                             </select>
                         </label>
+                        <select name="status">
+                            <option value="actif" selected >Actif</option>
+                            <option value="inactif">Inactif</option>
+                        </select>
+                        <div>
+                            <div>
+                                <label></label>
+                                <select name="maitre_apprentis" required>
+                                    @foreach($maitre_apprentis as $maitre_apprenti)
+                                        <option value="{{ $maitre_apprenti->id }}">{{ $maitre_apprenti->nom }} {{ $maitre_apprenti->prenom }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>                 
+                        <!--<label> Num PV d'installation
+                            <input type="text" name="numpv">
+                            <span>Date PV d'installation</span>
+                            <input type="date" name="dateov">
+                        </label>
+                        <label>Afféct(é) à
+                            <input type="text" name="directionaffectation">
+                        </label>-->
                         <button type="submit" class="btn btn-primary">Ajouter</button>
                     </form>
                 </div>

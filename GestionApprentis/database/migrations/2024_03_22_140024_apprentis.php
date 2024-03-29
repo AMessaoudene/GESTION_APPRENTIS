@@ -20,15 +20,15 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->enum('civilite', ['Homme', 'Femme']); // Example of enum column
+            $table->enum('nationalite',['algerienne','etrangere']);
             $table->date('datenaissance');
             $table->string('adresse');
             $table->string('email')->unique();
             $table->string('telephone');
-            $table->enum('nationalite',['algerienne','etrangere']);
             $table->enum('niveauscolaire', ['primaire', 'moyen', 'secondaire']); // Example of enum column
+            $table->enum('specialite',['secretariat','marketing','grh','comptabilite','exploitationinformatique','basededonnéesinformatique','documentationetarchives','sécuritéreseaux','operateurmicroinformatique','agentdesaisie','maintenancematerielsinformatique','gestiondestock','electromecanique','electricitéauto','plomberie','developpeurweb','cuisine','electricitéindustrielle','telecommunications','assurance','magasinier']);
             $table->unsignedBigInteger('structure_id')->nullable();
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade');
-            $table->string('specialite');
             $table->unsignedBigInteger('diplome1_id')->nullable();
             $table->foreign('diplome1_id')->references('id')->on('diplomes')->onDelete('cascade');
             $table->unsignedBigInteger('diplome2_id')->nullable();

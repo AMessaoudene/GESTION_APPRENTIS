@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('planbesoins', function (Blueprint $table) {
             $table->id();
             $table->string('reference')->unique();
+            $table->year('exercice_annee');
+            $table->foreign('exercice_annee')->references('annee')->on('exercices')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('structure_id');
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade')->onUpdate('cascade');
             $table->date('date');
@@ -24,15 +26,6 @@ return new class extends Migration
             $table->enum('statut',['accepté','en cours','refusé'])->default('en cours');
             $table->timestamps();
         });
-
-        /* Create a many-to-many relationship between the projects and tasks tables
-        Schema::create('project_planbesoin', function (Blueprint $table) {
-            $table->unsignedBigInteger('project_id');
-            $table->unsignedBigInteger('planbesoin_id');
-            $table->foreign('project_id')->references('id')->on('projects')->onDelete('cascade');
-            $table->foreign('planbesoin_id')->references('id')->on('planbesoins')->onDelete('cascade');
-            $table->primary(['project_id', 'planbesoin_id']);
-        });*/
     }
 
     /**

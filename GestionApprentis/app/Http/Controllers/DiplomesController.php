@@ -3,57 +3,87 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\diplomes;
-use Validator;
+use App\Models\Diplomes;
+use Illuminate\Support\Facades\Validator;
+use Barryvdh\DomPDF\Facade\Pdf;
+
+
 class DiplomesController extends Controller
 {
     public function index()
     {
-        return view('diplomes.ajouter');
+        $diplomes = Diplomes::all();
+        return view('diplomes.index', compact('diplomes'));
     }
 
-    public function submit(Request $request)
+    
+    public function generatePDF()
     {
-        $rules = [
+        $diplomes = Diplomes::get();
+
+        $data = [
+            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
+            'date' => date('m/d/Y'),
+            'diplomes' => $diplomes
+        ];
+
+        $pdf = PDF::loadView('diplomes.index', $data);
+        return $pdf->download('users-lists.pdf');
+    }
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
             'nom' => 'required|string|max:255',
-            'duree' => 'required|int',
-            'description'=>'nullable|string|max:2000',
-        ];
+            'duree' => 'required|integer',
+            'description' => 'nullable|string|max:2000',
+        ]);
 
-        $messages = [
-            'nom.required' => 'The name field is required.',
-            'duree.required' => 'The duration field is required.',
-            'duree.integer' => 'The duration must be an integer.',
-            'description.string' => 'The description must be a string.',
-            'description.max' => 'The description may not be greater than 2000 characters.',
-        ];
-
-        $validator = Validator::make($request->all(), $rules, $messages);
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        } else {
-            $diplomes = new diplomes();
-            $diplomes->nom = $request->input('nom');
-            $diplomes->duree = $request->input('duree');
-            $diplomes->description = $request->input('description');
-            $diplomes->save();
-            return redirect()->back();
-        }
-    }
-    //afficher les details d'un diplome
-    public function details($id){
-        $diplome = diplomes::find($id);
-
-        // Check if $diplome is null
-        if (!$diplome) {
-            // If the diplome with the given ID does not exist, redirect to an error page or return a message
-            return redirect()->route('diplomes.index'); // Adjust this to your error page route
         }
 
-        return view('diplomes.details',['diplome'=>$diplome]);
+        Diplomes::create($request->all());
+
+        return redirect()->route('diplomes.index');
     }
-    public function consulter(){
-        $diplomes = diplomes::all();
-        return view('diplomes.consulter',['diplomes'=>$diplomes]);
+
+    public function edit($id)
+    {
+        $diplome = Diplomes::findOrFail($id);
+        return response()->json(['diplome' => $diplome]); // Return the diploma data as JSON
+    }
+
+    public function update(Request $request, $id)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'nom' => 'required|string|max:255',
+                'duree' => 'required|integer',
+                'description' => 'nullable|string|max:2000',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $diplome = Diplomes::findOrFail($id);
+            $diplome->update($request->all());
+
+            return redirect()->route('diplomes.index');
+        } catch (\Exception $e) {
+            // Log the error for debugging
+            \Log::error($e);
+            // Return an error response
+            return back()->withError('An error occurred while updating the diploma.')->withInput();
+        }
+    }
+
+
+    public function destroy($id)
+    {
+        $diplome = Diplomes::findOrFail($id);
+        $diplome->delete();
+
+        return response()->json(['success' => true]); // Return success response
     }
 }
