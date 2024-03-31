@@ -20,7 +20,13 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" href="{{ route('dashboard') }}">Dashboard</a> <!-- Added text-dark class -->
+                            <a class="nav-link text-dark" href="{{ route('apprentis.index') }}">Apprentis</a> <!-- Added text-dark class -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{ route('maitreapprentis.index') }}">Maitre Apprentis</a> <!-- Added text-dark class -->
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{ route('diplomes.index') }}">Diplomes</a> <!-- Added text-dark class -->
                         </li>
                         @auth
                         <li class="nav-item">

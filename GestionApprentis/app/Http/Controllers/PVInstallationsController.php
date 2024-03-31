@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 
 class PVInstallationsController extends Controller
 {
+    
     /**
      * Display a listing of the resource.
      */
@@ -27,31 +28,30 @@ class PVInstallationsController extends Controller
      */
     public function store(Request $request)
     {
+        $apprenti = Session::get('apprenti');
         $rules = [
             'reference' => 'required',
             'direction' =>'required',
-            'datepv' => 'required',
+            /*'datepv' => 'required',
             'dateinstallationchiffre' => 'required',
             'anneeinstallationlettre' => 'required',
             'moisinstallationlettre' => 'required',
             'jourinstallationlettre' => 'required',
             'directionaffectation' => 'required',
             'serviceaffectation' => 'required',
-            'dotations' => 'required',
-            'pdf' => 'required',
+            'dotations' => 'required',*/
         ];
         $messages = [
           'reference.required'=>'La réference est obligatoire',
           'direction.required'=>'La direction est obligatoire',
-          'datepv.required'=>'La date pv est obligatoire',
+          /*'datepv.required'=>'La date pv est obligatoire',
           'dateinstallationchiffre.required'=>'La date installation chiffre est obligatoire',
           'anneeinstallationlettre.required'=>'L\'annee installation lettre est obligatoire',
           'moisinstallationlettre.required'=>'Le mois installation lettre est obligatoire',
           'jourinstallationlettre.required'=>'Le jour installation lettre est obligatoire',
           'directionaffectation.required'=>'La direction affectation est obligatoire',
           'serviceaffectation.required'=>'Le service affectation est obligatoire',
-          'dotations.required'=>'Les dotations sont obligatoires',
-          'pdf.required'=>'Le pdf est obligatoire',
+          'dotations.required'=>'Les dotations sont obligatoires',*/
         ];
         $validator = Validator::make($request->all(), $rules, $messages);
 
@@ -59,25 +59,42 @@ class PVInstallationsController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        /*$pv = session::get('pv_installations');
 
+        if(!$pv){
+            // Initialize a new instance only if session data doesn't exist
+            
+        }*/
+        try{
         // If validation passes, save the data
         $pv = new pv_installations();
-        $pv->reference = $request->input('reference');
-        $pv->direction = $request->input('direction');
-        $pv->datepv = $request->input('datepv');
-        $pv->dateinstallationchiffre = $request->input('dateinstallationchiffre');
-        $pv->anneeinstallationlettre = $request->input('anneeinstallationlettre');
-        $pv->moisinstallationlettre = $request->input('moisinstallationlettre');
-        $pv->jourinstallationlettre = $request->input('jourinstallationlettre');
-        $pv->directionaffectation = $request->input('directionaffectation');
-        $pv->serviceaffectation = $request->input('serviceaffectation');
-        $pv->dotations = $request->input('dotations');
-        $pv->pdf = $request->input('pdf');
+        $pv->reference = $request->reference;
+        $pv->direction = $request->direction;
+        $pv->datepv = $request->datepv;
+        $pv->dateinstallationchiffre = $request->dateinstallationchiffre;
+        $pv->anneeinstallationlettre = $request->anneeinstallationlettre;
+        $pv->moisinstallationlettre = $request->moisinstallationlettre;
+        $pv->jourinstallationlettre = $request->jourinstallationlettre;
+        $pv->directionaffectation = $request->directionaffectation;
+        $pv->serviceaffectation = $request->serviceaffectation;
+        $pv->dotations = $request->dotations;
+        $pv->apprenti_id = $apprenti->id;
+        $maitre_apprentis1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+        $maitre_apprentis2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+        is_null($maitre_apprentis1) ? $maitre_apprentis = $maitre_apprentis2 : $maitre_apprentis = $maitre_apprentis1;
+        $pv->maitreapprenti_id = $maitre_apprentis->id;
         $pv->save();
 
-        $transferredData = $request->all();
-        Session::put('transferredData', $transferredData);
-        return redirect()->route('dossiers.index');
+        Session::put('pv', $pv);
+        //Session::put('apprenti', $apprenti);
+        return redirect()->route('fiche.download');
+        }catch(\Exception $e){
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+    public function pdf(){
+        $transferredData = Session::get('transferredData');
+        return view('pvinstallations.pdf', compact('transferredData'));
     }
 
     /**

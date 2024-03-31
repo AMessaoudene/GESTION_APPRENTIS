@@ -13,18 +13,17 @@ return new class extends Migration
     {
         Schema::create("pv_installations", function (Blueprint $table) {
             $table->id();
+            $table->string("reference");
             $table->string("direction");
             $table->date('datepv');
             $table->unsignedBigInteger('apprenti_id');
             $table->foreign('apprenti_id')->references('id')->on('apprentis');
             $table->unsignedBigInteger('maitreapprenti_id');
             $table->foreign('maitreapprenti_id')->references('id')->on('maitre_apprentis');
-            $table->unsignedBigInteger('contratapprenti_id');
-            $table->foreign('contratapprenti_id')->references('id')->on('contrats_apprentis');
             $table->date("dateinstallationchiffre");
-            $table->date("anneeinstallationlettre");
-            $table->date('moisinstallationlettre');
-            $table->date('jourinstallationlettre');
+            $table->string("anneeinstallationlettre");
+            $table->string('moisinstallationlettre');
+            $table->string('jourinstallationlettre');
             $table->string("directionaffectation");
             $table->string("serviceaffectation");
             $table->string("dotations");

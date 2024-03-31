@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use app\Models\apprentis;
 
 class maitre_apprentis extends Model
 {
@@ -25,4 +26,8 @@ class maitre_apprentis extends Model
         'status',
     ];
     use HasFactory;
+    public function apprentis()
+    {
+        return $this->hasMany(Apprentis::class);
+    }
 }

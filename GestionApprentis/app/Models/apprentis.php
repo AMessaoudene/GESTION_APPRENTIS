@@ -3,10 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use App\Models\diplomes;
-use App\Models\maitre_apprentis;
-use App\Models\structures;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\maitre_apprentis;
 
 class apprentis extends Model
 {
@@ -32,5 +30,9 @@ class apprentis extends Model
         'diplome2_id',
         'status',
     ];
+    public function maitreApprenti()
+    {
+        return $this->belongsTo(maitre_apprentis::class);
+    }
     use HasFactory;
 }

@@ -9,6 +9,7 @@ class pv_installations extends Model
 {
     protected $table = 'pv_installations';
     protected $fillable = [
+        'id',
         'reference',
         'maitreapprenti_id',
         'apprenti_id',
@@ -21,7 +22,6 @@ class pv_installations extends Model
         'directionaffectation',
         'serviceaffectation',
         'dotations',
-        'pdf',
         'status',
     ];
     use HasFactory;

@@ -39,11 +39,17 @@ class ApprentisController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
+        // Try to retrieve apprentice data from session
+        $apprenti = Session::get('apprenti');
+
+        // If apprentice data doesn't exist in session, create a new one
+        if (!$apprenti) {
+            $apprenti = new apprentis();
+        }
 
         // If validation passes, store the data
         try {
             // Create a new apprentice record
-            $apprenti = new apprentis();
             $apprenti->numcontrat = $request->numcontrat;
             $apprenti->datecontrat = $request->datecontrat;
             $apprenti->datedebut = $request->datedebut;
@@ -61,7 +67,11 @@ class ApprentisController extends Controller
             $apprenti->structure_id = $request->structure_id;
             $apprenti->diplome1_id = $request->diplome1_id;
             $apprenti->status = $request->status;
-            $apprenti->save();
+            if ($apprenti->exists) {
+                $apprenti->update();
+            } else {
+                $apprenti->save();
+            }
             
             // Find the master apprentice based on the selected ID
             $maitreApprenti = maitre_apprentis::find($request->maitre_apprentis);

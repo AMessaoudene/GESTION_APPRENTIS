@@ -15,16 +15,16 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('apprentis_id');
             $table->foreign('apprentis_id')->references('id')->on('apprentis')->onDelete('cascade');
-            $table->binary('contratapprenti');
-            $table->binary('decisionapprenti');
-            $table->binary('decisionmaitreapprenti');
-            $table->binary('pvinstallation');
-            $table->binary('copiecheque');
-            $table->binary('extraitnaissance');
-            $table->binary('autorisationparentele')->nullable();
-            $table->binary('photo')->nullable();
+            $table->string('contratapprenti');
+            $table->string('decisionapprenti');
+            $table->string('decisionmaitreapprenti');
+            $table->string('pvinstallation');
+            $table->string('copiecheque');
+            $table->string('extraitnaissance');
+            $table->string('autorisationparentele')->nullable();
+            $table->string('photo')->nullable();
             $table->enum("status", ["valide","en cours","refuse"])->default("en cours");
-            $table->string("motif");
+            $table->string("motif")->nullable();
             $table->timestamps();
         });
     }

@@ -1,16 +1,16 @@
 @extends('layouts.layout')
 @section('title', 'PV Installations')
 @section('content')
-<form method="POST" action="{{ route('pvinstallations.submit') }}" enctype="multipart/form-data">
+<form method="POST" action="{{ route('pvinstallations.store') }}" enctype="multipart/form-data">
     @csrf
-    <label>reference
-        <input type="text" name="reference">
-    </label>
     <ul>
         @foreach($apprenti->getAttributes() as $key => $value)
             <li>{{ $key }} : {{ $value }}</li>
         @endforeach
     </ul>
+    <label>reference
+        <input type="text" name="reference">
+    </label>
     <label>direction
         <input type="text" name="direction">
     </label>
@@ -37,9 +37,6 @@
     </label>
     <label>dotations
         <input type="text" name="dotations">
-    </label>
-    <label>PDF
-        <input type="file" name="pdf">
     </label>
     <button type="submit">Submit</button>
 </form>

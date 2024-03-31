@@ -8,10 +8,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ApprentisController;
 use App\Http\Controllers\StructuresController;
 use App\Http\Controllers\MaitreApprentisController;
+use App\Http\Controllers\FicheController;
 use App\Http\Controllers\DiplomesController;
 use App\Http\Controllers\AssiduitesController;
 use App\Http\Controllers\EvaluationApprentisController;
 use App\Http\Controllers\EvaluationMaitreApprentisController;
+use App\Http\Controllers\PlanBesoinsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -34,14 +36,15 @@ Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('app
 Route::delete('/apprentis/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
 //pvs
 Route::get('/apprentis/pvinstallations', [PVInstallationsController::class, 'index'])->name('pvinstallations.index');
-Route::post('/apprentis/pvinstallations', [PVInstallationsController::class, 'submit'])->name('pvinstallations.submit');
-//Fichiers
+Route::post('/apprentis/pvinstallations', [PVInstallationsController::class, 'store'])->name('pvinstallations.store');
+Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'index'])->name('fiche.download');
+//Dossiers 
 Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('dossiers.index');
 Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
 //Maitre Apprentis
-Route::get('/maitreapprentis/ajouter', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
-Route::post('/maitreapprentis/ajouter', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
-Route::put('/maitreapprentis/ajouter', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
+Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
+Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
+Route::put('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
 //decisionsapprentis
 Route::get('/decisionsapprentis', [DecisionsApprentisController::class, 'index'])->name('decisions.index');
 // Evaluation maitre apprentis
@@ -58,6 +61,8 @@ Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->nam
 Route::get('/assiduites/consulter', [AssiduitesController::class, 'show'])->name('assiduites.consulter');
 Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
 Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
+//plan besoins
+Route::get('/planbesoins', [PlanBesoinsController::class, 'index'])->name('planbesoins.index');
 //Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
