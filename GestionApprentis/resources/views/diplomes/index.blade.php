@@ -1,31 +1,10 @@
-<!-- Assuming this is diplomes.index.blade.php -->
-
 @extends('layouts.layout')
-@section('title','Diplome | Ajouter')
+@section('title','Diplomes')
+<link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css">
 @section('content')
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/2.0.3/css/dataTables.bootstrap5.css">
-<script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/2.0.3/js/jquery.dataTables.js"></script>
-<script src="https://cdn.datatables.net/2.0.3/js/dataTables.bootstrap5.js"></script>
 <h1 class="text-center mt-4 mb-4">AJOUTER UN DIPLOME</h1>
 <div id="formemodal">
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="add">
-        Ajouter Diplome
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="exampleModalLabel">Ajouter un Diplome</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form name="forme" id="forme" action="{{ route('diplomes.store') }}" method="POST">
+    <form name="forme" id="forme" action="{{ route('diplomes.store') }}" method="POST">
                         @csrf
                         <div class="form-group mb-3">
                             <label for="nom">Nom</label>
@@ -43,14 +22,7 @@
                             <button type="submit" class="btn btn-primary" id="submit-btn">Ajouter</button>
                         </div>
                     </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <table id="example" class="table table-striped" style="width:100%">
+    <table id="diplome-table" class="table table-striped" style="width:100%">
         <thead>
             <tr>
                 <th>ID</th>
@@ -77,8 +49,12 @@
     </table>
     <a href="{{ route('diplomes.print') }}" class="btn btn-primary" target="_blank">Imprimer</a>
 </div>
-<script>
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
     <script>
+        $(document).ready(function() {
+            $('#diplome-table').DataTable();
+        });
     let isEdit = false
     $(document).ready(function() {
     // Edit diploma modal

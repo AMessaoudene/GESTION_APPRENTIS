@@ -16,20 +16,6 @@ class DiplomesController extends Controller
         return view('diplomes.index', compact('diplomes'));
     }
 
-    
-    public function generatePDF()
-    {
-        $diplomes = Diplomes::get();
-
-        $data = [
-            'title' => 'Welcome to Funda of Web IT - fundaofwebit.com',
-            'date' => date('m/d/Y'),
-            'diplomes' => $diplomes
-        ];
-
-        $pdf = PDF::loadView('diplomes.index', $data);
-        return $pdf->download('users-lists.pdf');
-    }
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -57,9 +43,9 @@ class DiplomesController extends Controller
     {
         try {
             $validator = Validator::make($request->all(), [
-                'nom' => 'required|string|max:255',
-                'duree' => 'required|integer',
-                'description' => 'nullable|string|max:2000',
+                'nom' => 'string|max:255',
+                'duree' => 'integer',
+                'description' => 'string|max:2000',
             ]);
 
             if ($validator->fails()) {
@@ -71,8 +57,6 @@ class DiplomesController extends Controller
 
             return redirect()->route('diplomes.index');
         } catch (\Exception $e) {
-            // Log the error for debugging
-            \Log::error($e);
             // Return an error response
             return back()->withError('An error occurred while updating the diploma.')->withInput();
         }

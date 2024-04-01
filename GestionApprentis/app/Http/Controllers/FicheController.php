@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\maitre_apprentis;
+use App\Models\diplomes;
 
 class FicheController extends Controller
 {
@@ -16,8 +17,11 @@ class FicheController extends Controller
         $apprenti = Session::get('apprenti');
         $maitre_apprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
         $maitre_apprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
-        ($maitre_apprenti1) ? $maitre_apprentis = $maitre_apprenti1 : $maitre_apprentis = $maitre_apprenti2;
-        return view('pvinstallations.fiche',['pv' => $pv, 'apprenti' => $apprenti, 'maitre_apprentis' => $maitre_apprentis]);
+        (!is_null($maitre_apprenti1)) ? $maitre_apprentis = $maitre_apprenti1 : $maitre_apprentis = $maitre_apprenti2;
+        $maitre_apprenti = maitre_apprentis::findOrFail($maitre_apprentis->id);
+        //$diplomeMA = $maitre_apprenti->diplome_id;
+        //$diplome = diplomes::findOrFail($diplomeMA);
+        return view('pvinstallations.fiche',['pv' => $pv, 'apprenti' => $apprenti, 'maitre_apprenti' => $maitre_apprenti]);
     }
 
     /**

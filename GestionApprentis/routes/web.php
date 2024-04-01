@@ -14,17 +14,19 @@ use App\Http\Controllers\AssiduitesController;
 use App\Http\Controllers\EvaluationApprentisController;
 use App\Http\Controllers\EvaluationMaitreApprentisController;
 use App\Http\Controllers\PlanBesoinsController;
+use App\Http\Controllers\ParametresController;
 
 Route::get('/', function () {
     return view('welcome');
 });
 //Structures
-Route::get('/structures/ajouter', [StructuresController::class, 'index'])->name('structures.index');
-Route::post('/structures/ajouter', [StructuresController::class, 'submit'])->name('structures.submit');
+Route::get('/structures', [StructuresController::class, 'index'])->name('structures.index');
+Route::post('/structures', [StructuresController::class, 'submit'])->name('structures.submit');
+Route::put('/structures/{id}', [StructuresController::class, 'update'])->name('structures.update');
+Route::delete('/structures/{id}', [StructuresController::class, 'destroy'])->name('structures.destroy');
 //Diplomes
 Route::get('/diplomes', [DiplomesController::class, 'index'])->name('diplomes.index');
 Route::post('/diplomes', [DiplomesController::class, 'store'])->name('diplomes.store');
-Route::get('/diplomes/print', [DiplomesController::class, 'generatePDF'])->name('diplomes.print');
 Route::get('/diplomes/{id}/edit', [DiplomesController::class, 'edit'])->name('diplomes.edit');
 Route::put('diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
 Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
@@ -41,6 +43,7 @@ Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'index']
 //Dossiers 
 Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('dossiers.index');
 Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
+Route::get('/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
 //Maitre Apprentis
 Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
 Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
@@ -63,6 +66,9 @@ Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])
 Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
 //plan besoins
 Route::get('/planbesoins', [PlanBesoinsController::class, 'index'])->name('planbesoins.index');
+//parametres
+Route::get('/parametres', [ParametresController::class, 'index'])->name('parametres.index');
+Route::post('/parametres', [ParametresController::class, 'store'])->name('parametres.store');
 //Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');

@@ -9,7 +9,7 @@ class dossiers extends Model
 {
     protected $table = 'dossiers';
     protected $fillable = [
-        'apprenti_id',
+        //'apprenti_id',
         'contratapprenti',
         'decisionapprenti',
         'decisionmaitreapprenti',

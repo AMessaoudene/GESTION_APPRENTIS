@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 use App\Models\structures;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Http\JsonResponse;
 
 class StructuresController extends Controller
 {
     public function index() {
-        return view('structures.ajouter');
+        $structures = structures::all();
+        return view('structures.index', compact('structures'));
     }
     //Ajout d'une structure
     public function submit(Request $request) {
@@ -32,5 +34,19 @@ class StructuresController extends Controller
             $structure->save();
             return redirect()->back();
         }
+    }
+    public function update(Request $request, $id)
+    {
+        $structure = structures::findOrFail($id);
+        $structure->nom = $request->nom;
+        $structure->adresseCourriel = $request->adressecourriel;
+        $structure->save();
+        return new JsonResponse(['success' => true]);
+    }
+
+    public function destroy($id)
+    {
+        structures::destroy($id);
+        return new JsonResponse(['success' => true]);
     }
 }

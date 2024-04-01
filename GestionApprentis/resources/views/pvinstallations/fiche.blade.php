@@ -11,11 +11,9 @@
 @foreach($pv->getAttributes() as $key => $value)
 <li>{{$key}} : {{$value}}</li> 
 @endforeach
-@foreach($maitre_apprentis->getAttributes() as $key => $value)
     <h3>Maitre apprentis</h3>
-    <li>{{$key}} : {{$value}}</li> 
-@break
-@endforeach
+    <li>{{$maitre_apprenti->nom}}</li> 
+
 <div style="position:absolute;top:1.72in;left:0.68in;width:1.59in;line-height:0.14in;">
 <DIV style="position:relative; left:0.06in;">
 <span style="font-style:normal;font-weight:bold;font-size:9pt;font-family:TimesNewRomanPS-BoldMT;color:#000000">EPIC ALGERIE POSTE</span>
@@ -87,26 +85,26 @@
 <div style="position:absolute;top:4.62in;left:2.50in;width:0.96in;line-height:0.17in;">
 <span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Nom / Prénom</span><br/></SPAN></div>
 <div style="position:absolute;top:4.62in;left:4.22in;width:3.03in;line-height:0.17in;">
-<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">«Nom et prénom du maitre d’apprentissage»</span><br/></SPAN></div>
+<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">{{$maitre_apprenti->nom}} {{$maitre_apprenti->prenom}}</span><br/></SPAN></div>
 <div style="position:absolute;top:4.88in;left:2.50in;width:0.60in;line-height:0.17in;">
 <span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Matricule</span><br/></SPAN></div>
 <div style="position:absolute;top:4.88in;left:4.22in;width:3.07in;line-height:0.17in;">
-<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">« Matricule  SAGE du  maitre  d’apprentissage »</span><br/></SPAN></div>
+<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">{{$maitre_apprenti->matricule}}</span><br/></SPAN></div>
 <div style="position:absolute;top:5.14in;left:2.50in;width:0.71in;line-height:0.17in;">
 <span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Affectation</span></SPAN></div>
 <div style="position:absolute;top:5.14in;left:4.22in;width:3.44in;line-height:0.17in;">
-<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">« Direction d’affectation  du maitre  d’apprentissage »</span>
+<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">{{$maitre_apprenti->affectation}}</span>
 </SPAN></div>
 <div style="position:absolute;top:5.41in;left:2.50in;width:0.57in;line-height:0.17in;">
 <span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Fonction</span></SPAN></div>
 <div style="position:absolute;top:5.41in;left:4.22in;width:2.58in;line-height:0.17in;">
-<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">« Fonction du  maitre  d’apprentissage »</span></SPAN></div>
+<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">{{$maitre_apprenti->fonction}}</span></SPAN></div>
 <div style="position:absolute;top:5.67in;left:2.50in;width:0.55in;line-height:0.17in;">
 <span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Diplôme</span></SPAN></div>
 <div style="position:absolute;top:5.67in;left:4.22in;width:3.25in;line-height:0.17in;">
-<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">« Formation de base du maitre d’apprentissage »</span></SPAN></div>
+<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000"></span></SPAN></div>
 <div style="position:absolute;top:5.94in;left:2.50in;width:1.36in;line-height:0.17in;"><span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Date de recrutement</span></SPAN></div>
-<div style="position:absolute;top:5.94in;left:4.22in;width:2.66in;line-height:0.17in;"><span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">« Date de recrutement à Algérie Poste »</span></SPAN></div>
+<div style="position:absolute;top:5.94in;left:4.22in;width:2.66in;line-height:0.17in;"><span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">{{$maitre_apprenti->daterecrutement}}</span></SPAN></div>
 <div style="position:absolute;top:7.07in;left:0.96in;width:1.04in;line-height:0.19in;"><DIV style="position:relative; left:0.16in;"><span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Installation de l’apprenti (e)</span>
 </SPAN>
 </DIV>

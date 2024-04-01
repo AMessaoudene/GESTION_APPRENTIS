@@ -13,7 +13,24 @@ return new class extends Migration
     {
         Schema::create("parametres", function (Blueprint $table) {
             $table->id();
-            
+            //$table->string('reference');
+            //$table->string('direction');
+            $table->string('decisionresponsable');
+            $table->date('datedecisionresponsable');
+            $table->string('nomresponsable');
+            $table->string('prenomresponsable');
+            $table->string('civiliteresponsable');
+            $table->string('fonctionresponsable');
+            $table->string('typedecisiondg');
+            $table->date('datedecisiondg');
+            $table->string('nomprenomdg');
+            $table->string('decisionpremierresponsable');
+            $table->date('datedecisionpremierresponsable');
+            $table->string('nomprenompremierresponsable');
+            $table->string('fonctionpremierresponsable');
+            $table->string('civilitedrh');
+            $table->string('civilitedfc');
+            $table->enum('status',['actif','inactif']);
             $table->timestamps();
         });
     }
