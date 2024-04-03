@@ -52,13 +52,13 @@
         @if($dossier->autorisationparentele)
             <td><a href="{{ url('/download', $dossier->autorisationparentele) }}">autorisation parentale</a></td>
         @else
-            <td></td>
+            <td>Aucun</td>
         @endif
 
         @if($dossier->photo)
             <td><a href="{{ url('/download', $dossier->photo) }}">Photo</a></td>
         @else
-            <td></td>
+            <td>Aucun</td>
         @endif
     </tr>
 @endforeach

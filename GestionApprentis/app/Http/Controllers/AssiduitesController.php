@@ -10,7 +10,8 @@ class AssiduitesController extends Controller{
     public function index()
     {
         $apprentis = apprentis::all();
-        return view('assiduites.ajouter', compact('apprentis'));
+        $assiduites = assiduites::all();
+        return view('assiduites.index', compact('apprentis', 'assiduites'));
     }
     public function submit(Request $request)
     {
@@ -40,25 +41,42 @@ class AssiduitesController extends Controller{
         }
 
         try {
-                $preuvePath = $request->file('preuve')->store('public/uploads'); // Store the file and get its path
                 $assiduites = new assiduites();
                 $assiduites->apprenti_id = $request->apprenti_id; // Correct property name
                 $assiduites->type = $request->type;
                 $assiduites->datedebut = $request->datedebut;
                 $assiduites->datefin = $request->datefin;
                 $assiduites->motif = $request->motif;
-                $assiduites->preuve = $preuvePath; // Save the file path
+                $preuve = $request->file('preuve');
+                $preuvenom = 'preuve'.time().'.'.$preuve->getClientOriginalExtension();
+                $preuve->move('assets/preuves', $preuvenom);
+                $assiduites->preuve = $preuvenom;
                 $assiduites->save();
                 return redirect()->back()->with('success', 'Assiduité ajoutée avec succès!');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
     }
-    public function show(Request $request)
+    public function update(Request $request, $id)
     {
-        // Retrieve all "assiduites" associated with the selected apprentice
-        $assiduites = assiduites::all();
+        $assiduites = assiduites::findOrFail($id);
+        $assiduites->apprenti_id = $request->apprenti_id; // Correct property name
+        $assiduites->type = $request->type;
+        $assiduites->datedebut = $request->datedebut;
+        $assiduites->datefin = $request->datefin;
+        $assiduites->motif = $request->motif;
+        $preuve = $request->file('preuve');
+        $preuvenom = 'preuve-'.time().'.'.$preuve->getClientOriginalExtension();
+        $preuve->move('assets/preuves', $preuvenom);
+        $assiduites->preuve = $preuvenom;
+        $assiduites->save();
+        return response()->json(['success' => true]);
+    }
 
-        return view('assiduites.consulter', compact('assiduites'));
+    public function destroy($id)
+    {
+        assiduites::destroy($id);
+
+        return response()->json(['success' => true]); // Return success response
     }
 }

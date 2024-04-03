@@ -12,10 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('exercices', function (Blueprint $table) {
-            $table->year('annee')->primary();
+            $table->id();
+            $table->integer('annee');
             $table->date('datedebut');
             $table->date('datefin');
-            $table->integer('nombrebesoins');
+            $table->integer('nombreeffectif')->unsigned()->nullable();
+            $table->integer('nombrebesoins')->unsigned();
             $table->float('massesalariaire');
             $table->float('budget');
             $table->timestamps();

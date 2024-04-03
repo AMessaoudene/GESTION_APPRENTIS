@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('decisionmaitreapprentis', function (Blueprint $table) {
+        Schema::create('decisionapprentis', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
             $table->date('date');
             $table->unsignedBigInteger('pv_id');
-            $table->foreign('pv_id')->references('id')->on('pv_installations')->onDelete('cascade');
+            $table->foreign('pv_id')->references('id')->on('pv_installations')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('parametre_id');
-            $table->foreign('parametre_id')->references('id')->on('parametres')->onDelete('cascade');
+            $table->foreign('parametre_id')->references('id')->on('parametres')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('bareme_id');
+            $table->foreign('bareme_id')->references('id')->on('baremes')->onDelete('cascade')->onUpdate('cascade');
+            $table->date('datetransfert')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('decisionmaitreapprentis');
+        Schema::dropIfExists('decisionapprentis');
     }
 };

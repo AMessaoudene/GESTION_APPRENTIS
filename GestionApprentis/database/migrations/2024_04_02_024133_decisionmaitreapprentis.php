@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('decisionapprentis', function (Blueprint $table) {
+        Schema::create('decisionmaitreapprentis', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
             $table->date('date');
@@ -19,7 +19,8 @@ return new class extends Migration
             $table->foreign('pv_id')->references('id')->on('pv_installations')->onDelete('cascade');
             $table->unsignedBigInteger('parametre_id');
             $table->foreign('parametre_id')->references('id')->on('parametres')->onDelete('cascade');
-            $table->date('datetransfert')->nullable();
+            $table->unsignedBigInteger('bareme_id');
+            $table->foreign('bareme_id')->references('id')->on('baremes')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('decisionapprentis');
+        Schema::dropIfExists('decisionmaitreapprentis');
     }
 };

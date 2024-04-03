@@ -21,4 +21,30 @@
     <input type="file" name="preuve"/><br/>
     <input type="submit" value="Ajouter"/>
 </form>
+<table>
+    <thead>
+        <tr>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Type</th>
+            <th>Date debut</th>
+            <th>Date fin</th>
+            <th>Motif</th>
+            <th>Preuve</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($assiduites as $assiduite)
+            <tr>
+                <td>{{ $apprenti->nom }}</td>
+                <td>{{ $apprenti->prenom }}</td>
+                <td>{{ $assiduite->type }}</td>
+                <td>{{ $assiduite->datedebut }}</td>
+                <td>{{ $assiduite->datefin }}</td>
+                <td>{{ $assiduite->motif }}</td>
+                <td>{{ $assiduite->preuve }}</td>
+            </tr>
+        @endforeach
+    </tbody>
+</table>
 @endsection

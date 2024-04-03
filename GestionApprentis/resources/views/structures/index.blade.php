@@ -37,84 +37,89 @@
 </table>
 @endsection
 
-@section('scripts')
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#structures-table').DataTable();
+$(document).ready(function() {
+    $('#structures-table').DataTable();
 
-        // AJAX for adding a new structure
-        $('#add-form').submit(function(event) {
-            event.preventDefault();
-            var form = $(this);
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize(),
-                success: function(response) {
-                    // Reload the page to update the table
-                    location.reload();
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Handle error
-                    console.error('Error adding structure:', errorThrown);
-                }
-            });
-        });
-
-        // AJAX for deleting a structure
-        $('.delete-btn').click(function() {
-            var id = $(this).data('id');
-            $.ajax({
-                url: '/structures/' + id,
-                type: 'DELETE',
-                success: function(response) {
-                    // Remove the row from the table
-                    $('#structures-table').DataTable().row($(this).parents('tr')).remove().draw();
-                    alert('Structure deleted successfully');
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Handle error
-                    console.error('Error deleting structure:', errorThrown);
-                }
-            });
-        });
-
-        // AJAX for editing a structure
-        $('.edit-btn').click(function() {
-            var id = $(this).data('id');
-            var row = $(this).closest('tr');
-            var nom = row.find('td:eq(1)').text();
-            var adressecourriel = row.find('td:eq(2)').text();
-            var editForm = `
-                <form method="POST" action="/structures/${id}" class="edit-form">
-                    @csrf
-                    @method('PUT')
-                    <input type="text" name="nom" class="form-control" value="${nom}">
-                    <input type="text" name="adressecourriel" class="form-control" value="${adressecourriel}">
-                    <button type="submit" class="btn btn-primary">Valider</button>
-                </form>
-            `;
-            row.find('td:eq(1)').html(editForm);
-        });
-
-        // Submit edit form
-        $(document).on('submit', '.edit-form', function(event) {
-            event.preventDefault();
-            var form = $(this);
-            $.ajax({
-                url: form.attr('action'),
-                type: 'POST',
-                data: form.serialize(), // Change this to use PUT method for update
-                success: function(response) {
-                    // Reload the page to update the table
-                    location.reload();
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Handle error
-                    console.error('Error updating structure:', errorThrown);
-                }
-            });
+    // AJAX for adding a new structure
+    $('#add-form').submit(function(event) {
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(),
+            success: function(response) {
+                // Reload the page to update the table
+                location.reload();
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                // Handle error
+                console.error('Error adding structure:', errorThrown);
+            }
         });
     });
+
+    // AJAX for deleting a structure
+$('.delete-btn').click(function() {
+    var id = $(this).data('id');
+    var button = $(this); // Store reference to 'this'
+    $.ajax({
+        url: '/structures/' + id,
+        type: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            // Remove the row from the table
+            button.closest('tr').remove();
+            alert('Structure deleted successfully');
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            // Handle error
+            console.error('Error deleting structure:', errorThrown);
+        }
+    });
+});
+
+
+    // AJAX for editing a structure
+    $('.edit-btn').click(function() {
+        var id = $(this).data('id');
+        var row = $(this).closest('tr');
+        var nom = row.find('td:eq(1)').text();
+        var adressecourriel = row.find('td:eq(2)').text();
+        var editForm = `
+            <form method="POST" action="/structures/${id}" class="edit-form">
+                @csrf
+                @method('PUT')
+                <input type="text" name="nom" class="form-control" value="${nom}">
+                <input type="text" name="adressecourriel" class="form-control" value="${adressecourriel}">
+                <button type="submit" class="btn btn-primary">Valider</button>
+            </form>
+        `;
+        row.find('td:eq(1)').html(editForm);
+    });
+
+    // Submit edit form
+    $(document).on('submit', '.edit-form', function(event) {
+        event.preventDefault();
+        var form = $(this);
+        $.ajax({
+            url: form.attr('action'),
+            type: 'POST',
+            data: form.serialize(), // Change this to use PUT method for update
+            success: function(response) {
+                // Reload the page to update the table
+                location.reload();
+            },
+            error: function(xhr, textStatus, errorThrown) {
+                // Handle error
+                console.error('Error updating structure:', errorThrown);
+            }
+        });
+    });
+});
 </script>
-@endsection

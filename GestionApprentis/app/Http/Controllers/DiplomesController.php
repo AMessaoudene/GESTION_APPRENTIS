@@ -1,12 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Diplomes;
 use Illuminate\Support\Facades\Validator;
-use Barryvdh\DomPDF\Facade\Pdf;
-
 
 class DiplomesController extends Controller
 {
@@ -33,40 +30,19 @@ class DiplomesController extends Controller
         return redirect()->route('diplomes.index');
     }
 
-    public function edit($id)
-    {
-        $diplome = Diplomes::findOrFail($id);
-        return response()->json(['diplome' => $diplome]); // Return the diploma data as JSON
-    }
-
     public function update(Request $request, $id)
     {
-        try {
-            $validator = Validator::make($request->all(), [
-                'nom' => 'string|max:255',
-                'duree' => 'integer',
-                'description' => 'string|max:2000',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            $diplome = Diplomes::findOrFail($id);
-            $diplome->update($request->all());
-
-            return redirect()->route('diplomes.index');
-        } catch (\Exception $e) {
-            // Return an error response
-            return back()->withError('An error occurred while updating the diploma.')->withInput();
-        }
+        $diplomes = Diplomes::findOrFail($id);
+        $diplomes->nom = $request->nom;
+        $diplomes->duree = $request->duree;
+        $diplomes->description = $request->description;
+        $diplomes->save();
+        return response()->json(['success' => true]);
     }
-
 
     public function destroy($id)
     {
-        $diplome = Diplomes::findOrFail($id);
-        $diplome->delete();
+        Diplomes::destroy($id);
 
         return response()->json(['success' => true]); // Return success response
     }

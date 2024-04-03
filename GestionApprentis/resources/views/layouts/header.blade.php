@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
     <link rel="icon" href="{{ asset('asset/images/AlgeriePoste.ico') }}" type="image/x-icon">
@@ -19,6 +20,9 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="{{ route('structures.index') }}">Structures</a> <!-- Added text-dark class -->
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" href="{{ route('apprentis.index') }}">Apprentis</a> <!-- Added text-dark class -->
                         </li>

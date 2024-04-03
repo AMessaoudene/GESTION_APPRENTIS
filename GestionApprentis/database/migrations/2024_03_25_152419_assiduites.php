@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('assiduites', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('apprenti_id');
-            $table->foreign('apprenti_id')->references('id')->on('apprentis');
+            $table->foreign('apprenti_id')->references('id')->on('apprentis')->onDelete('cascade')->onUpdate('cascade');
             $table->enum('type',['absence','maladiecourte','maladie longue','arrettravail']);
             $table->date('datedebut');
             $table->date('datefin');

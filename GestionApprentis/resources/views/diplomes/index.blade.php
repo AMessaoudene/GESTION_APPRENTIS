@@ -47,73 +47,97 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ route('diplomes.print') }}" class="btn btn-primary" target="_blank">Imprimer</a>
 </div>
-<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+@endsection
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
     <script>
         $(document).ready(function() {
             $('#diplome-table').DataTable();
-        });
-    let isEdit = false
-    $(document).ready(function() {
-    // Edit diploma modal
-    $('.edit-btn').click(function() {
-        var id = $(this).data('id');
-        $.ajax({
-            url: "{{ url('diplomes') }}" + '/' + id + '/edit',
-            type: 'GET',
-            success: function(data) {
-                $('#nom').val(data.diplome.nom);
-                $('#duree').val(data.diplome.duree);
-                $('#description').val(data.diplome.description);
-                $('#diplome_id').val(id); // Populate diploma ID
-                // Set the form action dynamically
-                $('#forme').attr('action', "{{ url('diplomes') }}/" + id); 
-                $('#exampleModal').modal('show');
-                isEdit = true;
-            }
-        });
-    });
-     // Submit update form via AJAX
-     $('#forme').submit(function(e) {
-            e.preventDefault(); // Prevent default form submission
-            var formData = $(this).serialize();
-            var url = $(this).attr('action');
+            // AJAX for adding a new structure
+            $('#add-form').submit(function(event) {
+                event.preventDefault();
+                var form = $(this);
+                $.ajax({
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(),
+                    success: function(response) {
+                        // Reload the page to update the table
+                        location.reload();
+                    },
+                    error: function(xhr, textStatus, errorThrown) {
+                        // Handle error
+                        console.error('Error adding diplome:', errorThrown);
+                    }
+                });
+            });
+
+            // AJAX for deleting a structure
+        $('.delete-btn').click(function() {
+            var id = $(this).data('id');
+            var button = $(this); // Store reference to 'this'
             $.ajax({
-                url: url,
-                type: isEdit? 'PUT' : 'POST', // You can use POST method for the same route and view
-                data: formData,
-                success: function(data) {
-                    // Handle success response
-                    // For example, if you want to reload the page after successful update:
-                    location.reload();
+                url: '/diplomes/' + id,
+                type: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                error: function(xhr, status, error) {
-                    // Handle error response
-                    // For example, if you want to show an alert message:
-                    alert('An error occurred while updating the diploma.');
-                    console.error(error); // Log the error for debugging
+                success: function(response) {
+                    // Remove the row from the table
+                    button.closest('tr').remove();
+                    alert('diplome deleted successfully');
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error deleting diplome:', errorThrown);
                 }
             });
         });
 
-        // Delete diploma
-        $('.delete-btn').click(function() {
-            var id = $(this).data('id');
-            if (confirm('Are you sure you want to delete this diploma?')) {
+
+            // AJAX for editing a structure
+            $('.edit-btn').click(function() {
+                var id = $(this).data('id');
+                var row = $(this).closest('tr');
+                var nom = row.find('td:eq(1)').text();
+                var duree = row.find('td:eq(2)').text(); // Update index to 2 for 'duree'
+                var description = row.find('td:eq(3)').text(); // Update index to 3 for 'description'
+                var editForm = `
+                    <form method="POST" action="/diplomes/${id}" class="edit-form">
+                        @csrf
+                        @method('PUT')
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" class="form-control" value="${nom}">
+                        <label for="duree">Durée</label>
+                        <input type="text" name="duree" class="form-control" value="${duree}">
+                        <label for="description">Description</label>
+                        <input type="text" name="description" class="form-control" value="${description}">
+                        <button type="submit" class="btn btn-primary">Valider</button>
+                    </form>
+                `;
+                row.find('td:eq(1)').html(editForm);
+            });
+
+
+            // Submit edit form
+            $(document).on('submit', '.edit-form', function(event) {
+                event.preventDefault();
+                var form = $(this);
                 $.ajax({
-                    url: "{{ url('diplomes') }}" + '/' + id,
-                    type: 'DELETE',
-                    data: {
-                        "_token": "{{ csrf_token() }}"
+                    url: form.attr('action'),
+                    type: 'POST',
+                    data: form.serialize(), // Change this to use PUT method for update
+                    success: function(response) {
+                        // Reload the page to update the table
+                        location.reload();
                     },
-                    success: function(data) {
-                        $('#diplome_' + id).remove();
+                    error: function(xhr, textStatus, errorThrown) {
+                        // Handle error
+                        console.error('Error updating diplome:', errorThrown);
                     }
                 });
-            }
+            });
         });
-    });
-</script>
-@endsection
+    
+    </script>

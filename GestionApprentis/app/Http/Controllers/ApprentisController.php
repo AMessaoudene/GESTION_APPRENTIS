@@ -46,7 +46,6 @@ class ApprentisController extends Controller
         if (!$apprenti) {
             $apprenti = new apprentis();
         }
-
         // If validation passes, store the data
         try {
             // Create a new apprentice record

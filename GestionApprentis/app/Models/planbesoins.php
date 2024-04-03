@@ -9,6 +9,7 @@ class planbesoins extends Model
 {
     protected $table = 'planbesoins';
     protected $fillable = [
+        'exercice_id',
         'reference',
         'structure_id',
         'date',

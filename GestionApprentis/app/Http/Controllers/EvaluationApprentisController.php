@@ -3,14 +3,19 @@
 namespace App\Http\Controllers;
 use App\Models\evaluation_apprentis;
 use App\Models\apprentis;
+use App\Models\structures;
 use Illuminate\Http\Request;
+use App\Models\maitre_apprentis;
 use Validator;
 class EvaluationApprentisController extends Controller
 {
     public function index()
     {
-        $apprentis = apprentis::all(); // Retrieve all evaluations, adjust this based on your actual model
-        return view('evaluation_apprentis.ajouter', compact('apprentis'));
+        $apprentis = apprentis::all();
+        $structures = structures::all();
+        $evaluations = evaluation_apprentis::all();
+        $maitreapprentis = maitre_apprentis::all();
+        return view('evaluation_apprentis.index', compact('apprentis','structures','evaluations','maitreapprentis'));
     }
     public function submit(Request $request){
         $rules = [
@@ -81,35 +86,35 @@ class EvaluationApprentisController extends Controller
         }
         else{
             $evaluation = new evaluation_apprentis();
-            $evaluation->reference = request('reference');
-            $evaluation->datedebut = request('datedebut');
-            $evaluation->datefin = request('datefin');
-            $evaluation->comportementsociabilite = request('comportementsociabilite');
-            $evaluation->observationcs = request('observationcs');
-            $evaluation->communication = request('communication');
-            $evaluation->observationc = request('observationc');
-            $evaluation->organisationhygiene = request('organisationhygiene');
-            $evaluation->observationoh = request('observationoh');
-            $evaluation->ponctualiteassiduite = request('ponctualiteassiduite');
-            $evaluation->observationpa = request('observationpa');
-            $evaluation->respectreglementinterieur = request('respectreglementinterieur');
-            $evaluation->observationrri = request('observationrri');
-            $evaluation->discipline = request('discipline');
-            $evaluation->observationd = request('observationd');
-            $evaluation->interettravail = request('interettravail');
-            $evaluation->observationit = request('observationit');
-            $evaluation->qualification = request('qualification');
-            $evaluation->observationq = request('observationq');
-            $evaluation->motivation = request('motivation');
-            $evaluation->observationm = request('observationm');
-            $evaluation->espritinitiative = request('espritinitiative');
-            $evaluation->observationei = request('observationei');
-            $evaluation->evolutionprocessusintegration = request('evolutionprocessusintegration');
-            $evaluation->observationepi = request('observationepi');
-            $evaluation->qualificationsprofessionelles = request('qualificationsprofessionelles');
-            $evaluation->observationqp = request('observationqp');
-            $evaluation->sensresponsabilite = request('sensresponsabilite');
-            $evaluation->observationsr = request('observationsr');
+            $evaluation->reference = $request->reference;
+            $evaluation->datedebut = $request->datedebut;
+            $evaluation->datefin = $request->datefin;
+            $evaluation->comportementsociabilite = $request->comportementsociabilite;
+            $evaluation->observationcs = $request->observationcs;
+            $evaluation->communication = $request->communication;
+            $evaluation->observationc = $request->observationc;
+            $evaluation->organisationhygiene = $request->organisationhygiene;
+            $evaluation->observationoh = $request->observationoh;
+            $evaluation->ponctualiteassiduite = $request->ponctualiteassiduite;
+            $evaluation->observationpa = $request->observationpa;
+            $evaluation->respectreglementinterieur = $request->respectreglementinterieur;
+            $evaluation->observationrri = $request->observationrri;
+            $evaluation->discipline = $request->discipline;
+            $evaluation->observationd = $request->observationd;
+            $evaluation->interettravail = $request->interettravail;
+            $evaluation->observationit = $request->observationit;
+            $evaluation->qualification = $request->qualification;
+            $evaluation->observationq = $request->observationq;
+            $evaluation->motivation = $request->motivation;
+            $evaluation->observationm = $request->observationm;
+            $evaluation->espritinitiative = $request->espritinitiative;
+            $evaluation->observationei = $request->observationei;
+            $evaluation->evolutionprocessusintegration = $request->evolutionprocessusintegration;
+            $evaluation->observationepi = $request->observationepi;
+            $evaluation->qualificationsprofessionelles = $request->qualificationsprofessionelles;
+            $evaluation->observationqp = $request->observationqp;
+            $evaluation->sensresponsabilite = $request->sensresponsabilite;
+            $evaluation->observationsr = $request->observationsr;
             $evaluation->save();
             return redirect()->back()->with('success', 'Evaluation ajoutée avec succès');
         }

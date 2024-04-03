@@ -28,8 +28,8 @@ return new class extends Migration
             $table->date('datedecisionpremierresponsable');
             $table->string('nomprenompremierresponsable');
             $table->string('fonctionpremierresponsable');
-            $table->string('civilitedrh');
-            $table->string('civilitedfc');
+            $table->enum('civilitedrh',['monsieur','madame','mademoiselle']);
+            $table->enum('civilitedfc',['monsieur','madame','mademoiselle']);
             $table->enum('status',['actif','inactif']);
             $table->timestamps();
         });

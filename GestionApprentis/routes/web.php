@@ -15,6 +15,7 @@ use App\Http\Controllers\EvaluationApprentisController;
 use App\Http\Controllers\EvaluationMaitreApprentisController;
 use App\Http\Controllers\PlanBesoinsController;
 use App\Http\Controllers\ParametresController;
+use App\Http\Controllers\ExercicesController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -27,8 +28,7 @@ Route::delete('/structures/{id}', [StructuresController::class, 'destroy'])->nam
 //Diplomes
 Route::get('/diplomes', [DiplomesController::class, 'index'])->name('diplomes.index');
 Route::post('/diplomes', [DiplomesController::class, 'store'])->name('diplomes.store');
-Route::get('/diplomes/{id}/edit', [DiplomesController::class, 'edit'])->name('diplomes.edit');
-Route::put('diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
+Route::put('/diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
 Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
 //Apprentis
 Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis.index');
@@ -51,13 +51,13 @@ Route::put('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->na
 //decisionsapprentis
 Route::get('/decisionsapprentis', [DecisionsApprentisController::class, 'index'])->name('decisions.index');
 // Evaluation maitre apprentis
-Route::get('/evaluation_maitre_apprentis/ajouter', [EvaluationMaitreApprentisController::class, 'index'])->name('evaluation_maitre_apprentis.index');
-Route::post('/evaluation_maitre_apprentis/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluation_maitre_apprentis.submit');
-Route::put('/evaluation_maitre_apprentis/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluation_maitre_apprentis.submit');
+Route::get('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'index'])->name('evaluationMA.index');
+Route::post('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
+Route::put('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
 // Evaluation apprentis
-Route::get('/evaluation_apprentis/ajouter', [EvaluationApprentisController::class, 'index'])->name('evaluation_apprentis.index');
-Route::post('/evaluation_apprentis/ajouter', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
-Route::put('/evaluation_apprentis/ajouter', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
+Route::get('/apprentis/Evaluer', [EvaluationApprentisController::class, 'index'])->name('evaluation_apprentis.index');
+Route::post('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
+Route::put('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
 //Assiduites
 Route::get('/assiduites/ajouter', [AssiduitesController::class, 'index'])->name('assiduites.index');
 Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
@@ -66,9 +66,17 @@ Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])
 Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
 //plan besoins
 Route::get('/planbesoins', [PlanBesoinsController::class, 'index'])->name('planbesoins.index');
+Route::post('/planbesoins', [PlanBesoinsController::class, 'store'])->name('planbesoins.store');
+Route::put('/planbesoins/{id}', [PlanBesoinsController::class, 'update'])->name('planbesoins.update');
+Route::delete('/planbesoins/{id}', [PlanBesoinsController::class, 'destroy'])->name('planbesoins.destroy');
 //parametres
 Route::get('/parametres', [ParametresController::class, 'index'])->name('parametres.index');
 Route::post('/parametres', [ParametresController::class, 'store'])->name('parametres.store');
+//exercices
+Route::get('/exercices', [ExercicesController::class, 'index'])->name('exercices.index');
+Route::post('/exercices', [ExercicesController::class, 'store'])->name('exercices.store');
+Route::put('/exercices/{id}', [exercicesController::class, 'update'])->name('exercices.update');
+Route::delete('/exercices/{id}', [exercicesController::class, 'destroy'])->name('exercices.destroy');
 //Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');

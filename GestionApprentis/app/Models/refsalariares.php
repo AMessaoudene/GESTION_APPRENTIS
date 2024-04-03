@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class refsalariares extends Model
 {
+    protected $table = 'refsalariares';
+    protected $fillable = [
+        'id',
+        'version',
+        'snmg',
+        'SalaireReference',
+        'status',
+    ];
     use HasFactory;
 }

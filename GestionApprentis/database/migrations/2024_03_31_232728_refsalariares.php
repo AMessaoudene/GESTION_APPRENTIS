@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('version');
             $table->double('snmg');
             $table->double('salairereference');
+            $table->enum("status", ["actif","inactif"])->default("actif");
             $table->timestamps();
         });
     }
