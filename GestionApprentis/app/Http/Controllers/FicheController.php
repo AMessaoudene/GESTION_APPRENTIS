@@ -5,13 +5,16 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\maitre_apprentis;
 use App\Models\diplomes;
+use App\Models\structures;
+use App\Models\apprentis;
+use App\Models\parametres;
 
 class FicheController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function pv()
     {
         $pv = Session::get('pv');
         $apprenti = Session::get('apprenti');
@@ -27,7 +30,14 @@ class FicheController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function decisionA()
+    {
+        $pv = Session::get('pv');
+        $parametres = parametres::all();
+        return view('decisions.ficheA', compact('pv', 'parametres'));
+    }
+
+    public function decisionMA(string $id)
     {
         //
     }
@@ -36,14 +46,6 @@ class FicheController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
     {
         //
     }

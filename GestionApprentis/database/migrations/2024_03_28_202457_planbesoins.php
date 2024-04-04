@@ -18,6 +18,8 @@ return new class extends Migration
             $table->foreign('exercice_id')->references('id')->on('exercices')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('structure_id');
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('specialites_id');
+            $table->foreign('specialites_id')->references('id')->on('specialites')->onDelete('cascade')->onUpdate('cascade');
             $table->date('date');
             $table->integer('nombreapprentis');
             $table->integer('nombereffectif');

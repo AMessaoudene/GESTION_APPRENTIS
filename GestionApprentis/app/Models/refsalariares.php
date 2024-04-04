@@ -12,7 +12,7 @@ class refsalariares extends Model
         'id',
         'version',
         'snmg',
-        'SalaireReference',
+        'salairereference',
         'status',
     ];
     use HasFactory;

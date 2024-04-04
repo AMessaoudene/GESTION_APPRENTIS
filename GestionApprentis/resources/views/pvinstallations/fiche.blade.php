@@ -2,6 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" href="{{ asset('asset/images/AlgeriePoste.ico') }}" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="style.css"/>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -52,7 +53,7 @@
 </div>
 <div style="position:absolute;top:2.72in;left:2.50in;width:4.34in;line-height:0.17in;">
 <DIV style="position:relative; left:1.72in;">
-<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">{{$apprenti->specialite}}</span>
+<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">{{$apprenti->specialite_id}}</span>
 <br/>
 </SPAN>
 </DIV>
@@ -144,7 +145,7 @@
 </SPAN>
 </div>
 <div style="position:absolute;top:7.79in;left:2.50in;width:0.63in;line-height:0.17in;">
-<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Dotations</span>
+<span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Dotations : {{$pv->dotations}}</span>
 </SPAN></div>
 <div style="position:absolute;top:8.50in;left:0.86in;width:2.12in;line-height:0.19in;">
 <span style="font-style:normal;font-weight:normal;font-size:12pt;font-family:Arial Narrow;color:#000000">Signature du Responsable de la</span>

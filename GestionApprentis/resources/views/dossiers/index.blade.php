@@ -27,6 +27,7 @@
     <table id="dossiers-table">
         <thead>
             <tr>
+                <th>Apprenti ID</th>
                 <th>PV d'installation</th>
                 <th>Decision d'apprenti</th>
                 <th>Decision Maitre d'apprentis</th>
@@ -41,7 +42,7 @@
         <tbody>
         @foreach($dossiers as $dossier)
     <tr>
-
+        <td>{{ $dossier->apprenti_id }}</td>
         <td><a href="{{ url('/download', $dossier->pvinstallation) }}">PV d'installation</a></td>
         <td><a href="{{ url('/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></td>
         <td><a href="{{ url('/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></td>

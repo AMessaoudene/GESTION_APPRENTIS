@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telephonepro');
             $table->string('adresse');
             $table->string('fonction');
+            $table->string('affectation');
             $table->unsignedBigInteger('apprenti1_id')->unique()->nullable();
             $table->foreign('apprenti1_id')->references('id')->on('apprentis')->onDelete('cascade');
             $table->unsignedBigInteger('apprenti2_id')->unique()->nullable();

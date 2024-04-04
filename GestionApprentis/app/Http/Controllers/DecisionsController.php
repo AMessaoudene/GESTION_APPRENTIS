@@ -1,9 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\parametres;
 use Illuminate\Http\Request;
-
+use App\Models\baremes;
 class DecisionsController extends Controller
 {
     /**
@@ -11,7 +11,9 @@ class DecisionsController extends Controller
      */
     public function index()
     {
-        //
+        $parametres = parametres::all();
+        $baremes = baremes::all();
+        return view('decisions.index', compact('parametres','baremes'));
     }
 
     /**

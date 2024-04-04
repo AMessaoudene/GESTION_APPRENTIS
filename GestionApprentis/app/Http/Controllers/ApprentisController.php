@@ -7,6 +7,7 @@ use App\Models\apprentis;
 use App\Models\maitre_apprentis;
 use App\Models\diplomes;
 use App\Models\structures;
+use App\Models\specialites;
 use Validator;
 
 class ApprentisController extends Controller
@@ -16,7 +17,8 @@ class ApprentisController extends Controller
         $diplomes = diplomes::all();
         $maitre_apprentis = maitre_apprentis::all();
         $structures = structures::all();
-        return view('apprentis.index', compact('maitre_apprentis','diplomes','structures')); 
+        $specialites = specialites::all();
+        return view('apprentis.index', compact('maitre_apprentis','diplomes','structures','specialites')); 
     }
 
     public function submit(Request $request){
@@ -24,12 +26,31 @@ class ApprentisController extends Controller
         $rules = [
             'numcontrat' => 'required|string|max:255',
             'datecontrat' => 'required|date|max:255',
+            'datedebut' => 'required|date|max:255',
+            'datefin' => 'required|date|max:255',
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'civilite' => 'required|string|max:255',
+            'nationalite' => 'required|string|max:255',
+            'datenaissance' => 'required|date|max:255',
+            'email' => 'required|email|max:255',
+            'telephone' => 'required|string|max:255',
+            'adresse' => 'required|string|max:255',
+            'niveauscolaire' => 'required|string|max:255',
+            'specialite_id' => 'required|string|max:255',
+            'structure_id' => 'required|string|max:255',
+            'diplome1_id' => 'required|string|max:255',
+            'status' => 'required',
+            /*'maitre_apprentis' => 'required|string|max:255',*/
         ];
 
         // Custom error messages
         $messages = [
-            'numcontrat.required' => 'Le champ numéro de contrat est requis.',
+            /*'numcontrat.required' => 'Le champ numéro de contrat est requis.',
             'datecontrat.required' => 'Le champ date de contrat est requis.',
+            'datedebut.required' => 'Le champ date de debut est requis.',
+            'datefin.required' => 'Le champ date de fin est requis.',
+            'datenaissance.required' => 'Le champ date de naissance est requis.',*/
         ];
 
         // Validate the incoming request
@@ -39,16 +60,9 @@ class ApprentisController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        // Try to retrieve apprentice data from session
-        $apprenti = Session::get('apprenti');
-
-        // If apprentice data doesn't exist in session, create a new one
-        if (!$apprenti) {
-            $apprenti = new apprentis();
-        }
-        // If validation passes, store the data
         try {
             // Create a new apprentice record
+            $apprenti = new apprentis();
             $apprenti->numcontrat = $request->numcontrat;
             $apprenti->datecontrat = $request->datecontrat;
             $apprenti->datedebut = $request->datedebut;
@@ -62,15 +76,11 @@ class ApprentisController extends Controller
             $apprenti->telephone = $request->telephone;
             $apprenti->adresse = $request->adresse;
             $apprenti->niveauscolaire = $request->niveauscolaire;
-            $apprenti->specialite = $request->specialite;
+            $apprenti->specialite_id = $request->specialite_id;
             $apprenti->structure_id = $request->structure_id;
             $apprenti->diplome1_id = $request->diplome1_id;
             $apprenti->status = $request->status;
-            if ($apprenti->exists) {
-                $apprenti->update();
-            } else {
-                $apprenti->save();
-            }
+            $apprenti->save();
             
             // Find the master apprentice based on the selected ID
             $maitreApprenti = maitre_apprentis::find($request->maitre_apprentis);

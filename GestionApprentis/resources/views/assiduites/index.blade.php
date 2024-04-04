@@ -42,7 +42,7 @@
                 <td>{{ $assiduite->datedebut }}</td>
                 <td>{{ $assiduite->datefin }}</td>
                 <td>{{ $assiduite->motif }}</td>
-                <td>{{ $assiduite->preuve }}</td>
+                <td><a href="{{ url('/download', $assiduite->preuve) }}">Fiche</a></td>
             </tr>
         @endforeach
     </tbody>

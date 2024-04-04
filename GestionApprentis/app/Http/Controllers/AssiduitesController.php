@@ -79,4 +79,7 @@ class AssiduitesController extends Controller{
 
         return response()->json(['success' => true]); // Return success response
     }
+    public function pdfdownload(Request $request,$file){
+        return response()->download('assets/preuves/'.$file);
+    }
 }

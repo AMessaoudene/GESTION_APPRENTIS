@@ -38,6 +38,7 @@
     <label>dotations
         <input type="text" name="dotations">
     </label>
+    <a href="{{ route("pvinstallations.download") }}">PDF</a>
     <button type="submit">Submit</button>
 </form>
 @endsection

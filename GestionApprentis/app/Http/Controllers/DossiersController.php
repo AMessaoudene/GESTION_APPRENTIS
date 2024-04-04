@@ -47,7 +47,7 @@ class DossiersController extends Controller
         }else{
             try{
             $dossiers = new dossiers();
-            //$dossiers->apprenti_id = $apprenti->id;
+            $dossiers->apprenti_id = $apprenti->id;
             /*$file=$request->file;
 		        
 	$filename=time().'.'.$file->getClientOriginalExtension();

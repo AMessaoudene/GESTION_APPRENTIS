@@ -23,17 +23,18 @@ return new class extends Migration
             $table->enum('nationalite',['algerienne','etrangere']);
             $table->date('datenaissance');
             $table->string('adresse');
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('telephone');
             $table->enum('niveauscolaire', ['primaire', 'moyen', 'secondaire']); // Example of enum column
-            $table->enum('specialite',['secretariat','marketing','grh','comptabilite','exploitationinformatique','basededonnéesinformatique','documentationetarchives','sécuritéreseaux','operateurmicroinformatique','agentdesaisie','maintenancematerielsinformatique','gestiondestock','electromecanique','electricitéauto','plomberie','developpeurweb','cuisine','electricitéindustrielle','telecommunications','assurance','magasinier']);
+            $table->unsignedBigInteger('specialite_id')->nullable();
+            $table->foreign('specialite_id')->references('id')->on('specialites')->onDelete('cascade');
             $table->unsignedBigInteger('structure_id')->nullable();
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade');
             $table->unsignedBigInteger('diplome1_id')->nullable();
             $table->foreign('diplome1_id')->references('id')->on('diplomes')->onDelete('cascade');
             $table->unsignedBigInteger('diplome2_id')->nullable();
             $table->foreign('diplome2_id')->references('id')->on('diplomes')->onDelete('cascade');
-            $table->enum('status', ['actif', 'inactif'])->default('actif'); // Example of enum column with default value
+            $table->enum('status', ['actif', 'inactif'])->default('actif'); // Example of enum column with default value*/
             $table->timestamps();
         });
     }

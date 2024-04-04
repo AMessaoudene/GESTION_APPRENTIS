@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DecisionsApprentisController;
+use App\Http\Controllers\specialitesController;
 use App\Http\Controllers\DossiersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PVInstallationsController;
@@ -16,6 +17,7 @@ use App\Http\Controllers\EvaluationMaitreApprentisController;
 use App\Http\Controllers\PlanBesoinsController;
 use App\Http\Controllers\ParametresController;
 use App\Http\Controllers\ExercicesController;
+use App\Http\Controllers\DecisionsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -36,10 +38,15 @@ Route::post('/apprentis', [ApprentisController::class, 'submit'])->name('apprent
 Route::get('/apprentis/{id}/edit', [ApprentisController::class, 'edit'])->name('apprentis.edit');
 Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
 Route::delete('/apprentis/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
+//specialites
+Route::get('/specialites', [SpecialitesController::class, 'index'])->name('specialites.index');
+Route::post('/specialites', [SpecialitesController::class, 'store'])->name('specialites.store');
+Route::put('/specialites/{id}', [SpecialitesController::class, 'update'])->name('specialites.update');
+Route::delete('/specialites/{id}', [SpecialitesController::class, 'destroy'])->name('specialites.destroy');
 //pvs
 Route::get('/apprentis/pvinstallations', [PVInstallationsController::class, 'index'])->name('pvinstallations.index');
 Route::post('/apprentis/pvinstallations', [PVInstallationsController::class, 'store'])->name('pvinstallations.store');
-Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'index'])->name('fiche.download');
+Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'pv'])->name('pvinstallations.download');
 //Dossiers 
 Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('dossiers.index');
 Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
@@ -49,7 +56,10 @@ Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->nam
 Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
 Route::put('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
 //decisionsapprentis
-Route::get('/decisionsapprentis', [DecisionsApprentisController::class, 'index'])->name('decisions.index');
+Route::get('/decisions', [DecisionsController::class, 'index'])->name('decisions.index');
+Route::post('/decisions', [DecisionsApprentisController::class, 'store'])->name('decisions.store');
+Route::get('/decisions/ficheA', [FicheController::class, 'decisionA'])->name('decisions.ficheA');
+Route::get('/decisions/ficheMA', [FicheController::class, 'decisionMA'])->name('decisions.ficheMA');
 // Evaluation maitre apprentis
 Route::get('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'index'])->name('evaluationMA.index');
 Route::post('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
@@ -64,6 +74,7 @@ Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->nam
 Route::get('/assiduites/consulter', [AssiduitesController::class, 'show'])->name('assiduites.consulter');
 Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
 Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
+Route::get('/download/{id}', [AssiduitesController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
 //plan besoins
 Route::get('/planbesoins', [PlanBesoinsController::class, 'index'])->name('planbesoins.index');
 Route::post('/planbesoins', [PlanBesoinsController::class, 'store'])->name('planbesoins.store');

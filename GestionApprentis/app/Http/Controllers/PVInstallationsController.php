@@ -87,7 +87,7 @@ class PVInstallationsController extends Controller
 
         Session::put('pv', $pv);
         //Session::put('apprenti', $apprenti);
-        return redirect()->route('fiche.download');
+        return redirect()->route('decisions.index');
         }catch(\Exception $e){
             return redirect()->back()->with('error', $e->getMessage());
         }
