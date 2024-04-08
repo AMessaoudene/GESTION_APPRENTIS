@@ -1,5 +1,8 @@
 @extends('layouts.layout')
 @section('title','Diplomes')
+<script src="{{ asset('asset/js/jqery-3.7.0.js') }}"></script>
+<link href="{{asset('asset/js/DataTables/datatables.min.css')}}" rel="stylesheet">
+<script src="{{asset('asset/js/DataTables/datatables.min.js')}}"></script>
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css">
 @section('content')
 <h1 class="text-center mt-4 mb-4">AJOUTER UN DIPLOME</h1>
@@ -50,7 +53,7 @@
 </div>
 @endsection
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+    <script src="{{asset('asset/js/dataTables.min.js')}}"></script>
     <script>
         $(document).ready(function() {
             $('#diplome-table').DataTable();

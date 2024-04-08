@@ -10,8 +10,9 @@
 </select>
 <select name="" id="">
     @foreach($baremes as $bareme)
-        <option value="{{$bareme->id}}">{{ $bareme->nom }}</option>
+        <option value="{{$bareme->id}}">{{ $bareme->version }}</option>
     @endforeach
 </select>
+<input type="date" name="datetransfert" id="">
 </form>
 @endsection

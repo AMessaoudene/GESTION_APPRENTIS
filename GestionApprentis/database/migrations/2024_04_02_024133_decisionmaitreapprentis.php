@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('decisionmaitreapprentis', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
-            $table->date('date');
+            $table->string('referencedma');
+            $table->date('datedma');
             $table->unsignedBigInteger('pv_id');
             $table->foreign('pv_id')->references('id')->on('pv_installations')->onDelete('cascade');
             $table->unsignedBigInteger('parametre_id');

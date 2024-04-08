@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\refsalariares;
 use Illuminate\Http\Request;
 
 class RefSalariairesController extends Controller
@@ -11,7 +11,8 @@ class RefSalariairesController extends Controller
      */
     public function index()
     {
-        //
+        $refsalariaires = refsalariares::all();
+        return view('refsalariaires.index', compact('refsalariaires'));
     }
 
     /**
@@ -27,7 +28,12 @@ class RefSalariairesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $refsalariares = new refsalariares();
+        $refsalariares->version = $request->version;
+        $refsalariares->snmg = $request->snmg;
+        $refsalariares->salairereference = $request->salairereference;
+        $refsalariares->save();
+        return redirect('/refsalariaires');
     }
 
     /**

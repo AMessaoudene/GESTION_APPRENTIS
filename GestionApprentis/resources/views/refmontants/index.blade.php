@@ -7,7 +7,7 @@
         <select name="refsalariaires_id" id="" required>
             @foreach($refs as $ref)
             @if($ref->status == 'active')
-                <option value="{{ $ref->id }}">{{ $ref->nom }}</option>
+                <option value="{{ $ref->id }}">{{ $ref->version }}</option>
             @endforeach
         </select>
         <select name="diplome_id" for="" required>Niveau de qualification

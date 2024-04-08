@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\DecisionsApprentisController;
+use App\Http\Controllers\baremesController;
+use App\Http\Controllers\RefSalariairesController;
 use App\Http\Controllers\specialitesController;
 use App\Http\Controllers\DossiersController;
 use App\Http\Controllers\ProfileController;
@@ -88,6 +90,12 @@ Route::get('/exercices', [ExercicesController::class, 'index'])->name('exercices
 Route::post('/exercices', [ExercicesController::class, 'store'])->name('exercices.store');
 Route::put('/exercices/{id}', [exercicesController::class, 'update'])->name('exercices.update');
 Route::delete('/exercices/{id}', [exercicesController::class, 'destroy'])->name('exercices.destroy');
+//Baremes
+Route::get('/baremes', [BaremesController::class, 'index'])->name('baremes.index');
+Route::post('/baremes', [BaremesController::class, 'store'])->name('baremes.store');
+//refsalariaires
+Route::get('/refsalariaires', [RefSalariairesController::class, 'index'])->name('refsalariaires.index');
+Route::post('/refsalariaires', [RefSalariairesController::class, 'store'])->name('refsalariaires.store');
 //Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');

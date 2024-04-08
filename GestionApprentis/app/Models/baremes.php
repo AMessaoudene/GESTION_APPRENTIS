@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class baremes extends Model
 {
+    protected $table = 'baremes';
+    protected $fillable = [
+    ];
     use HasFactory;
 }

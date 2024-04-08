@@ -1,7 +1,7 @@
 @extends('layouts.layout')
 @section('title', 'References Salariaires')
 @section('content')
-<form action="{{ route('refsalariaires.submit') }}" method="POST">
+<form action="{{ route('refsalariaires.store') }}" method="POST">
     @csrf
     <label>version
         <input type="text" name="version" id="">

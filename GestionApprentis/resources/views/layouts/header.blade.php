@@ -21,6 +21,9 @@
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                     <ul class="navbar-nav">
                         <li class="nav-item">
+                            <a href="{{ route('planbesoins.index') }}" class="nav-link text-dark">Plan Des Besoins</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" href="{{ route('structures.index') }}">Structures</a> <!-- Added text-dark class -->
                         </li>
                         <li class="nav-item">

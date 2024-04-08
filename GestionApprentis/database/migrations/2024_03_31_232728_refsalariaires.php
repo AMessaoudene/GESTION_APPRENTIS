@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('refsalariares', function (Blueprint $table) {
+        Schema::create('refsalariaires', function (Blueprint $table) {
             $table->id();
             $table->string('version');
             $table->double('snmg');

@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('decisionapprentis', function (Blueprint $table) {
             $table->id();
-            $table->string('reference');
-            $table->date('date');
+            $table->string('referenceda');
+            $table->date('dateda');
             $table->unsignedBigInteger('pv_id');
             $table->foreign('pv_id')->references('id')->on('pv_installations')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('parametre_id');

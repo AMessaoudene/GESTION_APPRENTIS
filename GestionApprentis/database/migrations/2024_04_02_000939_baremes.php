@@ -13,9 +13,8 @@ return new class extends Migration
     {
         Schema::create('baremes', function (Blueprint $table) {
             $table->id();
-            $table->string('version');
-            $table->unsignedBigInteger('refsalariares_id');
-            $table->foreign('refsalariares_id')->references('id')->on('refsalariares');
+            $table->unsignedBigInteger('refsalariaires_id');
+            $table->foreign('refsalariaires_id')->references('id')->on('refsalariaires');
             $table->unsignedBigInteger('diplome_id');
             $table->foreign('diplome_id')->references('id')->on('diplomes');
             $table->integer('tauxs1_apprentis');

@@ -1,6 +1,7 @@
 @extends('layouts.layout')
 @section('title', 'Parametres')
 @section('content')
+<h1>Parametres</h1><br/>
 <form method="POST" action="{{ route('parametres.submit') }}" class="form-horizontal" enctype="multipart/form-data">
     @csrf
     <label></label>
@@ -51,6 +52,15 @@
         <th>Prenom responsable</th>
         <th>Civilite responsable</th>
         <th>Fonction responsable</th>
+        <th>Decision DG</th>
+        <th>Date decision DG</th>
+        <th>Nom et prenom DG</th>
+        <th>Decision premier responsable</th>
+        <th>Date decision premier responsable</th>
+        <th>Nom et prenom premier responsable</th>
+        <th>Fonction premier responsable</th>
+        <th>Civilite RH</th>
+        <th>Civilite Fc</th>
     </tr>
     @foreach ($parametres as $parametre)
         <tr>
@@ -60,6 +70,15 @@
             <td>{{ $parametre->prenomresponsable }}</td>
             <td>{{ $parametre->civiliteresponsable }}</td>
             <td>{{ $parametre->fonctionresponsable }}</td>
+            <td>{{ $parametre->typedecisiondg }}</td>
+            <td>{{ $parametre->datedecisiondg }}</td>
+            <td>{{ $parametre->nomprenomdg }}</td>
+            <td>{{ $parametre->decisionpremierresponsable }}</td>
+            <td>{{ $parametre->datedecisionpremierresponsable }}</td>
+            <td>{{ $parametre->nomprenompremierresponsable }}</td>
+            <td>{{ $parametre->fonctionpremierresponsable }}</td>
+            <td>{{ $parametre->civilitedrh }}</td>
+            <td>{{ $parametre->civilitedfc }}</td>
         </tr>
     @endforeach
 </table>

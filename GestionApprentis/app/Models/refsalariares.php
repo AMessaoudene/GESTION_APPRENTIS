@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class refsalariares extends Model
 {
-    protected $table = 'refsalariares';
+    protected $table = 'refsalariaires';
     protected $fillable = [
         'id',
         'version',

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\parametres;
 use Illuminate\Http\Request;
 use App\Models\baremes;
+use Session;
 class DecisionsController extends Controller
 {
     /**
@@ -13,7 +14,8 @@ class DecisionsController extends Controller
     {
         $parametres = parametres::all();
         $baremes = baremes::all();
-        return view('decisions.index', compact('parametres','baremes'));
+        $pv = Session::get('pv');
+        return view('decisions.index', compact('parametres','baremes','pv'));
     }
 
     /**
