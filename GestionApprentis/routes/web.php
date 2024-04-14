@@ -59,7 +59,7 @@ Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->n
 Route::put('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
 //decisionsapprentis
 Route::get('/decisions', [DecisionsController::class, 'index'])->name('decisions.index');
-Route::post('/decisions', [DecisionsApprentisController::class, 'store'])->name('decisions.store');
+Route::post('/decisions', [DecisionsController::class, 'store'])->name('decisions.store');
 Route::get('/decisions/ficheA', [FicheController::class, 'decisionA'])->name('decisions.ficheA');
 Route::get('/decisions/ficheMA', [FicheController::class, 'decisionMA'])->name('decisions.ficheMA');
 // Evaluation maitre apprentis
@@ -85,6 +85,8 @@ Route::delete('/planbesoins/{id}', [PlanBesoinsController::class, 'destroy'])->n
 //parametres
 Route::get('/parametres', [ParametresController::class, 'index'])->name('parametres.index');
 Route::post('/parametres', [ParametresController::class, 'store'])->name('parametres.store');
+Route::put('/parametres/{id}', [ParametresController::class, 'update'])->name('parametres.update');
+Route::delete('/parametres/{id}', [ParametresController::class, 'destroy'])->name('parametres.destroy');
 //exercices
 Route::get('/exercices', [ExercicesController::class, 'index'])->name('exercices.index');
 Route::post('/exercices', [ExercicesController::class, 'store'])->name('exercices.store');

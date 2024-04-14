@@ -9,6 +9,7 @@ class diplomes extends Model
 {
     protected $table = 'diplomes';
     protected $fillable = [
+        'id',
         'nom',
         'duree',
         'description',

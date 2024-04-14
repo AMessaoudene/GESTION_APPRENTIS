@@ -58,6 +58,7 @@ class MaitreApprentisController extends Controller
             $maitre_apprentis->fonction = $request->fonction;
             $maitre_apprentis->numapprentissupervises = 0;
             $maitre_apprentis->daterecrutement = $request->daterecrutement;
+            $maitre_apprentis->affectation = $request->affectation;
             $maitre_apprentis->statut = $request->statut;
             $maitre_apprentis->save();
             return redirect()->back()->with('success', 'Maitre d\'apprentissage ajoute avec succes');

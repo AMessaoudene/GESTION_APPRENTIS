@@ -24,7 +24,7 @@ class ApprentisController extends Controller
     public function submit(Request $request){
         // Validation rules
         $rules = [
-            'numcontrat' => 'required|string|max:255',
+            'numcontrat' => 'required|unique:apprentis|string|max:255',
             'datecontrat' => 'required|date|max:255',
             'datedebut' => 'required|date|max:255',
             'datefin' => 'required|date|max:255',
@@ -46,11 +46,11 @@ class ApprentisController extends Controller
 
         // Custom error messages
         $messages = [
-            /*'numcontrat.required' => 'Le champ numéro de contrat est requis.',
+            'numcontrat.required' => 'Le champ numéro de contrat est requis.',
             'datecontrat.required' => 'Le champ date de contrat est requis.',
             'datedebut.required' => 'Le champ date de debut est requis.',
             'datefin.required' => 'Le champ date de fin est requis.',
-            'datenaissance.required' => 'Le champ date de naissance est requis.',*/
+            'datenaissance.required' => 'Le champ date de naissance est requis.',
         ];
 
         // Validate the incoming request
@@ -61,46 +61,104 @@ class ApprentisController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
         try {
-            // Create a new apprentice record
-            $apprenti = new apprentis();
-            $apprenti->numcontrat = $request->numcontrat;
-            $apprenti->datecontrat = $request->datecontrat;
-            $apprenti->datedebut = $request->datedebut;
-            $apprenti->datefin = $request->datefin;
-            $apprenti->nom = $request->nom;
-            $apprenti->prenom = $request->prenom;
-            $apprenti->civilite = $request->civilite;
-            $apprenti->nationalite = $request->nationalite;
-            $apprenti->datenaissance = $request->datenaissance;
-            $apprenti->email = $request->email;
-            $apprenti->telephone = $request->telephone;
-            $apprenti->adresse = $request->adresse;
-            $apprenti->niveauscolaire = $request->niveauscolaire;
-            $apprenti->specialite_id = $request->specialite_id;
-            $apprenti->structure_id = $request->structure_id;
-            $apprenti->diplome1_id = $request->diplome1_id;
-            $apprenti->status = $request->status;
-            $apprenti->save();
-            
-            // Find the master apprentice based on the selected ID
-            $maitreApprenti = maitre_apprentis::find($request->maitre_apprentis);
-            
-            // Check if apprenti1_id is null, then assign to apprenti1_id
-            if (is_null($maitreApprenti->apprenti1_id)) {
-                $maitreApprenti->apprenti1_id = $apprenti->id;
-            } else if(is_null($maitreApprenti->apprenti2_id)) {
-                // If apprenti1_id is not null, assign to apprenti2_id
-                $maitreApprenti->apprenti2_id = $apprenti->id;
-            }
+            // Check if numcontrat exists in the session
+            if (Session::has('numcontrat')) {
+                // If numcontrat exists, update the corresponding record
+                $apprenti = apprentis::where('numcontrat', Session::get('numcontrat'))->first();
+                if ($apprenti) {
+                    $apprenti->update($request->all());
+                    Session::put('apprenti', $apprenti);
+                    return redirect()->route('pvinstallations.index');
+                }
+                else{
+                    // Create a new apprentice record
+                    $apprenti = new apprentis();
+                    $apprenti->numcontrat = $request->numcontrat;
+                    $apprenti->datecontrat = $request->datecontrat;
+                    $apprenti->datedebut = $request->datedebut;
+                    $apprenti->datefin = $request->datefin;
+                    $apprenti->nom = $request->nom;
+                    $apprenti->prenom = $request->prenom;
+                    $apprenti->civilite = $request->civilite;
+                    $apprenti->nationalite = $request->nationalite;
+                    $apprenti->datenaissance = $request->datenaissance;
+                    $apprenti->email = $request->email;
+                    $apprenti->telephone = $request->telephone;
+                    $apprenti->adresse = $request->adresse;
+                    $apprenti->niveauscolaire = $request->niveauscolaire;
+                    $apprenti->specialite_id = $request->specialite_id;
+                    $apprenti->structure_id = $request->structure_id;
+                    $apprenti->diplome1_id = $request->diplome1_id;
+                    $apprenti->status = $request->status;
+                    $apprenti->save();
+                    
+                    // Find the master apprentice based on the selected ID
+                    $maitreApprenti = maitre_apprentis::find($request->maitre_apprentis);
+                    
+                    // Check if apprenti1_id is null, then assign to apprenti1_id
+                    if (is_null($maitreApprenti->apprenti1_id)) {
+                        $maitreApprenti->apprenti1_id = $apprenti->id;
+                    } else if(is_null($maitreApprenti->apprenti2_id)) {
+                        // If apprenti1_id is not null, assign to apprenti2_id
+                        $maitreApprenti->apprenti2_id = $apprenti->id;
+                    }
+                    if($maitreApprenti->numapprentissupervises < 2){
+                        $maitreApprenti->numapprentissupervises += 1;
+                    }
 
-            // Save the updated master apprentice
-            $maitreApprenti->save();
-            Session::put('apprenti', $apprenti);
-            return redirect()->route('pvinstallations.index');
-            } catch (\Exception $e) {
-                return redirect('/')->with('error', 'Une erreur est survenue: ' . $e->getMessage());
+                    // Save the updated master apprentice
+                    $maitreApprenti->save();
+                    Session::put('apprenti', $apprenti);
+                    return redirect()->route('pvinstallations.index');
+                }
             }
-    }
+            else{
+                // Create a new apprentice record
+                $apprenti = new apprentis();
+                $apprenti->numcontrat = $request->numcontrat;
+                $apprenti->datecontrat = $request->datecontrat;
+                $apprenti->datedebut = $request->datedebut;
+                $apprenti->datefin = $request->datefin;
+                $apprenti->nom = $request->nom;
+                $apprenti->prenom = $request->prenom;
+                $apprenti->civilite = $request->civilite;
+                $apprenti->nationalite = $request->nationalite;
+                $apprenti->datenaissance = $request->datenaissance;
+                $apprenti->email = $request->email;
+                $apprenti->telephone = $request->telephone;
+                $apprenti->adresse = $request->adresse;
+                $apprenti->niveauscolaire = $request->niveauscolaire;
+                $apprenti->specialite_id = $request->specialite_id;
+                $apprenti->structure_id = $request->structure_id;
+                $apprenti->diplome1_id = $request->diplome1_id;
+                $apprenti->status = $request->status;
+                $apprenti->save();
+                
+                // Find the master apprentice based on the selected ID
+                $maitreApprenti = maitre_apprentis::find($request->maitre_apprentis);
+                
+                // Check if apprenti1_id is null, then assign to apprenti1_id
+                if (is_null($maitreApprenti->apprenti1_id)) {
+                    $maitreApprenti->apprenti1_id = $apprenti->id;
+                } else if(is_null($maitreApprenti->apprenti2_id)) {
+                    // If apprenti1_id is not null, assign to apprenti2_id
+                    $maitreApprenti->apprenti2_id = $apprenti->id;
+                }
+                if($maitreApprenti->numapprentissupervises < 2){
+                    $maitreApprenti->numapprentissupervises += 1;
+                }
+
+                // Save the updated master apprentice
+                $maitreApprenti->save();
+                Session::put('apprenti', $apprenti);
+                return redirect()->route('pvinstallations.index');
+            }
+        }
+        catch (\Exception $e) {
+                return redirect('/')->with('error', 'Une erreur est survenue: ' . $e->getMessage());
+        }
+    } 
+
     public function edit($id)
     {  
         try {

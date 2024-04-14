@@ -5,12 +5,14 @@
     @csrf
     <div>
         <select name="refsalariaires_id" id="" required>
+            <option value="">Sélectionner une version</option>
             @foreach($refs as $ref)
             @if($ref->status == 'active')
                 <option value="{{ $ref->id }}">{{ $ref->version }}</option>
             @endforeach
         </select>
         <select name="diplome_id" for="" required>Niveau de qualification
+            <option value="">Sélectionner un diplome</option>
             @foreach($diplomes as $diplome)
                 <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
             @endforeach

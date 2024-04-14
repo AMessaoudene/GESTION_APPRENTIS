@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('apprentis', function (Blueprint $table) {
             $table->id();
-            $table->string('numcontrat');
+            $table->string('numcontrat')->unique();
             $table->date('datecontrat');
             $table->date('datedebut');
             $table->date('datefin');

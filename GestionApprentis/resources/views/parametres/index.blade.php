@@ -2,41 +2,74 @@
 @section('title', 'Parametres')
 @section('content')
 <h1>Parametres</h1><br/>
-<form method="POST" action="{{ route('parametres.submit') }}" class="form-horizontal" enctype="multipart/form-data">
+<form method="POST" action="{{ route('parametres.store') }}" class="form-horizontal" enctype="multipart/form-data">
     @csrf
-    <label></label>
+    <label for="">Reference
+        <input type="text" name="reference" id="">
+    </label>
+    <label>
+        Decision responsable
+    </label>
     <input type="text" name="decisionresponsable">
-    <label></label>
+    <label>
+        Date decision responsable
+    </label>
     <input type="date" name="datedecisionresponsable">
-    <label></label>
+    <label>
+        Nom responsable
+    </label>
     <input type="text" name="nomresponsable">
-    <label></label>
+    <label>
+        Prenom responsable
+    </label>
     <input type="text" name="prenomresponsable">
-    <label></label>
+    <label>
+        Civilite responsable
+    </label>
     <input type="text" name="civiliteresponsable">
-    <label></label>
+    <label>
+        Fonction responsable
+    </label>
     <input type="text" name="fonctionresponsable">
-    <label></label>
+    <label>
+        Type Decision DG
+    </label>
     <input type="text" name="typedecisiondg">
-    <label></label>
+    <label>
+        Date Decision DG
+    </label>
     <input type="date" name="datedecisiondg">
-    <label></label>
+    <label>
+        Nom et Prenom DG
+    </label>
     <input type="text" name="nomprenomdg">
-    <label></label>
+    <label>
+        Decision premier responsable
+    </label>
     <input type="text" name="decisionpremierresponsable">
-    <label></label>
+    <label>
+        Date decision premier responsable
+    </label>
     <input type="date" name="datedecisionpremierresponsable">
-    <label></label>
+    <label>
+        Nom et Prenom premier responsable
+    </label>
     <input type="text" name="nomprenompremierresponsable">
-    <label></label>
+    <label>
+        Fonction premier responsable
+    </label>
     <input type="text" name="fonctionpremierresponsable">
-    <label></label>
+    <label>
+        Civilite DRH
+    </label>
     <select name="civilitedrh" id="">
         <option value="Monsieur">Mr</option>
         <option value="Madame">Mme</option>
         <option value="Mademoiselle">Mlle</option>
     </select>
-    <label></label>
+    <label>
+        Civilite DFC
+    </label>
     <select name="civilitedfc" id="">
         <option value="Monsieur">Mr</option>
         <option value="Madame">Mme</option>
@@ -46,6 +79,7 @@
 </form>
 <table id="parametres-table">
     <tr>
+        <th>Reference</th>
         <th>Decision responsable</th>
         <th>Date decision responsable</th>
         <th>Nom responsable</th>
@@ -64,6 +98,7 @@
     </tr>
     @foreach ($parametres as $parametre)
         <tr>
+            <td>{{ $parametre->reference }}</td>
             <td>{{ $parametre->decisionresponsable }}</td>
             <td>{{ $parametre->datedecisionresponsable }}</td>
             <td>{{ $parametre->nomresponsable }}</td>
@@ -82,4 +117,4 @@
         </tr>
     @endforeach
 </table>
-@endserction
+@endsection

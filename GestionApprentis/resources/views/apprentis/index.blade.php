@@ -30,11 +30,19 @@
                             <input type="date" class="form-control" id="datecontrat" name="datecontrat" required>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Diplome</label>
+                            <select name="diplome1_id" class="form-select" required>
+                                @foreach($diplomes as $diplome)
+                                    <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label>Date debut et fin d'apprentissage</label>
                             <div class="input-group">
                                 <input type="date" name="datedebut" class="form-control" required>
                                 <span class="input-group-text">Au</span>
-                                <input type="date" name="datefin" class="form-control" required>
+                                <input type="date" name="datefin" class="form-control" readonly disabled>
                             </div>
                         </div>
                         <div class="row mb-3">
@@ -90,6 +98,7 @@
                             </select>
                         </div>
                         <div class="mb-3">
+                            <label class="form-label">Specialite</label>
                             <select name="specialite_id" class="form-select" required>
                                 @foreach($specialites as $specialite)
                                     <option value="{{$specialite->id}}">{{ $specialite->nom }}</option>
@@ -105,14 +114,6 @@
                             </select>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label">Diplome</label>
-                            <select name="diplome1_id" class="form-select" required>
-                                @foreach($diplomes as $diplome)
-                                    <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select name="status" class="form-select" required>
                                 <option value="actif" selected>Actif</option>
@@ -123,7 +124,7 @@
                             <label class="form-label">Maître d'apprentissage</label>
                             <select name="maitre_apprentis" class="form-select" required>
                                 @foreach($maitre_apprentis as $maitre_apprenti)
-                                    @if(isnull($maitre_apprenti->apprenti1_id) || is_null($maitre_apprenti->apprenti2_id)){
+                                    @if(is_null($maitre_apprenti->apprenti1_id) || is_null($maitre_apprenti->apprenti2_id)){
                                         <option value="{{ $maitre_apprenti->id }}">{{ $maitre_apprenti->nom }} {{ $maitre_apprenti->prenom }}</option>
                                     }
                                     @endif

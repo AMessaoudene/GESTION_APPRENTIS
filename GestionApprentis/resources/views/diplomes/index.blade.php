@@ -43,13 +43,43 @@
                 <td>{{ $diplome->duree }}</td>
                 <td>{{ $diplome->description }}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $diplome->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
+                    <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $diplome->id }}" data-bs-toggle="modal" data-bs-target="#editModal" data-action="edit">Editer</button>
                     <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $diplome->id }}">Supprimer</button>
                 </td>
             </tr>
             @endforeach
         </tbody>
     </table>
+</div>
+<!-- Edit Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Editer Diplome</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="edit-nom">Nom</label>
+                        <input type="text" class="form-control" id="edit-nom" name="nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-duree">Durée</label>
+                        <input type="text" class="form-control" id="edit-duree" name="duree">
+                    </div>
+                    <div class="form-group">
+                        <label for="edit-description">Description</label>
+                        <textarea class="form-control" id="edit-description" name="description" rows="3"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -104,8 +134,8 @@
                 var id = $(this).data('id');
                 var row = $(this).closest('tr');
                 var nom = row.find('td:eq(1)').text();
-                var duree = row.find('td:eq(2)').text(); // Update index to 2 for 'duree'
-                var description = row.find('td:eq(3)').text(); // Update index to 3 for 'description'
+                var duree = row.find('td:eq(2)').text();
+                var description = row.find('td:eq(3)').text();
                 var editForm = `
                     <form method="POST" action="/diplomes/${id}" class="edit-form">
                         @csrf

@@ -12,8 +12,9 @@ class decisionapprentis extends Model
         'reference',
         'date',
         'pv_id',
+        'bareme_id',
         'parametre_id',
-        'datetransfert'
+        'datetransfert',
     ];
     use HasFactory;
 }

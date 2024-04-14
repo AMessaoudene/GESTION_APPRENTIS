@@ -8,6 +8,7 @@
         <div class="form-group">
     <label for="refsalariaires_id">Référence Salariale :</label>
     <select class="form-control" name="refsalariaires_id" id="refsalariaires_id">
+        <option value="">Sélectionner une version</option>
         @foreach ($refsalaries as $refsalarie)
         <option value="{{ $refsalarie->id }}" data-snmg="{{ $refsalarie->snmg }}" data-salairereference="{{ $refsalarie->salairereference }}">{{ $refsalarie->version }}</option>
         @endforeach
@@ -16,6 +17,7 @@
 <div class="form-group">
     <label for="diplome_id">Diplôme :</label>
     <select class="form-control" name="diplome_id">
+    <option value="">Selectoinner in diplome:</option>
         @foreach ($diplomes as $diplome)
         <option id="{{ $diplome->id }}" value="{{ $diplome->id }}">{{$diplome->id}} - {{ $diplome->nom }} -  {{ $diplome->duree }}</option>
         @endforeach

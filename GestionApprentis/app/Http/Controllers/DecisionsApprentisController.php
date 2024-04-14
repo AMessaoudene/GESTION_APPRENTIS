@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\decisionapprentis;
 use Illuminate\Http\Request;
 
 class DecisionsApprentisController extends Controller
@@ -11,7 +11,10 @@ class DecisionsApprentisController extends Controller
      */
     public function index()
     {
-        //
+        $decision = decisionapprentis::all();
+
+        return view('decisionsApprentis.index', compact('decision'));
+
     }
 
     /**

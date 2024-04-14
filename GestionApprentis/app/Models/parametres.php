@@ -10,7 +10,7 @@ class parametres extends Model
     protected $table = 'parametres';
     protected $fillable = [
         'id',
-        //'reference',
+        'reference',
         //'direction',
         'decisionresponsable',
         'datedecisionresponsable',

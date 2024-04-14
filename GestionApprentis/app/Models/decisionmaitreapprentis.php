@@ -11,6 +11,7 @@ class decisionmaitreapprentis extends Model
     protected $fillable = [
         'reference',
         'date',
+        'bareme_id',
         'pv_id',
         'parametre_id',
     ];

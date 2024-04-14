@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create("parametres", function (Blueprint $table) {
             $table->id();
-            //$table->string('reference');
+            $table->string('reference');
             //$table->string('direction');
             $table->string('decisionresponsable');
             $table->date('datedecisionresponsable');

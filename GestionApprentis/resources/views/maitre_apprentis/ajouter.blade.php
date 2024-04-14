@@ -65,6 +65,10 @@
                 <label for="fonction" class="form-label">Fonction</label>
                 <input type="text" class="form-control" id="fonction" name="fonction" required>
             </div>
+            <div>
+                <label for="affectation" class="form-label">Affectation</label>
+                <input type="text" name="affectation" id="affectation" class="form-control" required>
+            </div>
             <div class="col-md-3">
                 <label for="daterecrutement" class="form-label">Date de recrutement</label>
                 <input type="date" class="form-control" id="daterecrutement" name="daterecrutement" required>
