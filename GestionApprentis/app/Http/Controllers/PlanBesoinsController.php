@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\structures;
 use App\Models\exercices;
 use Illuminate\Support\Facades\Storage;
+use App\Models\specialites;
 use App\Models\PlanBesoins;
 use Illuminate\Http\Request;
 
@@ -12,15 +13,17 @@ class PlanBesoinsController extends Controller
     public function index()
     {
         $planbesoins = PlanBesoins::all();
+        $specialites = specialites::all();
         $structures = structures::all();
         $exercices = exercices::all();
-        return view('planbesoins.index', compact('planbesoins','structures','exercices'));
+        return view('planbesoins.index', compact('planbesoins','structures','exercices','specialites'));
     }
     public function store(Request $request)
     {
         $planbesoins = new PlanBesoins();
         $planbesoins->exercice_id = $request->exercice_id;
         $planbesoins->reference = $request->reference;
+        $planbesoins->specialites_id = $request->specialites_id;
         $planbesoins->structure_id = $request->structure_id;
         $planbesoins->date = $request->date;
         $planbesoins->nombreapprentis = $request->nombreapprentis;

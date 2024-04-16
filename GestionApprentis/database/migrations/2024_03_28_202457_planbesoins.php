@@ -24,7 +24,7 @@ return new class extends Migration
             $table->integer('nombreapprentis');
             $table->integer('nombereffectif');
             $table->integer('nombreapprentismax');
-            $table->integer('nombreapprentisactuel');
+            $table->integer('nombreapprentisactuel')->nullable();
             $table->string('description')->nullable();
             $table->enum('status',['accepté','en cours','refusé'])->default('en cours');
             $table->timestamps();

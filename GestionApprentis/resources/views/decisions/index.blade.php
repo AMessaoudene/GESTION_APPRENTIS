@@ -3,6 +3,15 @@
 @section('content')
 <form action="{{ route('decisions.store') }}" method="POST">
     @csrf
+    <div>
+        <label for="">
+            <select name="planbesoins_id" id="planbesoins_id">
+                @foreach($plans as $plan)
+                    <option value="{{ $plan->id }}">{{ $plan->reference }}</option>
+                @endforeach
+            </select>
+        </label>
+    </div>
     <label for="reference">Reference
         <input type="text" name="reference" id="reference">
     </label>

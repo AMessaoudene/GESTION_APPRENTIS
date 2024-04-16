@@ -1,5 +1,6 @@
 @extends('layouts.layout')
 @section('title','Diplomes')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <script src="{{ asset('asset/js/jqery-3.7.0.js') }}"></script>
 <link href="{{asset('asset/js/DataTables/datatables.min.css')}}" rel="stylesheet">
 <script src="{{asset('asset/js/DataTables/datatables.min.js')}}"></script>
@@ -105,30 +106,27 @@
                     }
                 });
             });
-
             // AJAX for deleting a structure
-        $('.delete-btn').click(function() {
-            var id = $(this).data('id');
-            var button = $(this); // Store reference to 'this'
-            $.ajax({
-                url: '/diplomes/' + id,
-                type: 'DELETE',
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                success: function(response) {
-                    // Remove the row from the table
-                    button.closest('tr').remove();
-                    alert('diplome deleted successfully');
-                },
-                error: function(xhr, textStatus, errorThrown) {
-                    // Handle error
-                    console.error('Error deleting diplome:', errorThrown);
-                }
-            });
-        });
-
-
+$('.delete-btn').click(function() {
+    var id = $(this).data('id');
+    var button = $(this); // Store reference to 'this'
+    $.ajax({
+        url: '/diplomes/' + id,
+        type: 'DELETE',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function(response) {
+            // Remove the row from the table
+            button.closest('tr').remove();
+            alert('Structure deleted successfully');
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            // Handle error
+            console.error('Error deleting structure:', errorThrown);
+        }
+    });
+});
             // AJAX for editing a structure
             $('.edit-btn').click(function() {
                 var id = $(this).data('id');

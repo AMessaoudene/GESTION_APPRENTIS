@@ -15,6 +15,11 @@
         @endforeach
     </select>
     <input type="text" name="reference" required>
+    <select name="specialites_id" id="" required>
+        @foreach($specialites as $specialite)
+        <option value="{{$specialite->id}}">{{$specialite->nom}}</option>
+        @endforeach
+    </select>
     <input type="date" name="date" required>
     <input type="text" pattern="[0-9]+" name="nombreapprentis" required>
     <input type="text" pattern="[0-9]+" name="nombereffectif" required>
@@ -30,6 +35,7 @@
                 <th>Exercice</th>
                 <th>structure ID</th>
                 <th>reference</th>
+                <th>specialite</th>
                 <th>date</th>
                 <th>nombreapprentis</th>
                 <th>nombereffectif</th>
@@ -46,6 +52,7 @@
                 <td>{{ $planbesoin->exercice_id }}</td>
                 <td>{{ $planbesoin->structure_id }}</td>
                 <td>{{ $planbesoin->reference }}</td>
+                <td>{{ $planbesoin->specialites_id }}</td>
                 <td>{{ $planbesoin->date }}</td>
                 <td>{{ $planbesoin->nombreapprentis }}</td>
                 <td>{{ $planbesoin->nombereffectif }}</td>
@@ -110,50 +117,53 @@
 
             // AJAX for editing a structure
             $('.edit-btn').click(function() {
-    var id = $(this).data('id');
-    var row = $(this).closest('tr');
-    var exercice_id = row.find('td:eq(1)').text();
-    var structure_id = row.find('td:eq(2)').text();
-    var reference = row.find('td:eq(3)').text();
-    var date = row.find('td:eq(4)').text();
-    var nombreapprentis = row.find('td:eq(5)').text();
-    var nombereffectif = row.find('td:eq(6)').text();
-    var nombreapprentismax = row.find('td:eq(7)').text();
-    var description = row.find('td:eq(8)').text();
-    var status = row.find('td:eq(9)').text();
-    var editForm = `
-        <form method="POST" action="/planbesoins/${id}" class="edit-form">
-            @csrf
-            @method('PUT')
-            <select name="exercice_id">Année
-                @foreach($exercices as $exercice)
-                    <option value="{{ $exercice->id }}">{{ $exercice->annee }}</option>
-                @endforeach
-            </select>
-            <select name="structure_id">
-                @foreach($structures as $structure)
-                    <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
-                @endforeach
-            </select>
-            <input type="text" name="reference" value="${reference}">
-            <input type="date" name="date" value="${date}">
-            <input type="text" pattern="[0-9]+" name="nombreapprentis" value="${nombreapprentis}">
-            <input type="text" pattern="[0-9]+" name="nombereffectif" value="${nombereffectif}">
-            <input type="text" pattern="[0-9]+" name="nombreapprentismax" readonly disabled value="${nombreapprentismax}">
-            <textarea type="text" rows="4" cols="50" name="description">${description}</textarea>
-            <select name="status">
-                <option value="en cours" ${status == 'en cours' ? 'selected' : ''}>En cours</option>
-                <option value="accepté" ${status == 'accepté' ? 'selected' : ''}>Accepté</option>
-                <option value="refusé" ${status == 'refusé' ? 'selected' : ''}>Refusé</option>
-            </select>
-            <input type="submit" value="Modifier">
-        </form>
-    `;
-    row.find('td:eq(1)').html(editForm);
-});
-
-
-
+                var id = $(this).data('id');
+                var row = $(this).closest('tr');
+                var exercice_id = row.find('td:eq(1)').text();
+                var structure_id = row.find('td:eq(2)').text();
+                var reference = row.find('td:eq(3)').text();
+                var $specialites_id = row.find('td:eq(4)').text();
+                var date = row.find('td:eq(5)').text();
+                var nombreapprentis = row.find('td:eq(6)').text();
+                var nombereffectif = row.find('td:eq(7)').text();
+                var nombreapprentismax = row.find('td:eq(8)').text();
+                var description = row.find('td:eq(9)').text();
+                var status = row.find('td:eq(10)').text();
+                var editForm = `
+                    <form method="POST" action="/planbesoins/${id}" class="edit-form">
+                        @csrf
+                        @method('PUT')
+                        <select name="exercice_id">Année
+                            @foreach($exercices as $exercice)
+                                <option value="{{ $exercice->id }}">{{ $exercice->annee }}</option>
+                            @endforeach
+                        </select>
+                        <select name="structure_id">
+                            @foreach($structures as $structure)
+                                <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                            @endforeach
+                        </select>
+                        <input type="text" name="reference" value="${reference}">
+                        <select name="specialites_id" id="" required>
+                            @foreach($specialites as $specialite)
+                            <option value="{{$specialite->id}}">{{$specialite->nom}}</option>
+                            @endforeach
+                        </select>
+                        <input type="date" name="date" value="${date}">
+                        <input type="text" pattern="[0-9]+" name="nombreapprentis" value="${nombreapprentis}">
+                        <input type="text" pattern="[0-9]+" name="nombereffectif" value="${nombereffectif}">
+                        <input type="text" pattern="[0-9]+" name="nombreapprentismax" readonly disabled value="${nombreapprentismax}">
+                        <textarea type="text" rows="4" cols="50" name="description">${description}</textarea>
+                        <select name="status">
+                            <option value="en cours" ${status == 'en cours' ? 'selected' : ''}>En cours</option>
+                            <option value="accepté" ${status == 'accepté' ? 'selected' : ''}>Accepté</option>
+                            <option value="refusé" ${status == 'refusé' ? 'selected' : ''}>Refusé</option>
+                        </select>
+                        <input type="submit" value="Modifier">
+                    </form>
+                `;
+                row.find('td:eq(1)').html(editForm);
+            });
             // Submit edit form
             $(document).on('submit', '.edit-form', function(event) {
                 event.preventDefault();

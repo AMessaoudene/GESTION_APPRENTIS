@@ -10,6 +10,7 @@ class decisionapprentis extends Model
     protected $table = "decisionapprentis";
     protected $fillable = [
         'reference',
+        'planbesoins_id',
         'date',
         'pv_id',
         'bareme_id',

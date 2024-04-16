@@ -33,7 +33,7 @@ Route::delete('/structures/{id}', [StructuresController::class, 'destroy'])->nam
 Route::get('/diplomes', [DiplomesController::class, 'index'])->name('diplomes.index');
 Route::post('/diplomes', [DiplomesController::class, 'store'])->name('diplomes.store');
 Route::put('/diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
-Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
+Route::delete('/diplomes/{id}', 'DiplomeController@destroy')->name('diplomes.destroy');
 //Apprentis
 Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis.index');
 Route::post('/apprentis', [ApprentisController::class, 'submit'])->name('apprentis.submit');

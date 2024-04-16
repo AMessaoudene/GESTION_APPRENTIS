@@ -42,7 +42,7 @@
         <tbody>
         @foreach($dossiers as $dossier)
     <tr>
-        <td>{{ $dossier->apprenti_id }}</td>
+        <td>{{ $dossier->apprentis_id }}</td>
         <td><a href="{{ url('/download', $dossier->pvinstallation) }}">PV d'installation</a></td>
         <td><a href="{{ url('/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></td>
         <td><a href="{{ url('/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></td>

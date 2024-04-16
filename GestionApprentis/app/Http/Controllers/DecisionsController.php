@@ -6,6 +6,7 @@ use App\Models\decisionmaitreapprentis;
 use App\Models\maitre_apprentis;
 use App\Models\diplomes;
 use App\Models\parametres;
+use App\Models\planbesoins;
 use Illuminate\Http\Request;
 use App\Models\baremes;
 use Session;
@@ -16,6 +17,7 @@ class DecisionsController extends Controller
      */
     public function index()
     {
+        $plans = planbesoins::all();
         $parametres = parametres::all();
         $baremes = baremes::all();
         $pv = Session::get('pv');
@@ -26,7 +28,7 @@ class DecisionsController extends Controller
         $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
         $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
         (!is_null($maitreapprenti1)) ? $maitreapprenti = $maitreapprenti1 : $maitreapprenti = $maitreapprenti2;
-        return view('decisions.index', compact('parametres','baremes','pv','apprenti','maitreapprenti','diplome'));
+        return view('decisions.index', compact('parametres','baremes','pv','apprenti','maitreapprenti','diplome','plans'));
     }
 
     /**
@@ -36,6 +38,7 @@ class DecisionsController extends Controller
     {
         $pv = Session::get('pv');
         $decisiona = new decisionapprentis();
+        $decisiona->planbesoins_id = $request->planbesoins_id;
         $decisiona->referenceda = $request->reference; 
         $decisiona->dateda = $request->datedecision;
         $decisiona->pv_id = $pv->id;
