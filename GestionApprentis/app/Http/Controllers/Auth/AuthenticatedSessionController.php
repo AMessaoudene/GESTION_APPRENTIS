@@ -28,6 +28,19 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        if($request->user()->role === "DFP") {
+            return redirect()->intended(route('dfp.dashboard', absolute: false));
+        }
+        else if($request->user()->role === "DRH"){
+            return redirect()->intended(route('drh.dashboard', absolute: false));
+        }
+        else if($request->user()->role === "SA"){
+            return redirect()->intended(route('sa.dashboard', absolute: false));
+        }
+        else if($request->user()->role === "EvaluateurGradé"){
+            return redirect()->intended(route('EvaluateurGrade.dashboard', absolute: false));
+        }
+        
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

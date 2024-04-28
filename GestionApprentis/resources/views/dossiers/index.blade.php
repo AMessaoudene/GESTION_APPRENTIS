@@ -43,21 +43,21 @@
         @foreach($dossiers as $dossier)
     <tr>
         <td>{{ $dossier->apprentis_id }}</td>
-        <td><a href="{{ url('/download', $dossier->pvinstallation) }}">PV d'installation</a></td>
-        <td><a href="{{ url('/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></td>
-        <td><a href="{{ url('/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></td>
-        <td><a href="{{ url('/download', $dossier->contratapprenti) }}">Contrat Apprenti</a></td>
-        <td><a href="{{ url('/download', $dossier->copiecheque) }}">copie cheque</a></td>
-        <td><a href="{{ url('/download', $dossier->extraitnaissance) }}">extrait de naissance</a></td>
+        <td><a href="{{ url('/apprentis/fichiers/download', $dossier->pvinstallation) }}">PV d'installation</a></td>
+        <td><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></td>
+        <td><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></td>
+        <td><a href="{{ url('/apprentis/fichiers/download', $dossier->contratapprenti) }}">Contrat Apprenti</a></td>
+        <td><a href="{{ url('/apprentis/fichiers/download', $dossier->copiecheque) }}">copie cheque</a></td>
+        <td><a href="{{ url('/apprentis/fichiers/download', $dossier->extraitnaissance) }}">extrait de naissance</a></td>
 
         @if($dossier->autorisationparentele)
-            <td><a href="{{ url('/download', $dossier->autorisationparentele) }}">autorisation parentale</a></td>
+            <td><a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentele) }}">autorisation parentale</a></td>
         @else
             <td>Aucun</td>
         @endif
 
         @if($dossier->photo)
-            <td><a href="{{ url('/download', $dossier->photo) }}">Photo</a></td>
+            <td><a href="{{ url('/apprentis/fichiers/download', $dossier->photo) }}">Photo</a></td>
         @else
             <td>Aucun</td>
         @endif

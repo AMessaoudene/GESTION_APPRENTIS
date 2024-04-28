@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->enum('role', ['admin', 'maitre_apprenti', 'apprenti']);
+            $table->enum('role', ['DFP', 'DRH', 'SA', 'EvaluateurGradé']);
+            /*$table->unsignedBigInteger('structures_id');
+            $table->foreign('structures_id')->references('id')->on('structures');*/
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DecisionsApprentisController;
 use App\Http\Controllers\baremesController;
+use App\Http\Controllers\EvaluateurGrade\EvaluateurGradeController;
 use App\Http\Controllers\RefSalariairesController;
 use App\Http\Controllers\specialitesController;
 use App\Http\Controllers\DossiersController;
@@ -20,7 +21,9 @@ use App\Http\Controllers\PlanBesoinsController;
 use App\Http\Controllers\ParametresController;
 use App\Http\Controllers\ExercicesController;
 use App\Http\Controllers\DecisionsController;
-
+use App\Http\Controllers\DFP\DFPController;
+use App\Http\Controllers\SA\SAsController;
+use App\Http\Controllers\DRH\DRHController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -33,11 +36,12 @@ Route::delete('/structures/{id}', [StructuresController::class, 'destroy'])->nam
 Route::get('/diplomes', [DiplomesController::class, 'index'])->name('diplomes.index');
 Route::post('/diplomes', [DiplomesController::class, 'store'])->name('diplomes.store');
 Route::put('/diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
-Route::delete('/diplomes/{id}', 'DiplomeController@destroy')->name('diplomes.destroy');
+Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
 //Apprentis
 Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis.index');
 Route::post('/apprentis', [ApprentisController::class, 'submit'])->name('apprentis.submit');
-Route::get('/apprentis/{id}/edit', [ApprentisController::class, 'edit'])->name('apprentis.edit');
+Route::get('/apprentis/consulter', [ApprentisController::class, 'consulter'])->name('apprentis.consulter');
+Route::get('/apprentis/details/{id}',[ApprentisController::class,'details'])->name('apprentis.details');
 Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
 Route::delete('/apprentis/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
 //specialites
@@ -52,11 +56,11 @@ Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'pv'])->
 //Dossiers 
 Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('dossiers.index');
 Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
-Route::get('/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
+Route::get('/apprentis/fichiers/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
 //Maitre Apprentis
 Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
 Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
-Route::put('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
+Route::put('/maitreapprentis/{id}', [MaitreApprentisController::class, 'update'])->name('maitreapprentis.update');
 //decisionsapprentis
 Route::get('/decisions', [DecisionsController::class, 'index'])->name('decisions.index');
 Route::post('/decisions', [DecisionsController::class, 'store'])->name('decisions.store');
@@ -110,3 +114,20 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+
+//DFP
+Route::middleware('auth')->group(function () {
+    Route::get('/dfp/dashboard',[DFPController::class,'index'])->name('dfp.dashboard');
+});
+//DRH
+Route::middleware('auth')->group(function () {
+    Route::get('/drh/dashboard',[DRHController::class,'index'])->name('drh.dashboard');
+});
+//SA
+Route::middleware('auth')->group(function () {
+    Route::get('/sa/dashboard',[SAsController::class,'index'])->name('sa.dashboard');
+});
+//RH
+Route::middleware('auth')->group(function () {
+    Route::get('/evaluateurgrade/dashboard',[EvaluateurGradeController::class,'index'])->name('evaluateurgrade.dashboard');
+});

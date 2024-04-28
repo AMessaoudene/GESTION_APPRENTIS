@@ -66,28 +66,59 @@ class PVInstallationsController extends Controller
             
         }*/
         try{
-        // If validation passes, save the data
-        $pv = new pv_installations();
-        $pv->reference = $request->reference;
-        $pv->direction = $request->direction;
-        $pv->datepv = $request->datepv;
-        $pv->dateinstallationchiffre = $request->dateinstallationchiffre;
-        $pv->anneeinstallationlettre = $request->anneeinstallationlettre;
-        $pv->moisinstallationlettre = $request->moisinstallationlettre;
-        $pv->jourinstallationlettre = $request->jourinstallationlettre;
-        $pv->directionaffectation = $request->directionaffectation;
-        $pv->serviceaffectation = $request->serviceaffectation;
-        $pv->dotations = $request->dotations;
-        $pv->apprenti_id = $apprenti->id;
-        $maitre_apprentis1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
-        $maitre_apprentis2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
-        is_null($maitre_apprentis1) ? $maitre_apprentis = $maitre_apprentis2 : $maitre_apprentis = $maitre_apprentis1;
-        $pv->maitreapprenti_id = $maitre_apprentis->id;
-        $pv->save();
+        if(session::has('reference')){
+            $pv = pv_installations::where('reference', session::get('reference'))->first();
+            if($pv){
+                $pv = pv_installations::update(request()->all());
+                session::put('pv',$pv);
+                //Session::put('apprenti', $apprenti);
+                return redirect()->route('decisions.index');
+            }
+            else{
+                $pv = new pv_installations();
+                $pv->reference = $request->reference;
+                $pv->direction = $request->direction;
+                $pv->datepv = $request->datepv;
+                $pv->dateinstallationchiffre = $request->dateinstallationchiffre;
+                $pv->anneeinstallationlettre = $request->anneeinstallationlettre;
+                $pv->moisinstallationlettre = $request->moisinstallationlettre;
+                $pv->jourinstallationlettre = $request->jourinstallationlettre;
+                $pv->directionaffectation = $request->directionaffectation;
+                $pv->serviceaffectation = $request->serviceaffectation;
+                $pv->dotations = $request->dotations;
+                $pv->apprenti_id = $apprenti->id;
+                $maitre_apprentis1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+                $maitre_apprentis2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+                is_null($maitre_apprentis1) ? $maitre_apprentis = $maitre_apprentis2 : $maitre_apprentis = $maitre_apprentis1;
+                $pv->maitreapprenti_id = $maitre_apprentis->id;
+                $pv->save();
+                Session::put('pv', $pv);
+                //Session::put('apprenti', $apprenti);
+                return redirect()->route('decisions.index');
+            }
+        }else{
+            $pv = new pv_installations();
+            $pv->reference = $request->reference;
+            $pv->direction = $request->direction;
+            $pv->datepv = $request->datepv;
+            $pv->dateinstallationchiffre = $request->dateinstallationchiffre;
+            $pv->anneeinstallationlettre = $request->anneeinstallationlettre;
+            $pv->moisinstallationlettre = $request->moisinstallationlettre;
+            $pv->jourinstallationlettre = $request->jourinstallationlettre;
+            $pv->directionaffectation = $request->directionaffectation;
+            $pv->serviceaffectation = $request->serviceaffectation;
+            $pv->dotations = $request->dotations;
+            $pv->apprenti_id = $apprenti->id;
+            $maitre_apprentis1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+            $maitre_apprentis2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+            is_null($maitre_apprentis1) ? $maitre_apprentis = $maitre_apprentis2 : $maitre_apprentis = $maitre_apprentis1;
+            $pv->maitreapprenti_id = $maitre_apprentis->id;
+            $pv->save();
 
-        Session::put('pv', $pv);
-        //Session::put('apprenti', $apprenti);
-        return redirect()->route('decisions.index');
+            Session::put('pv', $pv);
+            //Session::put('apprenti', $apprenti);
+            return redirect()->route('decisions.index');
+        }
         }catch(\Exception $e){
             return redirect()->back()->with('error', $e->getMessage());
         }

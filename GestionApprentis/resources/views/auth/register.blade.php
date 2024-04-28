@@ -1,3 +1,4 @@
+@section('title', 'Register')
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf
@@ -14,6 +15,18 @@
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Role -->
+        <div class="mt-4">
+            <x-input-label for="role" :value="__('Role')" />
+            <select id="role" class="block mt-1 w-full border-gray-300 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 rounded-md shadow-sm" name="role">
+                <option value="DFP">DFP</option>
+                <option value="DRH">DRH</option>
+                <option value="SA">SA</option>
+                <option value="EvaluateurGradé">Evaluateur Gradé</option>
+            </select>
+            <x-input-error :messages="$errors->get('role')" class="mt-2" />
         </div>
 
         <!-- Password -->

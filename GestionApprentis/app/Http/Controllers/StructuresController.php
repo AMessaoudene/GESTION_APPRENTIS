@@ -47,6 +47,6 @@ class StructuresController extends Controller
     public function destroy($id)
     {
         structures::destroy($id);
-        return new JsonResponse(['success' => true]);
+        return redirect()->back();
     }
 }

@@ -9,12 +9,6 @@
 <title>Fiche PV d'installation</title>
 </head>
 <body>
-@foreach($pv->getAttributes() as $key => $value)
-<li>{{$key}} : {{$value}}</li> 
-@endforeach
-    <h3>Maitre apprentis</h3>
-    <li>{{$maitre_apprenti->nom}}</li> 
-
 <div style="position:absolute;top:1.72in;left:0.68in;width:1.59in;line-height:0.14in;">
 <DIV style="position:relative; left:0.06in;">
 <span style="font-style:normal;font-weight:bold;font-size:9pt;font-family:TimesNewRomanPS-BoldMT;color:#000000">EPIC ALGERIE POSTE</span>

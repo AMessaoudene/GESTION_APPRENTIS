@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -33,11 +34,13 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required'],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'role' => $request->role,
             'password' => Hash::make($request->password),
         ]);
 
@@ -45,6 +48,22 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        // Redirect based on user role
+         switch ($user->role) {
+            case 'DFP':
+                return redirect()->route('dfp.dashboard');
+                break;
+            case 'SA':
+                return redirect()->route('sa.dashboard');
+                break;
+            case 'DRH':
+                return redirect()->route('drh.dashboard');
+                break;
+            case 'EvaluateurGradé':
+                return redirect()->route('evaluateurgrade.dashboard');
+                break;
+            default:
+                return redirect()->route('dashboard');
+        }
     }
 }

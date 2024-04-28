@@ -48,57 +48,58 @@ class DossiersController extends Controller
             try{
             $dossiers = new dossiers();
             $dossiers->apprentis_id = $apprenti->id;
-            /*$file=$request->file;
-		        
-	$filename=time().'.'.$file->getClientOriginalExtension();
 
-		        $request->file->move('assets',$filename);
-
+            /*$file=$request->file;	        
+	        $filename=time().'.'.$file->getClientOriginalExtension();
+		    $request->file->move('assets',$filename);
 		    $data->file=$filename;*/
+
             $contratapprenti = $request->file('contratapprenti');
             $contratapprentinom = time().'.'.$contratapprenti->getClientOriginalExtension();
-            $contratapprenti->move('assets',$contratapprentinom);
+            $contratapprenti->move('assets/dossiers',$contratapprentinom);
             $dossiers->contratapprenti = $contratapprentinom;
 
             $decisionapprenti = $request->file('decisionapprenti');
             $decisionapprentinom = time().'.'.$decisionapprenti->getClientOriginalExtension();
-            $decisionapprenti->move('assets',$decisionapprentinom);
+            $decisionapprenti->move('assets/dossiers',$decisionapprentinom);
             $dossiers->decisionapprenti = $decisionapprentinom;
 
             $decisionmaitreapprenti = $request->file('decisionmaitreapprenti');
             $decisionmaitreapprentinom = time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
-            $decisionmaitreapprenti->move('assets',$decisionmaitreapprentinom);
+            $decisionmaitreapprenti->move('assets/dossiers',$decisionmaitreapprentinom);
             $dossiers->decisionmaitreapprenti = $decisionmaitreapprentinom;
 
             $pvinstallation = $request->file('pvinstallation');
             $pvinstallationnom = time().'.'.$pvinstallation->getClientOriginalExtension();
-            $pvinstallation->move('assets',$pvinstallationnom);
+            $pvinstallation->move('assets/dossiers',$pvinstallationnom);
             $dossiers->pvinstallation = $pvinstallationnom;
 
             $copiecheque = $request->file('copiecheque');
             $copiechequenom = time().'.'.$copiecheque->getClientOriginalExtension();
-            $copiecheque->move('assets',$copiechequenom);
+            $copiecheque->move('assets/dossiers',$copiechequenom);
             $dossiers->copiecheque = $copiechequenom;
 
             $extraitnaissance = $request->file('extraitnaissance');
             $extraitnaissancenom = time().'.'.$extraitnaissance->getClientOriginalExtension();
-            $extraitnaissance->move('assets',$extraitnaissancenom);
+            $extraitnaissance->move('assets/dossiers',$extraitnaissancenom);
             $dossiers->extraitnaissance = $extraitnaissancenom;
+
             if($request->hasFile('autorisationparentele') && $request->file('autorisationparentele')){
                 $autorisationparentele = $request->file('autorisationparentele');
                 $autorisationparentelenom = time().'.'.$autorisationparentele->getClientOriginalExtension();
-                $autorisationparentele->move('assets',$autorisationparentelenom);
+                $autorisationparentele->move('assets/dossiers',$autorisationparentelenom);
                 $dossiers->autorisationparentele = $autorisationparentelenom;
             }
+            
             if($request->hasFile('photo') && $request->file('photo')){
                 $photo = $request->file('photo');
                 $photonom = time().'.'.$photo->getClientOriginalExtension();
-                $photo->move('assets',$photonom);
+                $photo->move('assets/dossiers',$photonom);
                 $dossiers->photo = $photonom;
             }
 
             $dossiers->save();
-            return redirect()->back()->with('success','Dossier enregistre avec succes');
+            return redirect()->route('dashboard');
             }catch(\Exception $e){
                 return redirect()->back()->with('error','Dossier non enregistre');
             }
@@ -125,6 +126,6 @@ class DossiersController extends Controller
         }
     }
     public function pdfdownload(Request $request,$file){
-        return response()->download('assets/'.$file);
+        return response()->download('assets/dossiers/'.$file);
     }
 }

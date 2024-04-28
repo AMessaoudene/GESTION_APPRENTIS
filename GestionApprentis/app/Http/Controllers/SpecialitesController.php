@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\specialites;
 use Illuminate\Http\Request;
 use Validator;
+use Illuminate\Http\JsonResponse;
 class SpecialitesController extends Controller
 {
     /**
@@ -11,8 +12,8 @@ class SpecialitesController extends Controller
      */
     public function index()
     {
-        $specialite = specialites::all();
-        return view('specialites.index', compact('specialite'));
+        $specialites = specialites::all();
+        return view('specialites.index', compact('specialites'));
     }
 
     /**
@@ -64,16 +65,21 @@ class SpecialitesController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $specialite = specialites::findOrFail($id);
+        $specialite->nom = $request->nom;
+        $specialite->description = $request->description;
+        $specialite->save();
+        return new JsonResponse(['success' => true]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        specialites::destroy($id);
+        return redirect()->back();
     }
 }

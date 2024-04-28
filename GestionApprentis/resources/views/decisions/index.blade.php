@@ -93,12 +93,16 @@
         @endforeach
     </select>
     <select name="bareme_id" id="bareme_id">
+        <option value="">Sélectionnez un bareme</option>
         @foreach($baremes as $bareme)
             @if($bareme->statut == 'actif')
                 <option value="{{$bareme->id}}">{{ $bareme->refsalariaires_id }}</option>
             @endif
         @endforeach
     </select>
+    <div id="bareme_details">
+        <!-- Display bareme details here -->
+    </div>
     <button type="submit">Enregistrer</button>
 </form>
 @endsection

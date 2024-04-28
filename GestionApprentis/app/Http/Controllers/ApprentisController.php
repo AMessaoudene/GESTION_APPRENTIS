@@ -8,6 +8,8 @@ use App\Models\maitre_apprentis;
 use App\Models\diplomes;
 use App\Models\structures;
 use App\Models\specialites;
+use App\Models\dossiers;
+use App\Models\pv_installations;
 use Validator;
 
 class ApprentisController extends Controller
@@ -181,5 +183,23 @@ class ApprentisController extends Controller
         $apprenti = apprentis::find($id);
         $apprenti->delete();
         return redirect('/')->with('success', 'Apprenti supprimé avec succès');
+    }
+    public function details(Request $request,$id){
+        $apprenti = apprentis::find($id);
+        $specialite = specialites::where('id', $apprenti->specialite_id)->first();
+        $structure = structures::where('id', $apprenti->structure_id)->first();
+        $diplome = diplomes::where('id', $apprenti->diplome1_id)->first();
+        $dossier = dossiers::where('apprentis_id', $apprenti->id)->first();
+        $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        /*$dossier->status = $request->dossier_status;
+        $dossier->motif = $request->motif;
+        $dossier->save();
+        $apprenti->status = $request->apprenti_status;
+        $apprenti->save();*/
+        return view('apprentis.details',compact('apprenti','specialite','structure','diplome','dossier','pv'));
+    }
+    public function consulter(){
+        $apprentis = apprentis::all();
+        return view('apprentis.consulter',compact('apprentis'));
     }
 }

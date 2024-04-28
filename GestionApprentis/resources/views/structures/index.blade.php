@@ -29,7 +29,11 @@
             <td>{{ $structure->adressecourriel }}</td>
             <td>
                 <button class="btn btn-primary edit-btn" data-id="{{ $structure->id }}">Modifier</button>
-                <button class="btn btn-danger delete-btn" data-id="{{ $structure->id }}">Supprimer</button>
+                <form action="{{ route('structures.destroy', $structure->id) }}" method="POST">                  
+                    @csrf
+                    @method('DELETE')           
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
             </td>
         </tr>
         @endforeach
@@ -62,31 +66,8 @@ $(document).ready(function() {
         });
     });
 
-    // AJAX for deleting a structure
-$('.delete-btn').click(function() {
-    var id = $(this).data('id');
-    var button = $(this); // Store reference to 'this'
-    $.ajax({
-        url: '/structures/' + id,
-        type: 'DELETE',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function(response) {
-            // Remove the row from the table
-            button.closest('tr').remove();
-            alert('Structure deleted successfully');
-        },
-        error: function(xhr, textStatus, errorThrown) {
-            // Handle error
-            console.error('Error deleting structure:', errorThrown);
-        }
-    });
-});
-
-
     // AJAX for editing a structure
-    $('.edit-btn').click(function() {
+    $(document).on('click', '.edit-btn', function() {
         var id = $(this).data('id');
         var row = $(this).closest('tr');
         var nom = row.find('td:eq(1)').text();
@@ -109,8 +90,8 @@ $('.delete-btn').click(function() {
         var form = $(this);
         $.ajax({
             url: form.attr('action'),
-            type: 'POST',
-            data: form.serialize(), // Change this to use PUT method for update
+            type: 'PUT', // Changed from POST to PUT for update
+            data: form.serialize(),
             success: function(response) {
                 // Reload the page to update the table
                 location.reload();
