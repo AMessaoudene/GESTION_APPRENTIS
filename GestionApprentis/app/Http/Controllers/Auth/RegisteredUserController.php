@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\structures;
 
 class RegisteredUserController extends Controller
 {
@@ -20,7 +21,8 @@ class RegisteredUserController extends Controller
      */
     public function create(): View
     {
-        return view('auth.register');
+        $structures = structures::all();
+        return view('auth.register', compact('structures'));
     }
 
     /**
@@ -31,16 +33,22 @@ class RegisteredUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'nom' => ['required', 'string', 'max:255'],
+            'prenom' => ['required', 'string', 'max:255'],
+            'civilite' => ['required'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required'],
+            'structures_id' => ['required'], // Make sure this field is provided
         ]);
 
         $user = User::create([
-            'name' => $request->name,
+            'nom' => $request->name,
+            'prenom' => $request->prenom,
+            'civilite' => $request->civilite,
             'email' => $request->email,
             'role' => $request->role,
+            'structures_id' => $request->structures_id,
             'password' => Hash::make($request->password),
         ]);
 
