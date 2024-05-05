@@ -23,9 +23,9 @@ class PlanBesoinsController extends Controller
         $planbesoins = new PlanBesoins();
         $planbesoins->exercice_id = $request->exercice_id;
         $planbesoins->reference = $request->reference;
-        $planbesoins->specialites_id = $request->specialites_id;
         $planbesoins->structure_id = $request->structure_id;
         $planbesoins->date = $request->date;
+        $planbesoins->specialites_id = $request->specialites_id;
         $planbesoins->nombreapprentis = $request->nombreapprentis;
         $planbesoins->nombereffectif = $request->nombereffectif;
         $planbesoins->nombreapprentismax = $request->nombereffectif * 0.05;

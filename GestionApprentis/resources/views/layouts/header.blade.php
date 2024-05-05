@@ -6,7 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title')</title>
     <link rel="icon" href="{{ asset('asset/images/AlgeriePoste.ico') }}" type="image/x-icon">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f9fa;
+        }
+        header {
+            background-color: #343a40;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
+        .navbar-brand img {
+            margin-right: 10px;
+        }
+        .navbar-toggler {
+            border-color: transparent;
+        }
+        .navbar-nav .nav-item {
+            margin-right: 10px;
+        }
+        .nav-link {
+            color: #ffffff !important;
+        }
+        main {
+            padding-top: 20px;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -14,34 +40,33 @@
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="{{ asset('asset/images/AlgeriePoste.svg') }}" alt="Logo" width="50" height="50" class="d-inline-block align-text-top">
+                    Algerie Poste
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a href="{{ route('planbesoins.index') }}" class="nav-link">Plan Des Besoins</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('structures.index') }}">Structures</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('apprentis.index') }}">Apprentis</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('maitreapprentis.index') }}">Maitre Apprentis</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('diplomes.index') }}">Diplomes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('specialites.index') }}">Specialites</a>
-                        </li>
+                <ul class="navbar-nav">
                         @auth
                         <li class="nav-item">
-                            <span class="nav-link">Bienvenue, {{ Auth::user()->name }}</span>
+                            <span class="nav-link d-inline-flex align-items-center">
+                                Bienvenue 
+                                <a href="{{ url('/profile') }}" class="nav-link">{{ Auth::user()->nom }}</a>
+                            </span>
                         </li>
+
+                        <li class="nav-item">
+                            @if(Auth::user()->role === 'DFP')
+                                <a href="{{ url('/dfp/dashboard') }}" class="nav-link">Dashboard</a>        
+                            @elseif(Auth::user()->role === 'DRH')        
+                                <a href="{{ url('/drh/dashboard') }}" class="nav-link">Dashboard</a>
+                            @elseif(Auth::user()->role === 'SA')            
+                                <a href="{{ url('/sa/dashboard') }}" class="nav-link">Dashboard</a>
+                            @elseif(Auth::user()->role === 'EvaluateurGrade')
+                                <a href="{{ url('/evaluateurgrade/dashboard') }}" class="nav-link">Dashboard</a>
+                            @endif
+                        </li>
+
                         <li class="nav-item">
                             <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                 @csrf
@@ -57,6 +82,7 @@
                         </li>
                         @endauth
                     </ul>
+
                 </div>
             </div>
         </nav>

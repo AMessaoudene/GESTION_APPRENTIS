@@ -5,27 +5,23 @@ use App\Models\baremes;
 use App\Models\refsalariares;
 use App\Models\diplomes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BaremesController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
-{
-    $baremes = baremes::all();
-    $refsalaries = refsalariares::all(); // corrected variable name
-    $diplomes = diplomes::all();
-    return view('baremes.index', compact('baremes', 'refsalaries', 'diplomes')); // corrected variable name
-}
-
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+    public function index(){
+        $baremes = baremes::all();
+        $refsalaries = refsalariares::all(); // corrected variable name
+        $diplomes = diplomes::all();
+        if(auth::user()->role === 'DRH' || auth::user()->role === 'DFP'){
+            return view('baremes.index', compact('baremes', 'refsalaries', 'diplomes')); // corrected variable name
+        }
+        else{
+            return redirect()->back()->with('error', 'You do not have the required role to access this page.');
+        }
     }
 
     /**

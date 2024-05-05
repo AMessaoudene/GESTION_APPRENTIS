@@ -4,12 +4,19 @@ namespace App\Http\Controllers;
 use App\Models\maitre_apprentis;
 use Validator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MaitreApprentisController extends Controller
 {
     public function index()
     {
-        return view('maitre_apprentis.ajouter');
+        $maitre_apprentis = maitre_apprentis::all();
+        if(auth::user()->role === 'DFP'){
+            return view('maitre_apprentis.index', compact('maitre_apprentis'));
+        }
+        else{
+            return redirect()->back()->with('error', 'You do not have permission to access this page.');
+        }
     }
 
     public function submit(Request $request)

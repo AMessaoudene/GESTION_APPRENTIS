@@ -63,6 +63,7 @@
         Civilite DRH
     </label>
     <select name="civilitedrh" id="">
+        <option value="">-- Choisir --</option>
         <option value="Monsieur">Mr</option>
         <option value="Madame">Mme</option>
         <option value="Mademoiselle">Mlle</option>
@@ -71,6 +72,7 @@
         Civilite DFC
     </label>
     <select name="civilitedfc" id="">
+        <option value="">-- Choisir --</option>
         <option value="Monsieur">Mr</option>
         <option value="Madame">Mme</option>
         <option value="Mademoiselle">Mlle</option>

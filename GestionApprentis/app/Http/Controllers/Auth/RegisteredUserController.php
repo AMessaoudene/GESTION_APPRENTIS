@@ -14,6 +14,7 @@ use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\structures;
 
+
 class RegisteredUserController extends Controller
 {
     /**
@@ -39,11 +40,11 @@ class RegisteredUserController extends Controller
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'role' => ['required'],
-            'structures_id' => ['required'], // Make sure this field is provided
+            'structures_id' => ['required'],
         ]);
 
         $user = User::create([
-            'nom' => $request->name,
+            'nom' => $request->nom,
             'prenom' => $request->prenom,
             'civilite' => $request->civilite,
             'email' => $request->email,

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Diplomes;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class DiplomesController extends Controller
@@ -10,7 +11,12 @@ class DiplomesController extends Controller
     public function index()
     {
         $diplomes = Diplomes::all();
-        return view('diplomes.index', compact('diplomes'));
+        if(auth::user()->role === 'DFP'){
+            return view('diplomes.index', compact('diplomes'));
+        }
+        else{
+            return redirect()->back()->with('error', 'You do not have the required role to access this page.');
+        }
     }
 
     public function store(Request $request)

@@ -24,7 +24,7 @@
         <input type="file" class="form-control" id="photo" name="photo">
     </div>
     <button type="submit" class="btn btn-primary">Ajouter</button>
-    <table id="dossiers-table">
+    <!--<table id="dossiers-table">
         <thead>
             <tr>
                 <th>Apprenti ID</th>
@@ -73,4 +73,4 @@
         });
     </script>
 </form>
-@endsection
+@endsection-->

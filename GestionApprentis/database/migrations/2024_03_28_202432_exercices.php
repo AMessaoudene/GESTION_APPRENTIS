@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('nombrebesoins')->unsigned();
             $table->float('massesalariaire');
             $table->float('budget');
+            $table->enum('status',['actif','inactif'])->default('actif');
             $table->timestamps();
         });
     }

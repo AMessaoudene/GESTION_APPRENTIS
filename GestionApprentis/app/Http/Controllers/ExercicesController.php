@@ -8,7 +8,8 @@ class ExercicesController extends Controller
 {
     public function index()
     {
-        return view('exercices.index');
+        $exercices = exercices::all();
+        return view('exercices.index', compact('exercices'));
     }
     public function store(Request $request)
     {
@@ -17,7 +18,7 @@ class ExercicesController extends Controller
             'datedebut' => 'required|date',
             'datefin' => 'required|date',
             'nombrebesoins' => 'required|integer',
-            'massesalariaire' => 'required|integer',
+            'massesalariaire' => 'required',
         ]);
         $exercice = new exercices();
         $exercice->annee = $request->annee;
@@ -26,7 +27,21 @@ class ExercicesController extends Controller
         $exercice->nombrebesoins = $request->nombrebesoins;
         $exercice->massesalariaire = $request->massesalariaire;
         $exercice->budget = $request->massesalariaire * 0.01;
+        $exercice->status = 'actif';
         $exercice->save();
         return redirect()->route('exercices.index')->with('success', 'Exercice created successfully');
+    }
+    public function update(Request $request, $id)
+    {
+        $exercice = exercices::findOrFail($id);
+        $exercice->annee = $request->annee;
+        $exercice->datedebut = $request->datedebut;
+        $exercice->datefin = $request->datefin;
+        $exercice->nombrebesoins = $request->nombrebesoins;
+        $exercice->massesalariaire = $request->massesalariaire;
+        $exercice->budget = $request->massesalariaire * 0.01;
+        $exercice->status = $request->status;
+        $exercice->save();
+        return response()->json(['success' => true]);
     }
 }

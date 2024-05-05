@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\structures;
 use Validator;
 use Illuminate\Http\Request;
 use App\Models\dossiers; // Fixed the namespace and case sensitivity issue here
@@ -20,7 +21,7 @@ class DossiersController extends Controller
     public function index(){
         $data = session::get('transferredData');
         $apprenti = Session::get('apprenti');
-        $dossiers = dossiers::all(); // Fetch all dossiers
+        $dossiers = dossiers::all();
         return view("dossiers.index",['data' => $data, 'apprenti' => $apprenti, 'dossiers' => $dossiers]);
     }
     public function store(Request $request){
@@ -55,45 +56,45 @@ class DossiersController extends Controller
 		    $data->file=$filename;*/
 
             $contratapprenti = $request->file('contratapprenti');
-            $contratapprentinom = time().'.'.$contratapprenti->getClientOriginalExtension();
+            $contratapprentinom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$contratapprenti->getClientOriginalExtension();
             $contratapprenti->move('assets/dossiers',$contratapprentinom);
             $dossiers->contratapprenti = $contratapprentinom;
 
             $decisionapprenti = $request->file('decisionapprenti');
-            $decisionapprentinom = time().'.'.$decisionapprenti->getClientOriginalExtension();
+            $decisionapprentinom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionapprenti->getClientOriginalExtension();
             $decisionapprenti->move('assets/dossiers',$decisionapprentinom);
             $dossiers->decisionapprenti = $decisionapprentinom;
 
             $decisionmaitreapprenti = $request->file('decisionmaitreapprenti');
-            $decisionmaitreapprentinom = time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
+            $decisionmaitreapprentinom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
             $decisionmaitreapprenti->move('assets/dossiers',$decisionmaitreapprentinom);
             $dossiers->decisionmaitreapprenti = $decisionmaitreapprentinom;
 
             $pvinstallation = $request->file('pvinstallation');
-            $pvinstallationnom = time().'.'.$pvinstallation->getClientOriginalExtension();
+            $pvinstallationnom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$pvinstallation->getClientOriginalExtension();
             $pvinstallation->move('assets/dossiers',$pvinstallationnom);
             $dossiers->pvinstallation = $pvinstallationnom;
 
             $copiecheque = $request->file('copiecheque');
-            $copiechequenom = time().'.'.$copiecheque->getClientOriginalExtension();
+            $copiechequenom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$copiecheque->getClientOriginalExtension();
             $copiecheque->move('assets/dossiers',$copiechequenom);
             $dossiers->copiecheque = $copiechequenom;
 
             $extraitnaissance = $request->file('extraitnaissance');
-            $extraitnaissancenom = time().'.'.$extraitnaissance->getClientOriginalExtension();
+            $extraitnaissancenom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$extraitnaissance->getClientOriginalExtension();
             $extraitnaissance->move('assets/dossiers',$extraitnaissancenom);
             $dossiers->extraitnaissance = $extraitnaissancenom;
 
             if($request->hasFile('autorisationparentele') && $request->file('autorisationparentele')){
                 $autorisationparentele = $request->file('autorisationparentele');
-                $autorisationparentelenom = time().'.'.$autorisationparentele->getClientOriginalExtension();
+                $autorisationparentelenom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$autorisationparentele->getClientOriginalExtension();
                 $autorisationparentele->move('assets/dossiers',$autorisationparentelenom);
                 $dossiers->autorisationparentele = $autorisationparentelenom;
             }
             
             if($request->hasFile('photo') && $request->file('photo')){
                 $photo = $request->file('photo');
-                $photonom = time().'.'.$photo->getClientOriginalExtension();
+                $photonom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$photo->getClientOriginalExtension();
                 $photo->move('assets/dossiers',$photonom);
                 $dossiers->photo = $photonom;
             }
@@ -127,5 +128,16 @@ class DossiersController extends Controller
     }
     public function pdfdownload(Request $request,$file){
         return response()->download('assets/dossiers/'.$file);
+    }
+    public function delete(Request $request,$id){
+        $dossiers = dossiers::findOrFail($id);
+        $dossiers->delete();
+        return redirect()->back();
+    }
+    public function consulter(Request $request){
+        $apprentis = apprentis::all();
+        $dossiers = dossiers::all();
+        $structures = structures::all();
+        return view('dossiers.consulter',compact('apprentis','dossiers','structures'));
     }
 }

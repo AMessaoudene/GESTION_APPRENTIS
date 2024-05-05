@@ -24,6 +24,9 @@ use App\Http\Controllers\DecisionsController;
 use App\Http\Controllers\DFP\DFPController;
 use App\Http\Controllers\SA\SAsController;
 use App\Http\Controllers\DRH\DRHController;
+use App\Http\Controllers\DepartsController;
+use App\Http\Controllers\ComptesController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -56,6 +59,7 @@ Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'pv'])->
 //Dossiers 
 Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('dossiers.index');
 Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
+Route::get('/apprentis/dossiers/consulter',[DossiersController::class,'consulter'])->name('dossiers.consulter');
 Route::get('/apprentis/fichiers/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
 //Maitre Apprentis
 Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
@@ -99,6 +103,11 @@ Route::delete('/exercices/{id}', [exercicesController::class, 'destroy'])->name(
 //Baremes
 Route::get('/baremes', [BaremesController::class, 'index'])->name('baremes.index');
 Route::post('/baremes', [BaremesController::class, 'store'])->name('baremes.store');
+Route::put('/baremes/{id}', [BaremesController::class, 'update'])->name('baremes.update');
+//Departs
+Route::get('/departs', [DepartsController::class, 'index'])->name('departs.index');
+Route::post('/departs', [DepartsController::class, 'store'])->name('departs.store');
+
 //refsalariaires
 Route::get('/refsalariaires', [RefSalariairesController::class, 'index'])->name('refsalariaires.index');
 Route::post('/refsalariaires', [RefSalariairesController::class, 'store'])->name('refsalariaires.store');
@@ -127,7 +136,14 @@ Route::middleware('auth')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::get('/sa/dashboard',[SAsController::class,'index'])->name('sa.dashboard');
 });
-//RH
+//EG
 Route::middleware('auth')->group(function () {
     Route::get('/evaluateurgrade/dashboard',[EvaluateurGradeController::class,'index'])->name('evaluateurgrade.dashboard');
+});
+// Comptes
+Route::middleware('auth')->group(function () {
+    Route::get('/comptes',[ComptesController::class,'index'])->name('comptes.index');
+    Route::post('/comptes',[ComptesController::class,'store'])->name('comptes.store');
+    Route::delete('/comptes/{id}',[ComptesController::class,'destroy'])->name('comptes.destroy');
+    Route::put('/comptes/{id}',[ComptesController::class,'update'])->name('comptes.update');
 });

@@ -11,6 +11,7 @@ use App\Models\specialites;
 use App\Models\dossiers;
 use App\Models\pv_installations;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class ApprentisController extends Controller
 {
@@ -200,6 +201,13 @@ class ApprentisController extends Controller
     }
     public function consulter(){
         $apprentis = apprentis::all();
-        return view('apprentis.consulter',compact('apprentis'));
+        $structures = structures::all();
+        $specialites = specialites::all();
+        if(auth::user()->role === 'DFP' || auth::user()->role === 'SA'){
+            return view('apprentis.consulter', compact('apprentis','structures','specialites'));   
+        }
+        else{
+            return redirect()->back()->with('error', 'Vous n\'avez pas les autorisations pour consulter cette page');
+        }
     }
 }

@@ -1,4 +1,4 @@
-@section('title', 'Register')
+@section('title', 'Créer un nouveau compte')
 <x-guest-layout>
     <form method="POST" action="{{ route('register') }}">
         @csrf

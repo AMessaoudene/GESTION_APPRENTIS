@@ -18,10 +18,10 @@ return new class extends Migration
             $table->enum('civilite', ['Homme', 'Femme']);
             $table->enum('role', ['DFP', 'DRH', 'SA', 'EvaluateurGradé']);
             $table->unsignedBigInteger('structures_id');
+            $table->foreign('structures_id')->references('id')->on('structures');
             $table->string('telephone')->nullable();
             $table->string('adresse')->nullable();
             $table->string('email')->unique();
-            $table->foreign('structures_id')->references('id')->on('structures');
             $table->enum('status', ['active', 'inactive'])->default('active');
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
