@@ -203,8 +203,9 @@ class ApprentisController extends Controller
         $apprentis = apprentis::all();
         $structures = structures::all();
         $specialites = specialites::all();
+        $diplomes = diplomes::all();
         if(auth::user()->role === 'DFP' || auth::user()->role === 'SA'){
-            return view('apprentis.consulter', compact('apprentis','structures','specialites'));   
+            return view('apprentis.consulter', compact('apprentis','structures','specialites','diplomes'));   
         }
         else{
             return redirect()->back()->with('error', 'Vous n\'avez pas les autorisations pour consulter cette page');

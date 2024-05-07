@@ -56,51 +56,51 @@ class DossiersController extends Controller
 		    $data->file=$filename;*/
 
             $contratapprenti = $request->file('contratapprenti');
-            $contratapprentinom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$contratapprenti->getClientOriginalExtension();
+            $contratapprentinom = 'Contrat-Apprenti-'.$apprenti->id.'-'.time().'.'.$contratapprenti->getClientOriginalExtension();
             $contratapprenti->move('assets/dossiers',$contratapprentinom);
             $dossiers->contratapprenti = $contratapprentinom;
 
             $decisionapprenti = $request->file('decisionapprenti');
-            $decisionapprentinom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionapprenti->getClientOriginalExtension();
+            $decisionapprentinom = 'DecisionA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionapprenti->getClientOriginalExtension();
             $decisionapprenti->move('assets/dossiers',$decisionapprentinom);
             $dossiers->decisionapprenti = $decisionapprentinom;
 
             $decisionmaitreapprenti = $request->file('decisionmaitreapprenti');
-            $decisionmaitreapprentinom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
+            $decisionmaitreapprentinom = 'DecisionMA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
             $decisionmaitreapprenti->move('assets/dossiers',$decisionmaitreapprentinom);
             $dossiers->decisionmaitreapprenti = $decisionmaitreapprentinom;
 
             $pvinstallation = $request->file('pvinstallation');
-            $pvinstallationnom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$pvinstallation->getClientOriginalExtension();
+            $pvinstallationnom = 'PV-Apprenti-'.$apprenti->id.'-'.time().'.'.$pvinstallation->getClientOriginalExtension();
             $pvinstallation->move('assets/dossiers',$pvinstallationnom);
             $dossiers->pvinstallation = $pvinstallationnom;
 
             $copiecheque = $request->file('copiecheque');
-            $copiechequenom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$copiecheque->getClientOriginalExtension();
+            $copiechequenom = 'CopieCheque-Apprenti-'.$apprenti->id.'-'.time().'.'.$copiecheque->getClientOriginalExtension();
             $copiecheque->move('assets/dossiers',$copiechequenom);
             $dossiers->copiecheque = $copiechequenom;
 
             $extraitnaissance = $request->file('extraitnaissance');
-            $extraitnaissancenom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$extraitnaissance->getClientOriginalExtension();
+            $extraitnaissancenom = 'ExtraitNaissance-Apprenti-'.$apprenti->id.'-'.time().'.'.$extraitnaissance->getClientOriginalExtension();
             $extraitnaissance->move('assets/dossiers',$extraitnaissancenom);
             $dossiers->extraitnaissance = $extraitnaissancenom;
 
             if($request->hasFile('autorisationparentele') && $request->file('autorisationparentele')){
                 $autorisationparentele = $request->file('autorisationparentele');
-                $autorisationparentelenom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$autorisationparentele->getClientOriginalExtension();
+                $autorisationparentelenom = 'Autorisation-Apprenti-'.$apprenti->id.'-'.time().'.'.$autorisationparentele->getClientOriginalExtension();
                 $autorisationparentele->move('assets/dossiers',$autorisationparentelenom);
                 $dossiers->autorisationparentele = $autorisationparentelenom;
             }
             
             if($request->hasFile('photo') && $request->file('photo')){
                 $photo = $request->file('photo');
-                $photonom = 'Apprenti-'.$apprenti->id.'-'.time().'.'.$photo->getClientOriginalExtension();
+                $photonom = 'Photo-Apprenti-'.$apprenti->id.'-'.time().'.'.$photo->getClientOriginalExtension();
                 $photo->move('assets/dossiers',$photonom);
                 $dossiers->photo = $photonom;
             }
 
             $dossiers->save();
-            return redirect()->route('dashboard');
+            return redirect()->route('apprentis.consulter');
             }catch(\Exception $e){
                 return redirect()->back()->with('error','Dossier non enregistre');
             }

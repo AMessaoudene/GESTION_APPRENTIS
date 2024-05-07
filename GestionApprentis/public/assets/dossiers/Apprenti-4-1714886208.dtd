@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!ELEMENT university (students,professors)>
+<!ELEMENT students (student)+>
+<!ELEMENT professors (professor)+>
+<!ELEMENT student (name,age,major,courses)>
+<!ATTLIST student id CDATA #REQUIRED>
+<!ELEMENT name (#PCDATA) >
+<!ELEMENT age (#PCDATA)>
+<!ELEMENT major (#PCDATA)>
+<!ELEMENT courses (course)+>
+<!ELEMENT course (code,course_name,grade)>
+<!ELEMENT code (#PCDATA) >
+<!ELEMENT course_name (#PCDATA)>
+<!ELEMENT grade (#PCDATA)>
+<!ELEMENT professor (name,department,office)>
+<!ATTLIST professor id CDATA #REQUIRED>
+<!ELEMENT department (#PCDATA)>
+<!ELEMENT office (#PCDATA)>

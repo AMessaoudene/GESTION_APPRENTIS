@@ -1,5 +1,5 @@
 </main>
-<footer class="bg-dark text-light py-3">
+<footer class="text-light py-3" style="background-color:#22297C;">
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">

@@ -25,8 +25,8 @@
             <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
             <td>{{ $apprenti->status }}</td>
             <td>
-                <button class="btn btn-primary edit-btn" data-id="{{ $diplome->id }}">Modifier</button>
-                <form action="{{ route('apprentis.destroy', $diplome->id) }}" method="POST">                  
+                <button class="btn btn-primary edit-btn" data-id="{{ $apprenti->id }}">Modifier</button>
+                <form action="{{ route('apprentis.destroy', $apprenti->id) }}" method="POST">                  
                     @csrf
                     @method('DELETE')           
                     <button type="submit" class="btn btn-danger">Delete</button>

@@ -7,16 +7,18 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\specialites;
 use App\Models\PlanBesoins;
 use Illuminate\Http\Request;
+use Auth;
 
 class PlanBesoinsController extends Controller
 {
     public function index()
     {
+        $user = Auth::user();
         $planbesoins = PlanBesoins::all();
         $specialites = specialites::all();
         $structures = structures::all();
         $exercices = exercices::all();
-        return view('planbesoins.index', compact('planbesoins','structures','exercices','specialites'));
+        return view('planbesoins.index', compact('planbesoins','structures','exercices','specialites','user'));
     }
     public function store(Request $request)
     {

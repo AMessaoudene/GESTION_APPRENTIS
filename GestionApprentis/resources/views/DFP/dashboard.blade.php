@@ -1,48 +1,50 @@
 @extends('layouts.layout')
 @section('title', 'Dashboard')
-<style>
-    .custom-button {
-        padding: 20px 40px;
-        font-size: 18px;
-        border-radius: 10px;
-        margin: 10px;
-        display: block;
-        text-align: center;
-        text-decoration: none;
-        color: #fff;
-        background-color: #007bff;
-        border: 1px solid #007bff;
-        transition: all 0.3s ease;
-    }
-
-    .custom-button:hover {
-        background-color: #0056b3;
-        border-color: #0056b3;
-    }
-
-    .custom-button:last-child {
-        margin-bottom: 0;
-    }
-
-    .container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding-top: 50px;
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 50px;
-        color: #333;
-    }
-</style>
 @section('content')
-<div class="container mt-5 mb-5">
-    <h1 class="text-center mb-5">Bienvenue sur DFP Dashboard</h1>
-    <a href="{{ route('comptes.index')}}" class="custom-button">Gestion des comptes</a>
-    <a href="#" class="custom-button">Gestion des apprentis</a>
-    <a href="{{ route('maitreapprentis.index')}}" class="custom-button">Gestion des maîtres apprentis</a>
-    <a href="{{ route('structures.index')}}" class="custom-button">Gestion des structures</a>
-    <a href="#" class="custom-button">Gestion des plans de besoins</a>
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        @include('layouts.sidenav')
+
+        <!-- Page Content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            <div class="container mt-5 mb-5">
+                <h1 class="text-center mb-5">Bienvenue sur DFP Dashboard</h1>
+                <canvas id="myChart" width="400" height="200"></canvas>
+            </div>
+        </main>
+    </div>
 </div>
 @endsection
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Get the canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+
+        // Define the data
+        var data = {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+                label: 'Sales',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1,
+                data: [12, 19, 3, 5, 2, 3, 7]
+            }]
+        };
+
+        // Create the chart
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: data,
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>

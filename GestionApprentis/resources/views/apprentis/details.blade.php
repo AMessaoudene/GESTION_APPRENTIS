@@ -29,23 +29,7 @@
     <p>{{ $pv->serviceaffectation }}</p>
     <p>{{ $pv->dotations }}</p>
     <h2>Documents</h2>
-    <a href="{{ url('/download', $dossier->pvinstallation) }}">PV d'installation</a>
-    <a href="{{ url('/download', $dossier->decisionapprenti) }}">Decision Apprenti</a>
-    <a href="{{ url('/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a>
-    <a href="{{ url('/download', $dossier->contratapprenti) }}">Contrat Apprenti</a>
-    <a href="{{ url('/download', $dossier->copiecheque) }}">copie cheque</a>
-    <a href="{{ url('/download', $dossier->extraitnaissance) }}">extrait de naissance</a>
-    @if($dossier->autorisationparentele)
-        <a href="{{ url('/download', $dossier->autorisationparentele) }}">autorisation parentale</a>
-    @else
-        Aucun
-    @endif
-    @if($dossier->photo)
-        <a href="{{ url('/download', $dossier->photo) }}">Photo</a>
-    @else
-        Aucun
-    @endif
-    <p>Statut du dossier : {{ $dossier->status }}</p>
+    
     <p>Statut de l'apprenti : {{ $apprenti->statut }}</p>
 </div>
 @endsection

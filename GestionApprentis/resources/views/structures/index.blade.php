@@ -32,7 +32,6 @@
         <tr>
             <th scope="col">ID</th>
             <th scope="col">Nom</th>
-            <th scope="col">Responsable Actuel</th>
             <th scope="col">Adresse Courriel</th>
             <th scope="col">Actions</th>
         </tr>
@@ -42,13 +41,6 @@
         <tr>
             <td>{{ $structure->id }}</td>
             <td>{{ $structure->nom }}</td>
-            @foreach($users as $user)
-                @if($user->structures_id == $structure->id && $user->role == 'SA' && $user->status == "actif")
-                <td>{{ $user->nom }} {{ $user->prenom }}</td>
-                @else
-                <td> Aucun </td>
-                @endif
-            @endforeach
             <td>{{ $structure->adressecourriel }}</td>
             <td>
                 <div class="d-flex justify-content-center align-items-center">

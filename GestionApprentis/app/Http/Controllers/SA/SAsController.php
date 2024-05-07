@@ -11,7 +11,7 @@ class SAsController extends Controller
     public function index()
     {
         // Check if the authenticated user has the role of DFP
-        if (Auth::user()->Role === 'SA') {
+        if (strtolower(Auth::user()->role) === 'sa') {
             // User has the DFP role, allow access to the dashboard
             return view('SA.dashboard');
         } else {
