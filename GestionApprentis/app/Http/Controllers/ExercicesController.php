@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 use App\Models\exercices;
 use Illuminate\Http\Request;
-
+use Auth;
 class ExercicesController extends Controller
 {
     public function index()
     {
+        $user = auth::user();
         $exercices = exercices::all();
-        return view('exercices.index', compact('exercices'));
+        return view('exercices.index', compact('exercices','user'));
     }
     public function store(Request $request)
     {

@@ -11,6 +11,7 @@
             <th scope="col">Structure</th>
             <th scope="col">Specialite</th>
             <th scope="col">Dossier</th>
+            <th>Statut</th>
             <th scope="col">Action</th>
         </tr>
     </thead>

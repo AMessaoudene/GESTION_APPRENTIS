@@ -99,6 +99,13 @@ class DossiersController extends Controller
                 $dossiers->photo = $photonom;
             }
 
+            if($request->hasFile('pieceidentite') && $request->file('pieceidentite')){
+                $pieceidentite = $request->file('pieceidentite');
+                $pieceidentitenom = 'pieceidentite-Apprenti-'.$apprenti->id.'-'.time().'.'.$pieceidentite->getClientOriginalExtension();
+                $pieceidentite->move('assets/dossiers',$pieceidentitenom);
+                $dossiers->pieceidentite = $pieceidentitenom;
+            }
+
             $dossiers->save();
             return redirect()->route('apprentis.consulter');
             }catch(\Exception $e){

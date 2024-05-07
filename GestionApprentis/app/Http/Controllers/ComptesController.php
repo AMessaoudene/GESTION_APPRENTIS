@@ -60,6 +60,6 @@ class ComptesController extends Controller
     public function destroy($id)
     {
         user::destroy($id);
-        return redirect()->back();
+        return redirect()->back()->with('success');
     }
 }

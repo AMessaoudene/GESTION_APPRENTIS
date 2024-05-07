@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\parametres;
 use Illuminate\Http\Request;
 use Validator;
-
+use Auth;
 class ParametresController extends Controller
 {
     /**
@@ -12,8 +12,9 @@ class ParametresController extends Controller
      */
     public function index()
     {
+        $user = auth::user();
         $parametres = parametres::all();
-        return view('parametres.index', compact('parametres'));
+        return view('parametres.index', compact('parametres','user'));
     }
 
     /**
@@ -45,28 +46,15 @@ class ParametresController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    public function update(Request $request,$id)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
+        $parametre = parametres::findOrFail($id);
+        $parametre->reference = $request->reference;
+        $parametre->decisionresponsable = $request->decisionresponsable;
+        $parametre->datedecisionresponsable = $request->datedecisionresponsable;
+        $parametre->statut = $request->statut;
+        $parametre->save();
+        return response()->json(['success' => true]);
     }
 
     /**
@@ -74,6 +62,7 @@ class ParametresController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        parametres::destroy($id);
+        return redirect()->back()->with('success');
     }
 }

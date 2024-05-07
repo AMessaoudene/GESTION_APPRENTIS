@@ -42,24 +42,29 @@
                         </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="parametresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Parametres
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="plansDropdown">
+                        <div class="dropdown-menu" aria-labelledby="parametresDropdown">
                             <a class="dropdown-item" href="#">Link 1</a>
                             <a class="dropdown-item" href="#">Link 2</a>
                             <a class="dropdown-item" href="#">Link 3</a>
                         </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="statistiquesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Profile
+                        <a class="nav-link dropdown-toggle" href="#" id="comptesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Comptes
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="statistiquesDropdown">
+                        <div class="dropdown-menu" aria-labelledby="comptesDropdown">
                             <a class="dropdown-item" href="#">Link 1</a>
                             <a class="dropdown-item" href="#">Link 2</a>
                             <a class="dropdown-item" href="#">Link 3</a>
                         </div>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ url('/profile') }}">
+                            Profile
+                        </a>
                     </li>
                     <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST">

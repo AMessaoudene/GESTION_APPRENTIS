@@ -71,4 +71,20 @@ class MaitreApprentisController extends Controller
             return redirect()->back()->with('success', 'Maitre d\'apprentissage ajoute avec succes');
         }
     }
+    public function update(Request $request,$id){
+        $maitre_apprentis = maitre_apprentis::find($id);
+        $maitre_apprentis->matricule = $request->matricule;
+        $maitre_apprentis->nom = $request->nom;
+        $maitre_apprentis->prenom = $request->prenom;
+        $maitre_apprentis->civilite = $request->civilite;
+        $maitre_apprentis->email = $request->email;
+        $maitre_apprentis->telephonepro = $request->telephonepro;
+        $maitre_apprentis->adresse = $request->adresse;
+        $maitre_apprentis->fonction = $request->fonction;
+        $maitre_apprentis->daterecrutement = $request->daterecrutement;
+        $maitre_apprentis->affectation = $request->affectation;
+        $maitre_apprentis->statut = $request->statut;
+        $maitre_apprentis->save();
+        return redirect()->back()->with('success', 'Maitre d\'apprentissage modifie avec succes');
+    }
 }

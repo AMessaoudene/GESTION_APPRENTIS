@@ -22,6 +22,8 @@
         <input type="file" class="form-control" id="autorisationparentele" name="autorisationparentele">
         <label for="photo">photo</label>
         <input type="file" class="form-control" id="photo" name="photo">
+        <label for="pieceidentite">piece d'identite</label>
+        <input type="file" class="form-control" id="pieceidentite" name="pieceidentite">
     </div>
     <button type="submit" class="btn btn-primary">Ajouter</button>
     <!--<table id="dossiers-table">

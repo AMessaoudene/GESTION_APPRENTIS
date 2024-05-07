@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\decisionapprentis;
+use App\Models\decisionmaitreapprentis;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\apprentis;
@@ -183,21 +185,24 @@ class ApprentisController extends Controller
     {
         $apprenti = apprentis::find($id);
         $apprenti->delete();
-        return redirect('/')->with('success', 'Apprenti supprimé avec succès');
+        return redirect()->back()->with('success', 'Apprenti supprimé avec succès');
     }
     public function details(Request $request,$id){
         $apprenti = apprentis::find($id);
         $specialite = specialites::where('id', $apprenti->specialite_id)->first();
         $structure = structures::where('id', $apprenti->structure_id)->first();
         $diplome = diplomes::where('id', $apprenti->diplome1_id)->first();
-        $dossier = dossiers::where('apprentis_id', $apprenti->id)->first();
+        $dossiers = dossiers::all();
         $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $decisionapprentis = decisionapprentis::all();
+        $decisionmaitreapprentis = decisionmaitreapprentis::all();
+        $maitreapprentis = maitre_apprentis::all();
         /*$dossier->status = $request->dossier_status;
         $dossier->motif = $request->motif;
         $dossier->save();
         $apprenti->status = $request->apprenti_status;
         $apprenti->save();*/
-        return view('apprentis.details',compact('apprenti','specialite','structure','diplome','dossier','pv'));
+        return view('apprentis.details',compact('apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
     }
     public function consulter(){
         $apprentis = apprentis::all();

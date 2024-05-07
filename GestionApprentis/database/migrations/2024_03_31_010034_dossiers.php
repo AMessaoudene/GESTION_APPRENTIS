@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('extraitnaissance');
             $table->string('autorisationparentele')->nullable();
             $table->string('photo')->nullable();
+            $table->string('pieceidentite')->nullable();
             $table->enum("status", ["valide","en cours","refuse"])->default("en cours");
             $table->string("motif")->nullable();
             $table->timestamps();
