@@ -31,34 +31,35 @@
             <input type="text" name="reference" id="reference" class="form-control" placeholder="Référence" required>
         </div>
         <div class="col-md-2">
-            <label for="specialites_id">Spécialité:</label>
-            <select name="specialites_id" id="specialites_id" class="form-control" required>
-                <option value="">-- choisir --</option>
-                @foreach($specialites as $specialite)
-                <option value="{{$specialite->id}}">{{$specialite->nom}}</option>
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-2">
             <label for="date">Date:</label>
             <input type="date" name="date" id="date" class="form-control" required>
         </div>
     </div>
-    <div class="row mt-3">
-        <div class="col-md-2">
-            <label for="nombreapprentis">Nombre d'apprentis:</label>
-            <input type="text" pattern="[0-9]+" name="nombreapprentis" id="nombreapprentis" class="form-control" placeholder="Nombre d'apprentis" required>
+    @foreach ($specialites as $specialite)
+        <input type="hidden" name="specialites_id[]" value="{{$specialite->id}}">
+        <div class="row mt-3">
+            <div class="col-md-2">
+                <label>Spécialité:</label>
+                <p>{{$specialite->nom}}</p>
+            </div>
+            <div class="col-md-2">
+                <label for="nombreapprentis{{$specialite->id}}">Nombre d'apprentis:</label>
+                <input type="text" pattern="[0-9]+" name="nombreapprentis[]" id="nombreapprentis{{$specialite->id}}" class="form-control" placeholder="Nombre d'apprentis" required>
+            </div>
+            <div class="col-md-2">
+                <label for="nombereffectif{{$specialite->id}}">Nombre d'effectif:</label>
+                <input type="text" pattern="[0-9]+" name="nombereffectif[]" id="nombereffectif{{$specialite->id}}" class="form-control" placeholder="Nombre d'effectif" required>
+            </div>
+            <div class="col-md-4">
+                <label for="description{{$specialite->id}}">Description:</label>
+                <textarea rows="1" name="description[]" id="description{{$specialite->id}}" class="form-control" placeholder="Description"></textarea>
+            </div>
         </div>
-        <div class="col-md-2">
-            <label for="nombereffectif">Nombre d'effectif:</label>
-            <input type="text" pattern="[0-9]+" name="nombereffectif" id="nombereffectif" class="form-control" placeholder="Nombre d'effectif" required>
-        </div>
-        <div class="col-md-4">
-            <label for="description">Description:</label>
-            <textarea type="text" rows="1" name="description" id="description" class="form-control" placeholder="Description"></textarea>
-        </div>
-        <input type="submit" value="Ajouter" id="submit-btn" class="btn btn-primary btn-block">
+    @endforeach
+    <div class="text-center">
+    <input type="submit" value="Ajouter" id="submit-btn" class="btn btn-primary btn-block">
     </div>
+    
 </form>
 
 <table id="planbesoins-table" class="table table-striped" style="width:100%">

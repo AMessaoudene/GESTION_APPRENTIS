@@ -2,7 +2,7 @@
 @section('title', 'Decisions')
 @section('content')
 <div class="container">
-    <h2>Decisions Form</h2>
+    <h2 class="text-center">Decisions de l'apprenti et maitre d'apprenti</h2>
     <form action="{{ route('decisions.store') }}" method="POST">
         @csrf
         <div class="form-group">
@@ -10,7 +10,9 @@
             <select class="form-control" name="planbesoins_id" id="planbesoins_id">
                 <option value="">-- choisir --</option>
                 @foreach($plans as $plan)
-                <option value="{{ $plan->id }}">{{ $plan->reference }}</option>
+                @if($plan->status == 'accepté')
+                    <option value="{{ $plan->id }}">{{ $plan->reference }} - {{ $plan->structure_id}} - {{$plan->specialites_id}}</option>
+                @endif
                 @endforeach
             </select>
         </div>
@@ -69,7 +71,10 @@
         <div id="bareme_details">
             <!-- Display bareme details here -->
         </div>
+        <div class="text-center">
         <button type="submit" class="btn btn-primary">Enregistrer</button>
+        </div>
+        
     </form>
 </div>
 @endsection

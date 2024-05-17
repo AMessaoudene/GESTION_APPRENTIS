@@ -20,7 +20,7 @@ class maitre_apprentis extends Model
         'fonction',
         'apprenti1_id',
         'apprenti2_id',
-        'numapprentissupervises',
+        //'numapprentissupervises',
         'daterecrutement',
         'affectation',
         'status',

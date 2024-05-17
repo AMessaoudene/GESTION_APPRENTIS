@@ -10,10 +10,11 @@ class SAsController extends Controller
 {
     public function index()
     {
+        $user = auth::user();
         // Check if the authenticated user has the role of DFP
-        if (strtolower(Auth::user()->role) === 'sa') {
+        if (strtolower($user->role) === 'sa') {
             // User has the DFP role, allow access to the dashboard
-            return view('SA.dashboard');
+            return view('SA.dashboard', compact('user'));
         } else {
             // Redirect or show an error page if the user doesn't have the DFP role
             return redirect()->back()->with('error', 'You do not have the required role to access this page.');

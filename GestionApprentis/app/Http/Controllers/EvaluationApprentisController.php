@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\evaluation_apprentis;
 use App\Models\apprentis;
 use App\Models\structures;
+use App\Models\supervisions;
 use Illuminate\Http\Request;
 use App\Models\maitre_apprentis;
 use Validator;
+
 class EvaluationApprentisController extends Controller
 {
     public function index()
@@ -15,78 +18,59 @@ class EvaluationApprentisController extends Controller
         $structures = structures::all();
         $evaluations = evaluation_apprentis::all();
         $maitreapprentis = maitre_apprentis::all();
-        return view('evaluation_apprentis.index', compact('apprentis','structures','evaluations','maitreapprentis'));
+        $supervisions = supervisions::all();
+        return view('evaluation_apprentis.index', compact('apprentis', 'structures', 'evaluations', 'maitreapprentis', 'supervisions'));
     }
-    public function submit(Request $request){
-        $rules = [
-            'reference' => 'required|unique|string|max:255',
-            'datedebut' => 'required|date',
-            'datefin ' => 'required|date',
-            'comportementsociabilite ' => 'required|string|max:255',
-            'observationcs ' => 'required|string|max:255',
-            'communication ' => 'required|string|max:255',
-            'observationc ' => 'required|string|max:255',
-            'organisationhygiene ' => 'required|string|max:255',
-            'observationoh ' => 'required|string|max:255',
-            'ponctualiteassiduite ' => 'required|string|max:255',
-            'observationpa' => 'required|string|max:255',
-            'respectreglementinterieur' => 'required|string|max:255',
-            'observationrri' => 'required|string|max:255',
-            'discipline' => 'required|string|max:255',
-            'observationd' => 'required|string|max:255',
-            'interettravail' => 'required|string|max:255',
-            'observationit' => 'required|string|max:255',
-            'motivation' => 'required|string|max:255',
-            'observationm' => 'required|string|max:255',
-            'espritinitiative' => 'required|string|max:255',
-            'observationei' => 'required|string|max:255',
-            'evolutionprocessusintegration' => 'required|string|max:255',
-            'observationepi' => 'required|string|max:255',
-            'qualificationsprofessionelles' => 'required|string|max:255',
-            'observationqp' => 'required|string|max:255',
-            'sensresponsabilite' => 'required|string|max:255',
-            'observationsr' => 'required|string|max:255',
-        ];
-        $messages = [
-            'reference.required' => 'Le champ :attribute est obligatoire.',
-            'reference.unique' => 'Le champ :attribute doit être unique.',
-            'datedebut.required' => 'Le champ :attribute est obligatoire.',
-            'datedebut.date' => 'Le champ :attribute doit être une date.',
-            'datefin.required' => 'Le champ :attribute est obligatoire.',
-            'datefin.date' => 'Le champ :attribute doit être une date.',
-            'comportementsociabilite.required' => 'Le champ :attribute est obligatoire.',
-            'observationcs.required' => 'Le champ :attribute est obligatoire.',
-            'communication.required' => 'Le champ :attribute est obligatoire.',
-            'observationc.required' => 'Le champ :attribute est obligatoire.',
-            'organisationhygiene.required' => 'Le champ :attribute est obligatoire.',
-            'observationoh.required' => 'Le champ :attribute est obligatoire.',
-            'ponctualiteassiduite.required' => 'Le champ :attribute est obligatoire.',
-            'observationpa.required' => 'Le champ :attribute est obligatoire.',
-            'respectreglementinterieur.required' => 'Le champ :attribute est obligatoire.',
-            'observationrri.required' => 'Le champ :attribute est obligatoire.',
-            'discipline.required' => 'Le champ :attribute est obligatoire.',
-            'observationd.required' => 'Le champ :attribute est obligatoire.',
-            'interettravail.required' => 'Le champ :attribute est obligatoire.',
-            'observationit.required' => 'Le champ :attribute est obligatoire.',
-            'motivation.required' => 'Le champ :attribute est obligatoire.',
-            'observationm.required' => 'Le champ :attribute est obligatoire.',
-            'espritinitiative.required' => 'Le champ :attribute est obligatoire.',
-            'observationei.required' => 'Le champ :attribute est obligatoire.',
-            'evolutionprocessusintegration.required' => 'Le champ :attribute est obligatoire.',
-            'observationepi.required' => 'Le champ :attribute est obligatoire.',
-            'qualificationsprofessionelles.required' => 'Le champ :attribute est obligatoire.',
-            'observationqp.required' => 'Le champ :attribute est obligatoire.',
-            'sensresponsabilite.required' => 'Le champ :attribute est obligatoire.',
-            'observationsr.required' => 'Le champ :attribute est obligatoire.',
 
+    public function submit(Request $request)
+    {
+        $rules = [
+            'reference' => 'required|unique:evaluation_apprentis,reference|string|max:255',
+            'datedebut' => 'required|date',
+            'datefin' => 'required|date',
+            'comportementsociabilite' => 'required|string|max:255',
+            'communication' => 'required|string|max:255',
+            'organisationhygiene' => 'required|string|max:255',
+            'ponctualiteassiduite' => 'required|string|max:255',
+            'respectreglementinterieur' => 'required|string|max:255',
+            'discipline' => 'required|string|max:255',
+            'interettravail' => 'required|string|max:255',
+            'motivation' => 'required|string|max:255',
+            'espritinitiative' => 'required|string|max:255',
+            'evolutionprocessusintegration' => 'required|string|max:255',
+            'qualificationsprofessionelles' => 'required|string|max:255',
+            'sensresponsabilite' => 'required|string|max:255',
         ];
-        $validator = Validator::make(request()->all(), $rules, $messages);
+
+        $messages = [
+            'reference.required' => 'Le champ référence est obligatoire.',
+            'reference.unique' => 'Cette référence est déjà utilisée.',
+            'datedebut.required' => 'Le champ date début est obligatoire.',
+            'datedebut.date' => 'Le champ date début doit être une date.',
+            'datefin.required' => 'Le champ date fin est obligatoire.',
+            'datefin.date' => 'Le champ date fin doit être une date.',
+            'comportementsociabilite.required' => 'Le champ comportement sociabilité est obligatoire.',
+            'communication.required' => 'Le champ communication est obligatoire.',
+            'organisationhygiene.required' => 'Le champ organisation hygiène est obligatoire.',
+            'ponctualiteassiduite.required' => 'Le champ ponctualité et assiduité est obligatoire.',
+            'respectreglementinterieur.required' => 'Le champ respect règlement intérieur est obligatoire.',
+            'discipline.required' => 'Le champ discipline est obligatoire.',
+            'interettravail.required' => 'Le champ intérêt de travail est obligatoire.',
+            'motivation.required' => 'Le champ motivation est obligatoire.',
+            'espritinitiative.required' => 'Le champ esprit initiative est obligatoire.',
+            'evolutionprocessusintegration.required' => 'Le champ évolution processus intégration est obligatoire.',
+            'qualificationsprofessionelles.required' => 'Le champ qualifications professionnelles est obligatoire.',
+            'sensresponsabilite.required' => 'Le champ sens responsabilité est obligatoire.',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
-        }
-        else{
+        } else {
             $evaluation = new evaluation_apprentis();
             $evaluation->reference = $request->reference;
+            $evaluation->apprenti_id = $request->apprenti_id;
             $evaluation->datedebut = $request->datedebut;
             $evaluation->datefin = $request->datefin;
             $evaluation->comportementsociabilite = $request->comportementsociabilite;
@@ -103,8 +87,6 @@ class EvaluationApprentisController extends Controller
             $evaluation->observationd = $request->observationd;
             $evaluation->interettravail = $request->interettravail;
             $evaluation->observationit = $request->observationit;
-            $evaluation->qualification = $request->qualification;
-            $evaluation->observationq = $request->observationq;
             $evaluation->motivation = $request->motivation;
             $evaluation->observationm = $request->observationm;
             $evaluation->espritinitiative = $request->espritinitiative;
@@ -116,7 +98,7 @@ class EvaluationApprentisController extends Controller
             $evaluation->sensresponsabilite = $request->sensresponsabilite;
             $evaluation->observationsr = $request->observationsr;
             $evaluation->save();
-            return redirect()->back()->with('success', 'Evaluation ajoutée avec succès');
+            return redirect()->back()->with('success', 'Évaluation ajoutée avec succès');
         }
     }
 }

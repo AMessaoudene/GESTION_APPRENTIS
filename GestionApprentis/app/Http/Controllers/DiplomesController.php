@@ -49,6 +49,6 @@ class DiplomesController extends Controller
     public function destroy($id)
     {
         Diplomes::destroy($id);
-        return redirect()->back();
+        return redirect()->back()->with('success');
     }
 }

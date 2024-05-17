@@ -50,11 +50,6 @@ class DossiersController extends Controller
             $dossiers = new dossiers();
             $dossiers->apprentis_id = $apprenti->id;
 
-            /*$file=$request->file;	        
-	        $filename=time().'.'.$file->getClientOriginalExtension();
-		    $request->file->move('assets',$filename);
-		    $data->file=$filename;*/
-
             $contratapprenti = $request->file('contratapprenti');
             $contratapprentinom = 'Contrat-Apprenti-'.$apprenti->id.'-'.time().'.'.$contratapprenti->getClientOriginalExtension();
             $contratapprenti->move('assets/dossiers',$contratapprentinom);
@@ -141,10 +136,9 @@ class DossiersController extends Controller
         $dossiers->delete();
         return redirect()->back();
     }
-    public function consulter(Request $request){
-        $apprentis = apprentis::all();
-        $dossiers = dossiers::all();
-        $structures = structures::all();
-        return view('dossiers.consulter',compact('apprentis','dossiers','structures'));
+    public function details(Request $request,$id){
+        $apprenti = apprentis::findOrFail($id);
+        $dossier = dossiers::where('apprenti_id',$apprenti->id);
+        return view('dossiers.details',compact('apprenti'));
     }
 }

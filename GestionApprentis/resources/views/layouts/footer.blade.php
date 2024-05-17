@@ -1,13 +1,13 @@
 </main>
-<footer class="text-light py-3" style="background-color:#22297C;">
-        <div class="container">
-            <div class="row">
-                <div class="col-12 text-center">
-                    <h4><span id="currentYear"></span> &copy; - Algérie Poste</h4>
-                </div>
-            </div>
-        </div>
-    </footer>
+
+<footer>
+    <div class="card col-12 text-center" style="padding:0">
+  <div class="card-body">
+    
+    <h4><span id="currentYear"></span> &copy; - Algérie Poste</h4>
+  </div>
+</div>
+</footer>
 </body>
 </html>
 

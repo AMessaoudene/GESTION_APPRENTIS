@@ -3,29 +3,75 @@
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css">
 @section('content')
 
-<form method="POST" action="{{ route('dossiers.store') }}" enctype="multipart/form-data">
-    @csrf
-    <div class="form-group">
-        <label for="contratapprenti">Contrat</label>
-        <input type="file" class="form-control" id="contratapprenti" name="contratapprenti" required>
-        <label for="decisionapprenti">Decision d'apprenti</label>
-        <input type="file" class="form-control" id="decisionapprenti" name="decisionapprenti" required>
-        <label for="decisionmaitreapprenti">Decision Maitre d'apprentis</label>
-        <input type="file" class="form-control" id="decisionmaitreapprenti" name="decisionmaitreapprenti" required>
-        <label for="pvinstallation">PV d'Installation</label>
-        <input type="file" class="form-control" id="pvinstallation" name="pvinstallation" required>
-        <label for="copiecheque">copie cheque</label>
-        <input type="file" class="form-control" id="copiecheque" name="copiecheque" required>
-        <label for="extraitnaissance">extrait de naissance</label>
-        <input type="file" class="form-control" id="extraitnaissance" name="extraitnaissance" required>
-        <label for="autorisationparentele">autorisationparentele</label>
-        <input type="file" class="form-control" id="autorisationparentele" name="autorisationparentele">
-        <label for="photo">photo</label>
-        <input type="file" class="form-control" id="photo" name="photo">
-        <label for="pieceidentite">piece d'identite</label>
-        <input type="file" class="form-control" id="pieceidentite" name="pieceidentite">
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form method="POST" action="{{ route('dossiers.store') }}" enctype="multipart/form-data" class="needs-validation" novalidate>
+                <h2 class="text-center mb-4">Ajouter les documents</h2>
+                @csrf
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="contratapprenti">Contrat</label>
+                        <input type="file" class="form-control" id="contratapprenti" name="contratapprenti" required>
+                        <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="decisionapprenti">Decision d'apprenti</label>
+                        <input type="file" class="form-control" id="decisionapprenti" name="decisionapprenti" required>
+                        <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="decisionmaitreapprenti">Decision Maitre d'apprentis</label>
+                        <input type="file" class="form-control" id="decisionmaitreapprenti" name="decisionmaitreapprenti" required>
+                        <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="pvinstallation">PV d'Installation</label>
+                        <input type="file" class="form-control" id="pvinstallation" name="pvinstallation" required>
+                        <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="copiecheque">Copie Cheque</label>
+                        <input type="file" class="form-control" id="copiecheque" name="copiecheque" required>
+                        <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="extraitnaissance">Extrait de Naissance</label>
+                        <input type="file" class="form-control" id="extraitnaissance" name="extraitnaissance" required>
+                        <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="autorisationparentele">Autorisation Parentale</label>
+                        <input type="file" class="form-control" id="autorisationparentele" name="autorisationparentele">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="photo">Photo</label>
+                        <input type="file" class="form-control" id="photo" name="photo">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="pieceidentite">Piece d'Identite</label>
+                        <input type="file" class="form-control" id="pieceidentite" name="pieceidentite">
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary mt-3">Ajouter</button>
+                </div>
+            </form>
+        </div>
     </div>
-    <button type="submit" class="btn btn-primary">Ajouter</button>
+</div>
     <!--<table id="dossiers-table">
         <thead>
             <tr>
@@ -74,5 +120,5 @@
             $('#dossiers-table').DataTable();
         });
     </script>
-</form>
-@endsection-->
+</form>-->
+@endsection

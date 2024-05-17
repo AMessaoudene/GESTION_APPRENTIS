@@ -32,6 +32,7 @@
                         <div class="mb-3">
                             <label class="form-label">Diplome</label>
                             <select name="diplome1_id" class="form-select" required>
+                                <option value="">Choisir</option>
                                 @foreach($diplomes as $diplome)
                                     <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
                                 @endforeach
@@ -59,6 +60,7 @@
                             <div class="col-md-6">
                                 <label for="civilite" class="form-label">Civilité</label>
                                 <select class="form-select" id="civilite" name="civilite" required>
+                                    <option value="">Choisir</option>
                                     <option value="Homme">Homme</option>
                                     <option value="Femme">Femme</option>
                                 </select>
@@ -66,6 +68,7 @@
                             <div class="col-md-6">
                                 <label for="nationalite" class="form-label">Nationalité</label>
                                 <select class="form-select" id="nationalite" name="nationalite" required>
+                                    <option value="">Choisir</option>
                                     <option value="algerienne">Algerienne</option>
                                     <option value="etrangere">Etrangere</option>
                                 </select>
@@ -92,6 +95,7 @@
                         <div class="mb-3">
                             <label class="form-label">Niveau scolaire</label>
                             <select name="niveauscolaire" class="form-select" required>
+                                <option value="">-- Choisir --</option>
                                 <option value="primaire">Primaire</option>
                                 <option value="moyen">Moyen</option>
                                 <option value="secondaire">Secondaire</option>
@@ -108,6 +112,7 @@
                         <div class="mb-3">
                             <label class="form-label">Structure</label>
                             <select name="structure_id" class="form-select" required>
+                                <option value="">-- Choisir une structure --</option>
                                 @foreach($structures as $structure)
                                     <option value="{{$structure->id}}">{{ $structure->nom }}</option>
                                 @endforeach
@@ -116,6 +121,7 @@
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select name="status" class="form-select" required>
+                                <option value="">-- Choisir un statut --</option>
                                 <option value="actif" selected>Actif</option>
                                 <option value="inactif">Inactif</option>
                             </select>
@@ -123,6 +129,7 @@
                         <div class="mb-3">
                             <label class="form-label">Maître d'apprentissage</label>
                             <select name="maitre_apprentis" class="form-select" required>
+                                <option value="">-- Choisir un maitre d'apprentissage --</option>
                                 @foreach($maitre_apprentis as $maitre_apprenti)
                                     @if(is_null($maitre_apprenti->apprenti1_id) || is_null($maitre_apprenti->apprenti2_id)){
                                         <option value="{{ $maitre_apprenti->id }}">{{ $maitre_apprenti->nom }} {{ $maitre_apprenti->prenom }}</option>
@@ -131,7 +138,10 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="text-center">
                         <button type="submit" class="btn btn-primary">Ajouter</button>
+                        </div>
+                        
                     </form>
                 </div>
             </div>

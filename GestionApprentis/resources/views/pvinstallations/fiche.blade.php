@@ -13,7 +13,7 @@
 <DIV style="position:relative; left:0.06in;">
 <span style="font-style:normal;font-weight:bold;font-size:9pt;font-family:TimesNewRomanPS-BoldMT;color:#000000">EPIC ALGERIE POSTE</span>
 <span style="font-style:normal;font-weight:bold;font-size:9pt;font-family:TimesNewRomanPS-BoldMT;color:#000000"> </span><br/></DIV><span style="font-style:normal;font-weight:bold;font-size:9pt;font-family:TimesNewRomanPS-BoldMT;color:#000000">DIRECTION  GENERALE</span><span style="font-style:normal;font-weight:bold;font-size:9pt;font-family:TimesNewRomanPS-BoldMT;color:#000000"> </span><br/></SPAN></div>
-<div style="position:absolute;top:0.67in;left:2.51in;width:0.78in;line-height:0.20in;"><span style="font-style:normal;font-weight:normal;font-size:14pt;font-family:Arial Narrow;color:#000000">Direction : </span><span style="font-style:normal;font-weight:normal;font-size:14pt;font-family:Arial Narrow;color:#000000"> {{$pv->direction}}</span><br/></SPAN></div>
+<div style="position:absolute;top:0.67in;left:2.51in;width:0.78in;line-height:0.20in;"><span style="font-style:normal;font-weight:normal;font-size:14pt;font-family:Arial Narrow;color:#000000">Direction : </span><span style="font-style:normal;font-weight:normal;font-size:14pt;font-family:Arial Narrow;color:#000000"></span><br/></SPAN></div>
 <div style="position:absolute;top:0.68in;left:7.09in;width:1.18in;line-height:0.17in;">
 <span style="font-style:normal;font-weight:bold;font-size:12pt;font-family:Arial Narrow;color:#000000">ERQ/DFP/113/V2</span>
 <br/>

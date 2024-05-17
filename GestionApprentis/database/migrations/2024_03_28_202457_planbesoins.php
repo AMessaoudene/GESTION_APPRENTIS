@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('planbesoins', function (Blueprint $table) {
             $table->id();
-            $table->string('reference')->unique();
+            $table->string('reference');
             $table->unsignedBigInteger('exercice_id');
             $table->foreign('exercice_id')->references('id')->on('exercices')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('structure_id');

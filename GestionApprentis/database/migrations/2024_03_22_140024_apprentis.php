@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreign('diplome1_id')->references('id')->on('diplomes')->onDelete('cascade');
             $table->unsignedBigInteger('diplome2_id')->nullable();
             $table->foreign('diplome2_id')->references('id')->on('diplomes')->onDelete('cascade');
-            $table->enum('status', ['actif', 'inactif'])->default('actif'); // Example of enum column with default value*/
+            $table->enum('status', ['actif', 'inactif'])->default('inactif'); // Example of enum column with default value*/
             $table->timestamps();
         });
     }

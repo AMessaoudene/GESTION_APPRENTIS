@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use Validator;
 use Illuminate\Http\JsonResponse;
 use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
 class StructuresController extends Controller
 {
     public function index() {
         $structures = structures::all();
         $users = User::all();
-        return view('structures.index', compact('structures','users'));
+        $user = Auth::user();
+        return view('structures.index', compact('structures','users','user'));
     }
     //Ajout d'une structure
     public function submit(Request $request) {

@@ -63,7 +63,7 @@ class MaitreApprentisController extends Controller
             $maitre_apprentis->telephonepro = $request->telephonepro;
             $maitre_apprentis->adresse = $request->adresse;
             $maitre_apprentis->fonction = $request->fonction;
-            $maitre_apprentis->numapprentissupervises = 0;
+            //$maitre_apprentis->numapprentissupervises = 0;
             $maitre_apprentis->daterecrutement = $request->daterecrutement;
             $maitre_apprentis->affectation = $request->affectation;
             $maitre_apprentis->statut = $request->statut;

@@ -19,188 +19,310 @@
         </ul>
         </div>
     @endif
-    <form action="{{ route('evaluation_apprentis.submit') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('evaluation_apprentis.submit') }}" method="POST" enctype="multipart/form-data" class="container mt-5">
         @csrf
-        <div class="form-group">
-          <label for="">Apprenti</label>
-          <select name="apprenti_id" class="form-control" required>
-              @foreach ($apprentis as $apprenti)
-                  <option value="{{$apprenti->id}}">{{$apprenti->id}} - {{$apprenti->nom}} {{$apprenti->prenom}}</option>
-              @endforeach
-          </select>
-          <input type="text" value="{{$maitre_apprentis->nom}} {{$maitre_apprentis->prenom}}">
-          <input type="text" value="{{$maitre_apprentis->fonction}}">
-          <label for="">Structure
-            <select name="" id="">
-                @foreach ($structures as $structure)
-                    <option value="{{$structure->id}}">{{$structure->nom}}</option>
+        <div class="form-group mb-3">
+            <label for="apprenti" class="form-label">Apprenti</label>
+            <select name="apprenti_id" id="apprenti" class="form-control" required>
+                <option value="">-- Choisir --</option>
+                @foreach ($apprentis as $apprenti)
+                    @if($apprenti->status == 'actif' && Auth::user()->structures_id == $apprenti->structure_id)
+                        @php
+                            $supervision = $supervisions->firstWhere('apprenti_id', $apprenti->id);
+                            $maitre = $supervision ? $maitreapprentis->firstWhere('id', $supervision->maitreapprenti_id) : null;
+                        @endphp
+                        <option value="{{ $apprenti->id }}" 
+                                data-nom="{{ $apprenti->nom }}" 
+                                data-prenom="{{ $apprenti->prenom }}" 
+                                data-civilite="{{ $apprenti->civilite }}"
+                                data-maitre-nom="{{ $maitre->nom ?? '' }}" 
+                                data-maitre-prenom="{{ $maitre->prenom ?? '' }}">
+                            {{ $apprenti->id }} - {{ $apprenti->nom }} {{ $apprenti->prenom }}
+                        </option>
+                    @endif
                 @endforeach
             </select>
-          </label>
         </div>
-        <label for="">Reference
-            <input type="text" name="reference" required>
-        </label>
-        <div class="row">
-            <div class="col">
-                <label for="exampleInputPassword1">Date début</label>
-                <input type="date" name="date" class="form-control" id="exampleInputPassword1">
+
+        <div id="apprenti-info" class="d-none">
+            <h4>Infos sur l'apprenti</h4>
+            <div class="form-group mb-3">
+                <label for="nom" class="form-label">Nom</label>
+                <input type="text" id="nom" class="form-control" disabled readonly>
             </div>
-            <div class="col">
-                <label for="heureseance">Date fin</label>
-                <input type="date" name="date_fin" class="form-control" id="heureseance">
+            <div class="form-group mb-3">
+                <label for="prenom" class="form-label">Prenom</label>
+                <input type="text" id="prenom" class="form-control" disabled readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="civilite" class="form-label">Civilité</label>
+                <input type="text" id="civilite" class="form-control" disabled readonly>
             </div>
         </div>
 
-        <label for="">
-            <select name="reference" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="">
-        </label>
-        <label for="">
-            <select name="comportementsociabilite" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationcs">
-        </label>
-        <label for="">
-            <select name="communication" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationc">
-        </label>
-        <label for="">
-            <select name="organisationhygiene" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationoh">
-        </label>
-        <label for="">
-            <select name="ponctualiteassiduite" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationpa">
-        </label>
-        <label for="">
-            <select name="respectreglementinterieur" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationrri">
-        </label>
-        <label for="">
-            <select name="discipline" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationd">
-        </label>
-        <label for="">
-            <select name="interettravail" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationit">
-        </label>
-        <label for="">
-            <select name="motivation" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationm">
-        </label>
-        <label for="">
-            <select name="espritinitiative" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationei">
-        </label>
-        <label for="">
-            <select name="qualificationsprofessionelles" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationqp">
-        </label>
-        <label for="">
-            <select name="evolutionprocessusintegration" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationepi">
-        </label>
-        <label for="">
-            <select name="sensresponsabilite" id="" required>
-                <option value="Très bon"></option>
-                <option value="Bon"></option>
-                <option value="Moyen"></option>
-                <option value="Faible"></option>
-            </select>
-            <input type="text" name="observationsr">
-        </label>
-        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <div id="maitre-info" class="d-none">
+            <h4>Infos sur le maitre apprenti</h4>
+            <div class="form-group mb-3">
+                <label for="maitre-nom" class="form-label">Nom</label>
+                <input type="text" id="maitre-nom" class="form-control" disabled readonly>
+            </div>
+            <div class="form-group mb-3">
+                <label for="maitre-prenom" class="form-label">Prenom</label>
+                <input type="text" id="maitre-prenom" class="form-control" disabled readonly>
+            </div>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="reference" class="form-label">Reference</label>
+            <input type="text" name="reference" class="form-control" id="reference" required>
+        </div>
+
+        <div class="form-group row mb-3">
+            <div class="col-md-6">
+                <label for="date_debut" class="form-label">Date début</label>
+                <input type="date" name="datedebut" class="form-control" id="date_debut">
+            </div>
+            <div class="col-md-6">
+                <label for="date_fin" class="form-label">Date fin</label>
+                <input type="date" name="datefin" class="form-control" id="date_fin">
+            </div>
+        </div>
+            <div class="form-group row mb-3">
+    <label for="comportementsociabilite" class="form-label">Comportement et Sociabilité</label>
+    
+            <div class="col-md-6">
+    <select name="comportementsociabilite" id="comportementsociabilite" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationcs" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="communication" class="form-label">Communication</label>
+        
+<div class="col-md-6">
+    <select name="communication" id="communication" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationc" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="organisationhygiene" class="form-label">Organisation et Hygiène</label>
+        
+<div class="col-md-6">
+    <select name="organisationhygiene" id="organisationhygiene" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationoh" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="ponctualiteassiduite" class="form-label">Ponctualité et Assiduité</label>
+        
+<div class="col-md-6">
+    <select name="ponctualiteassiduite" id="ponctualiteassiduite" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationpa" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="respectreglementinterieur" class="form-label">Respect du Règlement Intérieur</label>
+        
+<div class="col-md-6">
+    <select name="respectreglementinterieur" id="respectreglementinterieur" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationrri" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="discipline" class="form-label">Discipline</label>
+        
+<div class="col-md-6">
+    <select name="discipline" id="discipline" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationd" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="interettravail" class="form-label">Intérêt pour le Travail</label>
+        
+<div class="col-md-6">
+    <select name="interettravail" id="interettravail" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationit" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="motivation" class="form-label">Motivation</label>
+        
+<div class="col-md-6">
+    <select name="motivation" id="motivation" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationm" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="espritinitiative" class="form-label">Esprit d'Initiative</label>
+        
+<div class="col-md-6">
+    <select name="espritinitiative" id="espritinitiative" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationei" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="evolutionprocessusintegration" class="form-label">Évolution et Processus d'Intégration</label>
+        
+<div class="col-md-6">
+    <select name="evolutionprocessusintegration" id="evolutionprocessusintegration" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationepi" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="qualificationsprofessionelles" class="form-label">Qualifications Professionnelles</label>
+        
+<div class="col-md-6">
+    <select name="qualificationsprofessionelles" id="qualificationsprofessionelles" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationqp" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+<div class="form-group row mb-3">
+<label for="sensresponsabilite" class="form-label">Sens de la Responsabilité</label>
+        
+<div class="col-md-6">
+    <select name="sensresponsabilite" id="sensresponsabilite" class="form-control" required>
+        <option value="">-- Choisir --</option>
+        <option value="Très bon">Très bon</option>
+        <option value="Bon">Bon</option>
+        <option value="Moyen">Moyen</option>
+        <option value="Faible">Faible</option>
+    </select>
+    </div>
+    <div class="col-md-6">
+    <input type="text" name="observationsr" class="form-control" placeholder="Observations">
+</div>
+</div>
+
+
+        <button type="submit" class="btn btn-primary w-100">Ajouter</button>
     </form>
 </div>
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Apprenti</th>
-            <th>Date</th>
-            <th>Heure de début</th>
-            <th>Heure de fin</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($evaluations as $evaluation)
-            <tr>
-                <td>{{ $evaluation->id }}</td>
-                <td>{{ $evaluation->apprenti_id }}</td>
-                <td>{{ $evaluation->date }}</td>
-                <td>{{ $evaluation->heure_debut }}</td>
-                <td>{{ $evaluation->heure_fin }}</td>
-                <td>
-                    <a href="{{ route('evaluation_apprentis.edit', $evaluation->id) }}" class="btn btn-primary">Modifier</a>
-                    <form action="{{ route('evaluation_apprentis.destroy', $evaluation->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger">Supprimer</button>
-                    </form>
-                </td>
-            </tr> 
-        @endforeach
-    </tbody>  
-</table>
+
+<script>
+    document.getElementById('apprenti').addEventListener('change', function() {
+        const selectedOption = this.options[this.selectedIndex];
+        const nom = selectedOption.getAttribute('data-nom');
+        const prenom = selectedOption.getAttribute('data-prenom');
+        const civilite = selectedOption.getAttribute('data-civilite');
+        const maitreNom = selectedOption.getAttribute('data-maitre-nom');
+        const maitrePrenom = selectedOption.getAttribute('data-maitre-prenom');
+
+        // Display apprenti information
+        if (nom && prenom && civilite) {
+            document.getElementById('nom').value = nom;
+            document.getElementById('prenom').value = prenom;
+            document.getElementById('civilite').value = civilite;
+            document.getElementById('apprenti-info').classList.remove('d-none');
+        } else {
+            document.getElementById('apprenti-info').classList.add('d-none');
+        }
+
+        // Display maitre apprenti information
+        if (maitreNom && maitrePrenom) {
+            document.getElementById('maitre-nom').value = maitreNom;
+            document.getElementById('maitre-prenom').value = maitrePrenom;
+            document.getElementById('maitre-info').classList.remove('d-none');
+        } else {
+            document.getElementById('maitre-info').classList.add('d-none');
+        }
+    });
+</script>
 @endsection

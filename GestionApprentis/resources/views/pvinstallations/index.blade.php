@@ -48,7 +48,10 @@
         <div class="form-group">
             <a href="{{ route("pvinstallations.download") }}" class="btn btn-primary">Download PDF</a>
         </div>
-        <button type="submit" class="btn btn-success">Submit</button>
+        <div class="text-center">
+    <button type="submit" class="btn btn-success">Submit</button>
+    </div>
     </form>
+    
 </div>
 @endsection

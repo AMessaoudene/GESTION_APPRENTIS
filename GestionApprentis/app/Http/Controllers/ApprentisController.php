@@ -1,8 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\assiduites;
 use App\Models\decisionapprentis;
 use App\Models\decisionmaitreapprentis;
+use App\Models\evaluation_apprentis;
+use App\Models\supervisions;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\apprentis;
@@ -46,7 +49,7 @@ class ApprentisController extends Controller
             'structure_id' => 'required|string|max:255',
             'diplome1_id' => 'required|string|max:255',
             'status' => 'required',
-            /*'maitre_apprentis' => 'required|string|max:255',*/
+            'maitre_apprentis' => 'required',
         ];
 
         // Custom error messages
@@ -56,6 +59,16 @@ class ApprentisController extends Controller
             'datedebut.required' => 'Le champ date de debut est requis.',
             'datefin.required' => 'Le champ date de fin est requis.',
             'datenaissance.required' => 'Le champ date de naissance est requis.',
+            'email.required' => 'Le champ email est requis.',
+            'telephone.required' => 'Le champ telephone est requis.',
+            'adresse.required' => 'Le champ adresse est requis.',
+            'niveauscolaire.required' => 'Le champ niveau scolaire est requis.',
+            'specialite_id.required' => 'Le champ specialite est requis.',
+            'structure_id.required' => 'Le champ structure est requis.',
+            'diplome1_id.required' => 'Le champ diplome est requis.',
+            'status.required' => 'Le champ status est requis.',
+            'maitre_apprentis.required' => 'Le champ maitre_apprentis est requis.',
+            'numcontrat.unique' => 'Le numéro de contrat existe deja dans la base de données.',
         ];
 
         // Validate the incoming request
@@ -113,6 +126,12 @@ class ApprentisController extends Controller
 
                     // Save the updated master apprentice
                     $maitreApprenti->save();
+
+                    $supervision = new supervisions();
+                    $supervision->apprenti_id = $apprenti->id;
+                    $supervision->maitreapprenti_id = $maitreApprenti->id;
+                    $supervision->save();
+
                     Session::put('apprenti', $apprenti);
                     return redirect()->route('pvinstallations.index');
                 }
@@ -155,6 +174,12 @@ class ApprentisController extends Controller
 
                 // Save the updated master apprentice
                 $maitreApprenti->save();
+
+                $supervision = new supervisions();
+                $supervision->apprenti_id = $apprenti->id;
+                $supervision->maitreapprenti_id = $maitreApprenti->id;
+                $supervision->save();
+
                 Session::put('apprenti', $apprenti);
                 return redirect()->route('pvinstallations.index');
             }
@@ -172,22 +197,67 @@ class ApprentisController extends Controller
             $diplomes = diplomes::all();
             return view('apprentis.modifier', compact('apprenti', 'maitre_apprentis','diplomes'));
         } catch (\Exception $e) {
-            return redirect('/')->with('error', 'Une erreur est survenue: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'Une erreur est survenue: ' . $e->getMessage());
         } 
         
     }
-    public function show()
-    {
-        $apprentis = apprentis::all();
-        return view('apprentis.afficher', compact('apprentis'));
+
+    // for SA
+    public function update(Request $request,$id){
+        $apprenti = apprentis::findOrFail($id);
+        $apprenti->nom = $request->nom;
+        $apprenti->prenom = $request->prenom;
+        $apprenti->civilite = $request->civilite;
+        $apprenti->email = $request->email;
+        $apprenti->telephone = $request->telephone;
+        $apprenti->adresse = $request->adresse;
+        $apprenti->niveauscolaire = $request->niveauscolaire;
+        $apprenti->specialite_id = $request->specialite_id;
+        $apprenti->structure_id = $request->structure_id;
+        $apprenti->diplome1_id = $request->diplome1_id;
+        $apprenti->save();
+        return redirect()->back()->with('success', 'Apprenti modifié avec succes');
     }
-    public function destroy($id)
-    {
+
+    // for DFP
+    public function status(Request $request, $id){
         $apprenti = apprentis::find($id);
-        $apprenti->delete();
-        return redirect()->back()->with('success', 'Apprenti supprimé avec succès');
+        $apprenti->status = $request->status;
+        $apprenti->save();
+        return redirect()->back()->with('success', 'Apprenti modifié avec succes');
     }
+
+    public function destroy($id)
+{
+    $apprenti = apprentis::find($id);
+    
+    if (!$apprenti) {
+        return redirect()->back()->with('error', 'Apprenti non trouvé');
+    }
+
+    pv_installations::where('apprenti_id', $apprenti->id)->delete();
+    assiduites::where('apprenti_id',$apprenti->id)->delete();
+    dossiers::where('apprentis_id',$apprenti->id)->delete();
+    evaluation_apprentis::where('apprenti_id',$apprenti->id)->delete();    
+    $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+    if ($maitreapprenti1) {
+        $maitreapprenti1->apprenti1_id = null;
+        $maitreapprenti1->save();
+    } else {
+        $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+        if ($maitreapprenti2) {
+            $maitreapprenti2->apprenti2_id = null;
+            $maitreapprenti2->save();
+        }
+    }
+
+    $apprenti->delete();
+
+    return redirect()->back()->with('success', 'Apprenti supprimé avec succès');
+}
+
     public function details(Request $request,$id){
+        $user = auth::user();
         $apprenti = apprentis::find($id);
         $specialite = specialites::where('id', $apprenti->specialite_id)->first();
         $structure = structures::where('id', $apprenti->structure_id)->first();
@@ -197,20 +267,32 @@ class ApprentisController extends Controller
         $decisionapprentis = decisionapprentis::all();
         $decisionmaitreapprentis = decisionmaitreapprentis::all();
         $maitreapprentis = maitre_apprentis::all();
-        /*$dossier->status = $request->dossier_status;
+        return view('apprentis.details',compact('user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+    }
+
+    public function updatedossier(Request $request,$id){
+        $dossier = dossiers::find($id);
+        $dossier->status = $request->status;
         $dossier->motif = $request->motif;
         $dossier->save();
-        $apprenti->status = $request->apprenti_status;
-        $apprenti->save();*/
-        return view('apprentis.details',compact('apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+        $apprenti = apprentis::where('id', $dossier->apprentis_id)->first();
+        if($request->status == 'valide'){
+            $apprenti->status = 'actif';
+        }
+        else{
+            $apprenti->status = 'inactif';
+        }
+        $apprenti->save();
+        return redirect()->back()->with('success', 'Dossier modifié avec succes');
     }
     public function consulter(){
+        $user = auth::user();
         $apprentis = apprentis::all();
         $structures = structures::all();
         $specialites = specialites::all();
         $diplomes = diplomes::all();
         if(auth::user()->role === 'DFP' || auth::user()->role === 'SA'){
-            return view('apprentis.consulter', compact('apprentis','structures','specialites','diplomes'));   
+            return view('apprentis.consulter', compact('user','apprentis','structures','specialites','diplomes'));   
         }
         else{
             return redirect()->back()->with('error', 'Vous n\'avez pas les autorisations pour consulter cette page');

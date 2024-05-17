@@ -4,6 +4,7 @@ use App\Http\Controllers\DecisionsApprentisController;
 use App\Http\Controllers\baremesController;
 use App\Http\Controllers\EvaluateurGrade\EvaluateurGradeController;
 use App\Http\Controllers\RefSalariairesController;
+use App\Http\Controllers\sidenavController;
 use App\Http\Controllers\specialitesController;
 use App\Http\Controllers\DossiersController;
 use App\Http\Controllers\ProfileController;
@@ -45,8 +46,9 @@ Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis
 Route::post('/apprentis', [ApprentisController::class, 'submit'])->name('apprentis.submit');
 Route::get('/apprentis/consulter', [ApprentisController::class, 'consulter'])->name('apprentis.consulter');
 Route::get('/apprentis/details/{id}',[ApprentisController::class,'details'])->name('apprentis.details');
+Route::post('/apprentis/details/{id}',[ApprentisController::class,'updatedossier'])->name('apprentis.updatedossier');
 Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
-Route::delete('/apprentis/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
+Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
 //specialites
 Route::get('/specialites', [SpecialitesController::class, 'index'])->name('specialites.index');
 Route::post('/specialites', [SpecialitesController::class, 'store'])->name('specialites.store');
@@ -146,4 +148,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/comptes',[ComptesController::class,'store'])->name('comptes.store');
     Route::delete('/comptes/{id}',[ComptesController::class,'destroy'])->name('comptes.destroy');
     Route::put('/comptes/{id}',[ComptesController::class,'update'])->name('comptes.update');
+});
+Route::middleware('auth')->group(function (){
+    Route::get('/sidenav',[sidenavController::class,'index']);
 });
