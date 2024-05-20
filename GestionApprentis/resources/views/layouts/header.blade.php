@@ -14,8 +14,8 @@
             background-color: #f8f9fa;
             display: flex;
             flex-direction: column;
-            min-height: 100vh; /* Set body minimum height to 100% of viewport height */
-            margin: 0; /* Remove default margin */
+            min-height: 100vh;
+            margin: 0;
         }
         .navbar-brand img {
             margin-right: 10px;
@@ -25,14 +25,13 @@
         }
         .navbar-nav .nav-item {
             margin-right: 10px;
-
         }
         .nav-link {
             color: darkblue !important;
         }
         main {
             padding-top: 20px;
-            flex-grow: 1; /* Grow to fill remaining vertical space */
+            flex-grow: 1;
         }
         .navbar-nav .nav-item .nav-link {
             display: flex;
@@ -44,24 +43,23 @@
         footer {
             background-color: #f8f9fa;
             text-align: center;
-            padding: 0 0;
+            padding: 0;
             margin: 0;
         }
     </style>
 </head>
 <body>
     <header>
-        <nav style="max-height: 100px;"class="navbar navbar-expand-lg bg-body-tertiary  " >
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container">
                 <a class="navbar-brand" href="/">
                     <img src="{{ asset('asset/images/AlgeriePoste.svg') }}" alt="Logo" width="70" height="70" class="d-inline-block align-text-top">
                 </a>
-                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
-                    <div class="navbar-nav ">
+                    <ul class="navbar-nav ms-auto">
                         @auth
                         <li class="nav-item">
                             <span class="nav-link">
@@ -77,7 +75,7 @@
                             <a class="nav-link" href="{{ route('register') }}">Register</a>
                         </li>
                         @endauth
-                    </div>
+                    </ul>
                 </div>
             </div>
         </nav>

@@ -104,6 +104,7 @@
                         <div class="mb-3">
                             <label class="form-label">Specialite</label>
                             <select name="specialite_id" class="form-select" required>
+                                <option value="">-- Choisir une specialite --</option>
                                 @foreach($specialites as $specialite)
                                     <option value="{{$specialite->id}}">{{ $specialite->nom }}</option>
                                 @endforeach

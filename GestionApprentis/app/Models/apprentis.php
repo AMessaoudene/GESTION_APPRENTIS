@@ -34,5 +34,16 @@ class apprentis extends Model
     {
         return $this->belongsTo(maitre_apprentis::class);
     }
+
+    public function assiduites()
+    {
+        return $this->hasMany(Assiduites::class);
+    }
+    
+    public function specialite()
+    {
+        return $this->belongsTo(Specialites::class, 'specialite_id');
+    }
+
     use HasFactory;
 }

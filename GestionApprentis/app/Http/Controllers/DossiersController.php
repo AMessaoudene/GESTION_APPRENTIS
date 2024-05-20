@@ -1,15 +1,24 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\parametres;
+use App\Models\planbesoins;
 use App\Models\structures;
 use Validator;
 use Illuminate\Http\Request;
-use App\Models\dossiers; // Fixed the namespace and case sensitivity issue here
+use App\Models\baremes;
+use App\Models\dossiers;
 use App\Models;
+use Auth;
 use App\Models\apprentis;
 use App\Models\pv_installations;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
+use App\Models\diplomes;
+use App\Models\specialites;
+use App\Models\decisionapprentis;
+use App\Models\decisionmaitreapprentis;
+use App\Models\maitre_apprentis;
 
 class DossiersController extends Controller
 {
@@ -140,5 +149,122 @@ class DossiersController extends Controller
         $apprenti = apprentis::findOrFail($id);
         $dossier = dossiers::where('apprenti_id',$apprenti->id);
         return view('dossiers.details',compact('apprenti'));
+    }
+
+    public function updateindex(Request $request,$id){
+        $user = auth::user();
+        $apprenti = apprentis::findOrFail($id);
+        $dossiers = dossiers::all();
+        $specialites = specialites::all();
+        $structures = structures::all();
+        $diplomes = diplomes::all();
+        $pvs = pv_installations::all();
+        $decisionapprentis = decisionapprentis::all();
+        $decisionmaitreapprentis = decisionmaitreapprentis::all();
+        $maitreapprentis = maitre_apprentis::all();
+        $parametres = parametres::all();
+        $baremes = baremes::all();
+        $planbesoins = planbesoins::all();
+        return view('dossiers.update',compact('apprenti','user','baremes','parametres','dossiers','specialites','structures','planbesoins','pvs','diplomes','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+    }
+    public function update(Request $request,$id){
+        $apprenti = apprentis::findOrFail($id);
+        $apprenti->nom = $request->nom;
+        $apprenti->prenom = $request->prenom;
+        $apprenti->civilite = $request->civilite;
+        $apprenti->adresse = $request->adresse;
+        $apprenti->telephone = $request->telephone;
+        $apprenti->email = $request->email;
+        $apprenti->datenaissance = $request->datenaissance;
+        $apprenti->numcontrat = $request->numcontrat;
+        $apprenti->specialite_id = $request->specialite_id;
+        $apprenti->structure_id = $request->structure_id;
+        $apprenti->planbesoin_id = $request->planbesoin_id;
+        $apprenti->diplome1_id = $request->diplome1_id;
+        $apprenti->diplome2_id = $request->diplome2_id;
+        $apprenti->save();
+
+        $pv = pv_installations::where('apprenti_id',$apprenti->id);
+        $pv->reference = $request->reference;
+        $pv->datepv = $request->datepv;
+        $pv->maitreapprenti_id = $request->maitreapprenti_id;
+        $pv->dateinstallation = $request->dateinstallation;
+        $pv->anneeinstallationlettre = $request->anneeinstallationlettre;
+        $pv->moisinstallationlettre = $request->moisinstallationlettre;
+        $pv->jourinstallationlettre = $request->jourinstallationlettre;
+        $pv->save();
+
+        $decisionapprenti = decisionapprentis::where('pv_id',$pv->id);
+        $decisionapprenti->referenceda = $request->referenceda;
+        $decisionapprenti->dateda = $request->dateda;
+        $decisionapprenti->planbesoins_id = $request->planbesoins_id;
+        $decisionapprenti->parametre_id = $request->parametre_id;
+        $decisionapprenti->bareme_id = $request->bareme_id;
+        $decisionapprenti->datetransfert = $request->datetransfert;
+        $decisionapprenti->save();
+
+        $decisionmaitreapprenti = decisionmaitreapprentis::where('pv_id',$pv->id);
+        $decisionmaitreapprenti->referencedma = $request->referencedma;
+        $decisionmaitreapprenti->datedma = $request->datedma;
+        $decisionmaitreapprenti->parametre_id = $request->parametre_id;
+        $decisionmaitreapprenti->bareme_id = $request->bareme_id;
+        $decisionmaitreapprenti->save();
+
+        $dossier = dossiers::where('apprenti_id',$apprenti->id);
+        $contratapprenti = $request->file('contratapprenti');
+        $contratapprentinom = 'Contrat-Apprenti-'.$apprenti->id.'-'.time().'.'.$contratapprenti->getClientOriginalExtension();
+        $contratapprenti->move('assets/dossiers',$contratapprentinom);
+        $dossier->contratapprenti = $contratapprentinom;
+
+        $decisionapprenti = $request->file('decisionapprenti');
+        $decisionapprentinom = 'DecisionA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionapprenti->getClientOriginalExtension();
+        $decisionapprenti->move('assets/dossiers',$decisionapprentinom);
+        $dossier->decisionapprenti = $decisionapprentinom;
+
+        $decisionmaitreapprenti = $request->file('decisionmaitreapprenti');
+        $decisionmaitreapprentinom = 'DecisionMA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
+        $decisionmaitreapprenti->move('assets/dossiers',$decisionmaitreapprentinom);
+        $dossier->decisionmaitreapprenti = $decisionmaitreapprentinom;
+
+        $pvinstallation = $request->file('pvinstallation');
+        $pvinstallationnom = 'PV-Apprenti-'.$apprenti->id.'-'.time().'.'.$pvinstallation->getClientOriginalExtension();
+        $pvinstallation->move('assets/dossiers',$pvinstallationnom);
+        $dossier->pvinstallation = $pvinstallationnom;
+
+        $copiecheque = $request->file('copiecheque');
+        $copiechequenom = 'CopieCheque-Apprenti-'.$apprenti->id.'-'.time().'.'.$copiecheque->getClientOriginalExtension();
+        $copiecheque->move('assets/dossiers',$copiechequenom);
+        $dossier->copiecheque = $copiechequenom;
+
+        $extraitnaissance = $request->file('extraitnaissance');
+        $extraitnaissancenom = 'ExtraitNaissance-Apprenti-'.$apprenti->id.'-'.time().'.'.$extraitnaissance->getClientOriginalExtension();
+        $extraitnaissance->move('assets/dossiers',$extraitnaissancenom);
+        $dossier->extraitnaissance = $extraitnaissancenom;
+
+        if($request->hasFile('autorisationparentele') && $request->file('autorisationparentele')){
+            $autorisationparentele = $request->file('autorisationparentele');
+            $autorisationparentelenom = 'Autorisation-Apprenti-'.$apprenti->id.'-'.time().'.'.$autorisationparentele->getClientOriginalExtension();
+            $autorisationparentele->move('assets/dossiers',$autorisationparentelenom);
+            $dossier->autorisationparentele = $autorisationparentelenom;
+        }
+            
+        if($request->hasFile('photo') && $request->file('photo')){
+            $photo = $request->file('photo');
+            $photonom = 'Photo-Apprenti-'.$apprenti->id.'-'.time().'.'.$photo->getClientOriginalExtension();
+            $photo->move('assets/dossiers',$photonom);
+            $dossier->photo = $photonom;
+        }
+
+        if($request->hasFile('pieceidentite') && $request->file('pieceidentite')){
+            $pieceidentite = $request->file('pieceidentite');
+            $pieceidentitenom = 'pieceidentite-Apprenti-'.$apprenti->id.'-'.time().'.'.$pieceidentite->getClientOriginalExtension();
+            $pieceidentite->move('assets/dossiers',$pieceidentitenom);
+            $dossier->pieceidentite = $pieceidentitenom;
+        }
+
+        $dossier->status = 'en cours';
+        $dossier->save();
+
+        return redirect()->back();
     }
 }

@@ -21,6 +21,7 @@ class ExercicesController extends Controller
             'nombrebesoins' => 'required|integer',
             'massesalariaire' => 'required',
         ]);
+        exercices::where('status', 'actif')->update(['status' => 'inactif']);
         $exercice = new exercices();
         $exercice->annee = $request->annee;
         $exercice->datedebut = $request->datedebut;

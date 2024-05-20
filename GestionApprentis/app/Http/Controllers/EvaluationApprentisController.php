@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\evaluation_apprentis;
+use Session;
 use App\Models\apprentis;
 use App\Models\structures;
 use App\Models\supervisions;
@@ -98,6 +99,7 @@ class EvaluationApprentisController extends Controller
             $evaluation->sensresponsabilite = $request->sensresponsabilite;
             $evaluation->observationsr = $request->observationsr;
             $evaluation->save();
+            
             return redirect()->back()->with('success', 'Évaluation ajoutée avec succès');
         }
     }

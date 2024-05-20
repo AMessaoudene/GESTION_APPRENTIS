@@ -11,7 +11,9 @@
             <select name="exercice_id" id="exercice_id" class="form-control" required>
                 <option value="">-- choisir --</option>
                 @foreach($exercices as $exercice)
+                @if ($exercice->status == "actif")
                 <option value="{{ $exercice->id }}">{{ $exercice->annee }}</option>
+                @endif
                 @endforeach
             </select>
         </div>
@@ -80,6 +82,7 @@
             </tr>
         </thead>
         <tbody>
+            @if (Auth::user()->role == "DFP")
             @foreach($planbesoins as $planbesoin)
             <tr id="planbesoin_{{ $planbesoin->id }}">
                 <td>{{ $planbesoin->id }}</td>
@@ -99,6 +102,29 @@
                 </td>
             </tr>
             @endforeach
+            @elseif(Auth::user()->role == "SA")
+            @foreach($planbesoins as $planbesoin)
+            @if ($planbesoin->structure_id == Auth::user()->structure_id)
+            <tr id="planbesoin_{{ $planbesoin->id }}">
+                <td>{{ $planbesoin->id }}</td>
+                <td>{{ $planbesoin->exercice_id }}</td>
+                <td>{{ $planbesoin->structure_id }}</td>
+                <td>{{ $planbesoin->reference }}</td>
+                <td>{{ $planbesoin->specialites_id }}</td>
+                <td>{{ $planbesoin->date }}</td>
+                <td>{{ $planbesoin->nombreapprentis }}</td>
+                <td>{{ $planbesoin->nombereffectif }}</td>
+                <td>{{ $planbesoin->nombreapprentismax }}</td>
+                <td>{{ Str::limit($planbesoin->description, 50) }}</td>
+                <td>{{ $planbesoin->status }}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $planbesoin->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
+                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $planbesoin->id }}">Supprimer</button>
+                </td>
+            </tr>
+            @endif
+            @endforeach
+            @endif
         </tbody>
     </table>
 @endSection

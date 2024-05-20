@@ -63,7 +63,7 @@
         </tr>
         <tr>
             <td>Nom et prénom de l'Apprenti(e)</td>
-            <td colspan="5">[Nom de l'apprenti]</td>
+            <td colspan="5">{{ $apprenti->nom }}</td>
         </tr>
         <tr>
             <td>Spécialité</td>

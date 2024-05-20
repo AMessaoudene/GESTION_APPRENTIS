@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\apprentis;
+use App\Models\maitre_apprentis;
 use Illuminate\Http\Request;
 use App\Models\departs;
 use Auth;
@@ -32,6 +33,18 @@ class DepartsController extends Controller
         // Update the status
         $apprenti->status = 'inactif';
         $apprenti->save();
+
+        $maitre1 = maitre_apprentis::where('apprenti1_id',$request->apprenti_id)->first();
+        $maitre2 = maitre_apprentis::where('apprenti2_id',$request->apprenti_id)->first();
+        if($maitre1){
+            $maitre1->apprenti1_id = null;
+            $maitre1->save();
+        }
+        else{
+            $maitre2->apprenti2_id = null;
+            $maitre2->save();
+        }
+
         return redirect()->back()->with('success');
     }
 }

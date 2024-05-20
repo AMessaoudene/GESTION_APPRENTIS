@@ -15,6 +15,7 @@ use App\Http\Controllers\StructuresController;
 use App\Http\Controllers\MaitreApprentisController;
 use App\Http\Controllers\FicheController;
 use App\Http\Controllers\DiplomesController;
+use App\Http\Controllers\AvenantsController;
 use App\Http\Controllers\AssiduitesController;
 use App\Http\Controllers\EvaluationApprentisController;
 use App\Http\Controllers\EvaluationMaitreApprentisController;
@@ -63,6 +64,8 @@ Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('d
 Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
 Route::get('/apprentis/dossiers/consulter',[DossiersController::class,'consulter'])->name('dossiers.consulter');
 Route::get('/apprentis/fichiers/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
+Route::get('/apprentis/details/update/{id}', [DossiersController::class,'updateindex'])->name('dossiers.updateindex');
+Route::put('/apprentis/details/update/{id}', [DossiersController::class,'update'])->name('dossiers.update');
 //Maitre Apprentis
 Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
 Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
@@ -80,6 +83,8 @@ Route::put('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class,
 Route::get('/apprentis/Evaluer', [EvaluationApprentisController::class, 'index'])->name('evaluation_apprentis.index');
 Route::post('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
 Route::put('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
+Route::post('/apprentis/evaluer/generate-pdf', 'EvaluationCApprentisontroller@fiche')->name('evaluation_apprentis.fiche');
+
 //Assiduites
 Route::get('/assiduites/ajouter', [AssiduitesController::class, 'index'])->name('assiduites.index');
 Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
@@ -109,7 +114,9 @@ Route::put('/baremes/{id}', [BaremesController::class, 'update'])->name('baremes
 //Departs
 Route::get('/departs', [DepartsController::class, 'index'])->name('departs.index');
 Route::post('/departs', [DepartsController::class, 'store'])->name('departs.store');
-
+//Avenants
+Route::get('/avenants', [AvenantsController::class, 'index'])->name('avenants.index');
+Route::post('/avenants', [AvenantsController::class, 'store'])->name('avenants.store');
 //refsalariaires
 Route::get('/refsalariaires', [RefSalariairesController::class, 'index'])->name('refsalariaires.index');
 Route::post('/refsalariaires', [RefSalariairesController::class, 'store'])->name('refsalariaires.store');

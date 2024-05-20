@@ -21,9 +21,11 @@
                                         <select class="form-control" name="apprenti_id" id="apprenti_id" required>
                                             <option value="">Sélectionner un apprenti</option>
                                             @foreach ($apprentis as $apprenti)
-                                                <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
+                                                @if ($apprenti->status == "actif" && Auth::user()->structures_id == $apprenti->structure_id)
+                                                <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}" data-specialite="{{ $apprenti->specialite->nom }}">
                                                     {{ $apprenti->nom }} {{ $apprenti->prenom }}
                                                 </option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -34,6 +36,10 @@
                                     <div class="form-group mb-3">
                                         <label for="prenom">Prénom</label>
                                         <input type="text" class="form-control" id="prenom" readonly disabled>
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="specialite">Specialité</label>
+                                        <input type="text" class="form-control" id="specialite" readonly disabled>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="type">Type</label>
@@ -116,9 +122,11 @@
         var selectedOption = this.options[this.selectedIndex];
         var nom = selectedOption.getAttribute('data-nom') || '';
         var prenom = selectedOption.getAttribute('data-prenom') || '';
+        var specialite = selectedOption.getAttribute('data-specialite') || '';
 
         document.getElementById('nom').value = nom;
         document.getElementById('prenom').value = prenom;
+        document.getElementById('specialite').value = specialite;
     });
 
     document.getElementById('datedebut').addEventListener('change', function() {

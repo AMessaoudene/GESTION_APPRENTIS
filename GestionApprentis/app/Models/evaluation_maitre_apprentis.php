@@ -11,7 +11,6 @@ class evaluation_maitre_apprentis extends Model
     protected $fillable = [
         'reference',
         'maitreapprenti_id',
-        'structureattache',
         'datedebut',
         'datefin',
         'sensresponsabilite',

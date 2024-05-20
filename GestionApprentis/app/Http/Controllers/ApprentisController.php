@@ -120,9 +120,6 @@ class ApprentisController extends Controller
                         // If apprenti1_id is not null, assign to apprenti2_id
                         $maitreApprenti->apprenti2_id = $apprenti->id;
                     }
-                    if($maitreApprenti->numapprentissupervises < 2){
-                        $maitreApprenti->numapprentissupervises += 1;
-                    }
 
                     // Save the updated master apprentice
                     $maitreApprenti->save();
@@ -167,9 +164,6 @@ class ApprentisController extends Controller
                 } else if(is_null($maitreApprenti->apprenti2_id)) {
                     // If apprenti1_id is not null, assign to apprenti2_id
                     $maitreApprenti->apprenti2_id = $apprenti->id;
-                }
-                if($maitreApprenti->numapprentissupervises < 2){
-                    $maitreApprenti->numapprentissupervises += 1;
                 }
 
                 // Save the updated master apprentice

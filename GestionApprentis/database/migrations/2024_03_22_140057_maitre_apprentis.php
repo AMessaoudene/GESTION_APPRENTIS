@@ -26,7 +26,6 @@ return new class extends Migration
             $table->foreign('apprenti1_id')->references('id')->on('apprentis')->onDelete('cascade');
             $table->unsignedBigInteger('apprenti2_id')->unique()->nullable();
             $table->foreign('apprenti2_id')->references('id')->on('apprentis')->onDelete('cascade');
-            //$table->integer('numapprentissupervises');
             $table->date('daterecrutement');
             $table->enum('statut', ['formé', 'non formé'])->default('formé');
             $table->timestamps();

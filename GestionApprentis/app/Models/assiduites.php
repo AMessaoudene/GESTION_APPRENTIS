@@ -17,5 +17,10 @@ class assiduites extends Model
         'preuve',
         'statut',
     ];
+
+    public function apprenti()
+    {
+        return $this->belongsTo(Apprentis::class);
+    }
     use HasFactory;
 }

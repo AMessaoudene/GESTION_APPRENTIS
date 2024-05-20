@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\apprentis;
 use App\Models\assiduites;
+use App\Models\specialites;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Validator;
@@ -11,7 +12,8 @@ class AssiduitesController extends Controller{
     {
         $apprentis = apprentis::all();
         $assiduites = assiduites::all();
-        return view('assiduites.index', compact('apprentis', 'assiduites'));
+        $specialites = specialites::all();
+        return view('assiduites.index', compact('apprentis', 'assiduites','specialites'));
     }
     public function submit(Request $request)
     {
