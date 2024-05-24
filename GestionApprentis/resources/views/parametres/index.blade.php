@@ -3,93 +3,114 @@
 @section('content')
 <div class="container-fluid">
     <div class="row">
-        @include('layouts.sidenav')
+        @if (Auth::user()->role == 'DFP')
+        @include('layouts.dfpsidenav')
+        @elseif(Auth::user()->role == 'SA')
+        @include('layouts.sasidenav')
+        @elseif(Auth::user()->role == 'DRH')
+        @include('layouts.drhsidenav')
+        @elseif(Auth::user()->role == 'EvaluateurGradé')
+        @include('layouts.egsidenav')
+        @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <form method="POST" action="{{ route('parametres.store') }}" class="row g-3">
-                @csrf
-                <div class="col-md-6">
-                    <label for="reference" class="form-label">Reference</label>
-                    <input type="text" class="form-control" id="reference" name="reference">
+            @if (Auth::user()->role == 'DFP')         
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="card">
+                                <div class="card-header">Ajouter une structure</div>
+                                <div class="card-body">
+                                <form method="POST" action="{{ route('parametres.store') }}" class="row g-3">
+                                    @csrf
+                                    <div class="col-md-6">
+                                        <label for="reference" class="form-label">Reference</label>
+                                        <input type="text" class="form-control" id="reference" name="reference">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="decisionresponsable" class="form-label">Decision responsable</label>
+                                        <input type="text" class="form-control" id="decisionresponsable" name="decisionresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="datedecisionresponsable" class="form-label">Date decision responsable</label>
+                                        <input type="date" class="form-control" id="datedecisionresponsable" name="datedecisionresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="nomresponsable" class="form-label">Nom responsable</label>
+                                        <input type="text" class="form-control" id="nomresponsable" name="nomresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="prenomresponsable" class="form-label">Prenom responsable</label>
+                                        <input type="text" class="form-control" id="prenomresponsable" name="prenomresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="civiliteresponsable" class="form-label">Civilite responsable</label>
+                                        <select class="form-select" id="civiliteresponsable" name="civiliteresponsable">
+                                            <option value="">-- Choisir --</option>
+                                            <option value="Monsieur">Mr</option>
+                                            <option value="Madame">Mme</option>
+                                            <option value="Mademoiselle">Mlle</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fonctionresponsable" class="form-label">Fonction responsable</label>
+                                        <input type="text" class="form-control" id="fonctionresponsable" name="fonctionresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="typedecisiondg" class="form-label">Type Decision DG</label>
+                                        <input type="text" class="form-control" id="typedecisiondg" name="typedecisiondg">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="datedecisiondg" class="form-label">Date Decision DG</label>
+                                        <input type="date" class="form-control" id="datedecisiondg" name="datedecisiondg">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="nomprenomdg" class="form-label">Nom et Prenom DG</label>
+                                        <input type="text" class="form-control" id="nomprenomdg" name="nomprenomdg">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="decisionpremierresponsable" class="form-label">Decision premier responsable</label>
+                                        <input type="text" class="form-control" id="decisionpremierresponsable" name="decisionpremierresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="datedecisionpremierresponsable" class="form-label">Date decision premier responsable</label>
+                                        <input type="date" class="form-control" id="datedecisionpremierresponsable" name="datedecisionpremierresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="nomprenompremierresponsable" class="form-label">Nom et Prenom premier responsable</label>
+                                        <input type="text" class="form-control" id="nomprenompremierresponsable" name="nomprenompremierresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="fonctionpremierresponsable" class="form-label">Fonction premier responsable</label>
+                                        <input type="text" class="form-control" id="fonctionpremierresponsable" name="fonctionpremierresponsable">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="civilitedrh" class="form-label">Civilite DRH</label>
+                                        <select class="form-select" id="civilitedrh" name="civilitedrh">
+                                            <option value="">-- Choisir --</option>
+                                            <option value="Monsieur">Mr</option>
+                                            <option value="Madame">Mme</option>
+                                            <option value="Mademoiselle">Mlle</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="civilitedfc" class="form-label">Civilite DFC</label>
+                                        <select class="form-select" id="civilitedfc" name="civilitedfc">
+                                            <option value="">-- Choisir --</option>
+                                            <option value="Monsieur">Mr</option>
+                                            <option value="Madame">Mme</option>
+                                            <option value="Mademoiselle">Mlle</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12">
+                                        <button type="submit" class="btn btn-primary">Enregistrer</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="col-md-6">
-                    <label for="decisionresponsable" class="form-label">Decision responsable</label>
-                    <input type="text" class="form-control" id="decisionresponsable" name="decisionresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="datedecisionresponsable" class="form-label">Date decision responsable</label>
-                    <input type="date" class="form-control" id="datedecisionresponsable" name="datedecisionresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="nomresponsable" class="form-label">Nom responsable</label>
-                    <input type="text" class="form-control" id="nomresponsable" name="nomresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="prenomresponsable" class="form-label">Prenom responsable</label>
-                    <input type="text" class="form-control" id="prenomresponsable" name="prenomresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="civiliteresponsable" class="form-label">Civilite responsable</label>
-                    <select class="form-select" id="civiliteresponsable" name="civiliteresponsable">
-                        <option value="">-- Choisir --</option>
-                        <option value="Monsieur">Mr</option>
-                        <option value="Madame">Mme</option>
-                        <option value="Mademoiselle">Mlle</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="fonctionresponsable" class="form-label">Fonction responsable</label>
-                    <input type="text" class="form-control" id="fonctionresponsable" name="fonctionresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="typedecisiondg" class="form-label">Type Decision DG</label>
-                    <input type="text" class="form-control" id="typedecisiondg" name="typedecisiondg">
-                </div>
-                <div class="col-md-6">
-                    <label for="datedecisiondg" class="form-label">Date Decision DG</label>
-                    <input type="date" class="form-control" id="datedecisiondg" name="datedecisiondg">
-                </div>
-                <div class="col-md-6">
-                    <label for="nomprenomdg" class="form-label">Nom et Prenom DG</label>
-                    <input type="text" class="form-control" id="nomprenomdg" name="nomprenomdg">
-                </div>
-                <div class="col-md-6">
-                    <label for="decisionpremierresponsable" class="form-label">Decision premier responsable</label>
-                    <input type="text" class="form-control" id="decisionpremierresponsable" name="decisionpremierresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="datedecisionpremierresponsable" class="form-label">Date decision premier responsable</label>
-                    <input type="date" class="form-control" id="datedecisionpremierresponsable" name="datedecisionpremierresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="nomprenompremierresponsable" class="form-label">Nom et Prenom premier responsable</label>
-                    <input type="text" class="form-control" id="nomprenompremierresponsable" name="nomprenompremierresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="fonctionpremierresponsable" class="form-label">Fonction premier responsable</label>
-                    <input type="text" class="form-control" id="fonctionpremierresponsable" name="fonctionpremierresponsable">
-                </div>
-                <div class="col-md-6">
-                    <label for="civilitedrh" class="form-label">Civilite DRH</label>
-                    <select class="form-select" id="civilitedrh" name="civilitedrh">
-                        <option value="">-- Choisir --</option>
-                        <option value="Monsieur">Mr</option>
-                        <option value="Madame">Mme</option>
-                        <option value="Mademoiselle">Mlle</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label for="civilitedfc" class="form-label">Civilite DFC</label>
-                    <select class="form-select" id="civilitedfc" name="civilitedfc">
-                        <option value="">-- Choisir --</option>
-                        <option value="Monsieur">Mr</option>
-                        <option value="Madame">Mme</option>
-                        <option value="Mademoiselle">Mlle</option>
-                    </select>
-                </div>
-                <div class="col-12">
-                    <button type="submit" class="btn btn-primary">Enregistrer</button>
-                </div>
-            </form>
+            </div>
+            @endif
             <div class="table-responsive">
                 <table id="parametres-table" class="table">
                     <thead>

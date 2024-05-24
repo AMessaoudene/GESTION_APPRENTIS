@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\decisionapprentis;
 use App\Models\diplomes;
+use auth;
 use App\Models\pv_installations;
 use Illuminate\Support\Facades\Validator;
 use App\Models\apprentis;
@@ -16,12 +17,17 @@ class AvenantsController extends Controller
      */
     public function index()
     {
+        if(auth::user()->role == 'DFP' || auth::user()->role == 'SA'){
         $apprentis = apprentis::all();
         $decisions = decisionapprentis::all();
         $avenants = avenants::all();
         $diplomes = diplomes::all();
         $pvs = pv_installations::all();
         return view('avenants.index', compact('decisions','pvs','avenants','apprentis','diplomes'));
+        }
+        else{
+            return redirect()->back();
+        }
     }
     public function store(Request $request)
     {

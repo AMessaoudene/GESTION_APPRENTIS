@@ -2,13 +2,9 @@
             <div class="sidebar-sticky mt-5">
                 <ul class="nav flex-column">
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="apprentisDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('apprentis.consulter') }}">
                             Apprentis
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="apprentisDropdown">
-                            <a class="dropdown-item" href="{{ route('apprentis.index')}}">Ajouter</a>
-                            <a class="dropdown-item" href=" {{ route('apprentis.consulter') }}">Consulter la liste</a>
-                        </div>
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link dropdown-toggle" href="#" id="maitresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -56,13 +52,9 @@
                         </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('assiduites.index') }}">
                             Assiduites
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="plansDropdown">
-                            <a class="dropdown-item" href="#">Ajouter une assiduité</a>
-                            <a class="dropdown-item" href="#">Consulter les assiduités</a>
-                        </div>
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

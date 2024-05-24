@@ -5,10 +5,20 @@
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            @include('layouts.sidenav')
+            @if (Auth::user()->role == 'DFP')
+            @include('layouts.dfpsidenav')
+            @elseif(Auth::user()->role == 'SA')
+            @include('layouts.sasidenav')
+            @elseif(Auth::user()->role == 'DRH')
+            @include('layouts.drhsidenav')
+            @elseif(Auth::user()->role == 'EvaluateurGradé')
+            @include('layouts.egsidenav')
+            @endif
 
             <!-- Page Content -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                <h1>Liste des exercices</h1>
+                @if (Auth::user()->role == 'DFP')
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="card">
@@ -48,7 +58,7 @@
                         </div>
                     </div>
                 </div>
-
+                @endif
                 <!-- Responsive Table -->
                 <div class="row mt-4">
                     <div class="col-lg-12">

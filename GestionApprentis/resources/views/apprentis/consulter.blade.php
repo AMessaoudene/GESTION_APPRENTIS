@@ -10,12 +10,22 @@
 <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            @include('layouts.sidenav')
+            @if (Auth::user()->role == 'DFP')
+            @include('layouts.dfpsidenav')
+            @elseif(Auth::user()->role == 'SA')
+            @include('layouts.sasidenav')
+            @elseif(Auth::user()->role == 'DRH')
+            @include('layouts.drhsidenav')
+            @elseif(Auth::user()->role == 'EvaluateurGradé')
+            @include('layouts.egsidenav')
+            @endif
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color:white;">
                 <div class="container">
                     <div class="row justify-content-center">
                         <h1 class="text-center mb-5">Liste des apprentis</h1>
+                        @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
                         <a href="{{ route('apprentis.index') }}" class="btn btn-primary mb-3">Ajouter un nouveau apprenti</a>
+                        @endif
                         <table id="apprentis-table" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
@@ -33,6 +43,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @if (Auth::user()->role == 'DFP')
                                 @foreach($apprentis as $apprenti)
                                 <tr>
                                     <td>{{ $apprenti->id }}</td>
@@ -42,7 +53,7 @@
                                     <td>{{ $apprenti->specialite_id }}</td>
                                     <td><a href="/apprentis/historiqueMA/{{ $apprenti->id }}">Voir</a></td>
                                     @if ($user->role == 'SA')
-                                    <td><a href="/apprentis/dossiers/{{ $apprenti->id }}">Voir</a></td>
+                                    <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
                                     @elseif($user->role == 'DFP')
                                     <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
                                     @endif
@@ -58,6 +69,35 @@
                                     </td>
                                 </tr>
                                 @endforeach
+                                @else
+                                @foreach($apprentis as $apprenti)
+                                @if ($apprenti->structure_id == Auth::user()->structures_id)
+                                <tr>
+                                    <td>{{ $apprenti->id }}</td>
+                                    <td>{{ $apprenti->nom }}</td>
+                                    <td>{{ $apprenti->prenom }}</td>
+                                    <td>{{ $apprenti->structure_id }}</td>
+                                    <td>{{ $apprenti->specialite_id }}</td>
+                                    <td><a href="/apprentis/historiqueMA/{{ $apprenti->id }}">Voir</a></td>
+                                    @if ($user->role == 'SA')
+                                    <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
+                                    @elseif($user->role == 'DFP')
+                                    <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
+                                    @endif
+                                    <td><a href="/apprentis/assiduites/{{ $apprenti->id }}">Voir</a></td>
+                                    <td><a href="/apprentis/evaluation/{{ $apprenti->id }}">Voir</a></td>
+                                    <td>{{ $apprenti->status }}</td>
+                                    <td>
+                                        <form id="deleteForm{{ $apprenti->id }}" action="{{ route('apprentis.destroy', $apprenti->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $apprenti->id }})">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                @endif
+                                @endforeach
+                                @endif
                             </tbody>
                         </table>
                 </div>

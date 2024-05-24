@@ -5,8 +5,17 @@
 <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            @include('layouts.sidenav')
+            @if (Auth::user()->role == 'DFP')
+            @include('layouts.dfpsidenav')
+            @elseif(Auth::user()->role == 'SA')
+            @include('layouts.sasidenav')
+            @elseif(Auth::user()->role == 'DRH')
+            @include('layouts.drhsidenav')
+            @elseif(Auth::user()->role == 'EvaluateurGradé')
+            @include('layouts.egsidenav')
+            @endif
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color:white;">
+                @if (Auth::user()->role == 'DFP')         
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
@@ -32,13 +41,16 @@
                         </div>
                     </div>
                 </div>
+                @endif
                 <table id="structures-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Adresse Courriel</th>
+                            @if (Auth::user()->role == 'DFP')
                             <th scope="col">Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -47,6 +59,7 @@
                             <td>{{ $structure->id }}</td>
                             <td>{{ $structure->nom }}</td>
                             <td>{{ $structure->adressecourriel }}</td>
+                            @if (Auth::user()->role == 'DFP')
                             <td>
                                 <div class="d-flex justify-content-center align-items-center">
                                     <button class="btn btn-primary edit-btn mr-2" data-id="{{ $structure->id }}">Modifier</button>
@@ -57,6 +70,7 @@
                                     </form>
                                 </div>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                     </tbody>

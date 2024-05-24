@@ -4,10 +4,19 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        @include('layouts.sidenav')
+        @if (Auth::user()->role == 'DFP')
+        @include('layouts.dfpsidenav')
+        @elseif(Auth::user()->role == 'SA')
+        @include('layouts.sasidenav')
+        @elseif(Auth::user()->role == 'DRH')
+        @include('layouts.drhsidenav')
+        @elseif(Auth::user()->role == 'EvaluateurGradé')
+        @include('layouts.egsidenav')
+        @endif
 
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            @if (Auth::user()->role == 'DFP') 
             <div class="container mt-5 mb-5">
                 <div class="card">
                     <div class="card-header">
@@ -60,7 +69,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="refcourrier" class="form-label">Référence Courrier</label>
-                            <input type="text" name="refcourrier" id="refcourrier" class="form-control" placeholder="Ex: REF12345" aria-label="Référence Courrier" required>
+                            <input type="text" name="refcourrier" id="refcourrier" class="form-control" placeholder="Ex: " aria-label="Référence Courrier" required>
                             <div class="invalid-feedback">
                                 Veuillez entrer la référence du courrier.
                             </div>
@@ -79,6 +88,7 @@
                     </div>
                 </div>
             </div>
+            @endif
         </main>
     </div>
 </div>

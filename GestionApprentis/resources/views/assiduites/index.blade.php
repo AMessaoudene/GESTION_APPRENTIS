@@ -1,11 +1,20 @@
 @extends('layouts.layout')
-@section('title', 'Assiduité | Ajouter')
+@section('title', 'Assiduités')
 @section('content')
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
-        @include('layouts.sasidenav')
+        @if (Auth::user()->role == 'DFP')
+            @include('layouts.dfpsidenav')
+            @elseif(Auth::user()->role == 'SA')
+            @include('layouts.sasidenav')
+            @elseif(Auth::user()->role == 'DRH')
+            @include('layouts.drhsidenav')
+            @elseif(Auth::user()->role == 'EvaluateurGradé')
+            @include('layouts.egsidenav')
+            @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')  
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
@@ -75,6 +84,8 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            @endif
                 <div class="row mt-4">
                     <div class="col-md-12">
                         <table class="table table-striped">

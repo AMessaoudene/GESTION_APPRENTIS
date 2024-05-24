@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 class ComptesController extends Controller
 {
     public function index(){
-        if(auth::user()->role === 'DFP'){
+        if(auth::user()->role === 'DFP' || auth::user()->role == 'SA'){
             $comptes = user::all();
             $structures = structures::all();
             return view('comptes.index',compact('comptes','structures'));

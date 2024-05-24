@@ -5,7 +5,15 @@
 <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            @include('layouts.sidenav')
+            @if (Auth::user()->role == 'DFP')
+            @include('layouts.dfpsidenav')
+            @elseif(Auth::user()->role == 'SA')
+            @include('layouts.sasidenav')
+            @elseif(Auth::user()->role == 'DRH')
+            @include('layouts.drhsidenav')
+            @elseif(Auth::user()->role == 'EvaluateurGradé')
+            @include('layouts.egsidenav')
+            @endif
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 <div class="container">
                     <div class="row justify-content-center">

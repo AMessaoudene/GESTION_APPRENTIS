@@ -2,12 +2,27 @@
 @section('title', 'Diplomes')
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css">
 @section('content')
-    <h1 class="text-center mt-4 mb-4">AJOUTER UN DIPLOME</h1>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar -->
+        @if (Auth::user()->role == 'DFP')
+        @include('layouts.dfpsidenav')
+        @elseif(Auth::user()->role == 'SA')
+        @include('layouts.sasidenav')
+        @elseif(Auth::user()->role == 'DRH')
+        @include('layouts.drhsidenav')
+        @elseif(Auth::user()->role == 'EvaluateurGradé')
+        @include('layouts.egsidenav')
+        @endif
+
+        <!-- Page Content -->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            @if (Auth::user()->role == 'DFP') 
+            <div class="container mt-5 mb-5">
                 <div class="card">
-                    <div class="card-header">AJOUTER UN DIPLOME</div>
+                    <div class="card-header">
+                        <h5 class="card-title text-center">Ajouter un Diplome</h5>
+                    </div>
                     <div class="card-body">
                         <form id="add-form" action="{{ route('diplomes.store') }}" method="POST">
                             @csrf
@@ -30,37 +45,39 @@
                     </div>
                 </div>
             </div>
-        </div>
+            @endif
+            <table id="diplomes-table" class="table table-striped" style="width:100%">
+                <thead>
+                    <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nom</th>
+                        <th scope="col">Durée (mois)</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($diplomes as $diplome)
+                        <tr>
+                            <td>{{ $diplome->id }}</td>
+                            <td>{{ $diplome->nom }}</td>
+                            <td>{{ $diplome->duree }}</td>
+                            <td>{{ $diplome->description }}</td>
+                            <td>
+                                <button class="btn btn-primary edit-btn" data-id="{{ $diplome->id }}">Modifier</button>
+                                <form action="{{ route('diplomes.destroy', $diplome->id) }}" method="POST">                  
+                                    @csrf
+                                    @method('DELETE')           
+                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </main>
     </div>
-    <table id="diplomes-table" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nom</th>
-                <th scope="col">Durée (mois)</th>
-                <th scope="col">Description</th>
-                <th scope="col">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($diplomes as $diplome)
-                <tr>
-                    <td>{{ $diplome->id }}</td>
-                    <td>{{ $diplome->nom }}</td>
-                    <td>{{ $diplome->duree }}</td>
-                    <td>{{ $diplome->description }}</td>
-                    <td>
-                        <button class="btn btn-primary edit-btn" data-id="{{ $diplome->id }}">Modifier</button>
-                        <form action="{{ route('diplomes.destroy', $diplome->id) }}" method="POST">                  
-                            @csrf
-                            @method('DELETE')           
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+</div>
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>

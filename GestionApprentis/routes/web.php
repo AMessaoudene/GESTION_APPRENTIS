@@ -33,15 +33,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 //Structures
-Route::get('/structures', [StructuresController::class, 'index'])->name('structures.index');
-Route::post('/structures', [StructuresController::class, 'submit'])->name('structures.submit');
-Route::put('/structures/{id}', [StructuresController::class, 'update'])->name('structures.update');
-Route::delete('/structures/{id}', [StructuresController::class, 'destroy'])->name('structures.destroy');
+Route::middleware('auth')->group(function(){
+    Route::get('/structures', [StructuresController::class, 'index'])->name('structures.index');
+    Route::post('/structures', [StructuresController::class, 'submit'])->name('structures.submit');
+    Route::put('/structures/{id}', [StructuresController::class, 'update'])->name('structures.update');
+    Route::delete('/structures/{id}', [StructuresController::class, 'destroy'])->name('structures.destroy'); 
+});
 //Diplomes
-Route::get('/diplomes', [DiplomesController::class, 'index'])->name('diplomes.index');
-Route::post('/diplomes', [DiplomesController::class, 'store'])->name('diplomes.store');
-Route::put('/diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
-Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
+Route::middleware('auth')->group(function(){
+    Route::get('/diplomes', [DiplomesController::class, 'index'])->name('diplomes.index');
+    Route::post('/diplomes', [DiplomesController::class, 'store'])->name('diplomes.store');
+    Route::put('/diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
+    Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
+});
 //Apprentis
 Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis.index');
 Route::post('/apprentis', [ApprentisController::class, 'submit'])->name('apprentis.submit');
@@ -51,10 +55,12 @@ Route::post('/apprentis/details/{id}',[ApprentisController::class,'updatedossier
 Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
 Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
 //specialites
-Route::get('/specialites', [SpecialitesController::class, 'index'])->name('specialites.index');
-Route::post('/specialites', [SpecialitesController::class, 'store'])->name('specialites.store');
-Route::put('/specialites/{id}', [SpecialitesController::class, 'update'])->name('specialites.update');
-Route::delete('/specialites/{id}', [SpecialitesController::class, 'destroy'])->name('specialites.destroy');
+Route::middleware('auth')->group(function(){
+    Route::get('/specialites', [SpecialitesController::class, 'index'])->name('specialites.index');
+    Route::post('/specialites', [SpecialitesController::class, 'store'])->name('specialites.store');
+    Route::put('/specialites/{id}', [SpecialitesController::class, 'update'])->name('specialites.update');
+    Route::delete('/specialites/{id}', [SpecialitesController::class, 'destroy'])->name('specialites.destroy'); 
+});
 //pvs
 Route::get('/apprentis/pvinstallations', [PVInstallationsController::class, 'index'])->name('pvinstallations.index');
 Route::post('/apprentis/pvinstallations', [PVInstallationsController::class, 'store'])->name('pvinstallations.store');
@@ -98,28 +104,40 @@ Route::post('/planbesoins', [PlanBesoinsController::class, 'store'])->name('plan
 Route::put('/planbesoins/{id}', [PlanBesoinsController::class, 'update'])->name('planbesoins.update');
 Route::delete('/planbesoins/{id}', [PlanBesoinsController::class, 'destroy'])->name('planbesoins.destroy');
 //parametres
-Route::get('/parametres', [ParametresController::class, 'index'])->name('parametres.index');
-Route::post('/parametres', [ParametresController::class, 'store'])->name('parametres.store');
-Route::put('/parametres/{id}', [ParametresController::class, 'update'])->name('parametres.update');
-Route::delete('/parametres/{id}', [ParametresController::class, 'destroy'])->name('parametres.destroy');
+Route::middleware('auth')->group(function(){
+    Route::get('/parametres', [ParametresController::class, 'index'])->name('parametres.index');
+    Route::post('/parametres', [ParametresController::class, 'store'])->name('parametres.store');
+    Route::put('/parametres/{id}', [ParametresController::class, 'update'])->name('parametres.update');
+    Route::delete('/parametres/{id}', [ParametresController::class, 'destroy'])->name('parametres.destroy');
+});
 //exercices
-Route::get('/exercices', [ExercicesController::class, 'index'])->name('exercices.index');
-Route::post('/exercices', [ExercicesController::class, 'store'])->name('exercices.store');
-Route::put('/exercices/{id}', [exercicesController::class, 'update'])->name('exercices.update');
-Route::delete('/exercices/{id}', [exercicesController::class, 'destroy'])->name('exercices.destroy');
+Route::middleware('auth')->group(function(){
+    Route::get('/exercices', [ExercicesController::class, 'index'])->name('exercices.index');
+    Route::post('/exercices', [ExercicesController::class, 'store'])->name('exercices.store');
+    Route::put('/exercices/{id}', [exercicesController::class, 'update'])->name('exercices.update');
+    Route::delete('/exercices/{id}', [exercicesController::class, 'destroy'])->name('exercices.destroy');
+});
 //Baremes
+Route::middleware('auth')->group(function(){
 Route::get('/baremes', [BaremesController::class, 'index'])->name('baremes.index');
 Route::post('/baremes', [BaremesController::class, 'store'])->name('baremes.store');
 Route::put('/baremes/{id}', [BaremesController::class, 'update'])->name('baremes.update');
+});
 //Departs
-Route::get('/departs', [DepartsController::class, 'index'])->name('departs.index');
-Route::post('/departs', [DepartsController::class, 'store'])->name('departs.store');
+Route::middleware('auth')->group(function(){
+    Route::get('/departs', [DepartsController::class, 'index'])->name('departs.index');
+    Route::post('/departs', [DepartsController::class, 'store'])->name('departs.store');
+});
 //Avenants
-Route::get('/avenants', [AvenantsController::class, 'index'])->name('avenants.index');
-Route::post('/avenants', [AvenantsController::class, 'store'])->name('avenants.store');
+Route::middleware('auth')->group(function(){
+    Route::get('/avenants', [AvenantsController::class, 'index'])->name('avenants.index');
+    Route::post('/avenants', [AvenantsController::class, 'store'])->name('avenants.store');
+});
 //refsalariaires
-Route::get('/refsalariaires', [RefSalariairesController::class, 'index'])->name('refsalariaires.index');
-Route::post('/refsalariaires', [RefSalariairesController::class, 'store'])->name('refsalariaires.store');
+Route::middleware('auth')->group(function(){
+    Route::get('/refsalariaires', [RefSalariairesController::class, 'index'])->name('refsalariaires.index');
+    Route::post('/refsalariaires', [RefSalariairesController::class, 'store'])->name('refsalariaires.store');
+});
 //Dashboard
 Route::get('/dashboard', function () {
     return view('dashboard');
