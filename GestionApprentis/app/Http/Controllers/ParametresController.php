@@ -12,9 +12,14 @@ class ParametresController extends Controller
      */
     public function index()
     {
+        if(auth::user()->role == 'DFP'){
         $user = auth::user();
         $parametres = parametres::all();
         return view('parametres.index', compact('parametres','user'));
+        }
+        else{
+            return redirect()->back();
+        }
     }
 
     /**
@@ -33,9 +38,8 @@ class ParametresController extends Controller
             return redirect()->back()->withErrors($validate)->withInput();
         } else {
             try{
+                parametres::where('status','actif')->update(['status'=>'inactif']);
                 $parametres = new parametres();
-                //$parametres->reference = $request->reference;
-
                 $parametres->fill($request->all());
                 $parametres->save();
                 return redirect()->back();   

@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 use App\Models\decisionapprentis;
 use App\Models\diplomes;
-use auth;
 use App\Models\pv_installations;
 use Illuminate\Support\Facades\Validator;
 use App\Models\apprentis;
 use App\Models\avenants;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AvenantsController extends Controller
 {

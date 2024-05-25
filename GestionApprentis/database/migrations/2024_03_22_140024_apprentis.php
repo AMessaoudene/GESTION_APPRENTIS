@@ -19,13 +19,13 @@ return new class extends Migration
             $table->date('datefin');
             $table->string('nom');
             $table->string('prenom');
-            $table->enum('civilite', ['Homme', 'Femme']); // Example of enum column
+            $table->enum('civilite', ['Homme', 'Femme']);
             $table->enum('nationalite',['algerienne','etrangere']);
             $table->date('datenaissance');
             $table->string('adresse');
             $table->string('email');
             $table->string('telephone');
-            $table->enum('niveauscolaire', ['primaire', 'moyen', 'secondaire']); // Example of enum column
+            $table->enum('niveauscolaire', ['primaire', 'moyen', 'secondaire']);
             $table->unsignedBigInteger('specialite_id')->nullable();
             $table->foreign('specialite_id')->references('id')->on('specialites')->onDelete('cascade');
             $table->unsignedBigInteger('structure_id')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreign('diplome1_id')->references('id')->on('diplomes')->onDelete('cascade');
             $table->unsignedBigInteger('diplome2_id')->nullable();
             $table->foreign('diplome2_id')->references('id')->on('diplomes')->onDelete('cascade');
-            $table->enum('status', ['actif', 'inactif'])->default('inactif'); // Example of enum column with default value*/
+            $table->enum('status', ['actif', 'inactif'])->default('inactif');
             $table->timestamps();
         });
     }

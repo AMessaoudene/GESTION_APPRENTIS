@@ -47,13 +47,15 @@ Route::middleware('auth')->group(function(){
     Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
 });
 //Apprentis
-Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis.index');
-Route::post('/apprentis', [ApprentisController::class, 'submit'])->name('apprentis.submit');
-Route::get('/apprentis/consulter', [ApprentisController::class, 'consulter'])->name('apprentis.consulter');
-Route::get('/apprentis/details/{id}',[ApprentisController::class,'details'])->name('apprentis.details');
-Route::post('/apprentis/details/{id}',[ApprentisController::class,'updatedossier'])->name('apprentis.updatedossier');
-Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
-Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
+Route::middleware('auth')->group(function(){
+    Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis.index');
+    Route::post('/apprentis', [ApprentisController::class, 'submit'])->name('apprentis.submit');
+    Route::get('/apprentis/consulter', [ApprentisController::class, 'consulter'])->name('apprentis.consulter');
+    Route::get('/apprentis/details/{id}',[ApprentisController::class,'details'])->name('apprentis.details');
+    Route::post('/apprentis/details/{id}',[ApprentisController::class,'updatedossier'])->name('apprentis.updatedossier');
+    Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
+    Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy'); 
+});
 //specialites
 Route::middleware('auth')->group(function(){
     Route::get('/specialites', [SpecialitesController::class, 'index'])->name('specialites.index');
@@ -62,47 +64,62 @@ Route::middleware('auth')->group(function(){
     Route::delete('/specialites/{id}', [SpecialitesController::class, 'destroy'])->name('specialites.destroy'); 
 });
 //pvs
-Route::get('/apprentis/pvinstallations', [PVInstallationsController::class, 'index'])->name('pvinstallations.index');
-Route::post('/apprentis/pvinstallations', [PVInstallationsController::class, 'store'])->name('pvinstallations.store');
-Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'pv'])->name('pvinstallations.download');
+Route::middleware('auth')->group(function(){
+    Route::get('/apprentis/pvinstallations', [PVInstallationsController::class, 'index'])->name('pvinstallations.index');
+    Route::post('/apprentis/pvinstallations', [PVInstallationsController::class, 'store'])->name('pvinstallations.store');
+    Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'pv'])->name('pvinstallations.download'); 
+});
 //Dossiers 
-Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('dossiers.index');
-Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
-Route::get('/apprentis/dossiers/consulter',[DossiersController::class,'consulter'])->name('dossiers.consulter');
-Route::get('/apprentis/fichiers/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
-Route::get('/apprentis/details/update/{id}', [DossiersController::class,'updateindex'])->name('dossiers.updateindex');
-Route::put('/apprentis/details/update/{id}', [DossiersController::class,'update'])->name('dossiers.update');
+Route::middleware('auth')->group(function(){
+    Route::get('/apprentis/dossiers', [DossiersController::class, 'index'])->name('dossiers.index');
+    Route::post('/apprentis/dossiers', [DossiersController::class, 'store'])->name('dossiers.store');
+    Route::get('/apprentis/dossiers/consulter',[DossiersController::class,'consulter'])->name('dossiers.consulter');
+    Route::get('/apprentis/fichiers/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
+    Route::get('/apprentis/details/update/{id}', [DossiersController::class,'updateindex'])->name('dossiers.updateindex');
+    Route::put('/apprentis/details/update/{id}', [DossiersController::class,'update'])->name('dossiers.update'); 
+});
 //Maitre Apprentis
-Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
-Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
-Route::put('/maitreapprentis/{id}', [MaitreApprentisController::class, 'update'])->name('maitreapprentis.update');
+Route::middleware('auth')->group(function(){
+    Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
+    Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
+    Route::put('/maitreapprentis/{id}', [MaitreApprentisController::class, 'update'])->name('maitreapprentis.update');
+});
 //decisionsapprentis
-Route::get('/decisions', [DecisionsController::class, 'index'])->name('decisions.index');
-Route::post('/decisions', [DecisionsController::class, 'store'])->name('decisions.store');
-Route::get('/decisions/ficheA', [FicheController::class, 'decisionA'])->name('decisions.ficheA');
-Route::get('/decisions/ficheMA', [FicheController::class, 'decisionMA'])->name('decisions.ficheMA');
+Route::middleware('auth')->group(function(){
+    Route::get('/decisions', [DecisionsController::class, 'index'])->name('decisions.index');
+    Route::post('/decisions', [DecisionsController::class, 'store'])->name('decisions.store');
+    Route::get('/decisions/ficheA', [FicheController::class, 'decisionA'])->name('decisions.ficheA');
+    Route::get('/decisions/ficheMA', [FicheController::class, 'decisionMA'])->name('decisions.ficheMA'); 
+});
 // Evaluation maitre apprentis
-Route::get('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'index'])->name('evaluationMA.index');
-Route::post('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
-Route::put('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
+Route::middleware('auth')->group(function(){
+    Route::get('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'index'])->name('evaluationMA.index');
+    Route::post('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
+    Route::put('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
+});
 // Evaluation apprentis
-Route::get('/apprentis/Evaluer', [EvaluationApprentisController::class, 'index'])->name('evaluation_apprentis.index');
-Route::post('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
-Route::put('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
-Route::post('/apprentis/evaluer/generate-pdf', 'EvaluationCApprentisontroller@fiche')->name('evaluation_apprentis.fiche');
-
+Route::middleware('auth')->group(function(){
+    Route::get('/apprentis/Evaluer', [EvaluationApprentisController::class, 'index'])->name('evaluation_apprentis.index');
+    Route::post('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
+    Route::put('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
+    Route::post('/apprentis/evaluer/generate-pdf', 'EvaluationCApprentisontroller@fiche')->name('evaluation_apprentis.fiche');
+});
 //Assiduites
-Route::get('/assiduites/ajouter', [AssiduitesController::class, 'index'])->name('assiduites.index');
-Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
-Route::get('/assiduites/consulter', [AssiduitesController::class, 'show'])->name('assiduites.consulter');
-Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
-Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
-Route::get('/download/{id}', [AssiduitesController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
+Route::middleware('auth')->group(function(){
+    Route::get('/assiduites/ajouter', [AssiduitesController::class, 'index'])->name('assiduites.index');
+    Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
+    Route::get('/assiduites/consulter', [AssiduitesController::class, 'show'])->name('assiduites.consulter');
+    Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
+    Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
+    Route::get('/download/{id}', [AssiduitesController::class, 'pdfdownload'])->name('dossiers.pdfdownload'); 
+});
 //plan besoins
-Route::get('/planbesoins', [PlanBesoinsController::class, 'index'])->name('planbesoins.index');
-Route::post('/planbesoins', [PlanBesoinsController::class, 'store'])->name('planbesoins.store');
-Route::put('/planbesoins/{id}', [PlanBesoinsController::class, 'update'])->name('planbesoins.update');
-Route::delete('/planbesoins/{id}', [PlanBesoinsController::class, 'destroy'])->name('planbesoins.destroy');
+Route::middleware('auth')->group(function(){
+    Route::get('/planbesoins', [PlanBesoinsController::class, 'index'])->name('planbesoins.index');
+    Route::post('/planbesoins', [PlanBesoinsController::class, 'store'])->name('planbesoins.store');
+    Route::put('/planbesoins/{id}', [PlanBesoinsController::class, 'update'])->name('planbesoins.update');
+    Route::delete('/planbesoins/{id}', [PlanBesoinsController::class, 'destroy'])->name('planbesoins.destroy');
+});
 //parametres
 Route::middleware('auth')->group(function(){
     Route::get('/parametres', [ParametresController::class, 'index'])->name('parametres.index');

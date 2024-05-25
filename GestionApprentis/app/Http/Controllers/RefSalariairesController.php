@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\refsalariares;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RefSalariairesController extends Controller
 {
@@ -11,8 +12,13 @@ class RefSalariairesController extends Controller
      */
     public function index()
     {
+        if(auth::user()->role == 'DFP' || auth::user()-> role == 'DRH'){
         $refsalariaires = refsalariares::all();
         return view('refsalariaires.index', compact('refsalariaires'));
+        }
+        else{
+            return redirect()->route('login');
+        }
     }
 
     /**
@@ -28,6 +34,7 @@ class RefSalariairesController extends Controller
      */
     public function store(Request $request)
     {
+        refsalariares::where('status','actif')->update(['status'=>'inactif']);
         $refsalariares = new refsalariares();
         $refsalariares->version = $request->version;
         $refsalariares->snmg = $request->snmg;

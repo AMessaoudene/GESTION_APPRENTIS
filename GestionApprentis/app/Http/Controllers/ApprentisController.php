@@ -22,11 +22,16 @@ class ApprentisController extends Controller
 {
     public function index()
     {
+        if(auth::user()->role == 'DFP' || auth::user()->role == 'SA'){
         $diplomes = diplomes::all();
         $maitre_apprentis = maitre_apprentis::all();
         $structures = structures::all();
         $specialites = specialites::all();
         return view('apprentis.index', compact('maitre_apprentis','diplomes','structures','specialites')); 
+        }
+        else{
+            return redirect()->back();
+        }
     }
 
     public function submit(Request $request){
@@ -48,7 +53,6 @@ class ApprentisController extends Controller
             'specialite_id' => 'required|string|max:255',
             'structure_id' => 'required|string|max:255',
             'diplome1_id' => 'required|string|max:255',
-            'status' => 'required',
             'maitre_apprentis' => 'required',
         ];
 
@@ -66,7 +70,6 @@ class ApprentisController extends Controller
             'specialite_id.required' => 'Le champ specialite est requis.',
             'structure_id.required' => 'Le champ structure est requis.',
             'diplome1_id.required' => 'Le champ diplome est requis.',
-            'status.required' => 'Le champ status est requis.',
             'maitre_apprentis.required' => 'Le champ maitre_apprentis est requis.',
             'numcontrat.unique' => 'Le numéro de contrat existe deja dans la base de données.',
         ];
@@ -107,7 +110,6 @@ class ApprentisController extends Controller
                     $apprenti->specialite_id = $request->specialite_id;
                     $apprenti->structure_id = $request->structure_id;
                     $apprenti->diplome1_id = $request->diplome1_id;
-                    $apprenti->status = $request->status;
                     $apprenti->save();
                     
                     // Find the master apprentice based on the selected ID
@@ -152,7 +154,6 @@ class ApprentisController extends Controller
                 $apprenti->specialite_id = $request->specialite_id;
                 $apprenti->structure_id = $request->structure_id;
                 $apprenti->diplome1_id = $request->diplome1_id;
-                $apprenti->status = $request->status;
                 $apprenti->save();
                 
                 // Find the master apprentice based on the selected ID

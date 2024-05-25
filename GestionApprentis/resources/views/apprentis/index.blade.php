@@ -119,14 +119,14 @@
                                 @endforeach
                             </select>
                         </div>
-                        <div class="mb-3">
+                        <!--<div class="mb-3">
                             <label class="form-label">Status</label>
                             <select name="status" class="form-select" required>
                                 <option value="">-- Choisir un statut --</option>
                                 <option value="actif" selected>Actif</option>
                                 <option value="inactif">Inactif</option>
                             </select>
-                        </div>
+                        </div>-->
                         <div class="mb-3">
                             <label class="form-label">Maître d'apprentissage</label>
                             <select name="maitre_apprentis" class="form-select" required>
