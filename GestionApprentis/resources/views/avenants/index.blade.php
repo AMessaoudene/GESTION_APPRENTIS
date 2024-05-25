@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title', 'Assiduité | Ajouter')
+@section('title', 'avenants')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -19,29 +19,29 @@
                     <div class="col-md-8">
                         <div class="card mt-4">
                             <div class="card-header">
-                                <h4>Ajouter Assiduité</h4>
+                                <h4>Ajouter un Avenant</h4>
                             </div>
                             <div class="card-body">
                                 <form id="avenantForm" action="{{ route('avenants.store') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group mb-3">
                                         <label for="decisionapprenti_id">Sélectionner une decision d'un apprenti</label>
-                                        @foreach ($apprentis as $apprenti)
-                                            @if (Auth::user()->structures_id == $apprenti->structure_id)
-                                                @foreach ($pvs as $pv)
-                                                    @if ($pv->apprenti_id == $apprenti->id)
-                                                        <select name="decisionapprenti_id" id="decisionapprenti_id">
-                                                        <option value="">-- Choisir --</option>
-                                                        @foreach ($decisions as $decision)
-                                                            @if ($decision->pv_id == $pv->id)
-                                                                <option value="{{ $decision->id }}">{{ $decision->referenceda }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    </select>
-                                                    @endif
-                                                @endforeach
-                                            @endif
-                                        @endforeach
+                                        <select name="decisionapprenti_id" id="decisionapprenti_id">
+                                            <option value="">-- Choisir --</option>
+                                            @foreach ($apprentis as $apprenti)
+                                                @if (Auth::user()->structures_id == $apprenti->structure_id)
+                                                    @foreach ($pvs as $pv)
+                                                        @if ($pv->apprenti_id == $apprenti->id)
+                                                            @foreach ($decisions as $decision)
+                                                                @if ($decision->pv_id == $pv->id)
+                                                                    <option value="{{ $decision->id }}">{{ $decision->referenceda }} - {{ $apprenti->id }} - {{ $apprenti->nom }} - {{ $apprenti->prenom }}</option>
+                                                                @endif
+                                                            @endforeach
+                                                        @endif
+                                                    @endforeach
+                                                @endif
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="form-group mb-3">
                                         <label for="date">Date</label>
@@ -79,6 +79,7 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Decision Apprenti ID</th>
+                                    <th>Date</th>
                                     <th>Type</th>
                                 </tr>
                             </thead>
@@ -87,6 +88,7 @@
                                     <tr>
                                         <td>{{ $avenant->id }}</td>
                                         <td>{{ $avenant->decisionapprenti_id }}</td>
+                                        <td>{{ $avenant->date }}</td>
                                         <td>{{ $avenant->type }}</td>
                                     </tr>
                                 @endforeach

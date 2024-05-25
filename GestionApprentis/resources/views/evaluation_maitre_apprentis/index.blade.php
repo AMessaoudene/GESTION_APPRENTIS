@@ -4,14 +4,22 @@
 <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
+        @if (Auth::user()->role == 'DFP')
+        @include('layouts.dfpsidenav')
+        @elseif(Auth::user()->role == 'SA')
         @include('layouts.sasidenav')
+        @elseif(Auth::user()->role == 'DRH')
+        @include('layouts.drhsidenav')
+        @elseif(Auth::user()->role == 'EvaluateurGradé')
+        @include('layouts.egsidenav')
+        @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card mt-4">
                             <div class="card-header">
-                                <h1 class="card-title text-center">Ajouter Evaluation Apprenti</h1>
+                                <h1 class="card-title text-center">Evaluation Maitre d'Apprenti</h1>
                             </div>
                             <div class="card-body">
                                 <form method="POST" action="{{ route('evaluationMA.submit') }}">

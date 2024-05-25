@@ -179,7 +179,6 @@ class DossiersController extends Controller
         $apprenti->numcontrat = $request->numcontrat;
         $apprenti->specialite_id = $request->specialite_id;
         $apprenti->structure_id = $request->structure_id;
-        $apprenti->planbesoin_id = $request->planbesoin_id;
         $apprenti->diplome1_id = $request->diplome1_id;
         $apprenti->diplome2_id = $request->diplome2_id;
         $apprenti->save();
@@ -265,6 +264,50 @@ class DossiersController extends Controller
         $dossier->status = 'en cours';
         $dossier->save();
 
-        return redirect()->back();
+        return redirect('/apprentis/consulter');
     }
+    public function deletefichier(Request $request, $id, $fichier)
+{
+    $dossier = Dossiers::find($id);
+
+    if ($dossier) {
+        switch ($fichier) {
+            case 'contratapprenti':
+                $dossier->contratapprenti = '';
+                break;
+            case 'decisionapprenti':
+                $dossier->decisionapprenti = '';
+                break;
+            case 'decisionmaitreapprenti':
+                $dossier->decisionmaitreapprenti = '';
+                break;
+            case 'pvinstallation':
+                $dossier->pvinstallation = '';
+                break;
+            case 'copiecheque':
+                $dossier->copiecheque = '';
+                break;
+            case 'extraitnaissance':
+                $dossier->extraitnaissance = '';
+                break;
+            case 'autorisationparentale':
+                $dossier->autorisationparentale = '';
+                break;
+            case 'photo':
+                $dossier->photo = '';
+                break;
+            case 'pieceidentite':
+                $dossier->pieceidentite = '';
+                break;
+            default:
+                return redirect()->back()->with('error', 'Invalid file type.');
+        }
+        $dossier->save();
+
+        return redirect()->back()->with('success', 'File deleted successfully.');
+    }
+
+    return redirect()->back()->with('error', 'Dossier not found.');
+}
+
 }

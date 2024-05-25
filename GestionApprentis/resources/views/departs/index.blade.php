@@ -69,7 +69,7 @@
                         </div>
                         <div class="mb-3">
                             <label for="refcourrier" class="form-label">Référence Courrier</label>
-                            <input type="text" name="refcourrier" id="refcourrier" class="form-control" placeholder="Ex: " aria-label="Référence Courrier" required>
+                            <input type="text" name="refcourrier" id="refcourrier" class="form-control" aria-label="Référence Courrier" required>
                             <div class="invalid-feedback">
                                 Veuillez entrer la référence du courrier.
                             </div>
@@ -89,10 +89,36 @@
                 </div>
             </div>
             @endif
-        </main>
+            <table id="departs-table" class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Apprenti ID</th>
+                            <th scope="col">Date de depart</th>
+                            <th scope="col">Motif</th>
+                            <th scope="col">Ref. courrier</th>
+                            <th scope="col">Date courrier</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($departs as $depart)
+                            <tr>
+                                <td>{{ $depart->id }}</td>
+                                <td>{{ $depart->apprenti_id }}</td>
+                                <td>{{ $depart->datedepart }}</td>
+                                <td>{{ $depart->motif }}</td>
+                                <td>{{ $depart->refcourrier }}</td>
+                                <td>{{ $depart->datecourrier }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </main>
+        </div>
     </div>
-</div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     document.getElementById('apprenti_id').addEventListener('change', function() {
         var selectedOption = this.options[this.selectedIndex];

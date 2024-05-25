@@ -22,12 +22,20 @@
     <div class="container-fluid">
     <div class="row">
         <!-- Sidebar -->
+        @if (Auth::user()->role == 'DFP')
+        @include('layouts.dfpsidenav')
+        @elseif(Auth::user()->role == 'SA')
         @include('layouts.sasidenav')
+        @elseif(Auth::user()->role == 'DRH')
+        @include('layouts.drhsidenav')
+        @elseif(Auth::user()->role == 'EvaluateurGradé')
+        @include('layouts.egsidenav')
+        @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
-                        <h1 class="text-center">Ajouter Evaluation Apprenti</h1>
+                        <h1 class="text-center">Evaluation Apprenti</h1>
                     </div>
                         <form action="{{ route('evaluation_apprentis.submit') }}" method="POST" enctype="multipart/form-data" class="container mt-5">
                             @csrf
@@ -301,14 +309,13 @@
                                 </div>  
                             </div>
                             <button type="submit" class="btn btn-primary w-100">Ajouter</button>
-                            <a href="{{ route('evaluation_apprentis.fiche') }}">Sauvegarder et Telecharger</a>
                         </form>
                     </div>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
-</main>
+</div>
 
 
 <script>

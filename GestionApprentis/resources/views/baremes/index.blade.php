@@ -209,11 +209,96 @@
                     </div>
                 </div>
             @endif
-        </main>
+            <table id="baremes-table" class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Ref. salariale</th>
+                            <th scope="col">Diplome</th>
+                            <th scope="col">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($baremes as $bareme)
+                            <tr>
+                                <td>{{ $bareme->id }}</td>
+                                <td>{{ $bareme->refsalariaires_id }}</td>
+                                <td>{{ $bareme->diplome_id }}</td>
+                                <td>{{ $bareme->statut }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </main>
+        </div>
     </div>
-</div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    /*$(document).ready(function() {
+        $('#baremes-table').DataTable();
+
+        // AJAX for editing a diplome
+        $(document).on('click', '.edit-btn', function() {
+            var id = $(this).data('id');
+            var row = $(this).closest('tr');
+            var nom = row.find('td:eq(1)').text();
+            var prenom = row.find('td:eq(2)').text();
+            var civilite = row.find('td:eq(3)').text();
+            var structure = row.find('td:eq(4)').text();
+            var role = row.find('td:eq(5)').text();
+            var email = row.find('td:eq(6)').text();
+            var status = row.find('td:eq(7)').text();
+            var editForm = `
+                <form method="POST" action="/baremes/${id}" class="edit-form">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="nom" class="form-control" value="${nom}">
+                    <input type="text" name="prenom" class="form-control" value="${prenom}">
+                    <select name="civilite" class="form-control" value="${civilite}">
+                        <option value="">-- Choisir une civilite --</option>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                    </select>
+                    <select name="role" class="form-control" value="${role}">
+                        <option value="">-- Choisir un role --</option>
+                        <option value="DFP">DFP</option>
+                        <option value="DRH">DRH</option>
+                        <option value="SA">SA</option>
+                        <option value="EvaluateurGrade">Evaluateur Gradé</option>
+                    </select>
+                    <input type="email" name="email" emailclass="form-control" value="${email}">
+                    <select name="status" class="form-control" value="${status}">
+                        <option value="">-- Choisir un statut --</option>
+                        <option value="actif">actif</option>
+                        <option value="inactif">inactif</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </form>
+            `;
+            row.find('td:eq(1)').html(editForm);
+        });
+
+        // Submit edit form
+        $(document).on('submit', '.edit-form', function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'PUT', // Changed from POST to PUT for update
+                data: form.serialize(),
+                success: function(response) {
+                    // Reload the page to update the table
+                    location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error updating diplome:', errorThrown);
+                }
+            });
+        });
+    });*/
     document.addEventListener('DOMContentLoaded', function() {
         var diplomeSelect = document.querySelector('select[name="diplome_id"]');
         var sectionsToShow = [];

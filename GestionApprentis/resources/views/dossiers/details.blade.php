@@ -8,37 +8,62 @@
             <h2>Informations personnelles</h2>
             <ul class="list-group">
                 <li class="list-group-item">ID : <input type="text" value="{{ $apprenti->id }}" readonly disabled></li>
-                <li class="list-group-item">Nom : <input type="text" name="" value="{{ $apprenti->nom }}"></li>
-                <li class="list-group-item">Prenom : <input type="text" name="" value="{{ $apprenti->prenom }}"> </li>
-                <li class="list-group-item">Adresse : <input type="text" name="" value="{{ $apprenti->adresse }}"> </li>
-                <li class="list-group-item">Téléphone : <input type="text" name="" value="{{ $apprenti->telephone }}"></li>
-                <li class="list-group-item">Email : <input type="text" name="" value="{{ $apprenti->email }}"> </li>
-                <li class="list-group-item">Civilité : <input type="text" name="" value="{{ $apprenti->civilite }}"> </li>
-                <li class="list-group-item">Numéro du contrat : <input type="text" name="" value="{{ $apprenti->numcontrat }}"></li>
-                <li class="list-group-item">Date du contrat : <input type="text" name="" value="{{ $apprenti->datecontrat }}"></li>
-                <li class="list-group-item">Date de début du contrat : <input type="text" name="" value="{{ $apprenti->datedebut }}"></li>
-                <li class="list-group-item">Date de fin du contrat : <input type="text" name="" value="{{ $apprenti->datefin }}"></li>
-                <li class="list-group-item">Date du transfert : <input type="text" name="" value="{{ $apprenti->datetransfert }}"> </li>
-                <li class="list-group-item">Niveau Scolaire : <input type="text" name="" value="{{ $apprenti->niveauscolaire }}"> </li>
+                <li class="list-group-item">Nom : <input type="text" name="nom" value="{{ $apprenti->nom }}"></li>
+                <li class="list-group-item">Prenom : <input type="text" name="prenom" value="{{ $apprenti->prenom }}"> </li>
+                <li class="list-group-item">Adresse : <input type="text" name="adresse" value="{{ $apprenti->adresse }}"> </li>
+                <li class="list-group-item">Téléphone : <input type="text" pattern="" name="telephone" value="{{ $apprenti->telephone }}"></li>
+                <li class="list-group-item">Email : <input type="email" name="email" value="{{ $apprenti->email }}"> </li>
+                <li class="list-group-item">Civilité : 
+                    <select name="civilite" value="{{ $apprenti->civilite }}">
+                        <option value="">-- Choisir --</option>
+                        <option value="M">M.</option>
+                        <option value="Mme">Mme</option>
+                        <option value="Mlle">Mlle</option>
+                    </select>
+                </li>
+                <li class="list-group-item">Numéro du contrat : <input type="text" name="numcontrat" value="{{ $apprenti->numcontrat }}"></li>
+                <li class="list-group-item">Date du contrat : <input type="date" name="datecontrat" value="{{ $apprenti->datecontrat }}"></li>
+                <li class="list-group-item">Date de début du contrat : <input type="date" name="datedebut" value="{{ $apprenti->datedebut }}"></li>
+                <li class="list-group-item">Date de fin du contrat : <input type="date" name="datefin" value="{{ $apprenti->datefin }}"></li>
+                <li class="list-group-item">Date du transfert : <input type="date" name="datetransfert" value="{{ $apprenti->datetransfert }}"> </li>
+                <li class="list-group-item">Niveau Scolaire : 
+                    <select name="niveauscolaire" value="{{ $apprenti->niveauscolaire }}">
+                        <option value="">-- Choisir --</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </li>
                 <li class="list-group-item">Spécialité : 
-                    <select name="" value="{{ $specialite->id }}">
+                    <select name="specialite_id" value="{{ $specialite->id }}">
                     <option value="">-- Choisir --</option>
                         @foreach($specialites as $specialite)
                             <option value="{{ $specialite->id }}">{{ $specialite->nom }}</option>
                         @endforeach
                     </select>
                  </li>
-                <li class="list-group-item">Diplôme : <input type="text" name="" value="{{ $ }}"> </li>
-                <li class="list-group-item">Structure : <input type="text" name="" value="{{ $ }}"> </li>
+                <li class="list-group-item">Diplôme : 
+                    <select name="diplome_id" value="{{ $ }}">
+                    <option value="">-- Choisir --</option>
+                        @foreach($diplomes as $diplome)
+                            <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
+                        @endforeach
+                    </select>
+                </li>
+                <li class="list-group-item">Structure : 
+                    <select name="" value="{{ $s }}">
+                </li>
             </ul>
         </div>
         <div class="col-lg-6">
             <h2>PV</h2>
             <ul class="list-group">
                 <li class="list-group-item">Référence : <input type="text" name="" value="{{ $ }}"></li>
-                <li class="list-group-item">Date du PV : <input type="text" name="" value="{{ $ }}"></li>
+                <li class="list-group-item">Date du PV : <input type="date" name="" value="{{ $ }}"></li>
                 <li class="list-group-item">Maitre Apprenti : <input type="text" name="" value="{{ $ }}"></li>
-                <li class="list-group-item">Date installation : <input type="text" name="" value="{{ $ }}"> </li>
+                <li class="list-group-item">Date installation : <input type="date" name="" value="{{ $ }}"> </li>
                 <li class="list-group-item">Année d'installation (lettre) : <input type="text" name="" value="{{ $ }}"> </li>
                 <li class="list-group-item">Mois d'installation (lettre) : <input type="text" name="" value="{{ $ }}"> </li>
                 <li class="list-group-item">Jour d'installation (lettre) : <input type="text" name="" value="{{ $ }}"> </li>

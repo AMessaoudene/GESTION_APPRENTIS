@@ -17,7 +17,6 @@
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             @if (Auth::user()->role == 'DFP') 
-            <div class="container mt-5 mb-5">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="card-title text-center">Ajouter un maitre d'apprentis</h5>
@@ -93,6 +92,105 @@
                     </form>
                 </div>
             </div>
-        </div>
         @endif
+        <table id="maitres-table" class="table table-striped mt-4">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nom</th>
+                            <th scope="col">Prénom</th>
+                            <th scope="col">Civilité</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($maitre_apprentis as $maitre)
+                            <tr>
+                                <td>{{ $maitre->id }}</td>
+                                <td>{{ $maitre->nom }}</td>
+                                <td>{{ $maitre->prenom }}</td>
+                                <td>{{ $maitre->civilite }}</td>
+                                <td>{{ $maitre->email }}</td>
+                                <td>{{ $maitre->statut }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </main>
+        </div>
+    </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#maitres-table').DataTable();
+
+        // AJAX for editing a diplome
+        $(document).on('click', '.edit-btn', function() {
+            var id = $(this).data('id');
+            var row = $(this).closest('tr');
+            var nom = row.find('td:eq(1)').text();
+            var prenom = row.find('td:eq(2)').text();
+            var civilite = row.find('td:eq(3)').text();
+            var structure = row.find('td:eq(4)').text();
+            var role = row.find('td:eq(5)').text();
+            var email = row.find('td:eq(6)').text();
+            var status = row.find('td:eq(7)').text();
+            var editForm = `
+                <form method="POST" action="/maitres/${id}" class="edit-form">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="nom" class="form-control" value="${nom}">
+                    <input type="text" name="prenom" class="form-control" value="${prenom}">
+                    <select name="civilite" class="form-control" value="${civilite}">
+                        <option value="">-- Choisir une civilite --</option>
+                        <option value="Homme">Homme</option>
+                        <option value="Femme">Femme</option>
+                    </select>
+                    <select name="structures_id" class="form-control" value="${structure}">
+                        <option value="">-- Choisir une structure --</option>
+                        @foreach ($structures as $structure)
+                            <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                        @endforeach
+                    </select>
+                    <select name="role" class="form-control" value="${role}">
+                        <option value="">-- Choisir un role --</option>
+                        <option value="DFP">DFP</option>
+                        <option value="DRH">DRH</option>
+                        <option value="SA">SA</option>
+                        <option value="EvaluateurGrade">Evaluateur Gradé</option>
+                    </select>
+                    <input type="email" name="email" emailclass="form-control" value="${email}">
+                    <select name="status" class="form-control" value="${status}">
+                        <option value="">-- Choisir un statut --</option>
+                        <option value="actif">actif</option>
+                        <option value="inactif">inactif</option>
+                    </select>
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </form>
+            `;
+            row.find('td:eq(1)').html(editForm);
+        });
+
+        // Submit edit form
+        $(document).on('submit', '.edit-form', function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'PUT', // Changed from POST to PUT for update
+                data: form.serialize(),
+                success: function(response) {
+                    // Reload the page to update the table
+                    location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error updating diplome:', errorThrown);
+                }
+            });
+        });
+    });
+</script>

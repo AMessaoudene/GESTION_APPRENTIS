@@ -15,6 +15,7 @@
             @include('layouts.egsidenav')
             @endif
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                @if (Auth::user()->role == 'DFP')      
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-8">
@@ -75,7 +76,7 @@
                         </div>
                     </div>
                 </div>
-
+                @endif
                 <table id="comptes-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
@@ -87,7 +88,9 @@
                             <th scope="col">Role</th>
                             <th scope="col">Email</th>
                             <th scope="col">Statut</th>
+                            @if (Auth::user()->role == 'DFP')
                             <th scope="col">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -100,13 +103,12 @@
                                 @foreach($structures as $structure)
                                     @if($structure->id == $compte->structures_id)
                                         <td>{{ $structure->nom }}</td>
-                                    @else
-                                        <td>Aucune</td>
                                     @endif
                                 @endforeach
                                 <td>{{ $compte->role }}</td>
                                 <td>{{ $compte->email }}</td>
                                 <td>{{ $compte->status }}</td>
+                                @if (Auth::user()->role == 'DFP')
                                 <td>
                                     <button class="btn btn-primary edit-btn" data-id="{{ $compte->id }}">Modifier</button>
                                     <form action="{{ route('comptes.destroy', $compte->id) }}" method="POST">                  
@@ -115,6 +117,7 @@
                                         <button type="submit" class="btn btn-danger">Supprimer</button>
                                     </form>
                                 </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/apprentis/consulter', [ApprentisController::class, 'consulter'])->name('apprentis.consulter');
     Route::get('/apprentis/details/{id}',[ApprentisController::class,'details'])->name('apprentis.details');
     Route::post('/apprentis/details/{id}',[ApprentisController::class,'updatedossier'])->name('apprentis.updatedossier');
+    Route::delete('/apprentis/fichiers/delete/{id}/{fichier}', [DossiersController::class, 'deletefichier'])->name('dossiers.deletefichier');
     Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
     Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy'); 
 });

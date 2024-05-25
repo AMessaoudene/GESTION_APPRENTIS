@@ -2,131 +2,157 @@
 @section('title','Plan de Besoins')
 <link rel="stylesheet" href="//cdn.datatables.net/2.0.3/css/dataTables.dataTables.min.css">
 @section('content')
-<h2 class="text-center">Plan de Besoins</h2>
-<form action="{{ route('planbesoins.store') }}" method="POST" enctype="multipart/form-data">
-    @csrf
+<div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
-            <label for="exercice_id">Année:</label>
-            <select name="exercice_id" id="exercice_id" class="form-control" required>
-                <option value="">-- choisir --</option>
-                @foreach($exercices as $exercice)
-                @if ($exercice->status == "actif")
-                <option value="{{ $exercice->id }}">{{ $exercice->annee }}</option>
-                @endif
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-3">
-            <label for="structure_id">Structure:</label>
-            <select name="structure_id" id="structure_id" class="form-control" required>
-                <option value="">-- choisir --</option>
-                @foreach($structures as $structure)
-                @if($user->structures_id == $structure->id)
-                    <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
-                @endif
-                @endforeach
-            </select>
-        </div>
-        <div class="col-md-2">
-            <label for="reference">Référence:</label>
-            <input type="text" name="reference" id="reference" class="form-control" placeholder="Référence" required>
-        </div>
-        <div class="col-md-2">
-            <label for="date">Date:</label>
-            <input type="date" name="date" id="date" class="form-control" required>
-        </div>
-    </div>
-    @foreach ($specialites as $specialite)
-        <input type="hidden" name="specialites_id[]" value="{{$specialite->id}}">
-        <div class="row mt-3">
-            <div class="col-md-2">
-                <label>Spécialité:</label>
-                <p>{{$specialite->nom}}</p>
+        @if (Auth::user()->role == 'DFP')
+        @include('layouts.dfpsidenav')
+        @elseif(Auth::user()->role == 'SA')
+        @include('layouts.sasidenav')
+        @elseif(Auth::user()->role == 'DRH')
+        @include('layouts.drhsidenav')
+        @elseif(Auth::user()->role == 'EvaluateurGradé')
+        @include('layouts.egsidenav')
+        @endif
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')         
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-md-8">
+                        <div class="card">
+                            <div class="card-header">Ajouter une structure</div>
+                            <div class="card-body">
+                                <form action="{{ route('planbesoins.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="row mb-3">
+                                        <div class="col-md-3">
+                                            <label for="exercice_id">Année:</label>
+                                            <select name="exercice_id" id="exercice_id" class="form-control" required>
+                                                <option value="">-- Choisir --</option>
+                                                @foreach($exercices as $exercice)
+                                                    @if($exercice->status == 'actif')
+                                                        <option value="{{ $exercice->id }}">{{ $exercice->annee }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="structure_id">Structure:</label>
+                                            <select name="structure_id" id="structure_id" class="form-control" required>
+                                                <option value="">-- Choisir --</option>
+                                                @foreach($structures as $structure)
+                                                    @if($user->structures_id == $structure->id)
+                                                        <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                                                    @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="reference">Référence:</label>
+                                            <input type="text" name="reference" id="reference" class="form-control" placeholder="Référence" required>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="date">Date:</label>
+                                            <input type="date" name="date" id="date" class="form-control" required>
+                                        </div>
+                                    </div>
+                                    @foreach($specialites as $specialite)
+                                        <input type="hidden" name="specialites_id[]" value="{{ $specialite->id }}">
+                                        <div class="row mt-3">
+                                            <div class="col-md-2">
+                                                <label>Spécialité:</label>
+                                                <p>{{ $specialite->nom }}</p>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="nombreapprentis{{ $specialite->id }}">Nombre d'apprentis:</label>
+                                                <input type="text" pattern="[0-9]+" name="nombreapprentis[]" id="nombreapprentis{{ $specialite->id }}" class="form-control" placeholder="Nombre d'apprentis" required>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="nombereffectif{{ $specialite->id }}">Nombre d'effectif:</label>
+                                                <input type="text" pattern="[0-9]+" name="nombereffectif[]" id="nombereffectif{{ $specialite->id }}" class="form-control" placeholder="Nombre d'effectif" required>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="description{{ $specialite->id }}">Description:</label>
+                                                <textarea rows="1" name="description[]" id="description{{ $specialite->id }}" class="form-control" placeholder="Description"></textarea>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                    <div class="text-center mt-4">
+                                        <input type="submit" value="Ajouter" id="submit-btn" class="btn btn-primary btn-block">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-2">
-                <label for="nombreapprentis{{$specialite->id}}">Nombre d'apprentis:</label>
-                <input type="text" pattern="[0-9]+" name="nombreapprentis[]" id="nombreapprentis{{$specialite->id}}" class="form-control" placeholder="Nombre d'apprentis" required>
-            </div>
-            <div class="col-md-2">
-                <label for="nombereffectif{{$specialite->id}}">Nombre d'effectif:</label>
-                <input type="text" pattern="[0-9]+" name="nombereffectif[]" id="nombereffectif{{$specialite->id}}" class="form-control" placeholder="Nombre d'effectif" required>
-            </div>
-            <div class="col-md-4">
-                <label for="description{{$specialite->id}}">Description:</label>
-                <textarea rows="1" name="description[]" id="description{{$specialite->id}}" class="form-control" placeholder="Description"></textarea>
-            </div>
-        </div>
-    @endforeach
-    <div class="text-center">
-    <input type="submit" value="Ajouter" id="submit-btn" class="btn btn-primary btn-block">
-    </div>
-    
-</form>
+            @endif
 
-<table id="planbesoins-table" class="table table-striped" style="width:100%">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Exercice</th>
-                <th>structure ID</th>
-                <th>reference</th>
-                <th>specialite</th>
-                <th>date</th>
-                <th>nombreapprentis</th>
-                <th>nombereffectif</th>
-                <th>nombreapprentismax</th>
-                <th>description</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @if (Auth::user()->role == "DFP")
-            @foreach($planbesoins as $planbesoin)
-            <tr id="planbesoin_{{ $planbesoin->id }}">
-                <td>{{ $planbesoin->id }}</td>
-                <td>{{ $planbesoin->exercice_id }}</td>
-                <td>{{ $planbesoin->structure_id }}</td>
-                <td>{{ $planbesoin->reference }}</td>
-                <td>{{ $planbesoin->specialites_id }}</td>
-                <td>{{ $planbesoin->date }}</td>
-                <td>{{ $planbesoin->nombreapprentis }}</td>
-                <td>{{ $planbesoin->nombereffectif }}</td>
-                <td>{{ $planbesoin->nombreapprentismax }}</td>
-                <td>{{ Str::limit($planbesoin->description, 50) }}</td>
-                <td>{{ $planbesoin->status }}</td>
-                <td>
-                    <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $planbesoin->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
-                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $planbesoin->id }}">Supprimer</button>
-                </td>
-            </tr>
-            @endforeach
-            @elseif(Auth::user()->role == "SA")
-            @foreach($planbesoins as $planbesoin)
-            @if ($planbesoin->structure_id == Auth::user()->structure_id)
-            <tr id="planbesoin_{{ $planbesoin->id }}">
-                <td>{{ $planbesoin->id }}</td>
-                <td>{{ $planbesoin->exercice_id }}</td>
-                <td>{{ $planbesoin->structure_id }}</td>
-                <td>{{ $planbesoin->reference }}</td>
-                <td>{{ $planbesoin->specialites_id }}</td>
-                <td>{{ $planbesoin->date }}</td>
-                <td>{{ $planbesoin->nombreapprentis }}</td>
-                <td>{{ $planbesoin->nombereffectif }}</td>
-                <td>{{ $planbesoin->nombreapprentismax }}</td>
-                <td>{{ Str::limit($planbesoin->description, 50) }}</td>
-                <td>{{ $planbesoin->status }}</td>
-                <td>
-                    <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $planbesoin->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
-                    <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $planbesoin->id }}">Supprimer</button>
-                </td>
-            </tr>
-            @endif
-            @endforeach
-            @endif
-        </tbody>
-    </table>
+            <table id="planbesoins-table" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Exercice</th>
+                            <th>structure ID</th>
+                            <th>reference</th>
+                            <th>specialite</th>
+                            <th>date</th>
+                            <th>nombreapprentis</th>
+                            <th>nombereffectif</th>
+                            <th>nombreapprentismax</th>
+                            <th>description</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Auth::user()->role == "DFP")
+                        @foreach($planbesoins as $planbesoin)
+                        <tr id="planbesoin_{{ $planbesoin->id }}">
+                            <td>{{ $planbesoin->id }}</td>
+                            <td>{{ $planbesoin->exercice_id }}</td>
+                            <td>{{ $planbesoin->structure_id }}</td>
+                            <td>{{ $planbesoin->reference }}</td>
+                            <td>{{ $planbesoin->specialites_id }}</td>
+                            <td>{{ $planbesoin->date }}</td>
+                            <td>{{ $planbesoin->nombreapprentis }}</td>
+                            <td>{{ $planbesoin->nombereffectif }}</td>
+                            <td>{{ $planbesoin->nombreapprentismax }}</td>
+                            <td>{{ Str::limit($planbesoin->description, 50) }}</td>
+                            <td>{{ $planbesoin->status }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $planbesoin->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $planbesoin->id }}">Supprimer</button>
+                            </td>
+                        </tr>
+                        @endforeach
+                        @elseif(Auth::user()->role == "SA")
+                        @foreach($planbesoins as $planbesoin)
+                        @if ($planbesoin->structure_id == Auth::user()->structures_id)
+                        <tr id="planbesoin_{{ $planbesoin->id }}">
+                            <td>{{ $planbesoin->id }}</td>
+                            <td>{{ $planbesoin->exercice_id }}</td>
+                            <td>{{ $planbesoin->structure_id }}</td>
+                            <td>{{ $planbesoin->reference }}</td>
+                            <td>{{ $planbesoin->specialites_id }}</td>
+                            <td>{{ $planbesoin->date }}</td>
+                            <td>{{ $planbesoin->nombreapprentis }}</td>
+                            <td>{{ $planbesoin->nombereffectif }}</td>
+                            <td>{{ $planbesoin->nombreapprentismax }}</td>
+                            <td>{{ Str::limit($planbesoin->description, 50) }}</td>
+                            <td>{{ $planbesoin->status }}</td>
+                            <td>
+                                <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $planbesoin->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
+                                <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $planbesoin->id }}">Supprimer</button>
+                            </td>
+                        </tr>
+                        @endif
+                        @endforeach
+                        @endif
+                    </tbody>
+                </table>
+            </main>
+        </div>
+    </div>
 @endSection
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>

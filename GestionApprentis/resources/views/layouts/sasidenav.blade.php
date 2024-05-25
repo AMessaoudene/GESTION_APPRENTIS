@@ -1,54 +1,33 @@
 <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
             <div class="sidebar-sticky mt-5">
-                <ul class="nav flex-column">
+            <ul class="nav flex-column">
                     <li class="nav-item mb-5">
                         <a class="nav-link" href="{{ route('apprentis.consulter') }}">
                             Apprentis
                         </a>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="maitresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('maitreapprentis.index') }}">
                             Maîtres apprentis
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="maitresDropdown">
-                            <a class="dropdown-item" href="{{ route('maitreapprentis.index') }}">Ajouter</a>
-                            <a class="dropdown-item" href="#">Consulter la liste</a>
-                        </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="structuresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('structures.index') }}">
                             Structures
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="structuresDropdown">
-                            <a class="dropdown-item" href="{{ route('structures.index') }}">Ajout & Deatils</a>
-                        </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="exercicesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            exercices
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="exercicesDropdown">
-                            <a class="dropdown-item" href="#">Ajouter</a>
-                            <a class="dropdown-item" href="#">Consulter la liste</a>
-                        </div>
-                    </li>
-                    <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('planbesoins.index') }}">
                             Plans de besoins
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="plansDropdown">
-                            <a class="dropdown-item" href="#">Ajouter un plan</a>
-                            <a class="dropdown-item" href="#">Consulter les plans</a>
-                            <a class="dropdown-item" href="#">Details des plans</a>
-                        </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" id="EvaluationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Evaluations
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="plansDropdown">
-                            <a class="dropdown-item" href="#">Ajouter un plan</a>
-                            <a class="dropdown-item" href="#">Consulter les plans</a>
+                        <div class="dropdown-menu" aria-labelledby="EvaluationsDropdown">
+                            <a class="dropdown-item" href="{{ route('evaluation_apprentis.index') }}">Apprentis</a>
+                            <a class="dropdown-item" href="{{ route('evaluationMA.index') }}">Maitre Apprentis</a>
                         </div>
                     </li>
                     <li class="nav-item mb-5">
@@ -57,31 +36,30 @@
                         </a>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('departs.index') }}">
                             Departs
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="plansDropdown">
-                            <a class="dropdown-item" href="#">Ajouter une depart</a>
-                            <a class="dropdown-item" href="#">Consulter les departs</a>
-                        </div>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('avenants.index') }}">
+                            Avenants
+                        </a>
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Parametres
                         </a>
                         <div class="dropdown-menu" aria-labelledby="plansDropdown">
-                            <a class="dropdown-item" href="#">Ajouter une parametre</a>
-                            <a class="dropdown-item" href="#">Consulter les parametres</a>
+                            <a class="dropdown-item" href="{{ route('exercices.index') }}">Administratives</a>
+                            <a class="dropdown-item" href="{{ route('parametres.index') }}">Legislatives</a>
+                            <a class="dropdown-item" href="{{ route('baremes.index') }}">Baremes</a>
+                            <a class="dropdown-item" href="{{ route('refsalariaires.index') }}">Ref. Salariales</a>
                         </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="comptesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('comptes.index') }}">
                             Comptes
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="comptesDropdown">
-                            <a class="dropdown-item" href="#">Ajouter des comptes</a>
-                            <a class="dropdown-item" href="#">Consulter les comptes</a>
-                        </div>
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link" href="{{ url('/profile') }}">

@@ -20,8 +20,8 @@
                     <li class="list-group-item">Civilité 
                         <select name="civilite" value="{{ $apprenti->civilite }}" placeholder="{{ $apprenti->civilite }}">
                             <option value="">-- Choisir --</option>
-                            <option value="homme">Homme</option>
-                            <option value="femme">Femme</option>
+                            <option value="Homme" @if($apprenti->civilite == 'Homme') selected @endif>Homme</option>
+                            <option value="Femme" @if($apprenti->civilite == 'Femme') selected @endif>Femme</option>
                         </select>
                     </li>
                     <li class="list-group-item">Numéro du contrat <input type="text" name="numcontrat" value="{{ $apprenti->numcontrat }}" placeholder="{{ $apprenti->numcontrat }}"></li>
@@ -32,16 +32,16 @@
                     <li class="list-group-item">Niveau Scolaire 
                         <select name="niveauscolaire" placeholder="{{ $apprenti->niveauscolaire }}">
                             <option value="">-- Choisir --</option>
-                            <option value="primaire">primaire</option>
-                            <option value="moyen">moyen</option>
-                            <option value="secondaire">secondaire</option>
+                            <option value="primaire" @if($apprenti->niveauscolaire == 'primaire') selected @endif>primaire</option>
+                            <option value="moyen" @if($apprenti->niveauscolaire == 'moyen') selected @endif>moyen</option>
+                            <option value="secondaire" @if($apprenti->niveauscolaire == 'secondaire') selected @endif>secondaire</option>
                         </select>
                     </li>
                     <li class="list-group-item">Spécialité 
                         <select name="specialite_id" placeholder="{{ $apprenti->specialite_id }}">
                             <option value="">-- Choisir --</option>
                             @foreach($specialites as $specialite)
-                                <option value="{{ $specialite->id }}">{{ $specialite->nom }}</option>
+                                <option value="{{ $specialite->id }}" @if($apprenti->specialite_id == $specialite->id) selected @endif>{{ $specialite->nom }}</option>
                             @endforeach
                         </select>
                     </li>
@@ -49,9 +49,7 @@
                         <select name="diplome1_id" placeholder="{{ $apprenti->diplome1_id }}">
                             <option value="">-- Choisir --</option>
                             @foreach($diplomes as $diplome)
-                                @if ($diplome->id > $apprenti->diplome1_id)
-                                <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
-                                @endif
+                                <option value="{{ $diplome->id }}" @if($apprenti->diplome1_id == $diplome->id) selected @endif>{{ $diplome->nom }}</option>
                             @endforeach
                         </select>
                     </li>
@@ -60,7 +58,7 @@
                         <select name="diplome2_id" placeholder="{{ $apprenti->diplome2_id }}">
                             <option value="">-- Choisir --</option>
                             @foreach($diplomes as $diplome)
-                                <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
+                                <option value="{{ $diplome->id }}" @if($apprenti->diplome2_id == $diplome->id) selected @endif>{{ $diplome->nom }}</option>
                             @endforeach
                         </select>
                     </li>
@@ -69,7 +67,7 @@
                         <select name="structure_id" placeholder="{{ $apprenti->structures_id }}">
                             <option value="">-- Choisir --</option>
                             @foreach($structures as $structure)
-                                <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                                <option value="{{ $structure->id }}" @if($apprenti->structure_id == $structure->id) selected @endif>{{ $structure->nom }}</option>
                             @endforeach
                         </select>
                     </li>
@@ -87,7 +85,7 @@
                                 <select name="maitreapprenti_id" placeholder="{{ $pv->maitreapprenti_id }}">
                                     <option value="">-- Choisir --</option>
                                     @foreach($maitreapprentis as $maitreapprenti)
-                                        <option value="{{ $maitreapprenti->id }}">{{ $maitreapprenti->nom }}</option>
+                                        <option value="{{ $maitreapprenti->id }}" @if($pv->maitreapprenti_id == $maitreapprenti->id) selected @endif>{{ $maitreapprenti->nom }}</option>
                                     @endforeach
                                 </select>
                             </li>
@@ -109,13 +107,13 @@
                 <ul class="list-group">
                     @foreach($decisionapprentis as $decisionapprenti)
                         @if($decisionapprenti->pv_id == $pv->id)
-                            <li class="list-group-item">ID <input type="text" placeholder="{{ $decisionapprenti->id }}" readonly disabled></li>
+                        <li class="list-group-item">ID <input type="text" placeholder="{{ $decisionapprenti->id }}" readonly disabled></li>
                             <li class="list-group-item">Plan Besoin ID
                                 <select name="planbesoins_id" placeholder="{{ $decisionapprenti->planbesoins_id }}">
                                     <option value="">-- Choisir --</option>
                                     @foreach($planbesoins as $planbesoin)
-                                        @if($planbesoin->status == 'actif')
-                                            <option value="{{ $planbesoin->id }}">{{ $planbesoin->nom }}</option>
+                                        @if($planbesoin->status == 'accepté')
+                                            <option value="{{ $planbesoin->id }}" @if($planbesoin->id == $decisionapprenti->planbesoins_id) selected @endif>{{ $planbesoin->reference }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -127,7 +125,7 @@
                                     <option value="">-- Choisir --</option>
                                     @foreach($parametres as $parametre)
                                         @if($parametre->status == 'actif')
-                                            <option value="{{ $parametre->id }}">{{ $parametre->nom }}</option>
+                                            <option value="{{ $parametre->id }}" @if($decisionapprenti->parametre_id == $parametre->id) selected @endif>{{ $parametre->reference }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -136,8 +134,8 @@
                                 <select name="bareme_id" placeholder="{{ $decisionapprenti->bareme_id }}">
                                     <option value="">-- Choisir --</option>
                                     @foreach($baremes as $bareme)
-                                        @if($bareme->status == 'actif')
-                                            <option value="{{ $bareme->id }}">{{ $bareme->nom }}</option>
+                                        @if($bareme->statut == 'actif')
+                                            <option value="{{ $bareme->id }}" @if($decisionapprenti->bareme_id == $bareme->id) selected @endif>{{ $bareme->refsalariaires_id }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -160,7 +158,7 @@
                                     <option value="">-- Choisir --</option>
                                     @foreach($parametres as $parametre)
                                         @if($parametre->status == 'actif')
-                                            <option value="{{ $parametre->id }}">{{ $parametre->nom }}</option>
+                                            <option value="{{ $parametre->id }}" @if($decisionmaitreapprenti->parametre_id == $parametre->id) selected @endif>{{ $parametre->reference }}</option>
                                         @endif
                                     @endforeach
                                 </select>
@@ -169,8 +167,8 @@
                                 <select name="bareme_id" placeholder="{{ $decisionmaitreapprenti->bareme_id }}">
                                     <option value="">-- Choisir --</option>
                                     @foreach($baremes as $bareme)
-                                        @if($bareme->status == 'actif')
-                                            <option value="{{ $bareme->id }}">{{ $bareme->nom }}</option>
+                                        @if($bareme->statut == 'actif')
+                                            <option value="{{ $bareme->id }}" @if($decisionmaitreapprenti->bareme_id == $bareme->id) selected @endif>{{ $bareme->refsalariaires_id }}</option>
                                         @endif
                                     @endforeach
                                 </select>
