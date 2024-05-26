@@ -17,6 +17,11 @@
                         </a>
                     </li>
                     <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('diplomes.index') }}">
+                            Diplomes
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
                         <a class="nav-link" href="{{ route('planbesoins.index') }}">
                             Plans de besoins
                         </a>
@@ -31,19 +36,14 @@
                         </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link" href="{{ route('assiduites.index') }}">
-                            Assiduites
+                        <a class="nav-link dropdown-toggle" href="#" id="ComportementsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Comportements
                         </a>
-                    </li>
-                    <li class="nav-item mb-5">
-                        <a class="nav-link" href="{{ route('departs.index') }}">
-                            Departs
-                        </a>
-                    </li>
-                    <li class="nav-item mb-5">
-                        <a class="nav-link" href="{{ route('avenants.index') }}">
-                            Avenants
-                        </a>
+                        <div class="dropdown-menu" aria-labelledby="ComportementsDropdown">
+                            <a class="dropdown-item" href="{{ route('departs.index') }}">Departs</a>
+                            <a class="dropdown-item" href="{{ route('assiduites.index') }}">Assiduites</a>
+                            <a class="dropdown-item" href="{{ route('avenants.index') }}">Avenants</a>
+                        </div>
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

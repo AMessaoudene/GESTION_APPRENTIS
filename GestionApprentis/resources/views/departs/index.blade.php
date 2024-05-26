@@ -16,7 +16,7 @@
 
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            @if (Auth::user()->role == 'DFP') 
+            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA') 
             <div class="container mt-5 mb-5">
                 <div class="card">
                     <div class="card-header">
@@ -30,7 +30,11 @@
                             <select name="apprenti_id" id="apprenti_id" class="form-select" aria-label="Sélectionner un apprenti" required>
                                 <option value="">Sélectionner un apprenti</option>
                                 @foreach($apprentis as $apprenti)
-                                    @if($user->structures_id == $apprenti->structure_id && $apprenti->status == "actif")
+                                    @if(Auth::user()->role == 'SA' && $user->structures_id == $apprenti->structure_id && $apprenti->status == "actif")
+                                        <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
+                                            {{ $apprenti->nom }} {{ $apprenti->prenom }}
+                                        </option>
+                                    @elseif(Auth::user()->role == "DFP" && $apprenti->status == "actif")
                                         <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
                                             {{ $apprenti->nom }} {{ $apprenti->prenom }}
                                         </option>
@@ -40,14 +44,6 @@
                             <div class="invalid-feedback">
                                 Veuillez sélectionner un apprenti.
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nom" class="form-label">Nom</label>
-                            <input type="text" class="form-control" id="nom" name="nom" readonly disabled>
-                        </div>
-                        <div class="mb-3">
-                            <label for="prenom" class="form-label">Prénom</label>
-                            <input type="text" class="form-control" id="prenom" name="prenom" readonly disabled>
                         </div>
                         <div class="mb-3">
                             <label for="datedepart" class="form-label">Date de départ</label>

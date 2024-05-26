@@ -73,8 +73,7 @@
         </div>
         <div class="text-center">
         <button type="submit" class="btn btn-primary">Enregistrer</button>
-        </div>
-        
+        </div>    
     </form>
 </div>
 @endsection

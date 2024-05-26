@@ -45,13 +45,9 @@
             <label for="dotations">Dotations:</label>
             <input type="text" class="form-control" id="dotations" name="dotations" required>
         </div>
-        <div class="form-group">
-            <a href="{{ route("pvinstallations.download") }}" class="btn btn-primary">Download PDF</a>
-        </div>
         <div class="text-center">
     <button type="submit" class="btn btn-success">Submit</button>
     </div>
-    </form>
-    
+    </form>  
 </div>
 @endsection

@@ -40,7 +40,7 @@ class DepartsController extends Controller
             $maitre1->apprenti1_id = null;
             $maitre1->save();
         }
-        else{
+        elseif($maitre2){
             $maitre2->apprenti2_id = null;
             $maitre2->save();
         }
