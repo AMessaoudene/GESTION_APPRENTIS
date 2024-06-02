@@ -9,6 +9,10 @@ use App\Http\Controllers\Auth\EmailVerificationNotificationController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\Auth\EmailVerificationPromptController;
 
+Route::get('/register',[RegisteredUserController::class,'create']);
+
+Route::post('/register',[RegisteredUserController::class,'store'])->name('register');
+
 Route::get('/login', [AuthenticatedSessionController::class, 'create'])
                 ->middleware('guest')
                 ->name('login');

@@ -37,7 +37,7 @@
                                     <th scope="col">Historique des MA</th>
                                     <th scope="col">Dossier</th>
                                     <th scope="col">Assiduités</th>
-                                    <th scope="col">Evaluation</th>
+                                    <th scope="col">Evaluations</th>
                                     <th scope="col">Statut</th>
                                     <th scope="col">Action</th>
                                 </tr>
@@ -49,15 +49,23 @@
                                     <td>{{ $apprenti->id }}</td>
                                     <td>{{ $apprenti->nom }}</td>
                                     <td>{{ $apprenti->prenom }}</td>
-                                    <td>{{ $apprenti->structure_id }}</td>
-                                    <td>{{ $apprenti->specialite_id }}</td>
-                                    <td><a href="/apprentis/historiqueMA/{{ $apprenti->id }}">Voir</a></td>
+                                    @foreach ($structures as $structure)
+                                        @if ($structure->id == $apprenti->structure_id)
+                                            <td>{{ $structure->nom }}</td>
+                                        @endif
+                                    @endforeach
+                                    @foreach ($specialites as $specialite)
+                                        @if ($specialite->id == $apprenti->specialite_id)
+                                            <td>{{ $specialite->nom }}</td>
+                                        @endif
+                                    @endforeach
+                                    <td><a href="/apprentis/{{ $apprenti->id }}/historiqueMA">Voir</a></td>
                                     @if ($user->role == 'SA')
                                     <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
                                     @elseif($user->role == 'DFP')
                                     <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
                                     @endif
-                                    <td><a href="/apprentis/assiduites/{{ $apprenti->id }}">Voir</a></td>
+                                    <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueAssiduites">Voir</a></td>
                                     <td><a href="/apprentis/evaluation/{{ $apprenti->id }}">Voir</a></td>
                                     <td>{{ $apprenti->status }}</td>
                                     <td>

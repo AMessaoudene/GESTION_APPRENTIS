@@ -55,7 +55,9 @@ Route::middleware('auth')->group(function(){
     Route::post('/apprentis/details/{id}',[ApprentisController::class,'updatedossier'])->name('apprentis.updatedossier');
     Route::delete('/apprentis/fichiers/delete/{id}/{fichier}', [DossiersController::class, 'deletefichier'])->name('dossiers.deletefichier');
     Route::put('/apprentis/{id}', [ApprentisController::class, 'update'])->name('apprentis.update');
-    Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy'); 
+    Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
+    Route::get('/apprentis/{id}/HistoriqueMA',[ApprentisController::class,'HistoriqueMA'])->name('apprentis.HistoriqueMA');
+    Route::get('/apprentis/{id}/HistoriqueAssiduites',[ApprentisController::class,'HistoriqueAssiduites'])->name('apprentis.HistoriqueAssiduites');
 });
 //specialites
 Route::middleware('auth')->group(function(){

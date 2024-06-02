@@ -201,7 +201,9 @@
                                                 <option value="inactif">Inactif</option>
                                             </select>
                                         </div>
-                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                        <div class="text-center">
+                                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>

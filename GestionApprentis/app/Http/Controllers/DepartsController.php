@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\apprentis;
 use App\Models\maitre_apprentis;
+use App\Models\supervisions;
 use Illuminate\Http\Request;
 use App\Models\departs;
 use Auth;
@@ -37,12 +38,22 @@ class DepartsController extends Controller
         $maitre1 = maitre_apprentis::where('apprenti1_id',$request->apprenti_id)->first();
         $maitre2 = maitre_apprentis::where('apprenti2_id',$request->apprenti_id)->first();
         if($maitre1){
-            $maitre1->apprenti1_id = null;
-            $maitre1->save();
+            $maitre = $maitre1;
+            $maitre->apprenti1_id = null;
         }
         elseif($maitre2){
-            $maitre2->apprenti2_id = null;
-            $maitre2->save();
+            $maitre = $maitre2;
+            $maitre->apprenti2_id = null;
+        }
+        $maitre->save();
+
+        $supervision = supervisions::where('apprenti_id', $request->apprenti_id)
+                          ->where('maitreapprenti_id', $maitre->id)
+                          ->first(); // Assuming you want to get the first matching record
+
+        if ($supervision) {
+            $supervision->statut = 'inactif';
+            $supervision->save();
         }
 
         return redirect()->back()->with('success');

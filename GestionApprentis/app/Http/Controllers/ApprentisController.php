@@ -222,10 +222,9 @@ class ApprentisController extends Controller
         return redirect()->back()->with('success', 'Apprenti modifié avec succes');
     }
 
-    public function destroy($id)
-{
-    $apprenti = apprentis::find($id);
+    public function destroy($id){
     
+    $apprenti = apprentis::find($id);
     if (!$apprenti) {
         return redirect()->back()->with('error', 'Apprenti non trouvé');
     }
@@ -292,5 +291,17 @@ class ApprentisController extends Controller
         else{
             return redirect()->back()->with('error', 'Vous n\'avez pas les autorisations pour consulter cette page');
         }
+    }
+
+    public function HistoriqueMA(Request $request,$id){
+        $supervisions = supervisions::where('apprenti_id',$id)->get();
+        $maitres = maitre_apprentis::all();
+        $specialites = specialites::all();
+        $structures = structures::all();
+        return view('apprentis.historique_maitres',compact('supervisions','maitres','specialites','structures'));
+    }
+    public function HistoriqueAssiduites(Request $request,$id){
+        $assiduites = assiduites::where('apprenti_id',$id)->get();
+        return view('apprentis.historique_assiduites',compact('assiduites'));
     }
 }

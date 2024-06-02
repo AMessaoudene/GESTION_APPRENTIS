@@ -19,8 +19,8 @@ return new class extends Migration
             $table->date('datedebut');
             $table->date('datefin');
             $table->string('motif');
-            $table->enum('statut',['en cours','valide','refuse'])->default('en cours')->nullable();
             $table->string('preuve');
+            $table->enum('statut',['en cours','valide','refuse'])->default('en cours')->nullable();
             $table->timestamps();
         });
     }

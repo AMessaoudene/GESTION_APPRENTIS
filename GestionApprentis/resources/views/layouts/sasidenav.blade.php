@@ -61,11 +61,11 @@
                             Comptes
                         </a>
                     </li>
-                    <li class="nav-item mb-5">
+                    <!--<li class="nav-item mb-5">
                         <a class="nav-link" href="{{ url('/profile') }}">
                             Profile
                         </a>
-                    </li>
+                    </li>-->
                     <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
