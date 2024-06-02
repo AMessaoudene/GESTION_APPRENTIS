@@ -29,15 +29,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($assiduites as $assiduite)
+                        @foreach($evaluations as $evaluation)
                             <tr>
-                                <td>{{ $assiduite->id }}</td>
-                                <td>{{ $assiduite->type }}</td>
-                                <td>{{ $assiduite->datedebut }}</td>
-                                <td>{{ $assiduite->datefin }}</td>
-                                <td>{{ $assiduite->motif }}</td>
-                                <td><a href="{{ url('/download', $assiduite->preuve) }}">Fiche</a></td>
-                                <td>{{ $assiduite->statut }}</td>
+                                <td>{{ $evaluation->id }}</td>
+                                <td>{{ $evaluation->type }}</td>
+                                <td>{{ $evaluation->datedebut }}</td>
+                                <td>{{ $evaluation->datefin }}</td>
+                                <td>{{ $evaluation->motif }}</td>
+                                <td>{{ $evaluation->statut }}</td>
                             </tr>
                         @endforeach
                     </tbody>

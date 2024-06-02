@@ -64,12 +64,9 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="statut" class="form-label">Statut</label>
-                                <select class="form-select" id="statut" name="statut" required>
-                                    <option value="formé">Formé</option>
-                                    <option value="non formé">Non formé</option>
-                                </select>
+                        <div class="col-md-6">
+                                <label for="affectation" class="form-label">Affectation</label>
+                                <input type="text" name="affectation" id="affectation" class="form-control" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="fonction" class="form-label">Fonction</label>
@@ -77,9 +74,12 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                            <div class="col-md-6">
-                                <label for="affectation" class="form-label">Affectation</label>
-                                <input type="text" name="affectation" id="affectation" class="form-control" required>
+                        <div class="col-md-6">
+                                <label for="statut" class="form-label">Statut</label>
+                                <select class="form-select" id="statut" name="statut" required>
+                                    <option value="formé">Formé</option>
+                                    <option value="non formé">Non formé</option>
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="daterecrutement" class="form-label">Date de recrutement</label>
@@ -100,7 +100,10 @@
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Civilité</th>
+                            <th scope="col">Spécialité</th>
+                            <th scope="col">Structure</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Date Recrutement</th>
                             <th scope="col">Statut</th>
                         </tr>
                     </thead>
@@ -111,7 +114,10 @@
                                 <td>{{ $maitre->nom }}</td>
                                 <td>{{ $maitre->prenom }}</td>
                                 <td>{{ $maitre->civilite }}</td>
+                                <td>{{ $maitre->affectation }}</td>
+                                <td>{{ $maitre->fonction }}</td>
                                 <td>{{ $maitre->email }}</td>
+                                <td>{{ $maitre->daterecrutement }}</td>
                                 <td>{{ $maitre->statut }}</td>
                             </tr>
                         @endforeach

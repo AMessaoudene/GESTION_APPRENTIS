@@ -59,14 +59,14 @@
                                             <td>{{ $specialite->nom }}</td>
                                         @endif
                                     @endforeach
-                                    <td><a href="/apprentis/{{ $apprenti->id }}/historiqueMA">Voir</a></td>
+                                    <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueMA">Voir</a></td>
                                     @if ($user->role == 'SA')
                                     <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
                                     @elseif($user->role == 'DFP')
                                     <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
                                     @endif
                                     <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueAssiduites">Voir</a></td>
-                                    <td><a href="/apprentis/evaluation/{{ $apprenti->id }}">Voir</a></td>
+                                    <td><a href="/apprentis/{{ $apprenti->id }}/Historiqueevaluations">Voir</a></td>
                                     <td>{{ $apprenti->status }}</td>
                                     <td>
                                         <form id="deleteForm{{ $apprenti->id }}" action="{{ route('apprentis.destroy', $apprenti->id) }}" method="POST">

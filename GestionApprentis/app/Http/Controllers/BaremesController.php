@@ -63,7 +63,7 @@ class BaremesController extends Controller
         $baremes->tauxs5_maitreapprentis = $request->tauxs5_maitreapprentis;
         $baremes->montantchiffres5_maitreapprentis = ($request->tauxs5_maitreapprentis * $referencesalariaires->salairereference)/100;
         $baremes->montantlettres5_maitreapprentis = $request->montantlettres5_maitreapprentis;
-        $baremes->statut = $request->statut;
+        $baremes->statut = "actif";
         $baremes->save();
         return redirect()->route('baremes.index')->with('success', 'Bareme ajouté avec succès');
     }

@@ -76,8 +76,8 @@
                             <table id="dataTable" class="table table-striped" style="border: solid">
                                 <thead>
                                     <tr>
-                                        <th>Nom</th>
-                                        <th>Email</th>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">Email</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -96,8 +96,8 @@
                             <table id="dataTable" class="table table-striped" style="border: solid">
                                 <thead style="border: solid">
                                     <tr>
-                                        <th>Nom</th>
-                                        <th>Email</th>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">Adresse courriel</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,7 +105,7 @@
                                     @foreach ($structures as $structure)
                                     <tr>
                                         <td>{{ $structure->nom }}</td>
-                                        <td>{{ $structure->email }}</td>
+                                        <td>{{ $structure->adressecourriel }}</td>
                                     </tr>
                                     @endforeach
                                 </tbody>
@@ -116,8 +116,8 @@
                             <table id="dataTable" class="table table-striped" style="border: solid">
                                 <thead style="border: solid">
                                     <tr>
-                                        <th>Nom</th>
-                                        <th>Email</th>
+                                        <th scope="col">Nom</th>
+                                        <th scope="col">Email</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -146,13 +146,13 @@
 
         // Define the data
         var data = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
             datasets: [{
                 label: 'Apprentis',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(255, 99, 132, 1)',
                 borderWidth: 1,
-                data: [12, 19, 3, 5, 2, 3, 7]
+                data: @json($monthlyCounts)
             }]
         };
 

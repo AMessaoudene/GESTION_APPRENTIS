@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function(){
     Route::delete('/apprentis/consulter/{id}', [ApprentisController::class, 'destroy'])->name('apprentis.destroy');
     Route::get('/apprentis/{id}/HistoriqueMA',[ApprentisController::class,'HistoriqueMA'])->name('apprentis.HistoriqueMA');
     Route::get('/apprentis/{id}/HistoriqueAssiduites',[ApprentisController::class,'HistoriqueAssiduites'])->name('apprentis.HistoriqueAssiduites');
+    Route::get('/apprentis/{id}/Historiqueevaluations',[ApprentisController::class,'Historiqueevaluations'])->name('apprentis.Historiqueevaluations');
 });
 //specialites
 Route::middleware('auth')->group(function(){

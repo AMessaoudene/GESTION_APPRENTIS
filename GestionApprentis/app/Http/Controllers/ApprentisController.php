@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Events\NewApprenticeAdded;
 use App\Models\assiduites;
 use App\Models\decisionapprentis;
 use App\Models\decisionmaitreapprentis;
 use App\Models\evaluation_apprentis;
+use App\Models\planbesoins;
 use App\Models\supervisions;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -130,6 +132,8 @@ class ApprentisController extends Controller
                     $supervision->apprenti_id = $apprenti->id;
                     $supervision->maitreapprenti_id = $maitreApprenti->id;
                     $supervision->save();
+                    // Dispatch the event
+                    event(new NewApprenticeAdded($apprenti));
 
                     Session::put('apprenti', $apprenti);
                     return redirect()->route('pvinstallations.index');
@@ -174,6 +178,8 @@ class ApprentisController extends Controller
                 $supervision->apprenti_id = $apprenti->id;
                 $supervision->maitreapprenti_id = $maitreApprenti->id;
                 $supervision->save();
+                // Dispatch the event
+                event(new NewApprenticeAdded($apprenti));
 
                 Session::put('apprenti', $apprenti);
                 return redirect()->route('pvinstallations.index');
@@ -271,6 +277,10 @@ class ApprentisController extends Controller
         $dossier->save();
         $apprenti = apprentis::where('id', $dossier->apprentis_id)->first();
         if($request->status == 'valide'){
+            $pv = pv_installations::where('apprenti_id',$apprenti->id)->first();
+            $decision = decisionapprentis::where('pv_id',$pv->id)->first();
+            $plan = planbesoins::where('id',$decision->planbesoins_id)->first();
+            $plan->nombreapprentisactuel++;
             $apprenti->status = 'actif';
         }
         else{
@@ -303,5 +313,9 @@ class ApprentisController extends Controller
     public function HistoriqueAssiduites(Request $request,$id){
         $assiduites = assiduites::where('apprenti_id',$id)->get();
         return view('apprentis.historique_assiduites',compact('assiduites'));
+    }
+    public function Historiqueevaluations(Request $request,$id){
+        $evaluations = evaluation_apprentis::where('apprenti_id',$id);
+        return view('apprentis.Historique_evaluations',compact('evaluations'));
     }
 }

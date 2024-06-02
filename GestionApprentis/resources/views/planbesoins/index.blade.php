@@ -25,7 +25,7 @@
                                     @csrf
                                     <div class="row mb-3">
                                         <div class="col-md-3">
-                                            <label for="exercice_id">Année:</label>
+                                            <label for="exercice_id">Exercice:</label>
                                             <select name="exercice_id" id="exercice_id" class="form-control" required>
                                                 <option value="">-- Choisir --</option>
                                                 @foreach($exercices as $exercice)
@@ -219,7 +219,7 @@
                     <form method="POST" action="/planbesoins/${id}" class="edit-form">
                         @csrf
                         @method('PUT')
-                        <select name="exercice_id">Année
+                        <select name="exercice_id">Exercice
                             @foreach($exercices as $exercice)
                                 <option value="{{ $exercice->id }}">{{ $exercice->annee }}</option>
                             @endforeach
