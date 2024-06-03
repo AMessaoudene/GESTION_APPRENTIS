@@ -242,13 +242,23 @@ class ApprentisController extends Controller
     $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
     if ($maitreapprenti1) {
         $maitreapprenti1->apprenti1_id = null;
+        $maitreapprenti = $maitreapprenti1;
         $maitreapprenti1->save();
     } else {
         $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
         if ($maitreapprenti2) {
             $maitreapprenti2->apprenti2_id = null;
+            $maitreapprenti = $maitreapprenti2;
             $maitreapprenti2->save();
         }
+    }
+
+    $supervision = supervisions::where('apprenti_id', $apprenti->id)
+    ->where('maitreapprenti_id', $maitreapprenti->id)
+    ->first();
+
+    if ($supervision) {
+        $supervision->delete();
     }
 
     $apprenti->delete();
