@@ -14,6 +14,16 @@ class decisionmaitreapprentis extends Model
         'bareme_id',
         'pv_id',
         'parametre_id',
+        'datedebutsalaireS1',
+        'datefinsalaireS1',
+        'datedebutsalaireS2',
+        'datefinsalaireS2',
+        'datedebutsalaireS3',
+        'datefinsalaireS3',
+        'datedebutsalaireS4',
+        'datefinsalaireS4',
+        'datedebutsalaireS5',
+        'datefinsalaireS5',
     ];
     use HasFactory;
 }

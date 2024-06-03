@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('maitreapprenti_id');
             $table->foreign('maitreapprenti_id')->references('id')->on('maitre_apprentis')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('reference');
             $table->date('datedebut');
             $table->date('datefin');
             $table->enum('sensresponsabilite',[['Très bon', 'Bon', 'Moyen', 'Faible']]);

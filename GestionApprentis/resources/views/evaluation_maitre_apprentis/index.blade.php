@@ -34,10 +34,6 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="reference">Reference</label>
-                                        <input type="text" name="reference" id="reference" class="form-control" required>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="datedebut">Date de debut</label>
                                         <input type="date" name="datedebut" id="datedebut" class="form-control" required>
                                     </div>

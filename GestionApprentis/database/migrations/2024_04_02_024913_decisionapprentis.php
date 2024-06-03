@@ -24,6 +24,16 @@ return new class extends Migration
             $table->unsignedBigInteger('bareme_id');
             $table->foreign('bareme_id')->references('id')->on('baremes')->onDelete('cascade')->onUpdate('cascade');
             $table->date('datetransfert')->nullable();
+            $table->date('datedebutpresalaireS1');
+            $table->date('datefinpresalaireS1');
+            $table->date('datedebutpresalaireS2');
+            $table->date('datefinpresalaireS2');
+            $table->date('datedebutpresalaireS3')->nullable();
+            $table->date('datefinpresalaireS3')->nullable();
+            $table->date('datedebutpresalaireS4')->nullable();
+            $table->date('datefinpresalaireS4')->nullable();
+            $table->date('datedebutpresalaireS5')->nullable();
+            $table->date('datefinpresalaireS5')->nullable();
             $table->timestamps();
         });
     }

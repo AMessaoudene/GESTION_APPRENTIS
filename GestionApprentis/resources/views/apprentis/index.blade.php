@@ -31,21 +31,46 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Diplome</label>
-                            <select name="diplome1_id" class="form-select" required>
-                                <option value="">Choisir</option>
+                            <select name="diplome1_id" id="diplomeSelect" class="form-select" required>
+                                <option value="" data-duree="0">Choisir</option>
                                 @foreach($diplomes as $diplome)
-                                    <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
+                                    <option value="{{ $diplome->id }}" data-duree="{{ $diplome->duree }}">{{ $diplome->nom }}</option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="mb-3">
                             <label>Date debut et fin d'apprentissage</label>
                             <div class="input-group">
-                                <input type="date" name="datedebut" class="form-control" required>
+                                <input type="date" id="datedebut" name="datedebut" class="form-control" required>
                                 <span class="input-group-text">Au</span>
-                                <input type="date" name="datefin" class="form-control" required>
+                                <input type="date" id="datefin" name="datefin" class="form-control" required>
                             </div>
                         </div>
+
+                        <script>
+                        document.addEventListener('DOMContentLoaded', function() {
+                            const diplomeSelect = document.getElementById('diplomeSelect');
+                            const datedebutInput = document.getElementById('datedebut');
+                            const datefinInput = document.getElementById('datefin');
+
+                            function updateDateFin() {
+                                const selectedDiplome = diplomeSelect.options[diplomeSelect.selectedIndex];
+                                const duree = parseInt(selectedDiplome.getAttribute('data-duree'));
+                                const datedebut = new Date(datedebutInput.value);
+
+                                if (!isNaN(datedebut) && duree) {
+                                    const datefin = new Date(datedebut.setMonth(datedebut.getMonth() + duree));
+                                    datefinInput.value = datefin.toISOString().split('T')[0];
+                                } else {
+                                    datefinInput.value = '';
+                                }
+                            }
+
+                            diplomeSelect.addEventListener('change', updateDateFin);
+                            datedebutInput.addEventListener('input', updateDateFin);
+                        });
+                        </script>
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="nom" class="form-label">Nom</label>
@@ -103,7 +128,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Specialite</label>
-                            <select name="specialite_id" class="form-select" required>
+                            <select name="specialite_id" class="form-select" required id="specialite_id">
                                 <option value="">-- Choisir une specialite --</option>
                                 @foreach($specialites as $specialite)
                                     <option value="{{$specialite->id}}">{{ $specialite->nom }}</option>
@@ -112,42 +137,69 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Structure</label>
-                            <select name="structure_id" class="form-select" required>
+                            <select name="structure_id" class="form-select" required id="structure_id">
                                 <option value="">-- Choisir une structure --</option>
                                 @foreach($structures as $structure)
                                     <option value="{{$structure->id}}">{{ $structure->nom }}</option>
                                 @endforeach
                             </select>
                         </div>
-                        <!--<div class="mb-3">
-                            <label class="form-label">Status</label>
-                            <select name="status" class="form-select" required>
-                                <option value="">-- Choisir un statut --</option>
-                                <option value="actif" selected>Actif</option>
-                                <option value="inactif">Inactif</option>
-                            </select>
-                        </div>-->
                         <div class="mb-3">
                             <label class="form-label">Maître d'apprentissage</label>
-                            <select name="maitre_apprentis" class="form-select" required>
+                            <select name="maitre_apprentis" class="form-select" required id="maitre_apprentis">
                                 <option value="">-- Choisir un maitre d'apprentissage --</option>
                                 @foreach($maitre_apprentis as $maitre_apprenti)
-                                    @if(is_null($maitre_apprenti->apprenti1_id) || is_null($maitre_apprenti->apprenti2_id)){
-                                        <option value="{{ $maitre_apprenti->id }}">{{ $maitre_apprenti->nom }} {{ $maitre_apprenti->prenom }}</option>
-                                    }
-                                    @endif
+                                    <option value="{{ $maitre_apprenti->id }}"
+                                            data-specialite="{{ $maitre_apprenti->fonction }}"
+                                            data-structure="{{ $maitre_apprenti->affectation }}"
+                                            @if(is_null($maitre_apprenti->apprenti1_id) || is_null($maitre_apprenti->apprenti2_id))
+                                            @endif>
+                                        {{ $maitre_apprenti->nom }} {{ $maitre_apprenti->prenom }}
+                                    </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                            <button type="submit" class="btn btn-primary">Ajouter</button>
                         </div>
-                        
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
-@endsection
 
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const specialiteSelect = document.getElementById('specialite_id');
+    const structureSelect = document.getElementById('structure_id');
+    const maitreApprentisSelect = document.getElementById('maitre_apprentis');
+
+    function filterMaitreApprentis() {
+        const selectedSpecialite = specialiteSelect.value;
+        const selectedStructure = structureSelect.value;
+
+        Array.from(maitreApprentisSelect.options).forEach(option => {
+            const specialite = option.getAttribute('data-specialite');
+            const structure = option.getAttribute('data-structure');
+
+            if (specialite === selectedSpecialite && structure === selectedStructure) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        });
+
+        // Clear the selection of maitre_apprentis
+        maitreApprentisSelect.value = '';
+    }
+
+    specialiteSelect.addEventListener('change', filterMaitreApprentis);
+    structureSelect.addEventListener('change', filterMaitreApprentis);
+
+    // Call the filter function initially to set the correct state
+    filterMaitreApprentis();
+});
+
+</script>
+@endsection

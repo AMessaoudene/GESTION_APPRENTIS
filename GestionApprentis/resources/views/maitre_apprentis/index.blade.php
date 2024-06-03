@@ -44,6 +44,7 @@
                             <div class="col-md-6">
                                 <label for="civilite" class="form-label">Civilité</label>
                                 <select class="form-select" id="civilite" name="civilite" required>
+                                    <option value="">Sélectionner une civilite</option>
                                     <option value="Homme">Homme</option>
                                     <option value="Femme">Femme</option>
                                 </select>
@@ -66,17 +67,28 @@
                         <div class="row mb-3">
                         <div class="col-md-6">
                                 <label for="affectation" class="form-label">Affectation</label>
-                                <input type="text" name="affectation" id="affectation" class="form-control" required>
+                                <select name="affectation" id="affectation" class="form-control" required>
+                                    <option value="">Sélectionner une affectation</option>
+                                    @foreach ($structures as $structure)
+                                        <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="col-md-6">
                                 <label for="fonction" class="form-label">Fonction</label>
-                                <input type="text" class="form-control" id="fonction" name="fonction" required>
+                                <select class="form-control" id="fonction" name="fonction" required>
+                                    <option value="">Sélectionner une fonction</option>
+                                    @foreach ($specialites as $specialite)
+                                        <option value="{{ $specialite->id }}">{{ $specialite->nom }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="row mb-3">
                         <div class="col-md-6">
                                 <label for="statut" class="form-label">Statut</label>
                                 <select class="form-select" id="statut" name="statut" required>
+                                    <option value="">Sélectionner un statut</option>
                                     <option value="formé">Formé</option>
                                     <option value="non formé">Non formé</option>
                                 </select>

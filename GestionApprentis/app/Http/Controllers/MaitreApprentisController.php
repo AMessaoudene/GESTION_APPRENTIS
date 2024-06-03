@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\maitre_apprentis;
+use App\Models\specialites;
 use App\Models\structures;
 use Validator;
 use Illuminate\Http\Request;
@@ -13,8 +14,9 @@ class MaitreApprentisController extends Controller
     {
         $maitre_apprentis = maitre_apprentis::all();
         $structures = structures::all();
+        $specialites = specialites::all();
         if(auth::user()->role === 'DFP' || auth::user()->role == 'SA' || auth::user()->role == 'DRH' || auth::user()->role == 'EvaluateurGradé'){
-            return view('maitre_apprentis.index', compact('maitre_apprentis','structures'));
+            return view('maitre_apprentis.index', compact('maitre_apprentis','structures','specialites'));
         }
         else{
             return redirect()->back()->with('error', 'You do not have permission to access this page.');

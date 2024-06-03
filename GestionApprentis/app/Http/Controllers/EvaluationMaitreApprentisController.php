@@ -16,7 +16,6 @@ class EvaluationMaitreApprentisController extends Controller
     public function submit(Request $request)
     {
         $evaluationmaitreapprentis = new evaluation_maitre_apprentis();
-        $evaluationmaitreapprentis->reference = $request->reference;
         $evaluationmaitreapprentis->maitreapprenti_id = $request->maitreapprenti_id;
         $evaluationmaitreapprentis->datedebut = $request->datedebut;
         $evaluationmaitreapprentis->datefin = $request->datefin;

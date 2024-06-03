@@ -29,6 +29,7 @@ class BaremesController extends Controller
      */
     public function store(Request $request)
     {
+        baremes::where('statut','actif')->update(['statut'=>'inactif']);
         $referencesalariaires = refsalariares::find($request->refsalariaires_id);
         $baremes = new baremes();
         $baremes->refsalariaires_id = $request->refsalariaires_id;

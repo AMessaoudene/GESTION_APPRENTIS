@@ -16,6 +16,16 @@ class decisionapprentis extends Model
         'bareme_id',
         'parametre_id',
         'datetransfert',
+        'datedebutpresalaireS1',
+        'datefinpresalaireS1',
+        'datedebutpresalaireS2',
+        'datefinpresalaireS2',
+        'datedebutpresalaireS3',
+        'datefinpresalaireS3',
+        'datedebutpresalaireS4',
+        'datefinpresalaireS4',
+        'datedebutpresalaireS5',
+        'datefinpresalaireS5',
     ];
     use HasFactory;
 }

@@ -26,7 +26,6 @@ class EvaluationApprentisController extends Controller
     public function submit(Request $request)
     {
         $rules = [
-            'reference' => 'required|unique:evaluation_apprentis,reference|string|max:255',
             'datedebut' => 'required|date',
             'datefin' => 'required|date',
             'comportementsociabilite' => 'required|string|max:255',
@@ -44,8 +43,6 @@ class EvaluationApprentisController extends Controller
         ];
 
         $messages = [
-            'reference.required' => 'Le champ référence est obligatoire.',
-            'reference.unique' => 'Cette référence est déjà utilisée.',
             'datedebut.required' => 'Le champ date début est obligatoire.',
             'datedebut.date' => 'Le champ date début doit être une date.',
             'datefin.required' => 'Le champ date fin est obligatoire.',
@@ -70,7 +67,6 @@ class EvaluationApprentisController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         } else {
             $evaluation = new evaluation_apprentis();
-            $evaluation->reference = $request->reference;
             $evaluation->apprenti_id = $request->apprenti_id;
             $evaluation->datedebut = $request->datedebut;
             $evaluation->datefin = $request->datefin;

@@ -9,7 +9,6 @@ class evaluation_apprentis extends Model
 {
     protected $table = "evaluation_apprentis";
     protected $fillable = [
-        'reference',
         'apprenti_id',
         'structureattache',
         'datedebut',

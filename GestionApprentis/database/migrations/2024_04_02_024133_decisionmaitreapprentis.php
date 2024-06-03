@@ -21,6 +21,16 @@ return new class extends Migration
             $table->foreign('parametre_id')->references('id')->on('parametres')->onDelete('cascade');
             $table->unsignedBigInteger('bareme_id');
             $table->foreign('bareme_id')->references('id')->on('baremes')->onDelete('cascade')->onUpdate('cascade');
+            $table->date('datedebutsalaireS1');
+            $table->date('datefinsalaireS1');
+            $table->date('datedebutsalaireS2');
+            $table->date('datefinsalaireS2');
+            $table->date('datedebutsalaireS3')->nullable();
+            $table->date('datefinsalaireS3')->nullable();
+            $table->date('datedebutsalaireS4')->nullable();
+            $table->date('datefinsalaireS4')->nullable();
+            $table->date('datedebutsalaireS5')->nullable();
+            $table->date('datefinsalaireS5')->nullable();
             $table->timestamps();
         });
     }
