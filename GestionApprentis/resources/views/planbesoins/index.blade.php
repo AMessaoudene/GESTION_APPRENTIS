@@ -127,10 +127,28 @@
                     @foreach($planbesoins as $planbesoin)
                     <tr id="planbesoin_{{ $planbesoin->id }}">
                         <td>{{ $planbesoin->id }}</td>
-                        <td>{{ $planbesoin->exercice_id }}</td>
-                        <td>{{ $planbesoin->structure_id }}</td>
+                        <td>
+                        @foreach($exercices as $exercice)
+                            @if($exercice->id == $planbesoin->exercice_id)
+                                {{ $exercice->annee }}
+                            @endif
+                        @endforeach
+                        </td>
+                        <td>
+                            @foreach($structures as $structure)
+                                @if($structure->id == $planbesoin->structure_id)
+                                    {{ $structure->nom }}
+                                @endif
+                            @endforeach
+                        </td>
                         <td>{{ $planbesoin->reference }}</td>
-                        <td>{{ $planbesoin->specialites_id }}</td>
+                        <td>
+                        @foreach($specialites as $specialite)
+                            @if($specialite->id == $planbesoin->specialites_id)
+                                {{ $specialite->nom }}
+                            @endif
+                        @endforeach
+                        </td>
                         <td>{{ $planbesoin->date }}</td>
                         <td>{{ $planbesoin->nombreapprentis }}</td>
                         <td>{{ $planbesoin->nombereffectif }}</td>

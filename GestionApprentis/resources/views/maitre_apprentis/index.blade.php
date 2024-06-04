@@ -121,8 +121,8 @@
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Civilité</th>
-                            <th scope="col">Spécialité</th>
                             <th scope="col">Structure</th>
+                            <th scope="col">Spécialité</th>
                             <th scope="col">Email</th>
                             <th scope="col">Date Recrutement</th>
                             <th scope="col">Statut</th>
@@ -135,8 +135,20 @@
                                 <td>{{ $maitre->nom }}</td>
                                 <td>{{ $maitre->prenom }}</td>
                                 <td>{{ $maitre->civilite }}</td>
-                                <td>{{ $maitre->affectation }}</td>
-                                <td>{{ $maitre->fonction }}</td>
+                                <td>
+                                    @foreach ($structures as $structure)
+                                        @if ($structure->id == $maitre->affectation)
+                                            {{ $structure->nom }}
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach ($specialites as $specialite)
+                                        @if ($specialite->id == $maitre->fonction)
+                                            {{ $specialite->nom }}
+                                        @endif
+                                    @endforeach
+                                </td>
                                 <td>{{ $maitre->email }}</td>
                                 <td>{{ $maitre->daterecrutement }}</td>
                                 <td>{{ $maitre->statut }}</td>
