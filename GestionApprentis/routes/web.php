@@ -158,6 +158,8 @@ Route::middleware('auth')->group(function(){
 Route::middleware('auth')->group(function(){
     Route::get('/refsalariaires', [RefSalariairesController::class, 'index'])->name('refsalariaires.index');
     Route::post('/refsalariaires', [RefSalariairesController::class, 'store'])->name('refsalariaires.store');
+    Route::put('/refsalariaires/{id}', [RefSalariairesController::class, 'update'])->name('refsalariaires.update');
+    Route::delete('/refsalariaires/{id}', [RefSalariairesController::class, 'destroy'])->name('refsalariaires.destroy');
 });
 //Dashboard
 Route::get('/dashboard', function () {

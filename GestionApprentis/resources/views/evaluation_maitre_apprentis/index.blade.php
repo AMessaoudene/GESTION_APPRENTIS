@@ -15,6 +15,7 @@
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div class="container">
+                @if (Auth::user()->role == "DFP" || Auth::user()->role == "SA")
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card mt-4">
@@ -108,6 +109,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
         </main>
     </div>

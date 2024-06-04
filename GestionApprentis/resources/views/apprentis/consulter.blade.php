@@ -37,8 +37,11 @@
                                     <th scope="col">Dossier</th>
                                     <th scope="col">Assiduités</th>
                                     <th scope="col">Evaluations</th>
+                                    <th scope="col">DDL Payement</th>
                                     <th scope="col">Statut</th>
+                                    @if (Auth::user()->role == "DFP" || Auth::user()->role == "SA")
                                     <th scope="col">Action</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -65,6 +68,58 @@
                                     @endif
                                     <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueAssiduites">Voir</a></td>
                                     <td><a href="/apprentis/{{ $apprenti->id }}/Historiqueevaluations">Voir</a></td>
+                                    <td>
+                                        @foreach ($pvs as $pv)
+                                            @if ($apprenti->id == $pv->apprenti_id)
+                                                @foreach ($decisionapprentis as $decision)
+                                                    @if ($pv->id == $decision->pv_id)
+                                                        @php
+                                                            // Convert decision dates to timestamps
+                                                            $decisionDates = [
+                                                                strtotime($decision->datefinpresalaireS1),
+                                                                strtotime($decision->datefinpresalaireS2),
+                                                                strtotime($decision->datefinpresalaireS3),
+                                                                strtotime($decision->datefinpresalaireS4),
+                                                                strtotime($decision->datefinpresalaireS5),
+                                                            ];
+                                                            
+                                                            // Get current timestamp
+                                                            $currentDate = time();
+                                                            
+                                                            // Initialize the default color as green
+                                                            $color = 'green';
+                                                            
+                                                            foreach ($decisionDates as $decisionDate) {
+                                                                if($decisionDate >= $currentDate){
+                                                                    $differenceInMonths = ($decisionDate - $currentDate) / (60 * 60 * 24 * 30);
+
+                                                                    if ($differenceInMonths < 1) {
+                                                                        $color = 'red';
+                                                                        break;
+                                                                    } elseif ($differenceInMonths <= 3) {
+                                                                        $color = 'orange';
+                                                                        break;
+                                                                    } elseif($differenceInMonths > 3){
+                                                                        $color = 'green';
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        <span style="color: {{ $color }};">
+                                                            @if($color == 'red')
+                                                                Urgent 
+                                                            @elseif($color == 'orange')
+                                                                Soon
+                                                            @else
+                                                                Active 
+                                                            @endif
+                                                        </span>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>{{ $apprenti->status }}</td>
                                     <td>
                                         <form id="deleteForm{{ $apprenti->id }}" action="{{ route('apprentis.destroy', $apprenti->id) }}" method="POST">
@@ -81,17 +136,78 @@
                                 <tr>
                                     <td>{{ $apprenti->nom }}</td>
                                     <td>{{ $apprenti->prenom }}</td>
-                                    <td>{{ $apprenti->structure_id }}</td>
-                                    <td>{{ $apprenti->specialite_id }}</td>
+                                    @foreach ($structures as $structure)
+                                        @if ($structure->id == $apprenti->structure_id)
+                                            <td>{{ $structure->nom }}</td>
+                                        @endif
+                                    @endforeach
+                                    @foreach ($specialites as $specialite)
+                                        @if ($specialite->id == $apprenti->specialite_id)
+                                            <td>{{ $specialite->nom }}</td>
+                                        @endif
+                                    @endforeach
                                     <td><a href="/apprentis/historiqueMA/{{ $apprenti->id }}">Voir</a></td>
                                     @if ($user->role == 'SA' && $apprenti->status == 'inactif')
                                     <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
-                                    @elseif($user->role == 'DFP' || ($user->role == 'SA' && $apprenti->status == 'actif'))
+                                    @elseif($user->role == 'DFP' || (($user->role == 'DRH' || $user->role == 'SA') && $apprenti->status == 'actif'))
                                     <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
                                     @endif
-                                    <td><a href="/apprentis/assiduites/{{ $apprenti->id }}">Voir</a></td>
-                                    <td><a href="/apprentis/evaluation/{{ $apprenti->id }}">Voir</a></td>
+                                    <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueAssiduites">Voir</a></td>
+                                    <td><a href="/apprentis/{{ $apprenti->id }}/Historiqueevaluations">Voir</a></td>
+                                    <td>
+                                        @foreach ($pvs as $pv)
+                                            @if ($apprenti->id == $pv->apprenti_id)
+                                                @foreach ($decisionapprentis as $decision)
+                                                    @if ($pv->id == $decision->pv_id)
+                                                        @php
+                                                            // Convert decision dates to timestamps
+                                                            $decisionDates = [
+                                                                strtotime($decision->datefinpresalaireS1),
+                                                                strtotime($decision->datefinpresalaireS2),
+                                                                strtotime($decision->datefinpresalaireS3),
+                                                                strtotime($decision->datefinpresalaireS4),
+                                                                strtotime($decision->datefinpresalaireS5),
+                                                            ];
+                                                            
+                                                            // Get current timestamp
+                                                            $currentDate = time();
+                                                            
+                                                            // Initialize the default color as green
+                                                            $color = 'green';
+                                                            
+                                                            foreach ($decisionDates as $decisionDate) {
+                                                                if($decisionDate >= $currentDate){
+                                                                    $differenceInMonths = ($decisionDate - $currentDate) / (60 * 60 * 24 * 30);
+
+                                                                    if ($differenceInMonths < 1) {
+                                                                        $color = 'red';
+                                                                        break;
+                                                                    } elseif ($differenceInMonths <= 3) {
+                                                                        $color = 'orange';
+                                                                        break;
+                                                                    } elseif($differenceInMonths > 3){
+                                                                        $color = 'green';
+                                                                        break;
+                                                                    }
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        <span style="color: {{ $color }};">
+                                                            @if($color == 'red')
+                                                                Urgent 
+                                                            @elseif($color == 'orange')
+                                                                Soon
+                                                            @else
+                                                                Active 
+                                                            @endif
+                                                        </span>
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td>{{ $apprenti->status }}</td>
+                                    @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
                                     <td>
                                         <form id="deleteForm{{ $apprenti->id }}" action="{{ route('apprentis.destroy', $apprenti->id) }}" method="POST">
                                             @csrf
@@ -99,6 +215,7 @@
                                             <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $apprenti->id }})">Delete</button>
                                         </form>
                                     </td>
+                                    @endif
                                 </tr>
                                 @endif
                                 @endforeach

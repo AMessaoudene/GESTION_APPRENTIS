@@ -16,26 +16,21 @@
 
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            <table id="departs-table" class="table table-striped mt-4">
+            <table id="evaluations-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">Evaluation ID</th>
-                            <th scope="col">type</th>
                             <th scope="col">datedebut</th>
                             <th scope="col">datefin</th>
-                            <th scope="col">motif</th>
-                            <th scope="col">preuve</th>
+                            <th scope="col">comportementsociabilite</th>
                             <th scope="col">Statut</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($evaluations as $evaluation)
                             <tr>
-                                <td>{{ $evaluation->id }}</td>
-                                <td>{{ $evaluation->type }}</td>
                                 <td>{{ $evaluation->datedebut }}</td>
                                 <td>{{ $evaluation->datefin }}</td>
-                                <td>{{ $evaluation->motif }}</td>
+                                <td>{{ $evaluation->comportementsociabilite }}</td>
                                 <td>{{ $evaluation->statut }}</td>
                             </tr>
                         @endforeach

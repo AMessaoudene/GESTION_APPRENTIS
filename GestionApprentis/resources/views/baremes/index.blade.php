@@ -13,7 +13,7 @@
         @include('layouts.egsidenav')
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            @if (Auth::user()->role == 'DFP')         
+            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH')         
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-8">

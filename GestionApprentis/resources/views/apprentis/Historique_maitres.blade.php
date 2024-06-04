@@ -19,7 +19,6 @@
             <table id="departs-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">Maitre Apprenti ID</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Prenom</th>
                             <th scope="col">Structure</th>
@@ -32,7 +31,6 @@
                             @foreach ($maitres as $maitre)
                                 @if ($maitre->id == $supervision->maitreapprenti_id)                      
                                     <tr>
-                                        <td>{{ $maitre->id }}</td>
                                         <td>{{ $maitre->nom }}</td>
                                         <td>{{ $maitre->prenom }}</td>
                                         @foreach ($structures as $structure)

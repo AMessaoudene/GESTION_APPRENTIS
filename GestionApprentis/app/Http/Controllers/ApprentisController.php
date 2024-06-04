@@ -275,7 +275,8 @@ class ApprentisController extends Controller
         $decisionapprentis = decisionapprentis::all();
         $decisionmaitreapprentis = decisionmaitreapprentis::all();
         $maitreapprentis = maitre_apprentis::all();
-        return view('apprentis.details',compact('user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+        $plans = planbesoins::all();
+        return view('apprentis.details',compact('plans','user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
     }
 
     public function updatedossier(Request $request,$id){
@@ -299,17 +300,20 @@ class ApprentisController extends Controller
     }
     public function consulter(){
         $user = auth::user();
-        $apprentis = apprentis::all();
-        $structures = structures::all();
-        $specialites = specialites::all();
-        $diplomes = diplomes::all();
-        if(auth::user()->role === 'DFP' || auth::user()->role === 'SA'){
-            return view('apprentis.consulter', compact('user','apprentis','structures','specialites','diplomes'));   
-        }
-        else{
+        $apprentis = Apprentis::all();
+        $structures = Structures::all();
+        $specialites = Specialites::all();
+        $diplomes = Diplomes::all();
+        $pvs = Pv_Installations::all();
+        $decisionapprentis = DecisionApprentis::all();
+    
+        if(auth::user()){
+            return view('apprentis.consulter', compact('user','apprentis','structures','specialites','diplomes','pvs','decisionapprentis'));   
+        } else {
             return redirect()->back()->with('error', 'Vous n\'avez pas les autorisations pour consulter cette page');
         }
     }
+    
 
     public function HistoriqueMA(Request $request,$id){
         $supervisions = supervisions::where('apprenti_id',$id)->get();

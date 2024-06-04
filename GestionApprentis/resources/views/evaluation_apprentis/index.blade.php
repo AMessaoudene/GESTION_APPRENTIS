@@ -33,6 +33,7 @@
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             <div class="container">
+                @if (Auth::user()->role == "DFP" || Auth::user()->role == "SA")
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <h1 class="text-center">Evaluation Apprenti</h1>
@@ -312,6 +313,7 @@
                         </form>
                     </div>
                 </div>
+                @endif
             </div>
         </main>
     </div>

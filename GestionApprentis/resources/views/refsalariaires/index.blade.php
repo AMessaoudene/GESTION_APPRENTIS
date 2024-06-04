@@ -16,7 +16,7 @@
 
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            @if (Auth::user()->role == 'DFP') 
+            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH') 
             <div class="container mt-5 mb-5">
                 <div class="card">
                     <div class="card-header">
@@ -43,19 +43,29 @@
             <table id="refs-table" class="table table-striped" style="width:100%">
                 <thead>
                 <tr>
+                    <th>id</th>
                     <th>version</th>
                     <th>SNMG</th>
                     <th>Salaire Reference</th>
                     <th>Status</th>
+                    <th>Actions</th>
                 </tr>
                 </thead>
                 <tbody>
                 @foreach ($refsalariaires as $refsalariaire)
                 <tr>
+                    <td>{{ $refsalariaire->id }}</td>
                     <td>{{ $refsalariaire->version }}</td>
                     <td>{{ $refsalariaire->snmg }}</td>
                     <td>{{ $refsalariaire->salairereference }}</td>
                     <td>{{ $refsalariaire->status }}</td>
+                    <td>
+                        <form action="{{ route('refsalariaires.destroy', $refsalariaire->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
                 </tr>
                 @endforeach
                 </tbody>

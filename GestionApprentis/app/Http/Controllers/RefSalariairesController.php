@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\baremes;
 use App\Models\refsalariares;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -70,8 +71,11 @@ class RefSalariairesController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request,$id)
     {
-        //
+        $baremes = baremes::where('refsalariaires_id',$id);
+        $baremes->delete();
+        refsalariares::destroy($id);
+        return redirect()->back();
     }
 }

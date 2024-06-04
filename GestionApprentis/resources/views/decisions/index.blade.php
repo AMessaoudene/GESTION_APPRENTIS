@@ -10,7 +10,7 @@
             <select class="form-control" name="planbesoins_id" id="planbesoins_id">
                 <option value="">-- choisir --</option>
                 @foreach($plans as $plan)
-                @if($plan->status == 'accepté')
+                @if($plan->status == 'accepté' && $plan->structure_id == $apprenti->structure_id && $plan->specialites_id == $apprenti->specialite_id)
                     <option value="{{ $plan->id }}">{{ $plan->reference }} - {{ $plan->structure_id}} - {{$plan->specialites_id}}</option>
                 @endif
                 @endforeach

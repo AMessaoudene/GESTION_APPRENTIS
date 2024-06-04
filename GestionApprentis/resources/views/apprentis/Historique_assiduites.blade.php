@@ -19,7 +19,6 @@
             <table id="departs-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">Assiduité ID</th>
                             <th scope="col">type</th>
                             <th scope="col">datedebut</th>
                             <th scope="col">datefin</th>
@@ -31,7 +30,6 @@
                     <tbody>
                         @foreach($assiduites as $assiduite)
                             <tr>
-                                <td>{{ $assiduite->id }}</td>
                                 <td>{{ $assiduite->type }}</td>
                                 <td>{{ $assiduite->datedebut }}</td>
                                 <td>{{ $assiduite->datefin }}</td>

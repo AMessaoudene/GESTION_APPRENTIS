@@ -49,6 +49,7 @@
             <table id="diplomes-table" class="table table-striped" style="width:100%">
                 <thead>
                     <tr>
+                        <th scope="col">ID</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Durée (mois)</th>
                         <th scope="col">Description</th>
@@ -60,6 +61,7 @@
                 <tbody>
                     @foreach($diplomes as $diplome)
                         <tr>
+                            <td>{{ $diplome->id }}</td>
                             <td>{{ $diplome->nom }}</td>
                             <td>{{ $diplome->duree }}</td>
                             <td>{{ $diplome->description }}</td>

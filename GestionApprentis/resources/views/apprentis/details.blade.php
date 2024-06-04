@@ -7,7 +7,6 @@
         <div class="col-lg-6">
             <h2>Informations personnelles</h2>
             <ul class="list-group">
-                <li class="list-group-item">ID : {{ $apprenti->id }}</li>
                 <li class="list-group-item">Nom : {{ $apprenti->nom }}</li>
                 <li class="list-group-item">Prénom : {{ $apprenti->prenom }}</li>
                 <li class="list-group-item">Adresse : {{ $apprenti->adresse }}</li>
@@ -18,10 +17,16 @@
                 <li class="list-group-item">Date du contrat : {{ $apprenti->datecontrat }}</li>
                 <li class="list-group-item">Date de début du contrat : {{ $apprenti->datedebut }}</li>
                 <li class="list-group-item">Date de fin du contrat : {{ $apprenti->datefin }}</li>
-                <li class="list-group-item">Date du transfert : {{ $apprenti->datetransfert }}</li>
+                <li class="list-group-item">Date du transfert : 
+                    @if($apprenti->datetransfert)
+                        {{ $apprenti->datetransfert }}
+                    @else
+                        /
+                    @endif
+                </li>
                 <li class="list-group-item">Niveau Scolaire : {{ $apprenti->niveauscolaire }}</li>
                 <li class="list-group-item">Spécialité : {{ $specialite->nom }}</li>
-                <li class="list-group-item">Diplôme : {{ $diplome->nom }}</li>
+                <li class="list-group-item">Diplôme : {{ $diplome->nom }} - {{ $diplome-> duree }} mois</li>
                 <li class="list-group-item">Structure : {{ $structure->nom }}</li>
             </ul>
         </div>
@@ -30,7 +35,13 @@
             <ul class="list-group">
                 <li class="list-group-item">Référence : {{ $pv->reference }}</li>
                 <li class="list-group-item">Date du PV : {{ $pv->datepv }}</li>
-                <li class="list-group-item">Maitre Apprenti : {{ $pv->maitreapprenti_id }}</li>
+                <li class="list-group-item">Maitre Apprenti : 
+                @foreach($maitreapprentis as $maitreapprenti)
+                    @if($maitreapprenti->id == $pv->maitreapprenti_id)
+                    {{ $maitreapprenti->nom }} {{ $maitreapprenti->prenom}}
+                    @endif
+                @endforeach
+                </li>
                 <li class="list-group-item">Date installation : {{ $pv->dateinstallationchiffre }}</li>
                 <li class="list-group-item">Année d'installation (lettre) : {{ $pv->anneeinstallationlettre }}</li>
                 <li class="list-group-item">Mois d'installation (lettre) : {{ $pv->moisinstallationlettre }}</li>
@@ -46,9 +57,14 @@
             <h2>Decision Apprenti</h2>
             <ul class="list-group">
                 @foreach($decisionapprentis as $decisionapprenti)
+                    <li class="list-group-item">Plan Besoin : 
+                        @foreach ($plans as $plan)
+                            @if($plan->id == $decisionapprenti->planbesoins_id)
+                                {{ $plan->exercice_id }}
+                            @endif
+                        @endforeach
+                    </li>
                     @if($decisionapprenti->pv_id == $pv->id)
-                        <li class="list-group-item">ID : {{ $decisionapprenti->id }}</li>
-                        <li class="list-group-item">Plan Besoin ID : {{ $decisionapprenti->planbesoins_id }}</li>
                         <li class="list-group-item">Référence : {{ $decisionapprenti->referenceda }}</li>
                         <li class="list-group-item">Date Decision : {{ $decisionapprenti->dateda }}</li>
                         <li class="list-group-item">Parametre ID : {{ $decisionapprenti->parametre_id }}</li>
@@ -65,7 +81,6 @@
             <ul class="list-group">
                 @foreach($decisionmaitreapprentis as $decisionmaitreapprenti)
                     @if($decisionmaitreapprenti->pv_id == $pv->id)
-                        <li class="list-group-item">ID : {{ $decisionmaitreapprenti->id }}</li>
                         <li class="list-group-item">Référence : {{ $decisionmaitreapprenti->referencedma }}</li>
                         <li class="list-group-item">Date Decision : {{ $decisionmaitreapprenti->datedma }}</li>
                         <li class="list-group-item">Parametre ID : {{ $decisionmaitreapprenti->parametre_id }}</li>
@@ -171,6 +186,9 @@
                     @if($maitreapprenti->apprenti1_id == $apprenti->id || $maitreapprenti->apprenti2_id == $apprenti->id)
                         <li class="list-group-item">Nom : {{ $maitreapprenti->nom }}</li>
                         <li class="list-group-item">Prenom : {{ $maitreapprenti->prenom }}</li>
+                        <li class="list-group-item">Diplome : {{ $maitreapprenti->diplome_id }}</li>
+                        <li class="list-group-item">Structure : {{ $maitreapprenti->affectation }}</li>
+                        <li class="list-group-item">Spécialité : {{ $maitreapprenti->fonction }}</li>
                         <li class="list-group-item">Civilite : {{ $maitreapprenti->civilite }}</li>
                         <li class="list-group-item">Telephone : {{ $maitreapprenti->telephonepro }}</li>
                         <li class="list-group-item">Adresse : {{ $maitreapprenti->adresse }}</li>

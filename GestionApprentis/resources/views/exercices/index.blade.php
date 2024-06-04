@@ -66,6 +66,7 @@
                             <table id="exercices-table" class="table table-striped">
                                 <thead>
                                     <tr>
+                                        <th scope="col">ID</th>
                                         <th scope="col">Année</th>
                                         <th scope="col">Date début</th>
                                         <th scope="col">Date fin</th>
@@ -81,6 +82,7 @@
                                 <tbody>
                                     @foreach($exercices as $exercice)
                                         <tr>
+                                            <td>{{ $exercice->id }}</td>
                                             <td>{{ $exercice->annee }}</td>
                                             <td>{{ $exercice->datedebut }}</td>
                                             <td>{{ $exercice->datefin }}</td>

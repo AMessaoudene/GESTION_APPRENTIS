@@ -117,11 +117,13 @@
                         <th>Nombre d'apprentis max</th>
                         <th>Description</th>
                         <th>Status</th>
+                        @if (Auth::user()->role == "DFP" || Auth::user()->role == "SA")
                         <th>Actions</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Auth::user()->role == "DFP")
+                    @if (Auth::user()->role == "DFP" || Auth::user()->role == "DRH")
                     @foreach($planbesoins as $planbesoin)
                     <tr id="planbesoin_{{ $planbesoin->id }}">
                         <td>{{ $planbesoin->id }}</td>
@@ -135,10 +137,12 @@
                         <td>{{ $planbesoin->nombreapprentismax }}</td>
                         <td>{{ Str::limit($planbesoin->description, 50) }}</td>
                         <td>{{ $planbesoin->status }}</td>
+                        @if (Auth::user()->role == "DFP")
                         <td>
                             <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $planbesoin->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
                             <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $planbesoin->id }}">Supprimer</button>
                         </td>
+                        @endif
                     </tr>
                     @endforeach
                     @elseif(Auth::user()->role == "SA")
