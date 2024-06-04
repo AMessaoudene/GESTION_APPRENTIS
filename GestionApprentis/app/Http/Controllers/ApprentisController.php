@@ -253,9 +253,7 @@ class ApprentisController extends Controller
         }
     }
 
-    $supervision = supervisions::where('apprenti_id', $apprenti->id)
-    ->where('maitreapprenti_id', $maitreapprenti->id)
-    ->first();
+    $supervision = supervisions::where('apprenti_id', $apprenti->id)->where('maitreapprenti_id', $maitreapprenti->id)->first();
 
     if ($supervision) {
         $supervision->delete();

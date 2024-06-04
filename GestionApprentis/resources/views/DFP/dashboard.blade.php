@@ -2,30 +2,35 @@
 @section('title', 'Dashboard')
 <style>
     .card {
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: box-shadow 0.3s ease;
+        margin-bottom: 20px;
+    }
 
-.card:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
-}
+    .card:hover {
+        box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+    }
 
-.card-title {
-    font-size: 1.2rem;
-    font-weight: bold;
-}
+    .card-title {
+        font-size: 1.2rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
 
-.card-body {
-    padding: 20px;
-}
+    .card-body {
+        padding: 20px;
+    }
 
-.card-text {
-    font-size: 1.1rem;
-    color: #333;
-}
+    .card-text {
+        font-size: 1.1rem;
+        color: #333;
+    }
 
+    .table-responsive {
+        margin-bottom: 20px;
+    }
 </style>
 @section('content')
 <div class="container-fluid">
@@ -37,6 +42,17 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color:white">
             <div class="container-fluid mt-5 mb-5">
                 <h1 class="text-center mb-5">Bienvenue sur DFP Dashboard</h1>
+                <div class="row mb-4">
+                    <!-- Card: Today's Date -->
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">Date d'aujourd'hui</h5>
+                                <p id="current-date" class="card-text"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="row mb-4">
                     <!-- Card: Total Apprentices -->
                     <div class="col-lg-4">
@@ -72,8 +88,8 @@
                     </div>
                     <div class="col-lg-6">
                         <div class="table-responsive">
-                            <h5 class="text-center mb-4" >Liste des apprentis</h5>
-                            <table id="dataTable" class="table table-striped" style="border: solid">
+                            <h5 class="text-center mb-4">Liste des apprentis</h5>
+                            <table id="apprentisTable" class="table table-striped">
                                 <thead>
                                     <tr>
                                         <th scope="col">Nom</th>
@@ -81,7 +97,6 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Add your data rows here -->
                                     @foreach ($apprentis as $apprenti)
                                     <tr>
                                         <td>{{ $apprenti->nom }}</td>
@@ -93,15 +108,14 @@
                         </div>
                         <div class="table-responsive">
                             <h5 class="text-center mb-4">Liste des structures</h5>
-                            <table id="dataTable" class="table table-striped" style="border: solid">
-                                <thead style="border: solid">
+                            <table id="structuresTable" class="table table-striped">
+                                <thead>
                                     <tr>
                                         <th scope="col">Nom</th>
                                         <th scope="col">Adresse courriel</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Add your data rows here -->
                                     @foreach ($structures as $structure)
                                     <tr>
                                         <td>{{ $structure->nom }}</td>
@@ -112,16 +126,15 @@
                             </table>
                         </div>
                         <div class="table-responsive">
-                            <h5 class="text-center mb-4">Liste des maitre d'apprentis</h5>
-                            <table id="dataTable" class="table table-striped" style="border: solid">
-                                <thead style="border: solid">
+                            <h5 class="text-center mb-4">Liste des maîtres d'apprentis</h5>
+                            <table id="maitresTable" class="table table-striped">
+                                <thead>
                                     <tr>
                                         <th scope="col">Nom</th>
                                         <th scope="col">Email</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Add your data rows here -->
                                     @foreach ($maitres as $maitre)
                                     <tr>
                                         <td>{{ $maitre->nom }}</td>
@@ -141,6 +154,17 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Get today's date
+        var today = new Date();
+        var dateString = today.toLocaleDateString('fr-FR', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+
+        // Update the paragraph with today's date
+        document.getElementById('current-date').textContent = dateString;
         // Get the canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
 
@@ -174,7 +198,9 @@
 <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
-        $('#dataTable').DataTable();
+        $('#apprentisTable').DataTable();
+        $('#structuresTable').DataTable();
+        $('#maitresTable').DataTable();
     });
 </script>
 @endsection

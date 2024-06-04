@@ -18,7 +18,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card">
-                                <div class="card-header">Ajouter une structure</div>
+                                <div class="card-header">Ajouter un parametre</div>
                                 <div class="card-body">
                                 <form method="POST" action="{{ route('parametres.store') }}" class="row g-3">
                                     @csrf
@@ -112,7 +112,7 @@
             </div>
             @endif
             <div class="table-responsive">
-                <table id="parametres-table" class="table">
+                <table id="parametres-table" class="table table-striped mt-4" style="width:100%">
                     <thead>
                         <tr>
                             <th>Reference</th>

@@ -22,6 +22,11 @@
                         </a>
                     </li>
                     <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('specialites.index') }}">
+                            Speciaités
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
                         <a class="nav-link" href="{{ route('planbesoins.index') }}">
                             Plans de besoins
                         </a>

@@ -122,8 +122,8 @@
                         @if($dossier->photo)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->photo) }}">Photo</a></li>
                         @endif
-                        @if($dossier->autorisationparentale)
-                            <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentale) }}">Autorisation parentale</a></li>
+                        @if($dossier->autorisationparentele)
+                            <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentele) }}">Autorisation parentale</a></li>
                         @endif
                         @if($dossier->pieceidentite)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->pieceidentite) }}">Piece d'identité</a></li>

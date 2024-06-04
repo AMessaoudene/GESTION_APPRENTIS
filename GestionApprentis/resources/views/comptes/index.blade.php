@@ -80,7 +80,6 @@
                 <table id="comptes-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Civilité</th>
@@ -96,7 +95,6 @@
                     <tbody>
                         @foreach($comptes as $compte)
                             <tr>
-                                <td>{{ $compte->id }}</td>
                                 <td>{{ $compte->nom }}</td>
                                 <td>{{ $compte->prenom }}</td>
                                 <td>{{ $compte->civilite }}</td>

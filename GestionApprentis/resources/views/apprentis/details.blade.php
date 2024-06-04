@@ -165,10 +165,10 @@
                     @else
                     <li class="list-group-item">Aucune photo</li>
                     @endif
-                    @if($dossier->autorisationparentale || $dossier->autorisationparentale !='')
+                    @if($dossier->autorisationparentele || $dossier->autorisationparentele !='')
                         <li class="list-group-item">
-                            <a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentale) }}">Autorisation parentale</a>
-                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'autorisationparentale']) }}" method="POST" style="display:inline;">
+                            <a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentele) }}">Autorisation parentale</a>
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'autorisationparentele']) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>

@@ -207,6 +207,7 @@
             let debutPresalaireS1 = document.getElementById('datedebutpresalaireS1').value;
             let finPresalaireS1 = new Date(debutPresalaireS1);
             finPresalaireS1.setMonth(finPresalaireS1.getMonth() + 6);
+            finPresalaireS1.setDate(finPresalaireS1.getDate() - 1); // Subtract 1 day
             document.getElementById('datefinpresalaireS1').value = finPresalaireS1.toISOString().slice(0,10);
             
             let debutPresalaireS2 = new Date(finPresalaireS1);
@@ -214,12 +215,14 @@
             document.getElementById('datedebutpresalaireS2').value = debutPresalaireS2.toISOString().slice(0,10);
             let finPresalaireS2 = new Date(debutPresalaireS2);
             finPresalaireS2.setMonth(finPresalaireS2.getMonth() + 6);
+            finPresalaireS2.setDate(finPresalaireS2.getDate() - 1); // Subtract 1 day
             document.getElementById('datefinpresalaireS2').value = finPresalaireS2.toISOString().slice(0,10);
 
             document.getElementById('datedebutsalaireS1').value = "{{ $apprenti->datedebut }}";
             let debutsalaireS1 = document.getElementById('datedebutsalaireS1').value;
             let finsalaireS1 = new Date(debutsalaireS1);
             finsalaireS1.setMonth(finsalaireS1.getMonth() + 6);
+            finsalaireS1.setDate(finsalaireS1.getDate() - 1); // Subtract 1 day
             document.getElementById('datefinsalaireS1').value = finsalaireS1.toISOString().slice(0,10);
             
             let debutsalaireS2 = new Date(finsalaireS1);
@@ -227,6 +230,7 @@
             document.getElementById('datedebutsalaireS2').value = debutsalaireS2.toISOString().slice(0,10);
             let finsalaireS2 = new Date(debutsalaireS2);
             finsalaireS2.setMonth(finsalaireS2.getMonth() + 6);
+            finsalaireS2.setDate(finsalaireS2.getDate() - 1); // Subtract 1 day
             document.getElementById('datefinsalaireS2').value = finsalaireS2.toISOString().slice(0,10);
 
             // Hide all sections initially
@@ -245,6 +249,8 @@
                 document.getElementById('datedebutpresalaireS3').value = debutPresalaireS3.toISOString().slice(0,10);
                 let finPresalaireS3 = new Date(debutPresalaireS3);
                 finPresalaireS3.setMonth(finPresalaireS3.getMonth() + 6);
+                finPresalaireS3.setDate(finPresalaireS3.getDate() - 1); // Subtract 1 day
+
                 document.getElementById('datefinpresalaireS3').value = finPresalaireS3.toISOString().slice(0,10);
 
                 let debutsalaireS3 = new Date(finsalaireS2);
@@ -252,6 +258,7 @@
                 document.getElementById('datedebutsalaireS3').value = debutsalaireS3.toISOString().slice(0,10);
                 let finsalaireS3 = new Date(debutsalaireS3);
                 finsalaireS3.setMonth(finsalaireS3.getMonth() + 6);
+                finsalaireS3.setDate(finsalaireS3.getDate() - 1); // Subtract 1 day
                 document.getElementById('datefinsalaireS3').value = finsalaireS3.toISOString().slice(0,10);
 
                 document.getElementById('S3_apprentis').style.display = 'block';
@@ -264,6 +271,7 @@
                 document.getElementById('datedebutpresalaireS4').value = debutPresalaireS4.toISOString().slice(0,10);
                 let finPresalaireS4 = new Date(debutPresalaireS4);
                 finPresalaireS4.setMonth(finPresalaireS4.getMonth() + 6);
+                finPresalaireS4.setDate(finPresalaireS4.getDate() - 1); // Subtract 1 day
                 document.getElementById('datefinpresalaireS4').value = finPresalaireS4.toISOString().slice(0,10);
 
                 let debutsalaireS4 = new Date(finsalaireS3);
@@ -271,6 +279,7 @@
                 document.getElementById('datedebutsalaireS4').value = debutsalaireS4.toISOString().slice(0,10);
                 let finsalaireS4 = new Date(debutsalaireS4);
                 finsalaireS4.setMonth(finsalaireS4.getMonth() + 6);
+                finsalaireS4.setDate(finsalaireS4.getDate() - 1); // Subtract 1 day
                 document.getElementById('datefinsalaireS4').value = finsalaireS4.toISOString().slice(0,10);
 
                 document.getElementById('S4_apprentis').style.display = 'block';
@@ -283,6 +292,7 @@
                 document.getElementById('datedebutpresalaireS5').value = debutPresalaireS5.toISOString().slice(0,10);
                 let finPresalaireS5 = new Date(debutPresalaireS5);
                 finPresalaireS5.setMonth(finPresalaireS5.getMonth() + 6);
+                finPresalaireS5.setDate(finPresalaireS5.getDate() - 1); // Subtract 1 day
                 document.getElementById('datefinpresalaireS5').value = finPresalaireS5.toISOString().slice(0,10);
 
                 let debutsalaireS5 = new Date(finsalaireS4);
@@ -290,6 +300,7 @@
                 document.getElementById('datedebutsalaireS5').value = debutsalaireS5.toISOString().slice(0,10);
                 let finsalaireS5 = new Date(debutsalaireS5);
                 finsalaireS5.setMonth(finsalaireS5.getMonth() + 6);
+                finsalaireS5.setDate(finsalaireS5.getDate() - 1); // Subtract 1 day
                 document.getElementById('datefinsalaireS5').value = finPresalaireS5.toISOString().slice(0,10);
 
                 document.getElementById('S5_apprentis').style.display = 'block';

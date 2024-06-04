@@ -13,7 +13,12 @@
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link" href="{{ route('structures.index') }}">
-                            Structures
+                            Structures d'accueil
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('planbesoins.index') }}">
+                            Plans de besoins
                         </a>
                     </li>
                     <li class="nav-item mb-5">
@@ -22,8 +27,8 @@
                         </a>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link" href="{{ route('planbesoins.index') }}">
-                            Plans de besoins
+                        <a class="nav-link" href="{{ route('specialites.index') }}">
+                            Specialités
                         </a>
                     </li>
                     <li class="nav-item mb-5">

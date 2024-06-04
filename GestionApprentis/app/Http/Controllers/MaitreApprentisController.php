@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\diplomes;
 use App\Models\maitre_apprentis;
 use App\Models\specialites;
 use App\Models\structures;
@@ -15,8 +16,9 @@ class MaitreApprentisController extends Controller
         $maitre_apprentis = maitre_apprentis::all();
         $structures = structures::all();
         $specialites = specialites::all();
-        if(auth::user()->role === 'DFP' || auth::user()->role == 'SA' || auth::user()->role == 'DRH' || auth::user()->role == 'EvaluateurGradé'){
-            return view('maitre_apprentis.index', compact('maitre_apprentis','structures','specialites'));
+        $diplomes = diplomes::all();
+        if(auth::user()){
+            return view('maitre_apprentis.index', compact('diplomes','maitre_apprentis','structures','specialites'));
         }
         else{
             return redirect()->back()->with('error', 'You do not have permission to access this page.');
@@ -67,9 +69,9 @@ class MaitreApprentisController extends Controller
             $maitre_apprentis->telephonepro = $request->telephonepro;
             $maitre_apprentis->adresse = $request->adresse;
             $maitre_apprentis->fonction = $request->fonction;
-            //$maitre_apprentis->numapprentissupervises = 0;
             $maitre_apprentis->daterecrutement = $request->daterecrutement;
             $maitre_apprentis->affectation = $request->affectation;
+            $maitre_apprentis->diplome_id = $request->diplome_id;
             $maitre_apprentis->statut = $request->statut;
             $maitre_apprentis->save();
             return redirect()->back()->with('success', 'Maitre d\'apprentissage ajoute avec succes');

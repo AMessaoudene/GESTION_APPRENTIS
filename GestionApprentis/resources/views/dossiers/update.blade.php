@@ -118,8 +118,8 @@
                                     @endforeach
                                 </select>
                             </li>
-                            <li class="list-group-item">Référence <input type="text" name="reference" value="{{ $decisionapprenti->referenceda }}" placeholder="{{ $decisionapprenti->referenceda }}"> </li>
-                            <li class="list-group-item">Date Decision <input type="text" name="dateda" value="{{ $decisionapprenti->dateda }}" placeholder="{{ $decisionapprenti->dateda }}"></li>
+                            <li class="list-group-item">Référence <input type="text" name="referenceda" value="{{ $decisionapprenti->referenceda }}" placeholder="{{ $decisionapprenti->referenceda }}"> </li>
+                            <li class="list-group-item">Date Decision <input type="date" name="dateda" value="{{ $decisionapprenti->dateda }}" placeholder="{{ $decisionapprenti->dateda }}"></li>
                             <li class="list-group-item">Parametre ID 
                                 <select name="parametre_id" placeholder="{{ $decisionapprenti->parametre_id }}">
                                     <option value="">-- Choisir --</option>
@@ -151,8 +151,8 @@
                     @foreach($decisionmaitreapprentis as $decisionmaitreapprenti)
                         @if($decisionmaitreapprenti->pv_id == $pv->id)
                             <li class="list-group-item">ID <input type="text" name="" value="{{ $decisionmaitreapprenti->id }}" disabled readonly> </li>
-                            <li class="list-group-item">Référence <input type="text" name="reference" value="{{ $decisionmaitreapprenti->referencedma }}" placeholder="{{ $decisionmaitreapprenti->referencedma }}"> </li>
-                            <li class="list-group-item">Date Decision <input type="text" name="dateda" value="{{ $decisionmaitreapprenti->datedma }}" placeholder="{{ $decisionmaitreapprenti->datedma }}"></li>
+                            <li class="list-group-item">Référence <input type="text" name="referencedma" value="{{ $decisionmaitreapprenti->referencedma }}" placeholder="{{ $decisionmaitreapprenti->referencedma }}"> </li>
+                            <li class="list-group-item">Date Decision <input type="date" name="datedma" value="{{ $decisionmaitreapprenti->datedma }}" placeholder="{{ $decisionmaitreapprenti->datedma }}"></li>
                             <li class="list-group-item">Parametre ID 
                                 <select name="parametre_id" placeholder="{{ $decisionmaitreapprenti->parametre_id }}">
                                     <option value="">-- Choisir --</option>
@@ -227,10 +227,10 @@
                                 <input type="file" name="photo" id="">
                             @endif
                             <label for="">Autorisation parentale</label>
-                            @if($dossier->autorisationparentale)
-                                <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentale) }}">Autorisation parentale</a></li>
+                            @if($dossier->autorisationparentele)
+                                <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentele) }}">Autorisation parentale</a></li>
                             @else
-                                <input type="file" name="autorisationparentale" id="">
+                                <input type="file" name="autorisationparentele" id="">
                             @endif
                             <label for="">Piece d'identité</label>
                             @if($dossier->pieceidentite)

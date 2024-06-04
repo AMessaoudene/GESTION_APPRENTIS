@@ -44,7 +44,9 @@
                         <th scope="col">ID</th>
                         <th scope="col">Nom</th>
                         <th scope="col">Description</th>
-                        <th scope="col">Action</th>
+                        @if(Auth::user()->role == 'DFP')
+                            <th scope="col">Action</th>
+                        @endif
                     </tr>
                 </thead>
                 <tbody>
@@ -53,15 +55,17 @@
                         <td>{{ $specialite->id }}</td>
                         <td>{{ $specialite->nom }}</td>
                         <td>{{ $specialite->description }}</td>
-                        <td>
-                            <button class="btn btn-primary edit-btn" data-id="{{ $specialite->id }}">Modifier</button>
-                            <form action="{{ route('specialites.destroy', $specialite->id) }}" method="POST">
-                                @csrf
-                                @method('DELETE')
-                                <!-- Other form fields or buttons -->
-                                <button type="submit" class="btn btn-danger">Delete</button>
-                            </form>
-                        </td>
+                        @if(Auth::user()->role == 'DFP')
+                            <td>
+                                <button class="btn btn-primary edit-btn" data-id="{{ $specialite->id }}">Modifier</button>
+                                <form action="{{ route('specialites.destroy', $specialite->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <!-- Other form fields or buttons -->
+                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                </form>
+                            </td>
+                        @endif
                     </tr>
                     @endforeach
                 </tbody>

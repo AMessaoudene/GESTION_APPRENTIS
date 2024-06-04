@@ -85,17 +85,26 @@
                             </div>
                         </div>
                         <div class="row mb-3">
-                        <div class="col-md-6">
+                            <div class="col-md-6">
+                                <label for="diplome_id" class="form-label">Diplome</label>
+                                <select class="form-select" id="diplome_id" name="diplome_id" required>
+                                    <option value="">Sélectionner un diplome</option>
+                                    @foreach ($diplomes as $diplome)
+                                        <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="daterecrutement" class="form-label">Date de recrutement</label>
+                                <input type="date" class="form-control" id="daterecrutement" name="daterecrutement" required>
+                            </div>
+                            <div class="col-md-6">
                                 <label for="statut" class="form-label">Statut</label>
                                 <select class="form-select" id="statut" name="statut" required>
                                     <option value="">Sélectionner un statut</option>
                                     <option value="formé">Formé</option>
                                     <option value="non formé">Non formé</option>
                                 </select>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="daterecrutement" class="form-label">Date de recrutement</label>
-                                <input type="date" class="form-control" id="daterecrutement" name="daterecrutement" required>
                             </div>
                         </div>
                         <div class="text-center">
@@ -108,7 +117,7 @@
         <table id="maitres-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">ID</th>
+                            <th scope="col">Matricule</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Civilité</th>
@@ -122,7 +131,7 @@
                     <tbody>
                         @foreach($maitre_apprentis as $maitre)
                             <tr>
-                                <td>{{ $maitre->id }}</td>
+                                <td>{{ $maitre->matricule }}</td>
                                 <td>{{ $maitre->nom }}</td>
                                 <td>{{ $maitre->prenom }}</td>
                                 <td>{{ $maitre->civilite }}</td>

@@ -20,31 +20,31 @@ class PlanBesoinsController extends Controller
         $exercices = exercices::all();
         return view('planbesoins.index', compact('planbesoins','structures','exercices','specialites','user'));
     }
-    public function store(Request $request)
-{
-    $specialitesIds = $request->specialites_id;
-    $nombreEffectifs = $request->nombereffectif;
+    public function store(Request $request){
+        $specialitesIds = $request->specialites_id;
+        $nombereffectif = $request->nombereffectif; // Single nombereffectif value
+        $nombreapprentismax = $nombereffectif * 0.05;
     
-    // Assuming that $specialitesIds and $nombreEffectifs have the same length
-    $planbesoinsArray = [];
-    foreach ($specialitesIds as $key => $specialiteId) {
-        $planbesoins = new PlanBesoins();
-        $planbesoins->exercice_id = $request->exercice_id;
-        $planbesoins->reference = $request->reference;
-        $planbesoins->structure_id = $request->structure_id;
-        $planbesoins->date = $request->date;
-        $planbesoins->specialites_id = $specialiteId;
-        $planbesoins->nombreapprentis = $request->nombreapprentis[$key];
-        $planbesoins->nombereffectif = $nombreEffectifs[$key];
-        $planbesoins->nombreapprentismax = $nombreEffectifs[$key] * 0.05;
-        $planbesoins->description = $request->description[$key];
-        $planbesoins->status = "en cours";
-        $planbesoins->save();
-        
-        $planbesoinsArray[] = $planbesoins;
-    }    
-    return redirect()->back()->with('success');
-}
+        $planbesoinsArray = [];
+        foreach ($specialitesIds as $key => $specialiteId) {
+            $planbesoins = new PlanBesoins();
+            $planbesoins->exercice_id = $request->exercice_id;
+            $planbesoins->reference = $request->reference;
+            $planbesoins->structure_id = $request->structure_id;
+            $planbesoins->date = $request->date;
+            $planbesoins->specialites_id = $specialiteId;
+            $planbesoins->nombreapprentis = $request->nombreapprentis[$key];
+            $planbesoins->nombereffectif = $nombereffectif; // Use single nombereffectif value
+            $planbesoins->nombreapprentismax = $nombreapprentismax; // Use calculated max value
+            $planbesoins->description = $request->description[$key];
+            $planbesoins->status = "en cours";
+            $planbesoins->save();
+            
+            $planbesoinsArray[] = $planbesoins;
+        }    
+        return redirect()->back()->with('success', 'Plan de besoins ajouté avec succès');
+    }
+    
 
     public function update(Request $request, $id)
     {

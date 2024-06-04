@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\decisionapprentis;
 use App\Models\diplomes;
 use App\Models\pv_installations;
+use App\Models\specialites;
 use Illuminate\Support\Facades\Validator;
 use App\Models\apprentis;
 use App\Models\avenants;
@@ -22,8 +23,9 @@ class AvenantsController extends Controller
         $decisions = decisionapprentis::all();
         $avenants = avenants::all();
         $diplomes = diplomes::all();
+        $specialites = specialites::all();
         $pvs = pv_installations::all();
-        return view('avenants.index', compact('decisions','pvs','avenants','apprentis','diplomes'));
+        return view('avenants.index', compact('specialites','decisions','pvs','avenants','apprentis','diplomes'));
         }
         else{
             return redirect()->back();

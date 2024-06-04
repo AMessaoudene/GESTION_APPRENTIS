@@ -24,6 +24,8 @@ return new class extends Migration
             $table->foreign('fonction')->references('id')->on('specialites')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('affectation');
             $table->foreign('affectation')->references('id')->on('structures')->onDelete('cascade')->onUpdate('cascade');
+            $table->unsignedBigInteger('diplome_id');
+            $table->foreign('diplome_id')->references('id')->on('diplomes')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('apprenti1_id')->unique()->nullable();
             $table->foreign('apprenti1_id')->references('id')->on('apprentis')->onDelete('cascade');
             $table->unsignedBigInteger('apprenti2_id')->unique()->nullable();

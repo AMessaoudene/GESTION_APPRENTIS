@@ -1,83 +1,81 @@
-<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+<nav id="sidebar" class="col-md-3 col-lg-2 d-md-block bg-body-tertiary sidebar" style="background-color:#007bff;">
             <div class="sidebar-sticky mt-5">
                 <ul class="nav flex-column">
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="apprentisDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('apprentis.consulter') }}">
                             Apprentis
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="apprentisDropdown">
-                            <a class="dropdown-item" href="{{ route('apprentis.index')}}">Ajouter</a>
-                            <a class="dropdown-item" href=" {{ route('apprentis.consulter') }}">Consulter la liste</a>
-                        </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="maitresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('maitreapprentis.index') }}">
                             Maîtres apprentis
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="maitresDropdown">
-                            <a class="dropdown-item" href="{{ route('maitreapprentis.index') }}">Ajouter</a>
-                            <a class="dropdown-item" href="#">Consulter la liste</a>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('structures.index') }}">
+                            Structures d'accueil
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('planbesoins.index') }}">
+                            Plans de besoins
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('specialites.index') }}">
+                            Speciaités
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('diplomes.index') }}">
+                            Diplomes
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('specialites.index') }}">
+                            Specialités
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
+                        <a class="nav-link dropdown-toggle" href="#" id="EvaluationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Evaluations
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="EvaluationsDropdown">
+                            <a class="dropdown-item" href="{{ route('evaluation_apprentis.index') }}">Apprentis</a>
+                            <a class="dropdown-item" href="{{ route('evaluationMA.index') }}">Maitre Apprentis</a>
                         </div>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="structuresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Structures
+                        <a class="nav-link dropdown-toggle" href="#" id="ComportementsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Comportements
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="structuresDropdown">
-                            <a class="dropdown-item" href="{{ route('structures.index') }}">Ajout & Deatils</a>
-                        </div>
-                    </li>
-                    <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="exercicesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            exercices
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="exercicesDropdown">
-                            <a class="dropdown-item" href="#">Ajouter</a>
-                            <a class="dropdown-item" href="#">Consulter la liste</a>
+                        <div class="dropdown-menu" aria-labelledby="ComportementsDropdown">
+                            <a class="dropdown-item" href="{{ route('departs.index') }}">Departs</a>
+                            <a class="dropdown-item" href="{{ route('assiduites.index') }}">Assiduites</a>
+                            <a class="dropdown-item" href="{{ route('avenants.index') }}">Avenants</a>
                         </div>
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link dropdown-toggle" href="#" id="plansDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Plans de besoins
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="plansDropdown">
-                            <a class="dropdown-item" href="#">Ajouter un plan</a>
-                            <a class="dropdown-item" href="#">Consulter les plans</a>
-                            @if ($user->role === 'DFP')
-                            <a class="dropdown-item" href="#">Details des plans</a>
-                            @endif
-                        </div>
-                    </li>
-                    @if ($user->role == 'DRH')
-                    <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="parametresDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Parametres
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="parametresDropdown">
-                            <a class="dropdown-item" href="#">Link 1</a>
-                            <a class="dropdown-item" href="#">Link 2</a>
-                            <a class="dropdown-item" href="#">Link 3</a>
+                        <div class="dropdown-menu" aria-labelledby="plansDropdown">
+                            <a class="dropdown-item" href="{{ route('exercices.index') }}">Administratives</a>
+                            <a class="dropdown-item" href="{{ route('parametres.index') }}">Legislatives</a>
+                            <a class="dropdown-item" href="{{ route('baremes.index') }}">Baremes</a>
+                            <a class="dropdown-item" href="{{ route('refsalariaires.index') }}">Ref. Salariales</a>
                         </div>
                     </li>
-                    @endif
-                    @if ($user->role == 'SA' || $user->role == 'DFP')
                     <li class="nav-item mb-5">
-                        <a class="nav-link dropdown-toggle" href="#" id="comptesDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link" href="{{ route('comptes.index') }}">
                             Comptes
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="comptesDropdown">
-                            @if ($user->role == "DFP")
-                            <a class="dropdown-item" href="#">Ajouter des comptes</a>
-                            @endif
-                            <a class="dropdown-item" href="#">Consulter les comptes</a>
-                        </div>
                     </li>
-                    @endif
-                    <li class="nav-item mb-5">
+                    <!--<li class="nav-item mb-5">
                         <a class="nav-link" href="{{ url('/profile') }}">
                             Profile
                         </a>
-                    </li>
+                    </li>-->
                     <li>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf

@@ -12,7 +12,7 @@ class ParametresController extends Controller
      */
     public function index()
     {
-        if(auth::user()->role == 'DFP'){
+        if(auth::user()){
         $user = auth::user();
         $parametres = parametres::all();
         return view('parametres.index', compact('parametres','user'));

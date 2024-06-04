@@ -29,7 +29,6 @@
                         <table id="apprentis-table" class="table table-striped" style="width:100%">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
                                     <th scope="col">Nom</th>
                                     <th scope="col">Prenom</th>
                                     <th scope="col">Structure</th>
@@ -46,7 +45,6 @@
                                 @if (Auth::user()->role == 'DFP')
                                 @foreach($apprentis as $apprenti)
                                 <tr>
-                                    <td>{{ $apprenti->id }}</td>
                                     <td>{{ $apprenti->nom }}</td>
                                     <td>{{ $apprenti->prenom }}</td>
                                     @foreach ($structures as $structure)
@@ -81,15 +79,14 @@
                                 @foreach($apprentis as $apprenti)
                                 @if ($apprenti->structure_id == Auth::user()->structures_id)
                                 <tr>
-                                    <td>{{ $apprenti->id }}</td>
                                     <td>{{ $apprenti->nom }}</td>
                                     <td>{{ $apprenti->prenom }}</td>
                                     <td>{{ $apprenti->structure_id }}</td>
                                     <td>{{ $apprenti->specialite_id }}</td>
                                     <td><a href="/apprentis/historiqueMA/{{ $apprenti->id }}">Voir</a></td>
-                                    @if ($user->role == 'SA')
+                                    @if ($user->role == 'SA' && $apprenti->status == 'inactif')
                                     <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
-                                    @elseif($user->role == 'DFP')
+                                    @elseif($user->role == 'DFP' || ($user->role == 'SA' && $apprenti->status == 'actif'))
                                     <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
                                     @endif
                                     <td><a href="/apprentis/assiduites/{{ $apprenti->id }}">Voir</a></td>

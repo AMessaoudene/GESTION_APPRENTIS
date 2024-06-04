@@ -11,7 +11,7 @@ class DiplomesController extends Controller
     public function index()
     {
         $diplomes = Diplomes::all();
-        if(auth::user()->role === 'DFP'){
+        if(auth::user()){
             return view('diplomes.index', compact('diplomes'));
         }
         else{

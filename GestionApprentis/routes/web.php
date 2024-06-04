@@ -110,8 +110,8 @@ Route::middleware('auth')->group(function(){
 });
 //Assiduites
 Route::middleware('auth')->group(function(){
-    Route::get('/assiduites/ajouter', [AssiduitesController::class, 'index'])->name('assiduites.index');
-    Route::post('/assiduites/ajouter', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
+    Route::get('/assiduites', [AssiduitesController::class, 'index'])->name('assiduites.index');
+    Route::post('/assiduites', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
     Route::get('/assiduites/consulter', [AssiduitesController::class, 'show'])->name('assiduites.consulter');
     Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
     Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
