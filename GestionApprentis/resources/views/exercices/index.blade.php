@@ -17,7 +17,6 @@
 
             <!-- Page Content -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                <h1 class="text-center">Liste des exercices</h1>
                 @if (Auth::user()->role == 'DFP')
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
@@ -50,7 +49,7 @@
                                         <label for="budget">Budget</label>
                                         <input type="text" class="form-control" id="budget" name="budget" readonly disabled>
                                     </div>
-                                    <div class="text-center">
+                                    <div class="text-center" style="margin-top:3%;">
                                         <button type="submit" class="btn btn-primary">Ajouter</button>
                                     </div>
                                 </form>
@@ -59,6 +58,7 @@
                     </div>
                 </div>
                 @endif
+                <h1 class="text-center" style="margin-top:3%;">Liste des exercices</h1>
                 <!-- Responsive Table -->
                 <div class="row mt-4">
                     <div class="col-lg-12">

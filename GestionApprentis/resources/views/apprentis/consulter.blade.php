@@ -227,10 +227,9 @@
         </div>
     </div>
 @endsection
-
 <script>
     function confirmDelete(id) {
-        if (confirm('Are you sure you want to delete this apprentice?')) {
+        if (confirm('Voulez-vous supprimer cet apprenti?')) {
             // Submit the form if confirmed
             document.getElementById('deleteForm' + id).submit();
         } 

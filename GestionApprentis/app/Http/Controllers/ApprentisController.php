@@ -186,7 +186,7 @@ class ApprentisController extends Controller
             }
         }
         catch (\Exception $e) {
-                return redirect('/')->with('error', 'Une erreur est survenue: ' . $e->getMessage());
+                return redirect()->back()->with('error', 'Une erreur est survenue: ' . $e->getMessage());
         }
     } 
 
@@ -228,41 +228,43 @@ class ApprentisController extends Controller
         return redirect()->back()->with('success', 'Apprenti modifié avec succes');
     }
 
-    public function destroy($id){
-    
-    $apprenti = apprentis::find($id);
-    if (!$apprenti) {
-        return redirect()->back()->with('error', 'Apprenti non trouvé');
-    }
-
-    pv_installations::where('apprenti_id', $apprenti->id)->delete();
-    assiduites::where('apprenti_id',$apprenti->id)->delete();
-    dossiers::where('apprentis_id',$apprenti->id)->delete();
-    evaluation_apprentis::where('apprenti_id',$apprenti->id)->delete();    
-    $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
-    if ($maitreapprenti1) {
-        $maitreapprenti1->apprenti1_id = null;
-        $maitreapprenti = $maitreapprenti1;
-        $maitreapprenti1->save();
-    } else {
-        $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
-        if ($maitreapprenti2) {
-            $maitreapprenti2->apprenti2_id = null;
-            $maitreapprenti = $maitreapprenti2;
-            $maitreapprenti2->save();
+    public function destroy($id) {
+        $apprenti = apprentis::find($id);
+        if (!$apprenti) {
+            return redirect()->back()->with('error', 'Apprenti non trouvé');
         }
+    
+        // Deleting related records
+        pv_installations::where('apprenti_id', $apprenti->id)->delete();
+        assiduites::where('apprenti_id', $apprenti->id)->delete();
+        dossiers::where('apprentis_id', $apprenti->id)->delete();
+        evaluation_apprentis::where('apprenti_id', $apprenti->id)->delete();    
+    
+        // Initializing $maitreapprenti as null
+        $maitreapprenti = null;
+    
+        $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+        if ($maitreapprenti1) {
+            $maitreapprenti1->apprenti1_id = null;
+            $maitreapprenti = $maitreapprenti1;
+            $maitreapprenti1->save();
+        } else {
+            $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+            if ($maitreapprenti2) {
+                $maitreapprenti2->apprenti2_id = null;
+                $maitreapprenti = $maitreapprenti2;
+                $maitreapprenti2->save();
+            }
+        }
+    
+        // Deleting related supervisions records
+    supervisions::where('apprenti_id', $apprenti->id)->delete();
+    
+        $apprenti->delete();
+    
+        return redirect()->back()->with('success', 'Apprenti supprimé avec succès');
     }
-
-    $supervision = supervisions::where('apprenti_id', $apprenti->id)->where('maitreapprenti_id', $maitreapprenti->id)->first();
-
-    if ($supervision) {
-        $supervision->delete();
-    }
-
-    $apprenti->delete();
-
-    return redirect()->back()->with('success', 'Apprenti supprimé avec succès');
-}
+    
 
     public function details(Request $request,$id){
         $user = auth::user();
