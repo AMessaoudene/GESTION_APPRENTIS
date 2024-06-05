@@ -111,10 +111,10 @@
                                 @if (Auth::user()->role == 'DFP')
                                 <td>
                                     <button class="btn btn-primary edit-btn" data-id="{{ $compte->id }}">Modifier</button>
-                                    <form action="{{ route('comptes.destroy', $compte->id) }}" method="POST">                  
+                                    <form id="deleteForm{{ $compte->id }}" action="{{ route('comptes.destroy', $compte->id) }}" method="POST">
                                         @csrf
-                                        @method('DELETE')           
-                                        <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ $apprenti->id }})">Supprimer</button>
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $compte->id }})">Delete</button>
                                     </form>
                                 </td>
                                 @endif
@@ -129,11 +129,10 @@
 <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     function confirmDelete(id) {
-        if (confirm('Voulez-vous supprimer cet apprenti?')) {
+        if (confirm('Voulez-vous supprimer cet compte?')) {
             // Submit the form if confirmed
             document.getElementById('deleteForm' + id).submit();
-        } 
-        // No action needed if canceled
+        }
     }
     $(document).ready(function() {
         $('#comptes-table').DataTable();
