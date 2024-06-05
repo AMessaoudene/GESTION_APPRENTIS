@@ -14,14 +14,14 @@ class SAsController extends Controller
 {
     public function index()
     {
-        $apprentis = apprentis::where('structures_id',Auth::user()->structures_id);
-        $totalapprentis = apprentis::count();
-        $maitres = maitre_apprentis::all();
-        $totalmaitres = maitre_apprentis::count();
+        $apprentis = apprentis::where('structure_id',Auth::user()->structures_id);
+        $totalapprentis = apprentis::where('structure_id',Auth::user()->structures_id)->count();
+        $maitres = maitre_apprentis::where('affectation',Auth::user()->structures_id);
+        $totalmaitres = maitre_apprentis::where('affectation',Auth::user()->structures_id)->count();
         $structures = structures::all();
         $totalstructures = structures::count();
         // Query to fetch all datecontrat from apprenti table
-        $contracts = DB::table('apprentis')->select('datecontrat')->get();
+        $contracts = apprentis::where('structure_id',Auth::user()->structures_id)->select('datecontrat')->get();
 
         // Initialize an array to hold counts for each month
         $monthlyCounts = array_fill(0, 12, 0);

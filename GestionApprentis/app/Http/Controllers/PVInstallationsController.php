@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\structures;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Models\pv_installations;
@@ -17,10 +18,11 @@ class PVInstallationsController extends Controller
      */
     public function index()
     {
+        $structures = structures::all();
         $apprenti = Session::get('apprenti');
         $maitre_apprentis = maitre_apprentis::all();
         // Pass transferred data to the view
-        return view('pvinstallations.index', compact('maitre_apprentis'))->with('apprenti', $apprenti);
+        return view('pvinstallations.index', compact('maitre_apprentis','structures'))->with('apprenti', $apprenti);
     }
 
     /**

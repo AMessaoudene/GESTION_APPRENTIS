@@ -11,7 +11,13 @@
         </div>
         <div class="form-group">
             <label for="direction">Direction:</label>
-            <input type="text" class="form-control" id="direction" name="direction" required>
+            <input type="text" class="form-control" id="direction" name="direction" value="
+            @foreach ($structures as $structure)
+                @if ($structure->id == $apprenti->structure_id)
+                    {{ $structure->nom }}
+                @endif
+            @endforeach
+            " readonly>
         </div>
         <div class="form-group">
             <label for="datepv">Date PV:</label>

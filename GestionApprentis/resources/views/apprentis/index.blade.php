@@ -43,7 +43,7 @@
                             <div class="input-group">
                                 <input type="date" id="datedebut" name="datedebut" class="form-control" required>
                                 <span class="input-group-text">Au</span>
-                                <input type="date" id="datefin" name="datefin" class="form-control" required>
+                                <input type="date" id="datefin" name="datefin" class="form-control" readonly required>
                             </div>
                         </div>
 

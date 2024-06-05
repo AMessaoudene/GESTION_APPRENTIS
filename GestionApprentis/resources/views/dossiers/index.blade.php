@@ -12,12 +12,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="contratapprenti">Contrat</label>
-                        <input type="file" class="form-control" id="contratapprenti" name="contratapprenti" required>
+                        <input type="file" class="form-control" id="contratapprenti" name="contratapprenti" accept=".pdf" required>
                         <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="decisionapprenti">Decision d'apprenti</label>
-                        <input type="file" class="form-control" id="decisionapprenti" name="decisionapprenti" required>
+                        <input type="file" class="form-control" id="decisionapprenti" name="decisionapprenti" accept=".pdf" required>
                         <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                     </div>
                 </div>
@@ -25,12 +25,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="decisionmaitreapprenti">Decision Maitre d'apprentis</label>
-                        <input type="file" class="form-control" id="decisionmaitreapprenti" name="decisionmaitreapprenti" required>
+                        <input type="file" class="form-control" id="decisionmaitreapprenti" name="decisionmaitreapprenti" accept=".pdf" required>
                         <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="pvinstallation">PV d'Installation</label>
-                        <input type="file" class="form-control" id="pvinstallation" name="pvinstallation" required>
+                        <input type="file" class="form-control" id="pvinstallation" name="pvinstallation" accept=".pdf" required>
                         <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                     </div>
                 </div>
@@ -38,12 +38,12 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="copiecheque">Copie Cheque</label>
-                        <input type="file" class="form-control" id="copiecheque" name="copiecheque" required>
+                        <input type="file" class="form-control" id="copiecheque" name="copiecheque" accept=".pdf" required>
                         <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="extraitnaissance">Extrait de Naissance</label>
-                        <input type="file" class="form-control" id="extraitnaissance" name="extraitnaissance" required>
+                        <input type="file" class="form-control" id="extraitnaissance" name="extraitnaissance" accept=".pdf" required>
                         <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                     </div>
                 </div>
@@ -51,18 +51,18 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="autorisationparentele">Autorisation Parentale</label>
-                        <input type="file" class="form-control" id="autorisationparentele" name="autorisationparentele">
+                        <input type="file" class="form-control" id="autorisationparentele" accept=".pdf" name="autorisationparentele">
                     </div>
                     <div class="form-group col-md-6">
                         <label for="photo">Photo</label>
-                        <input type="file" class="form-control" id="photo" name="photo">
+                        <input type="file" class="form-control" id="photo" accept=".pdf, .jpg, .jpeg, .png" name="photo">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="pieceidentite">Piece d'Identite</label>
-                        <input type="file" class="form-control" id="pieceidentite" name="pieceidentite">
+                        <input type="file" class="form-control" id="pieceidentite" accept=".pdf" name="pieceidentite">
                     </div>
                 </div>
                 <div>
