@@ -58,11 +58,10 @@
                         @if(Auth::user()->role == 'DFP')
                             <td>
                                 <button class="btn btn-primary edit-btn" data-id="{{ $specialite->id }}">Modifier</button>
-                                <form action="{{ route('specialites.destroy', $specialite->id) }}" method="POST">
+                                <form id="deleteForm{{ $specialite->id }}" action="{{ route('specialites.destroy', $specialite->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
-                                    <!-- Other form fields or buttons -->
-                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                    <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $specialite->id }})">Delete</button>
                                 </form>
                             </td>
                         @endif
@@ -78,63 +77,69 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
-$(document).ready(function() {
-    $('#specialites-table').DataTable();
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer cet specialité?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
+    $(document).ready(function() {
+        $('#specialites-table').DataTable();
 
-    // AJAX for adding a new structure
-    $('#add-form').submit(function(event) {
-        event.preventDefault();
-        var form = $(this);
-        $.ajax({
-            url: form.attr('action'),
-            type: 'POST',
-            data: form.serialize(),
-            success: function(response) {
-                // Reload the page to update the table
-                location.reload();
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                // Handle error
-                console.error('Error adding structure:', errorThrown);
-            }
+        // AJAX for adding a new structure
+        $('#add-form').submit(function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function(response) {
+                    // Reload the page to update the table
+                    location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error adding structure:', errorThrown);
+                }
+            });
+        });
+
+        // AJAX for editing a structure
+        $(document).on('click', '.edit-btn', function() {
+            var id = $(this).data('id');
+            var row = $(this).closest('tr');
+            var nom = row.find('td:eq(1)').text();
+            var description = row.find('td:eq(2)').text();
+            var editForm = `
+                <form method="POST" action="/specialites/${id}" class="edit-form">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="nom" class="form-control" value="${nom}">
+                    <input type="text" name="description" class="form-control" value="${description}">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </form>
+            `;
+            row.find('td:eq(1)').html(editForm);
+        });
+
+        // Submit edit form
+        $(document).on('submit', '.edit-form', function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'PUT', // Changed from POST to PUT for update
+                data: form.serialize(),
+                success: function(response) {
+                    // Reload the page to update the table
+                    location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error updating structure:', errorThrown);
+                }
+            });
         });
     });
-
-    // AJAX for editing a structure
-    $(document).on('click', '.edit-btn', function() {
-        var id = $(this).data('id');
-        var row = $(this).closest('tr');
-        var nom = row.find('td:eq(1)').text();
-        var description = row.find('td:eq(2)').text();
-        var editForm = `
-            <form method="POST" action="/specialites/${id}" class="edit-form">
-                @csrf
-                @method('PUT')
-                <input type="text" name="nom" class="form-control" value="${nom}">
-                <input type="text" name="description" class="form-control" value="${description}">
-                <button type="submit" class="btn btn-primary">Valider</button>
-            </form>
-        `;
-        row.find('td:eq(1)').html(editForm);
-    });
-
-    // Submit edit form
-    $(document).on('submit', '.edit-form', function(event) {
-        event.preventDefault();
-        var form = $(this);
-        $.ajax({
-            url: form.attr('action'),
-            type: 'PUT', // Changed from POST to PUT for update
-            data: form.serialize(),
-            success: function(response) {
-                // Reload the page to update the table
-                location.reload();
-            },
-            error: function(xhr, textStatus, errorThrown) {
-                // Handle error
-                console.error('Error updating structure:', errorThrown);
-            }
-        });
-    });
-});
 </script>

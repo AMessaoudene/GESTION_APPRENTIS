@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\apprentis;
+use App\Models\maitre_apprentis;
 use App\Models\structures;
 use Illuminate\Http\Request;
 use Validator;
@@ -47,9 +49,25 @@ class StructuresController extends Controller
         return new JsonResponse(['success' => true]);
     }
 
-    public function destroy($id)
-    {
+    public function destroy($id){
+        // Retrieve and update each apprenti associated with the structure
+        $apprentis = apprentis::where('structure_id', $id)->get();
+        foreach ($apprentis as $apprenti) {
+            $apprenti->structure_id = null;
+            $apprenti->save();
+        }
+
+        // Retrieve and update each maitre apprenti associated with the structure
+        $maitre = maitre_apprentis::where('structures_id', $id)->get();
+        foreach ($maitre as $maitre_apprenti) {
+            $maitre_apprenti->structures_id = null;
+            $maitre_apprenti->save();
+        }
+
+        // Destroy the structure
         structures::destroy($id);
+
         return redirect()->back();
     }
+
 }

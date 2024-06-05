@@ -60,10 +60,10 @@
                     <td>{{ $refsalariaire->salairereference }}</td>
                     <td>{{ $refsalariaire->status }}</td>
                     <td>
-                        <form action="{{ route('refsalariaires.destroy', $refsalariaire->id) }}" method="POST">
+                        <form id="deleteForm{{ $refsalariaire->id }}" action="{{ route('refsalariaires.destroy', $refsalariaire->id) }}" method="POST">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Supprimer</button>
+                            <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $refsalariaire->id }})">Delete</button>
                         </form>
                     </td>
                 </tr>
@@ -78,6 +78,12 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer cet specialité?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     $(document).ready(function() {
         $('#refs-table').DataTable();
 

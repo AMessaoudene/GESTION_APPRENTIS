@@ -42,6 +42,7 @@
                     </div>
                 </div>
                 @endif
+                <h1 class="text-center" style="margin-top:3%;">Liste des structures</h1>
                 <table id="structures-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
@@ -60,20 +61,20 @@
                             <td>{{ $structure->nom }}</td>
                             <td>{{ $structure->adressecourriel }}</td>
                             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
-                                <td>
-                                    <div class="d-flex justify-content-center align-items-center">
-                                        @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $structure->id))
-                                            <button class="btn btn-primary edit-btn mr-2" data-id="{{ $structure->id }}">Modifier</button>
-                                        @endif
-                                        @if (Auth::user()->role == 'DFP')
-                                        <form action="{{ route('structures.destroy', $structure->id) }}" method="POST" class="delete-form d-inline mr-2 mt-2 mb-2 p-2 text-center w-100 h-100 d-flex justify-content-center align-items-center flex-column p-2">                  
-                                            @csrf
-                                            @method('DELETE')           
-                                            <button type="submit" class="btn btn-danger delete-btn">Supprimer</button>
-                                        </form>
-                                        @endif
-                                    </div>
-                                </td>
+                            <td>
+                                <div>
+                                    @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $structure->id))
+                                        <button class="btn btn-primary edit-btn mr-2" data-id="{{ $structure->id }}">Modifier</button>
+                                    @endif
+                                    @if (Auth::user()->role == 'DFP')
+                                    <form id="deleteForm{{ $structure->id }}" action="{{ route('structures.destroy', $structure->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $structure->id }})">Supprimer</button>
+                                    </form>
+                                    @endif
+                                </div>
+                            </td>
                             @endif
                         </tr>
                         @endforeach
@@ -86,6 +87,12 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer cette structure?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
 $(document).ready(function() {
     $('#structures-table').DataTable();
 

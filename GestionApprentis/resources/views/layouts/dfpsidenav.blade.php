@@ -57,8 +57,8 @@
                         <div class="dropdown-menu" aria-labelledby="plansDropdown">
                             <a class="dropdown-item" href="{{ route('exercices.index') }}">Administratives</a>
                             <a class="dropdown-item" href="{{ route('parametres.index') }}">Legislatives</a>
-                            <a class="dropdown-item" href="{{ route('baremes.index') }}">Baremes</a>
                             <a class="dropdown-item" href="{{ route('refsalariaires.index') }}">Ref. Salariales</a>
+                            <a class="dropdown-item" href="{{ route('baremes.index') }}">Baremes</a>
                         </div>
                     </li>
                     <li class="nav-item mb-5">
