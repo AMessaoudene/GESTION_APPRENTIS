@@ -31,6 +31,7 @@ class ComptesController extends Controller
             'role' => ['required'],
             'structures_id' => ['required'],
         ]);
+        //user::where(['structures_id' , $request->structures_id],['role', $request->role],['status' , 'active'])->update(['status'=>'inactif']);
         $compte = new user();
         $compte->nom = $request->nom;
         $compte->prenom = $request->prenom;

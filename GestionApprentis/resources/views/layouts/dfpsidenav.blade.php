@@ -2,6 +2,11 @@
             <div class="sidebar-sticky mt-5">
                 <ul class="nav flex-column">
                     <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('dfp.dashboard') }}">
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
                         <a class="nav-link" href="{{ route('apprentis.consulter') }}">
                             Apprentis
                         </a>
@@ -17,19 +22,14 @@
                         </a>
                     </li>
                     <li class="nav-item mb-5">
-                        <a class="nav-link" href="{{ route('planbesoins.index') }}">
-                            Plans de besoins
+                        <a class="nav-link dropdown-toggle" href="#" id="EducationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Education
                         </a>
-                    </li>
-                    <li class="nav-item mb-5">
-                        <a class="nav-link" href="{{ route('diplomes.index') }}">
-                            Diplomes
-                        </a>
-                    </li>
-                    <li class="nav-item mb-5">
-                        <a class="nav-link" href="{{ route('specialites.index') }}">
-                            Specialités
-                        </a>
+                        <div class="dropdown-menu" aria-labelledby="EducationsDropdown">
+                            <a class="dropdown-item" href="{{ route('planbesoins.index') }}">Plan de besoins</a>
+                            <a class="dropdown-item" href="{{ route('diplomes.index') }}">Diplomes</a>
+                            <a class="dropdown-item" href="{{ route('specialites.index') }}">Specialités</a>
+                        </div>
                     </li>
                     <li class="nav-item mb-5">
                         <a class="nav-link dropdown-toggle" href="#" id="EvaluationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -7,6 +7,9 @@ use App\Models\maitre_apprentis;
 use App\Models\diplomes;
 use App\Models\parametres;
 use App\Models\planbesoins;
+use App\Models\specialites;
+use App\Models\structures;
+use App\Models\refsalariares;
 use Illuminate\Http\Request;
 use App\Models\baremes;
 use Session;
@@ -20,6 +23,9 @@ class DecisionsController extends Controller
         $plans = planbesoins::all();
         $parametres = parametres::all();
         $baremes = baremes::all();
+        $specialites = specialites::all();
+        $structures = structures::all();
+        $refs = refsalariares::all();
         $pv = Session::get('pv');
         $apprenti = Session::get('apprenti');
         $diplome1 = diplomes::where('id', $apprenti->diplome1_id)->first();
@@ -28,7 +34,7 @@ class DecisionsController extends Controller
         $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
         $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
         (!is_null($maitreapprenti1)) ? $maitreapprenti = $maitreapprenti1 : $maitreapprenti = $maitreapprenti2;
-        return view('decisions.index', compact('parametres','baremes','pv','apprenti','maitreapprenti','diplome','plans'));
+        return view('decisions.index', compact('refs','structures','specialites','parametres','baremes','pv','apprenti','maitreapprenti','diplome','plans'));
     }
 
     /**

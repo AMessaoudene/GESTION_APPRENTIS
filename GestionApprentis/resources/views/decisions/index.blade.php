@@ -11,7 +11,19 @@
                 <option value="">-- choisir --</option>
                 @foreach($plans as $plan)
                 @if($plan->status == 'accepté' && $plan->structure_id == $apprenti->structure_id && $plan->specialites_id == $apprenti->specialite_id)
-                    <option value="{{ $plan->id }}">{{ $plan->reference }} - {{ $plan->structure_id}} - {{$plan->specialites_id}}</option>
+                    <option value="{{ $plan->id }}">{{ $plan->reference }} - 
+                    @foreach ($structures as $structure)
+                    @if ($structure->id == $plan->structure_id)
+                        {{ $structure->nom }}
+                    @endif
+                    @endforeach
+                    -
+                    @foreach ($specialites as $specialite)
+                    @if ($plan->specialites_id == $specialite->id)
+                        {{ $specialite->nom }}
+                    @endif
+                    @endforeach
+                    </option>
                 @endif
                 @endforeach
             </select>
@@ -22,7 +34,7 @@
                 <option value="">-- choisir --</option>
                 @foreach($parametres as $parametre)
                     @if($parametre->status == 'actif')
-                        <option value="{{$parametre->id}}"> {{ $parametre->reference }}</option>
+                        <option value="{{$parametre->id}}"> {{ $parametre->reference }} - {{ $parametre->nomprenomdg }}</option>
                     @endif
                 @endforeach
             </select>
@@ -33,7 +45,13 @@
                 <option value="">-- choisir --</option>
                 @foreach($baremes as $bareme)
                     @if($bareme->statut == 'actif')
-                        <option value="{{$bareme->id}}" data-bareme="{{ json_encode($bareme) }}">{{ $bareme->refsalariaires_id }}</option>
+                        <option value="{{$bareme->id}}" data-bareme="{{ json_encode($bareme) }}">
+                        @foreach ($refs as $ref)
+                        @if ($ref->id == $bareme->refsalariaires_id)
+                            {{ $ref->version }} - SNMG : {{ $ref->snmg }} - Salaire réference : {{ $ref->salairereference }}
+                        @endif
+                        @endforeach
+                        </option>
                     @endif
                 @endforeach
             </select>
@@ -266,6 +284,26 @@
             }
             if (diplomeDuree >= 24) {
 
+                let debutPresalaireS3 = new Date(finPresalaireS2);
+                debutPresalaireS3.setDate(finPresalaireS2.getDate() + 1);
+                document.getElementById('datedebutpresalaireS3').value = debutPresalaireS3.toISOString().slice(0,10);
+                let finPresalaireS3 = new Date(debutPresalaireS3);
+                finPresalaireS3.setMonth(finPresalaireS3.getMonth() + 6);
+                finPresalaireS3.setDate(finPresalaireS3.getDate() - 1); // Subtract 1 day
+
+                document.getElementById('datefinpresalaireS3').value = finPresalaireS3.toISOString().slice(0,10);
+
+                let debutsalaireS3 = new Date(finsalaireS2);
+                debutsalaireS3.setDate(finsalaireS2.getDate() + 1);
+                document.getElementById('datedebutsalaireS3').value = debutsalaireS3.toISOString().slice(0,10);
+                let finsalaireS3 = new Date(debutsalaireS3);
+                finsalaireS3.setMonth(finsalaireS3.getMonth() + 6);
+                finsalaireS3.setDate(finsalaireS3.getDate() - 1); // Subtract 1 day
+                document.getElementById('datefinsalaireS3').value = finsalaireS3.toISOString().slice(0,10);
+
+                document.getElementById('S3_apprentis').style.display = 'block';
+                document.getElementById('S3_maitreapprentis').style.display = 'block';
+
                 let debutPresalaireS4 = new Date(finPresalaireS3);
                 debutPresalaireS4.setDate(finPresalaireS3.getDate() + 1);
                 document.getElementById('datedebutpresalaireS4').value = debutPresalaireS4.toISOString().slice(0,10);
@@ -286,6 +324,45 @@
                 document.getElementById('S4_maitreapprentis').style.display = 'block';
             }
             if (diplomeDuree >= 30) {
+
+                let debutPresalaireS3 = new Date(finPresalaireS2);
+                debutPresalaireS3.setDate(finPresalaireS2.getDate() + 1);
+                document.getElementById('datedebutpresalaireS3').value = debutPresalaireS3.toISOString().slice(0,10);
+                let finPresalaireS3 = new Date(debutPresalaireS3);
+                finPresalaireS3.setMonth(finPresalaireS3.getMonth() + 6);
+                finPresalaireS3.setDate(finPresalaireS3.getDate() - 1); // Subtract 1 day
+
+                document.getElementById('datefinpresalaireS3').value = finPresalaireS3.toISOString().slice(0,10);
+
+                let debutsalaireS3 = new Date(finsalaireS2);
+                debutsalaireS3.setDate(finsalaireS2.getDate() + 1);
+                document.getElementById('datedebutsalaireS3').value = debutsalaireS3.toISOString().slice(0,10);
+                let finsalaireS3 = new Date(debutsalaireS3);
+                finsalaireS3.setMonth(finsalaireS3.getMonth() + 6);
+                finsalaireS3.setDate(finsalaireS3.getDate() - 1); // Subtract 1 day
+                document.getElementById('datefinsalaireS3').value = finsalaireS3.toISOString().slice(0,10);
+
+                document.getElementById('S3_apprentis').style.display = 'block';
+                document.getElementById('S3_maitreapprentis').style.display = 'block';
+
+                let debutPresalaireS4 = new Date(finPresalaireS3);
+                debutPresalaireS4.setDate(finPresalaireS3.getDate() + 1);
+                document.getElementById('datedebutpresalaireS4').value = debutPresalaireS4.toISOString().slice(0,10);
+                let finPresalaireS4 = new Date(debutPresalaireS4);
+                finPresalaireS4.setMonth(finPresalaireS4.getMonth() + 6);
+                finPresalaireS4.setDate(finPresalaireS4.getDate() - 1); // Subtract 1 day
+                document.getElementById('datefinpresalaireS4').value = finPresalaireS4.toISOString().slice(0,10);
+
+                let debutsalaireS4 = new Date(finsalaireS3);
+                debutsalaireS4.setDate(finsalaireS3.getDate() + 1);
+                document.getElementById('datedebutsalaireS4').value = debutsalaireS4.toISOString().slice(0,10);
+                let finsalaireS4 = new Date(debutsalaireS4);
+                finsalaireS4.setMonth(finsalaireS4.getMonth() + 6);
+                finsalaireS4.setDate(finsalaireS4.getDate() - 1); // Subtract 1 day
+                document.getElementById('datefinsalaireS4').value = finsalaireS4.toISOString().slice(0,10);
+
+                document.getElementById('S4_apprentis').style.display = 'block';
+                document.getElementById('S4_maitreapprentis').style.display = 'block';
 
                 let debutPresalaireS5 = new Date(finPresalaireS4);
                 debutPresalaireS5.setDate(finPresalaireS4.getDate() + 1);

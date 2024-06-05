@@ -72,7 +72,7 @@
                                         @foreach ($pvs as $pv)
                                             @if ($apprenti->id == $pv->apprenti_id)
                                                 @foreach ($decisionapprentis as $decision)
-                                                    @if ($pv->id == $decision->pv_id)
+                                                    @if ($pv->id == $decision->pv_id && $apprenti->status == "actif")
                                                         @php
                                                             // Convert decision dates to timestamps
                                                             $decisionDates = [

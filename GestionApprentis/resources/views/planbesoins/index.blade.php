@@ -37,19 +37,33 @@
                                             </select>
                                         </div>
                                     </div>
+                                    @if (Auth::user()->role == 'DFP')
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="structure_id" class="form-label">Structure</label>
                                             <select name="structure_id" id="structure_id" class="form-select" required>
                                                 <option value="" disabled selected>-- Choisir --</option>
                                                 @foreach($structures as $structure)
-                                                    @if($user->structures_id == $structure->id)
-                                                        <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
-                                                    @endif
+                                                    <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                     </div>
+                                    @elseif(Auth::user()->role == 'SA')
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label for="structure_id" class="form-label">Structure</label>
+                                            <select name="structure_id" id="structure_id" class="form-select" required>
+                                                <option value="" disabled selected>-- Choisir --</option>
+                                                @foreach($structures as $structure)
+                                                @if ($user->structures_id == $structure->id)
+                                                <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                                                @endif
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
+                                    @endif
                                     <div class="col-md-3">
                                         <div class="form-group">
                                             <label for="reference" class="form-label">Référence</label>
@@ -115,6 +129,7 @@
                         <th>Nombre d'apprentis</th>
                         <th>Nombre d'effectif</th>
                         <th>Nombre d'apprentis max</th>
+                        <th>Nombre d'apprentis actuel</th>
                         <th>Description</th>
                         <th>Status</th>
                         @if (Auth::user()->role == "DFP" || Auth::user()->role == "SA")
@@ -153,6 +168,7 @@
                         <td>{{ $planbesoin->nombreapprentis }}</td>
                         <td>{{ $planbesoin->nombereffectif }}</td>
                         <td>{{ $planbesoin->nombreapprentismax }}</td>
+                        <td>{{ $planbesoin->nombreapprentisactuel }}</td>
                         <td>{{ Str::limit($planbesoin->description, 50) }}</td>
                         <td>{{ $planbesoin->status }}</td>
                         @if (Auth::user()->role == "DFP")
@@ -176,6 +192,7 @@
                         <td>{{ $planbesoin->nombreapprentis }}</td>
                         <td>{{ $planbesoin->nombereffectif }}</td>
                         <td>{{ $planbesoin->nombreapprentismax }}</td>
+                        <td>{{ $planbesoin->nombreapprentisactuel }}</td>
                         <td>{{ Str::limit($planbesoin->description, 50) }}</td>
                         <td>{{ $planbesoin->status }}</td>
                         <td>

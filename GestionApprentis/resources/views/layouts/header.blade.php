@@ -64,7 +64,7 @@
                         <li class="nav-item">
                             <span class="nav-link">
                                 Bienvenue, 
-                                <a href="{{ url('/profile') }}" class="nav-link">{{ Auth::user()->nom }}</a>
+                                <!--<a href="{{ url('/profile') }}" class="nav-link">-->{{ Auth::user()->nom }}<!--</a>-->
                             </span>
                         </li>
                         @else

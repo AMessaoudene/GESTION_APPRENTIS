@@ -290,6 +290,7 @@ class ApprentisController extends Controller
             $decision = decisionapprentis::where('pv_id',$pv->id)->first();
             $plan = planbesoins::where('id',$decision->planbesoins_id)->first();
             $plan->nombreapprentisactuel++;
+            $plan->save();
             $apprenti->status = 'actif';
         }
         else{
