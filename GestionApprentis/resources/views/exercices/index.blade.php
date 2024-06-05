@@ -21,7 +21,7 @@
                 <div class="row justify-content-center">
                     <div class="col-lg-8">
                         <div class="card">
-                            <div class="card-header">AJOUTER UN EXERCICE</div>
+                            <div class="card-header text-center">AJOUTER UN EXERCICE</div>
                             <div class="card-body">
                                 <form id="add-form" action="{{ route('exercices.store') }}" method="POST">
                                     @csrf
