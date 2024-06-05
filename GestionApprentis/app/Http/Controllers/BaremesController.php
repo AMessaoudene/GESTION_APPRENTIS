@@ -14,10 +14,10 @@ class BaremesController extends Controller
      */
     public function index(){
         $baremes = baremes::all();
-        $refsalaries = refsalariares::all(); // corrected variable name
+        $refsalaries = refsalariares::all();
         $diplomes = diplomes::all();
-        if(auth::user()->role === 'DRH' || auth::user()->role === 'DFP'){
-            return view('baremes.index', compact('baremes', 'refsalaries', 'diplomes')); // corrected variable name
+        if(auth::user()){
+            return view('baremes.index', compact('baremes', 'refsalaries', 'diplomes'));
         }
         else{
             return redirect()->back()->with('error', 'You do not have the required role to access this page.');
@@ -29,7 +29,7 @@ class BaremesController extends Controller
      */
     public function store(Request $request)
     {
-        baremes::where('statut','actif')->update(['statut'=>'inactif']);
+        baremes::where('statut', 'actif')->where('diplome_id', $request->diplome_id)->update(['statut' => 'inactif']);
         $referencesalariaires = refsalariares::find($request->refsalariaires_id);
         $baremes = new baremes();
         $baremes->refsalariaires_id = $request->refsalariaires_id;
@@ -98,6 +98,7 @@ class BaremesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        baremes::destroy($id);
+        return redirect()->back();
     }
 }

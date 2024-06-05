@@ -143,6 +143,7 @@ Route::middleware('auth')->group(function(){
 Route::get('/baremes', [BaremesController::class, 'index'])->name('baremes.index');
 Route::post('/baremes', [BaremesController::class, 'store'])->name('baremes.store');
 Route::put('/baremes/{id}', [BaremesController::class, 'update'])->name('baremes.update');
+Route::delete('/baremes/{id}', [BaremesController::class, 'destroy'])->name('baremes.destroy');
 });
 //Departs
 Route::middleware('auth')->group(function(){

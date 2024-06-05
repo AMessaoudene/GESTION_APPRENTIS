@@ -12,9 +12,9 @@
         @elseif(Auth::user()->role == 'EvaluateurGradé')
         @include('layouts.egsidenav')
         @endif
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH')         
-                <div class="container">
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">         
+            <div class="container">
+                @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH')
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card">
@@ -85,7 +85,7 @@
                                             <!-- Apprentis -->
                                             <div id="apprentis" class="form-group">
                                                 <label>Apprentis</label>
-                                                <!-- Repeat the following structure for each section -->
+                                                <!-- Repeat the following bareme for each section -->
                                                 <div id="AS1" class="form-row">S1
                                                     <div class="col">
                                                         <input type="text" class="form-control" pattern="[0-9]+" name="tauxs1_apprentis" placeholder="S1 Taux" required>
@@ -151,7 +151,7 @@
                                             <!-- Maitre Apprentis -->
                                             <div id="maitreapprentis" class="form-group">
                                                 <label>Maitre Apprentis</label>
-                                                <!-- Repeat the following structure for each section -->
+                                                <!-- Repeat the following bareme for each section -->
                                                 <div id="MS1" class="form-row">S1
                                                     <div class="col">
                                                         <input type="text" class="form-control" pattern="[0-9]+" name="tauxs1_maitreapprentis" placeholder="S1 Taux" required>
@@ -213,21 +213,208 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                        <div class="form-group text-center mt-3 mb-3">
+                                            <button type="submit" class="btn btn-primary">Ajouter</button>
+                                        </div>
                                     </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            @endif
+                 @endif
+                 <h1 class="text-center" style="margin-top:3%;">Liste des baremes</h1>
+                <table id="baremes-table" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Version</th>
+                            <th scope="col">SNMG</th>
+                            <th scope="col">Salaire Reference</th>
+                            <th scope="col">Diplome</th>
+                            <th scope="col">Taux S1 Apprentis</th>
+                            <th scope="col">Taux S2 Apprentis</th>
+                            <th scope="col">Taux S3 Apprentis</th>
+                            <th scope="col">Taux S4 Apprentis</th>
+                            <th scope="col">Taux S5 Apprentis</th>
+                            <th scope="col">Taux S1 Maitre Apprentis</th>
+                            <th scope="col">Taux S2 Maitre Apprentis</th>
+                            <th scope="col">Taux S3 Maitre Apprentis</th>
+                            <th scope="col">Taux S4 Maitre Apprentis</th>
+                            <th scope="col">Taux S5 Maitre Apprentis</th>
+                            <th scope="col">Status</th>
+                            @if (Auth::user()->role == 'DFP')
+                                <th scope="col">Actions</th>
+                            @endif
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($baremes as $bareme)
+                        <tr>
+                            <td>{{ $bareme->id }}</td>
+                            <td>
+                            @foreach ($refsalaries as $ref)
+                                @if ($bareme->refsalariaires_id == $ref->id)
+                                    {{ $ref->version }}
+                                @endif
+                            @endforeach
+                            </td>
+                            <td>
+                            @foreach ($refsalaries as $ref)
+                                @if ($bareme->refsalariaires_id == $ref->id)
+                                    {{ $ref->snmg }} DZD
+                                @endif
+                            @endforeach
+                            </td>
+                            <td>
+                            @foreach ($refsalaries as $ref)
+                                @if ($bareme->refsalariaires_id == $ref->id)
+                                    {{ $ref->salairereference }} DZD
+                                @endif
+                            @endforeach
+                            </td>
+                            <td>
+                            @foreach ($diplomes as $diplome)
+                                @if ($bareme->diplome_id == $diplome->id)
+                                    {{ $diplome->nom }}
+                                @endif
+                            @endforeach
+                            </td>
+                            <td>{{ $bareme->tauxs1_apprentis }} %</td>
+                            <td>{{ $bareme->tauxs2_apprentis }} %</td>
+                            <td>
+                            @if ($bareme->tauxs3_apprentis)
+                            {{ $bareme->tauxs3_apprentis }} %
+                            @else
+                            /
+                            @endif
+                            </td>
+                            <td>
+                            @if ($bareme->tauxs4_apprentis)
+                            {{ $bareme->tauxs4_apprentis }} %
+                            @else
+                            /
+                            @endif
+                            </td>
+                            <td>
+                            @if ($bareme->tauxs5_apprentis)
+                            {{ $bareme->tauxs5_apprentis }} %
+                            @else
+                            /
+                            @endif
+                            </td>
+                            <td>{{ $bareme->tauxs1_maitreapprentis }} %</td>
+                            <td>{{ $bareme->tauxs2_maitreapprentis }} %</td>
+                            <td>
+                            @if ($bareme->tauxs3_maitreapprentis)
+                            {{ $bareme->tauxs3_maitreapprentis }} %
+                            @else
+                            /
+                            @endif
+                            </td>
+                            <td>
+                            @if ($bareme->tauxs4_maitreapprentis)
+                            {{ $bareme->tauxs4_maitreapprentis }} %
+                            @else
+                            /
+                            @endif
+                            </td>
+                            <td>
+                            @if ($bareme->tauxs5_maitreapprentis)
+                            {{ $bareme->tauxs5_maitreapprentis }} %
+                            @else
+                            /
+                            @endif
+                            </td>
+                            <td>{{ $bareme->statut }}</td>
+                            @if (Auth::user()->role == 'DFP')
+                            <td>
+                                <div>
+                                    <button class="btn btn-primary edit-btn mr-2" data-id="{{ $bareme->id }}">Modifier</button>
+                                    <form id="deleteForm{{ $bareme->id }}" action="{{ route('baremes.destroy', $bareme->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $bareme->id }})">Supprimer</button>
+                                    </form>
+                                </div>
+                            </td>
+                            @endif
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
         </main>
     </div>
 </div>
 @endsection
-
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    $(document).ready(function() {
+        $('#baremes-table').DataTable();
+
+        // AJAX for adding a new bareme
+        $('#add-form').submit(function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(),
+                success: function(response) {
+                    // Reload the page to update the table
+                    location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error adding bareme:', errorThrown);
+                }
+            });
+        });
+
+        // AJAX for editing a bareme
+        $(document).on('click', '.edit-btn', function() {
+            var id = $(this).data('id');
+            var row = $(this).closest('tr');
+            var nom = row.find('td:eq(1)').text();
+            var adressecourriel = row.find('td:eq(2)').text();
+            var editForm = `
+                <form method="POST" action="/baremes/${id}" class="edit-form">
+                    @csrf
+                    @method('PUT')
+                    <input type="text" name="nom" class="form-control" value="${nom}">
+                    <input type="text" name="adressecourriel" class="form-control" value="${adressecourriel}">
+                    <button type="submit" class="btn btn-primary">Valider</button>
+                </form>
+            `;
+            row.find('td:eq(1)').html(editForm);
+        });
+
+        // Submit edit form
+        $(document).on('submit', '.edit-form', function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'PUT', // Changed from POST to PUT for update
+                data: form.serialize(),
+                success: function(response) {
+                    // Reload the page to update the table
+                    location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error updating bareme:', errorThrown);
+                }
+            });
+        });
+    });
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer ce bareme?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     document.addEventListener('DOMContentLoaded', function() {
         // Function to calculate and display amounts for apprentices
         function calculateApprentisAmounts() {

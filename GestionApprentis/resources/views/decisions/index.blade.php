@@ -44,7 +44,7 @@
             <select class="form-control" name="bareme_id" id="bareme_id" onchange="showBaremeDetails()">
                 <option value="">-- choisir --</option>
                 @foreach($baremes as $bareme)
-                    @if($bareme->statut == 'actif')
+                    @if($bareme->statut == 'actif' && $bareme->diplome_id == $diplome->id)
                         <option value="{{$bareme->id}}" data-bareme="{{ json_encode($bareme) }}">
                         @foreach ($refs as $ref)
                         @if ($ref->id == $bareme->refsalariaires_id)
