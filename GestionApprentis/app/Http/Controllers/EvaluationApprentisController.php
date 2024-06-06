@@ -99,4 +99,8 @@ class EvaluationApprentisController extends Controller
             return redirect()->back()->with('success', 'Évaluation ajoutée avec succès');
         }
     }
+    public function destroy($id){
+        evaluation_apprentis::destroy($id);
+        return redirect()->back()->with('success');
+    }
 }

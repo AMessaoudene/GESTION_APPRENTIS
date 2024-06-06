@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\baremes;
+use App\Models\decisionapprentis;
+use App\Models\decisionmaitreapprentis;
 use App\Models\refsalariares;
 use App\Models\diplomes;
 use Illuminate\Http\Request;
@@ -98,6 +100,8 @@ class BaremesController extends Controller
      */
     public function destroy(string $id)
     {
+        decisionapprentis::where('bareme_id',$id)->update(['bareme_id' => null]);
+        decisionmaitreapprentis::where('bareme_id',$id)->update(['bareme_id' => null]);
         baremes::destroy($id);
         return redirect()->back();
     }

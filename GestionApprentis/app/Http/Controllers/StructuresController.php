@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\apprentis;
 use App\Models\maitre_apprentis;
+use App\Models\planbesoins;
 use App\Models\structures;
 use Illuminate\Http\Request;
 use Validator;
@@ -62,6 +63,9 @@ class StructuresController extends Controller
             $maitre_apprenti->structures_id = null;
             $maitre_apprenti->save();
         }
+
+        planbesoins::where('structure_id',$id)->update(['structure_id' => null]);
+        User::where('structures_id',$id)->update(['structures_id' => null]);
 
         // Destroy the structure
         structures::destroy($id);

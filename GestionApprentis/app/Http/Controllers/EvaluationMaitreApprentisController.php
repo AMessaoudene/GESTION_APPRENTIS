@@ -40,4 +40,20 @@ class EvaluationMaitreApprentisController extends Controller
         //
     }
 
+    public function edit($id)
+    {
+        //
+    }
+
+    public function update(Request $request, $id)
+    {
+        //
+    }
+
+    public function destroy($id)
+    {
+        evaluation_maitre_apprentis::destroy($id);
+        return redirect()->back()->with('success');
+    }
+
 }

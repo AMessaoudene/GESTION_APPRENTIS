@@ -5,6 +5,7 @@ use App\Events\NewApprenticeAdded;
 use App\Models\assiduites;
 use App\Models\decisionapprentis;
 use App\Models\decisionmaitreapprentis;
+use App\Models\departs;
 use App\Models\evaluation_apprentis;
 use App\Models\planbesoins;
 use App\Models\supervisions;
@@ -238,7 +239,8 @@ class ApprentisController extends Controller
         pv_installations::where('apprenti_id', $apprenti->id)->delete();
         assiduites::where('apprenti_id', $apprenti->id)->delete();
         dossiers::where('apprentis_id', $apprenti->id)->delete();
-        evaluation_apprentis::where('apprenti_id', $apprenti->id)->delete();    
+        evaluation_apprentis::where('apprenti_id', $apprenti->id)->delete();
+        departs::where('apprenti_id',$apprenti->id)->delete();
     
         // Initializing $maitreapprenti as null
         $maitreapprenti = null;
@@ -247,18 +249,17 @@ class ApprentisController extends Controller
         if ($maitreapprenti1) {
             $maitreapprenti1->apprenti1_id = null;
             $maitreapprenti = $maitreapprenti1;
-            $maitreapprenti1->save();
         } else {
             $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
             if ($maitreapprenti2) {
                 $maitreapprenti2->apprenti2_id = null;
                 $maitreapprenti = $maitreapprenti2;
-                $maitreapprenti2->save();
             }
         }
-    
+        $maitreapprenti->save();
+
         // Deleting related supervisions records
-    supervisions::where('apprenti_id', $apprenti->id)->delete();
+        supervisions::where('apprenti_id', $apprenti->id)->delete();
     
         $apprenti->delete();
     

@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\diplomes;
 use App\Models\maitre_apprentis;
+use App\Models\pv_installations;
 use App\Models\specialites;
 use App\Models\structures;
+use App\Models\supervisions;
 use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -92,5 +94,11 @@ class MaitreApprentisController extends Controller
         $maitre_apprentis->statut = $request->statut;
         $maitre_apprentis->save();
         return redirect()->back()->with('success', 'Maitre d\'apprentissage modifie avec succes');
+    }
+    public function delete($id){
+        supervisions::where('maitreapprenti_id',$id)->delete();
+        pv_installations::where('maitreapprenti_id',$id)->update(['maitreapprenti_id' => null]);
+        maitre_apprentis::destroy($id);
+        return redirect()->back();
     }
 }

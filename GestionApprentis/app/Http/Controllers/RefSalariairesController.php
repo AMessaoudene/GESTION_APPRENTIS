@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\baremes;
+use App\Models\decisionapprentis;
 use App\Models\refsalariares;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

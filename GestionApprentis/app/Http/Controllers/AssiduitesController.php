@@ -84,7 +84,7 @@ class AssiduitesController extends Controller{
     public function destroy($id)
     {
         assiduites::destroy($id);
-        return redirect()->back(); // Return success response
+        return redirect()->back();
     }
     public function pdfdownload(Request $request,$file){
         return response()->download('assets/preuves/'.$file);

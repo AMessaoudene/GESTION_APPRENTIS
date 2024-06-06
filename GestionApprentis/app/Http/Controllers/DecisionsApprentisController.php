@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\decisionapprentis;
+use App\Models\Avenants;
 use Illuminate\Http\Request;
 
 class DecisionsApprentisController extends Controller
@@ -62,6 +63,8 @@ class DecisionsApprentisController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Avenants::where('decisionapprenti_id',$id)->update(['decisionapprenti_id' => null]);
+        decisionapprentis::destroy($id);
+        return redirect()->back();
     }
 }

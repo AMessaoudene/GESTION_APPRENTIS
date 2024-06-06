@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\apprentis;
+use App\Models\baremes;
 use Illuminate\Http\Request;
 use App\Models\Diplomes;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +50,9 @@ class DiplomesController extends Controller
 
     public function destroy($id)
     {
+        baremes::where('diplome_id',$id)->update(['diplome_id' => null]);
+        apprentis::where('diplome1_id',$id)->update(['diplome1_id' => null]);
+        apprentis::where('diplome2_id',$id)->update(['diplome2_id' => null]);
         Diplomes::destroy($id);
         return redirect()->back()->with('success');
     }
