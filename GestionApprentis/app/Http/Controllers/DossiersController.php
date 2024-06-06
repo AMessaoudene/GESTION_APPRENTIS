@@ -37,17 +37,17 @@ class DossiersController extends Controller
         $apprenti = Session::get('apprenti');
         $rules = [
             'contratapprenti' => 'required',
-            'decisionapprenti' => 'required',
+            /*'decisionapprenti' => 'required',
             'decisionmaitreapprenti' => 'required',
-            'pvinstallation' => 'required',
+            'pvinstallation' => 'required',*/
             'copiecheque' => 'required',
             'extraitnaissance' => 'required',
         ];
         $message = [
             'contratapprenti.required' => 'The contratapprenti field is required.',
-            'decisionapprenti.required' => 'The decisionapprenti field is required.',
+            /*'decisionapprenti.required' => 'The decisionapprenti field is required.',
             'decisionmaitreapprenti.required' => 'The decisionmaitreapprenti field is required.',
-            'pvinstallation.required' => 'The pvinstallation field is required.',
+            'pvinstallation.required' => 'The pvinstallation field is required.',*/
             'copiecheque.required' => 'The copiecheque field is required.',
             'extraitnaissance.required' => 'The extraitnaissance field is required.',
         ];
@@ -59,35 +59,46 @@ class DossiersController extends Controller
             $dossiers = new dossiers();
             $dossiers->apprentis_id = $apprenti->id;
 
-            $contratapprenti = $request->file('contratapprenti');
-            $contratapprentinom = 'Contrat-Apprenti-'.$apprenti->id.'-'.time().'.'.$contratapprenti->getClientOriginalExtension();
-            $contratapprenti->move('assets/dossiers',$contratapprentinom);
-            $dossiers->contratapprenti = $contratapprentinom;
+            if($request->hasFile('contratapprenti') && $request->file('contratapprenti')){
+                $contratapprenti = $request->file('contratapprenti');
+                $contratapprentinom = 'Contrat-Apprenti-'.$apprenti->id.'-'.time().'.'.$contratapprenti->getClientOriginalExtension();
+                $contratapprenti->move('assets/dossiers',$contratapprentinom);
+                $dossiers->contratapprenti = $contratapprentinom;
+            }
+            if($request->hasFile('decisionapprenti') && $request->file('decisionapprenti')){
+                $decisionapprenti = $request->file('decisionapprenti');
+                $decisionapprentinom = 'DecisionA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionapprenti->getClientOriginalExtension();
+                $decisionapprenti->move('assets/dossiers',$decisionapprentinom);
+                $dossiers->decisionapprenti = $decisionapprentinom;
+            }
 
-            $decisionapprenti = $request->file('decisionapprenti');
-            $decisionapprentinom = 'DecisionA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionapprenti->getClientOriginalExtension();
-            $decisionapprenti->move('assets/dossiers',$decisionapprentinom);
-            $dossiers->decisionapprenti = $decisionapprentinom;
+            if($request->hasFile('decisionmaitreapprenti') && $request->file('decisionmaitreapprenti')){
+                $decisionmaitreapprenti = $request->file('decisionmaitreapprenti');
+                $decisionmaitreapprentinom = 'DecisionMA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
+                $decisionmaitreapprenti->move('assets/dossiers',$decisionmaitreapprentinom);
+                $dossiers->decisionmaitreapprenti = $decisionmaitreapprentinom;
+            }
 
-            $decisionmaitreapprenti = $request->file('decisionmaitreapprenti');
-            $decisionmaitreapprentinom = 'DecisionMA-Apprenti-'.$apprenti->id.'-'.time().'.'.$decisionmaitreapprenti->getClientOriginalExtension();
-            $decisionmaitreapprenti->move('assets/dossiers',$decisionmaitreapprentinom);
-            $dossiers->decisionmaitreapprenti = $decisionmaitreapprentinom;
+            if($request->hasFile('pvinstallation') && $request->file('pvinstallation')){
+                $pvinstallation = $request->file('pvinstallation');
+                $pvinstallationnom = 'PV-Apprenti-'.$apprenti->id.'-'.time().'.'.$pvinstallation->getClientOriginalExtension();
+                $pvinstallation->move('assets/dossiers',$pvinstallationnom);
+                $dossiers->pvinstallation = $pvinstallationnom;
+            }
 
-            $pvinstallation = $request->file('pvinstallation');
-            $pvinstallationnom = 'PV-Apprenti-'.$apprenti->id.'-'.time().'.'.$pvinstallation->getClientOriginalExtension();
-            $pvinstallation->move('assets/dossiers',$pvinstallationnom);
-            $dossiers->pvinstallation = $pvinstallationnom;
+            if($request->hasFile('copiecheque') && $request->file('copiecheque')){
+                $copiecheque = $request->file('copiecheque');
+                $copiechequenom = 'CopieCheque-Apprenti-'.$apprenti->id.'-'.time().'.'.$copiecheque->getClientOriginalExtension();
+                $copiecheque->move('assets/dossiers',$copiechequenom);
+                $dossiers->copiecheque = $copiechequenom;
+            }
 
-            $copiecheque = $request->file('copiecheque');
-            $copiechequenom = 'CopieCheque-Apprenti-'.$apprenti->id.'-'.time().'.'.$copiecheque->getClientOriginalExtension();
-            $copiecheque->move('assets/dossiers',$copiechequenom);
-            $dossiers->copiecheque = $copiechequenom;
-
-            $extraitnaissance = $request->file('extraitnaissance');
-            $extraitnaissancenom = 'ExtraitNaissance-Apprenti-'.$apprenti->id.'-'.time().'.'.$extraitnaissance->getClientOriginalExtension();
-            $extraitnaissance->move('assets/dossiers',$extraitnaissancenom);
-            $dossiers->extraitnaissance = $extraitnaissancenom;
+            if($request->hasFile('extraitnaissance') && $request->file('extraitnaissance')){
+                $extraitnaissance = $request->file('extraitnaissance');
+                $extraitnaissancenom = 'ExtraitNaissance-Apprenti-'.$apprenti->id.'-'.time().'.'.$extraitnaissance->getClientOriginalExtension();
+                $extraitnaissance->move('assets/dossiers',$extraitnaissancenom);
+                $dossiers->extraitnaissance = $extraitnaissancenom;
+            }
 
             if($request->hasFile('autorisationparentele') && $request->file('autorisationparentele')){
                 $autorisationparentele = $request->file('autorisationparentele');

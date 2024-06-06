@@ -77,6 +77,7 @@
                 <h2>PV</h2>
                 @foreach($pvs as $pv)
                     @if($pv->apprenti_id == $apprenti->id)
+                        <input type="hidden" name="pv_id" value="{{ $pv->id }}">
                         <ul class="list-group">
                             <li class="list-group-item">ID <input type="text" value="{{ $pv->id }}" readonly disabled></li>
                             <li class="list-group-item">Référence <input type="text" name="reference" value="{{ $pv->reference }}" placeholder="{{ $pv->reference }}"></li>
@@ -192,25 +193,25 @@
                             @endif
                             <label for="">PV</label>
                             @if($dossier->pvinstallation)
-                            <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->pvinstallation) }}">PV</a></li>
+                                <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->pvinstallation) }}">PV</a></li>
                             @else
                                 <input type="file" accept=".pdf" name="pvinstallation" id="" required>
                             @endif
                             <label for="">Extrait de naissance</label>
                             @if($dossier->extraitnaissance)
-                            <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->extraitnaissance) }}">Extrait de naissance</a></li>
+                                <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->extraitnaissance) }}">Extrait de naissance</a></li>
                             @else
                                 <input type="file" accept=".pdf" name="extraitnaissance" id="" required>
                             @endif
                             <label for="">Decision d'apprenti</label>
                             @if($dossier->decisionapprenti)
-                            <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></li>
+                                <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></li>
                             @else
                                 <input type="file" accept=".pdf" name="decisionapprenti" id="" required>
                             @endif
                             <label for="">Decision Maitre d'apprentis</label>
                             @if($dossier->decisionmaitreapprenti)
-                            <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></li>
+                                <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></li>
                             @else
                                 <input type="file" accept=".pdf" name="decisionmaitreapprenti" id="" required>
                             @endif

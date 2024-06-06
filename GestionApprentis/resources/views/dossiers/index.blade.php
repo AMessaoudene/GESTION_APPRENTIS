@@ -24,7 +24,7 @@
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="decisionapprenti">Decision d'apprenti</label>
-                                    <input type="file" class="form-control" id="decisionapprenti" name="decisionapprenti" accept=".pdf" required>
+                                    <input type="file" class="form-control" id="decisionapprenti" name="decisionapprenti" accept=".pdf">
                                     <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                                 </div>
                             </div>
@@ -32,12 +32,12 @@
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="decisionmaitreapprenti">Decision Maitre d'apprentis</label>
-                                    <input type="file" class="form-control" id="decisionmaitreapprenti" name="decisionmaitreapprenti" accept=".pdf" required>
+                                    <input type="file" class="form-control" id="decisionmaitreapprenti" name="decisionmaitreapprenti" accept=".pdf">
                                     <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="pvinstallation">PV d'Installation</label>
-                                    <input type="file" class="form-control" id="pvinstallation" name="pvinstallation" accept=".pdf" required>
+                                    <input type="file" class="form-control" id="pvinstallation" name="pvinstallation" accept=".pdf">
                                     <div class="invalid-feedback">Veuillez sélectionner un fichier.</div>
                                 </div>
                             </div>
