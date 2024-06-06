@@ -259,7 +259,10 @@ class ApprentisController extends Controller
                 $maitreapprenti = $maitreapprenti2;
             }
         }
+
+        if ($maitreapprenti) {
         $maitreapprenti->save();
+        }
 
         // Deleting related supervisions records
         supervisions::where('apprenti_id', $apprenti->id)->delete();

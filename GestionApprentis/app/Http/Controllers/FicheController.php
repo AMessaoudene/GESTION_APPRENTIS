@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\pv_installations;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use App\Models\maitre_apprentis;
@@ -14,17 +15,10 @@ class FicheController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function pv()
+    public function pv(Request $request,$apprenti_id)
     {
-        $pv = Session::get('pv');
-        $apprenti = Session::get('apprenti');
-        $maitre_apprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
-        $maitre_apprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
-        (!is_null($maitre_apprenti1)) ? $maitre_apprentis = $maitre_apprenti1 : $maitre_apprentis = $maitre_apprenti2;
-        $maitre_apprenti = maitre_apprentis::findOrFail($maitre_apprentis->id);
-        //$diplomeMA = $maitre_apprenti->diplome_id;
-        //$diplome = diplomes::findOrFail($diplomeMA);
-        return view('pvinstallations.fiche',['pv' => $pv, 'apprenti' => $apprenti, 'maitre_apprenti' => $maitre_apprenti]);
+        $pv = pv_installations::where('apprenti_id',$apprenti_id);
+        return view('pvinstallations.fiche',compact('pv'));
     }
 
     /**

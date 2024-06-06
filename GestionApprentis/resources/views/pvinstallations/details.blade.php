@@ -6,10 +6,5 @@
         <td>Id</td>
         <td>{{$pvinstallations->id}}</td>
     </tr>
-    
-    <tr>
-        <td>Etat</td>
-        <td>{{$pvinstallations->etat}}</td>
-    </tr>
 </table>
 @endsection

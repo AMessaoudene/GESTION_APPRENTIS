@@ -2,172 +2,230 @@
 @section('title', 'Decisions')
 @section('content')
 <div class="container">
-    <h2 class="text-center">Decisions de l'apprenti et maitre d'apprenti</h2>
-    <form action="{{ route('decisions.store') }}" method="POST">
-        @csrf
-        <div class="form-group">
-            <label for="planbesoins_id">Plan Besoins:</label>
-            <select class="form-control" name="planbesoins_id" id="planbesoins_id">
-                <option value="">-- choisir --</option>
-                @foreach($plans as $plan)
-                @if($plan->status == 'accepté' && $plan->structure_id == $apprenti->structure_id && $plan->specialites_id == $apprenti->specialite_id)
-                    <option value="{{ $plan->id }}">{{ $plan->reference }} - 
-                    @foreach ($structures as $structure)
-                    @if ($structure->id == $plan->structure_id)
-                        {{ $structure->nom }}
-                    @endif
-                    @endforeach
-                    -
-                    @foreach ($specialites as $specialite)
-                    @if ($plan->specialites_id == $specialite->id)
-                        {{ $specialite->nom }}
-                    @endif
-                    @endforeach
-                    </option>
-                @endif
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="parametre_id">Parametre:</label>
-            <select class="form-control" name="parametre_id" id="parametre_id">
-                <option value="">-- choisir --</option>
-                @foreach($parametres as $parametre)
-                    @if($parametre->status == 'actif')
-                        <option value="{{$parametre->id}}"> {{ $parametre->reference }} - {{ $parametre->nomprenomdg }}</option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="bareme_id">Bareme:</label>
-            <select class="form-control" name="bareme_id" id="bareme_id" onchange="showBaremeDetails()">
-                <option value="">-- choisir --</option>
-                @foreach($baremes as $bareme)
-                    @if($bareme->statut == 'actif' && $bareme->diplome_id == $diplome->id)
-                        <option value="{{$bareme->id}}" data-bareme="{{ json_encode($bareme) }}">
-                        @foreach ($refs as $ref)
-                        @if ($ref->id == $bareme->refsalariaires_id)
-                            {{ $ref->version }} - SNMG : {{ $ref->snmg }} - Salaire réference : {{ $ref->salairereference }}
-                        @endif
-                        @endforeach
-                        </option>
-                    @endif
-                @endforeach
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="reference">Reference:</label>
-            <input type="text" class="form-control" id="reference" name="reference">
-        </div>
-        <div class="form-group">
-            <label for="datedecision">Date de Décision:</label>
-            <input type="date" class="form-control" id="datedecision" name="datedecision">
-        </div>
-        <hr>
-        <div class="form-group">
-            <label for="apprenti_info">Apprenti Information:</label>
-            <div>
-                <input type="text" class="form-control" value="{{ $apprenti->nom }}" readonly disabled>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2 class="text-center">Decisions de l'apprenti et maitre d'apprenti</h2>
+                    <form action="{{ route('decisions.store') }}" method="POST">
+                        @csrf
+                        <div class="form-group">
+                            <label for="planbesoins_id">Plan Besoins:</label>
+                            <select class="form-control" name="planbesoins_id" id="planbesoins_id">
+                                <option value="">-- choisir --</option>
+                                @foreach($plans as $plan)
+                                @if($plan->status == 'accepté' && $plan->structure_id == $apprenti->structure_id && $plan->specialites_id == $apprenti->specialite_id)
+                                    <option value="{{ $plan->id }}">{{ $plan->reference }} - 
+                                    @foreach ($structures as $structure)
+                                    @if ($structure->id == $plan->structure_id)
+                                        {{ $structure->nom }}
+                                    @endif
+                                    @endforeach
+                                    -
+                                    @foreach ($specialites as $specialite)
+                                    @if ($plan->specialites_id == $specialite->id)
+                                        {{ $specialite->nom }}
+                                    @endif
+                                    @endforeach
+                                    </option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="parametre_id">Parametre:</label>
+                            <select class="form-control" name="parametre_id" id="parametre_id">
+                                <option value="">-- choisir --</option>
+                                @foreach($parametres as $parametre)
+                                    @if($parametre->status == 'actif')
+                                        <option value="{{$parametre->id}}"> {{ $parametre->reference }} - {{ $parametre->nomprenomdg }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="bareme_id">Bareme:</label>
+                            <select class="form-control" name="bareme_id" id="bareme_id" onchange="showBaremeDetails()">
+                                <option value="">-- choisir --</option>
+                                @foreach($baremes as $bareme)
+                                    @if($bareme->statut == 'actif' && $bareme->diplome_id == $diplome->id)
+                                        <option value="{{$bareme->id}}" data-bareme="{{ json_encode($bareme) }}">
+                                        @foreach ($refs as $ref)
+                                        @if ($ref->id == $bareme->refsalariaires_id)
+                                            {{ $ref->version }} - SNMG : {{ $ref->snmg }} - Salaire réference : {{ $ref->salairereference }}
+                                        @endif
+                                        @endforeach
+                                        </option>
+                                    @endif
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="reference">Reference:</label>
+                            <input type="text" class="form-control" id="reference" name="reference">
+                        </div>
+                        <div class="form-group">
+                            <label for="datedecision">Date de Décision:</label>
+                            <input type="date" class="form-control" id="datedecision" name="datedecision">
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <label for="apprenti_info">Apprenti Information:</label>
+                            <div>
+                                <input type="text" class="form-control" value="{{ $apprenti->nom }}" readonly disabled>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="maitreapprenti_info">Maître Apprentis Information:</label>
+                            <div>
+                                <input type="text" class="form-control" value="{{ $maitreapprenti->nom }}" readonly disabled>
+                                <!-- Include other master apprentice details here -->
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="diplome_info">Diplome Information:</label>
+                            <div>
+                                <input type="text" class="form-control" value="{{ $diplome->id }} - {{ $diplome->duree }}" readonly disabled>
+                                <span></span>
+                                <input type="hidden" id="diplome_duree" value="{{ $diplome->duree }}">
+                                <!-- Include other diploma details here -->
+                            </div>
+                        </div>
+                        <div id="bareme_details" style="display: none;">
+                            <!-- Include the bareme details here -->
+                            <div>Apprentis
+                                <div>S1
+                                    <label for="">Taux S1 Apprentis</label>
+                                    <input type="text" name="" id="tauxs1_apprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S1 Apprentis</label>
+                                    <input type="text" name="" id="montantchiffres1_apprentis" readonly disabled>
+                                    <label for="">Montant Lettre S1 Apprentis</label>
+                                    <input type="text" name="" id="montantlettres1_apprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S1</label>
+                                    <input type="text" readonly name="datedebutpresalaireS1" id="datedebutpresalaireS1" value="{{ $apprenti->datedebut }}">
+                                    <label for="">Date fin presalaire S1</label>
+                                    <input type="text" readonly name="datefinpresalaireS1" id="datefinpresalaireS1">
+                                </div>
+                                <div>S2
+                                    <label for="">Taux S2 Apprentis</label>
+                                    <input type="text" name="" id="tauxs2_apprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S2 Apprentis</label>
+                                    <input type="text" name="" id="montantchiffres2_apprentis" readonly disabled>
+                                    <label for="">Montant Lettre S2 Apprentis</label>
+                                    <input type="text" name="" id="montantlettres2_apprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S2</label>
+                                    <input type="text" readonly name="datedebutpresalaireS2" id="datedebutpresalaireS2">
+                                    <label for="">Date fin presalaire S2</label>
+                                    <input type="text" readonly name="datefinpresalaireS2" id="datefinpresalaireS2">
+                                </div>
+                                <div id="S3_apprentis" style="display: none;">S3
+                                    <label for="">Taux S3 Apprentis</label>
+                                    <input type="text" name="" id="tauxs3_apprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S3 Apprentis</label>
+                                    <input type="text" name="" id="montantchiffres3_apprentis" readonly disabled>
+                                    <label for="">Montant Lettre S3 Apprentis</label>
+                                    <input type="text" name="" id="montantlettres3_apprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S3</label>
+                                    <input type="text" readonly name="datedebutpresalaireS3" id="datedebutpresalaireS3">
+                                    <label for="">Date fin presalaire S3</label>
+                                    <input type="text" readonly name="datefinpresalaireS3" id="datefinpresalaireS3">
+                                </div>
+                                <div id="S4_apprentis" style="display: none;">S4
+                                    <label for="">Taux S4 Apprentis</label>
+                                    <input type="text" name="" id="tauxs4_apprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S4 Apprentis</label>
+                                    <input type="text" name="" id="montantchiffres4_apprentis" readonly disabled>
+                                    <label for="">Montant Lettre S4 Apprentis</label>
+                                    <input type="text" name="" id="montantlettres4_apprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S4</label>
+                                    <input type="text" readonly name="datedebutpresalaireS4" id="datedebutpresalaireS4">
+                                    <label for="">Date fin presalaire S4</label>
+                                    <input type="text" readonly name="datefinpresalaireS4" id="datefinpresalaireS4">
+                                </div>
+                                <div id="S5_apprentis" style="display: none;">S5
+                                    <label for="">Taux S5 Apprentis</label>
+                                    <input type="text" name="" id="tauxs5_apprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S5 Apprentis</label>
+                                    <input type="text" name="" id="montantchiffres5_apprentis" readonly disabled>
+                                    <label for="">Montant Lettre S5 Apprentis</label>
+                                    <input type="text" name="" id="montantlettres5_apprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S5</label>
+                                    <input type="text" readonly name="datedebutpresalaireS5" id="datedebutpresalaireS5">
+                                    <label for="">Date fin presalaire S5</label>
+                                    <input type="text" readonly name="datefinpresalaireS5" id="datefinpresalaireS5">
+                                </div>
+                            </div>
+                            <div>Maitre d'apprenti
+                                <div>S1
+                                    <label for="">Taux S1 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="tauxs1_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S1 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantchiffres1_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Lettre S1 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantlettres1_maitreapprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S1</label>
+                                    <input type="text" readonly name="datedebutsalaireS1" id="datedebutsalaireS1">
+                                    <label for="">Date fin presalaire S1</label>
+                                    <input type="text" readonly name="datefinsalaireS1" id="datefinsalaireS1">
+                                </div>
+                                <div>S2
+                                    <label for="">Taux S2 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="tauxs2_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S2 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantchiffres2_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Lettre S2 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantlettres2_maitreapprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S2</label>
+                                    <input type="text" readonly name="datedebutsalaireS2" id="datedebutsalaireS2">
+                                    <label for="">Date fin presalaire S2</label>
+                                    <input type="text" readonly name="datefinsalaireS2" id="datefinsalaireS2">
+                                </div>
+                                <div id="S3_maitreapprentis" style="display: none;">S3
+                                    <label for="">Taux S3 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="tauxs3_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S3 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantchiffres3_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Lettre S3 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantlettres3_maitreapprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S3</label>
+                                    <input type="text" readonly name="datedebutsalaireS3" id="datedebutsalaireS3">
+                                    <label for="">Date fin presalaire S3</label>
+                                    <input type="text" readonly name="datefinsalaireS3" id="datefinsalaireS3">
+                                </div>
+                                <div id="S4_maitreapprentis" style="display: none;">S4
+                                    <label for="">Taux S4 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="tauxs4_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S4 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantchiffres4_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Lettre S4 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantlettres4_maitreapprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S4</label>
+                                    <input type="text" readonly name="datedebutsalaireS4" id="datedebutsalaireS4">
+                                    <label for="">Date fin presalaire S4</label>
+                                    <input type="text" readonly name="datefinsalaireS4" id="datefinsalaireS4">
+                                </div>
+                                <div id="S5_maitreapprentis" style="display: none;">S5
+                                    <label for="">Taux S5 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="tauxs5_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Chiffre S5 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantchiffres5_maitreapprentis" readonly disabled>
+                                    <label for="">Montant Lettre S5 Maitre d'apprenti</label>
+                                    <input type="text" name="" id="montantlettres5_maitreapprentis" readonly disabled>
+                                    <label for="">Date debut presalaire S5</label>
+                                    <input type="text" readonly name="datedebutsalaireS5" id="datedebutsalaireS5">
+                                    <label for="">Date fin presalaire S5</label>
+                                    <input type="text" readonly name="datefinsalaireS5" id="datefinsalaireS5">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-primary">Enregistrer</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label for="maitreapprenti_info">Maître Apprentis Information:</label>
-            <div>
-                <input type="text" class="form-control" value="{{ $maitreapprenti->nom }}" readonly disabled>
-                <!-- Include other master apprentice details here -->
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="diplome_info">Diplome Information:</label>
-            <div>
-                <input type="text" class="form-control" value="{{ $diplome->id }} - {{ $diplome->duree }}" readonly disabled>
-                <span></span>
-                <input type="hidden" id="diplome_duree" value="{{ $diplome->duree }}">
-                <!-- Include other diploma details here -->
-            </div>
-        </div>
-        <div id="bareme_details" style="display: none;">
-            <!-- Include the bareme details here -->
-            <div>Apprentis
-                <div>S1
-                    <input type="text" name="" id="tauxs1_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres1_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres1_apprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutpresalaireS1" id="datedebutpresalaireS1" value="{{ $apprenti->datedebut }}">
-                    <input type="text" readonly name="datefinpresalaireS1" id="datefinpresalaireS1">
-                </div>
-                <div>S2
-                    <input type="text" name="" id="tauxs2_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres2_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres2_apprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutpresalaireS2" id="datedebutpresalaireS2">
-                    <input type="text" readonly name="datefinpresalaireS2" id="datefinpresalaireS2">
-                </div>
-                <div id="S3_apprentis" style="display: none;">S3
-                    <input type="text" name="" id="tauxs3_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres3_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres3_apprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutpresalaireS3" id="datedebutpresalaireS3">
-                    <input type="text" readonly name="datefinpresalaireS3" id="datefinpresalaireS3">
-                </div>
-                <div id="S4_apprentis" style="display: none;">S4
-                    <input type="text" name="" id="tauxs4_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres4_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres4_apprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutpresalaireS4" id="datedebutpresalaireS4">
-                    <input type="text" readonly name="datefinpresalaireS4" id="datefinpresalaireS4">
-                </div>
-                <div id="S5_apprentis" style="display: none;">S5
-                    <input type="text" name="" id="tauxs5_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres5_apprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres5_apprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutpresalaireS5" id="datedebutpresalaireS5">
-                    <input type="text" readonly name="datefinpresalaireS5" id="datefinpresalaireS5">
-                </div>
-            </div>
-            <div>Maitre d'apprenti
-                <div>S1
-                    <input type="text" name="" id="tauxs1_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres1_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres1_maitreapprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutsalaireS1" id="datedebutsalaireS1">
-                    <input type="text" readonly name="datefinsalaireS1" id="datefinsalaireS1">
-                </div>
-                <div>S2
-                    <input type="text" name="" id="tauxs2_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres2_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres2_maitreapprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutsalaireS2" id="datedebutsalaireS2">
-                    <input type="text" readonly name="datefinsalaireS2" id="datefinsalaireS2">
-                </div>
-                <div id="S3_maitreapprentis" style="display: none;">S3
-                    <input type="text" name="" id="tauxs3_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres3_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres3_maitreapprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutsalaireS3" id="datedebutsalaireS3">
-                    <input type="text" readonly name="datefinsalaireS3" id="datefinsalaireS3">
-                </div>
-                <div id="S4_maitreapprentis" style="display: none;">S4
-                    <input type="text" name="" id="tauxs4_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres4_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres4_maitreapprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutsalaireS4" id="datedebutsalaireS4">
-                    <input type="text" readonly name="datefinsalaireS4" id="datefinsalaireS4">
-                </div>
-                <div id="S5_maitreapprentis" style="display: none;">S5
-                    <input type="text" name="" id="tauxs5_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantchiffres5_maitreapprentis" readonly disabled>
-                    <input type="text" name="" id="montantlettres5_maitreapprentis" readonly disabled>
-                    <input type="text" readonly name="datedebutsalaireS5" id="datedebutsalaireS5">
-                    <input type="text" readonly name="datefinsalaireS5" id="datefinsalaireS5">
-                </div>
-            </div>
-        </div>
-        <div class="text-center">
-            <button type="submit" class="btn btn-primary">Enregistrer</button>
-        </div>
-    </form>
+    </div>
 </div>
 
 <script>
