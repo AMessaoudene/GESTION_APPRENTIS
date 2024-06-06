@@ -40,35 +40,6 @@
                                         <input type="text" class="form-control" id="reference" name="reference">
                                     </div>
                                     <div class="col-md-6">
-                                        <label for="decisionresponsable" class="form-label">Decision responsable</label>
-                                        <input type="text" class="form-control" id="decisionresponsable" name="decisionresponsable">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="datedecisionresponsable" class="form-label">Date decision responsable</label>
-                                        <input type="date" class="form-control" id="datedecisionresponsable" name="datedecisionresponsable">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="nomresponsable" class="form-label">Nom responsable</label>
-                                        <input type="text" class="form-control" id="nomresponsable" name="nomresponsable">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="prenomresponsable" class="form-label">Prenom responsable</label>
-                                        <input type="text" class="form-control" id="prenomresponsable" name="prenomresponsable">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="civiliteresponsable" class="form-label">Civilite responsable</label>
-                                        <select class="form-select" id="civiliteresponsable" name="civiliteresponsable">
-                                            <option value="">-- Choisir --</option>
-                                            <option value="Monsieur">Mr</option>
-                                            <option value="Madame">Mme</option>
-                                            <option value="Mademoiselle">Mlle</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fonctionresponsable" class="form-label">Fonction responsable</label>
-                                        <input type="text" class="form-control" id="fonctionresponsable" name="fonctionresponsable">
-                                    </div>
-                                    <div class="col-md-6">
                                         <label for="typedecisiondg" class="form-label">Type Decision DG</label>
                                         <input type="text" class="form-control" id="typedecisiondg" name="typedecisiondg">
                                     </div>
@@ -128,12 +99,6 @@
                         <thead>
                             <tr>
                                 <th>Reference</th>
-                                <th>Decision responsable</th>
-                                <th>Date decision responsable</th>
-                                <th>Nom responsable</th>
-                                <th>Prenom responsable</th>
-                                <th>Civilite responsable</th>
-                                <th>Fonction responsable</th>
                                 <th>Decision DG</th>
                                 <th>Date decision DG</th>
                                 <th>Nom et prenom DG</th>
@@ -153,12 +118,6 @@
                             @foreach ($parametres as $parametre)
                                 <tr>
                                     <td>{{ $parametre->reference }}</td>
-                                    <td>{{ $parametre->decisionresponsable }}</td>
-                                    <td>{{ $parametre->datedecisionresponsable }}</td>
-                                    <td>{{ $parametre->nomresponsable }}</td>
-                                    <td>{{ $parametre->prenomresponsable }}</td>
-                                    <td>{{ $parametre->civiliteresponsable }}</td>
-                                    <td>{{ $parametre->fonctionresponsable }}</td>
                                     <td>{{ $parametre->typedecisiondg }}</td>
                                     <td>{{ $parametre->datedecisiondg }}</td>
                                     <td>{{ $parametre->nomprenomdg }}</td>

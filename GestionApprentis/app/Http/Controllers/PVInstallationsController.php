@@ -61,7 +61,6 @@ class PVInstallationsController extends Controller
         $pv = new pv_installations();
         $pv->apprenti_id = $apprenti->id;
         $pv->reference = $request->reference;
-        $pv->direction = $request->direction;
         $pv->datepv = $request->datepv;
         $pv->dateinstallationchiffre = $request->dateinstallationchiffre;
         $pv->anneeinstallationlettre = $request->anneeinstallationlettre;

@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create("pv_installations", function (Blueprint $table) {
             $table->id();
             $table->string("reference");
-            $table->string("direction");
             $table->date('datepv');
             $table->unsignedBigInteger('apprenti_id')->nullable();
             $table->foreign('apprenti_id')->references('id')->on('apprentis');

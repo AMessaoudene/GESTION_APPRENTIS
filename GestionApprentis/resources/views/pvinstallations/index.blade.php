@@ -14,12 +14,6 @@
                             <input type="text" class="form-control" id="reference" name="reference" required>
                         </div>
                         <div class="form-group">
-                            <label for="direction">Direction</label>
-                            <input type="text" class="form-control" id="direction" name="direction" value=" @foreach ($structures as $structure) @if ($structure->id == $apprenti->structure_id) {{ $structure->nom }} @endif
-                            @endforeach
-                            " readonly>
-                        </div>
-                        <div class="form-group">
                             <label for="datepv">Date PV</label>
                             <input type="date" class="form-control" id="datepv" name="datepv" required>
                         </div>
@@ -52,8 +46,8 @@
                             <input type="text" class="form-control" id="dotations" name="dotations" required>
                         </div>
                         <div class="text-center">
-                    <button type="submit" class="btn btn-success">Submit</button>
-                    </div>
+                            <button type="submit" class="btn btn-success">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>

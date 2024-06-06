@@ -182,8 +182,6 @@ class ApprentisController extends Controller
                 $supervision->apprenti_id = $apprenti->id;
                 $supervision->maitreapprenti_id = $maitreApprenti->id;
                 $supervision->save();
-                // Dispatch the event
-                event(new NewApprenticeAdded($apprenti));
 
                 Session::put('apprenti', $apprenti);
                 return redirect()->route('pvinstallations.index');
