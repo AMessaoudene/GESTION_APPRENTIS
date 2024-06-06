@@ -80,7 +80,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/apprentis/dossiers/consulter',[DossiersController::class,'consulter'])->name('dossiers.consulter');
     Route::get('/apprentis/fichiers/download/{id}', [DossiersController::class, 'pdfdownload'])->name('dossiers.pdfdownload');
     Route::get('/apprentis/details/update/{id}', [DossiersController::class,'updateindex'])->name('dossiers.updateindex');
-    Route::put('/apprentis/details/update/{id}', [DossiersController::class,'update'])->name('dossiers.update'); 
+    Route::put('/apprentis/details/update/{id}', [DossiersController::class,'update'])->name('dossiers.update');
+    Route::delete('/apprentis/details/update/{id}/{fichier}', [DossiersController::class, 'deletefichier'])->name('dossiers.deletefichier');
 });
 //Maitre Apprentis
 Route::middleware('auth')->group(function(){

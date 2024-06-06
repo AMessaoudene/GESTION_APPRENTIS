@@ -292,17 +292,20 @@
                     @csrf
                     @method('PUT')
                     <select name="exercice_id" class="form-control mb-2">
+                        <option value="{{ $exercice->id }}" ${exercice_id == '{{ $exercice->id }}' ? 'selected' : ''}>{{ $exercice->annee }}</option>
                         @foreach($exercices as $exercice)
                             <option value="{{ $exercice->id }}" ${exercice_id == '{{ $exercice->id }}' ? 'selected' : ''}>{{ $exercice->annee }}</option>
                         @endforeach
                     </select>
                     <select name="structure_id" class="form-control mb-2">
+                        <option value="{{ $structure->id }}" ${structure_id == '{{ $structure->id }}' ? 'selected' : ''}>{{ $structure->nom }}</option>
                         @foreach($structures as $structure)
                             <option value="{{ $structure->id }}" ${structure_id == '{{ $structure->id }}' ? 'selected' : ''}>{{ $structure->nom }}</option>
                         @endforeach
                     </select>
                     <input type="text" name="reference" class="form-control mb-2" value="${reference}">
                     <select name="specialites_id" class="form-control mb-2" required>
+                        <option value="{{ $specialite->id }}" ${specialites_id == '{{ $specialite->id }}' ? 'selected' : ''}>{{$specialite->nom}}</option>
                         @foreach($specialites as $specialite)
                             <option value="{{$specialite->id}}" ${specialites_id == '{{ $specialite->id }}' ? 'selected' : ''}>{{$specialite->nom}}</option>
                         @endforeach
@@ -311,9 +314,10 @@
                     <input type="text" pattern="[0-9]+" name="nombreapprentis" class="form-control mb-2" value="${nombreapprentis}">
                     <input type="text" pattern="[0-9]+" name="nombereffectif" class="form-control mb-2" value="${nombereffectif}">
                     <input type="text" pattern="[0-9]+" name="nombreapprentismax" class="form-control mb-2" readonly disabled value="${nombreapprentismax}">
-                    <textarea rows="4" cols="50" name="description" class="form-control mb-2">${description}</textarea>
+                    <textarea rows="4" cols="50" name="description" class="form-control mb-2"></textarea>
                     @if($user->role == 'DFP')
                         <select name="status" class="form-control mb-2">
+                            <option value="">-- Choisir un statut --</option>
                             <option value="en cours" ${status == 'en cours' ? 'selected' : ''}>En cours</option>
                             <option value="accepté" ${status == 'accepté' ? 'selected' : ''}>Accepté</option>
                             <option value="refusé" ${status == 'refusé' ? 'selected' : ''}>Refusé</option>

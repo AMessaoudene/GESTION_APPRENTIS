@@ -113,7 +113,14 @@
             <ul class="list-group">
                 @foreach($dossiers as $dossier)
                     @if($dossier->apprentis_id == $apprenti->id)
-                        <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->contratapprenti) }}">Contrat</a></li>
+                        <li class="list-group-item">
+                            <a href="{{ url('/apprentis/fichiers/download', $dossier->contratapprenti) }}">Contrat</a>
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'contratapprenti']) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        </li>
                         <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->pvinstallation) }}">PV</a></li>
                         <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->extraitnaissance) }}">Extrait de naissance</a></li>
                         <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></li>

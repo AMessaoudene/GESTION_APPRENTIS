@@ -279,8 +279,7 @@ class DossiersController extends Controller
 
         return redirect('/apprentis/consulter');
     }
-    public function deletefichier(Request $request, $id, $fichier)
-{
+    public function deletefichier(Request $request, $id, $fichier){
     $dossier = Dossiers::find($id);
 
     if ($dossier) {

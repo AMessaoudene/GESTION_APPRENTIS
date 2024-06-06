@@ -188,55 +188,55 @@
                             @if($dossier->contratapprenti)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->contratapprenti) }}">Contrat</a></li>
                             @else
-                                <input type="file" name="contratapprenti" id="" required>
+                                <input type="file" accept=".pdf" name="contratapprenti" id="" required>
                             @endif
                             <label for="">PV</label>
                             @if($dossier->pvinstallation)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->pvinstallation) }}">PV</a></li>
                             @else
-                                <input type="file" name="pvinstallation" id="" required>
+                                <input type="file" accept=".pdf" name="pvinstallation" id="" required>
                             @endif
                             <label for="">Extrait de naissance</label>
                             @if($dossier->extraitnaissance)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->extraitnaissance) }}">Extrait de naissance</a></li>
                             @else
-                                <input type="file" name="extraitnaissance" id="" required>
+                                <input type="file" accept=".pdf" name="extraitnaissance" id="" required>
                             @endif
                             <label for="">Decision d'apprenti</label>
                             @if($dossier->decisionapprenti)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></li>
                             @else
-                                <input type="file" name="decisionapprenti" id="" required>
+                                <input type="file" accept=".pdf" name="decisionapprenti" id="" required>
                             @endif
                             <label for="">Decision Maitre d'apprentis</label>
                             @if($dossier->decisionmaitreapprenti)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></li>
                             @else
-                                <input type="file" name="decisionmaitreapprenti" id="" required>
+                                <input type="file" accept=".pdf" name="decisionmaitreapprenti" id="" required>
                             @endif
                             <label for="">Copie cheque</label>
                             @if($dossier->copiecheque)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->copiecheque) }}">Copie cheque</a></li>
                             @else
-                                <input type="file" name="copiecheque" id="" required>
+                                <input type="file" accept=".pdf" name="copiecheque" id="" required>
                             @endif
                             <label for="">Photo</label>
                             @if($dossier->photo)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->photo) }}">Photo</a></li>
                             @else
-                                <input type="file" name="photo" id="">
+                                <input type="file" accept=".pdf,.jpg,.jpeg,.png" name="photo" id="">
                             @endif
                             <label for="">Autorisation parentale</label>
                             @if($dossier->autorisationparentele)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentele) }}">Autorisation parentale</a></li>
                             @else
-                                <input type="file" name="autorisationparentele" id="">
+                                <input type="file" accept=".pdf" name="autorisationparentele" id="">
                             @endif
                             <label for="">Piece d'identité</label>
                             @if($dossier->pieceidentite)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->pieceidentite) }}">Piece d'identité</a></li>
                             @else
-                                <input type="file" name="pieceidentite" id="">
+                                <input type="file" accept=".pdf" name="pieceidentite" id="">
                             @endif
                             <li class="list-group-item">Status <input type="text" name="status" placeholder="{{$dossier->status}}" id="" readonly disabled></li>
                             @if ($dossier->status == 'refusé' || $dossier->status == 'en cours')

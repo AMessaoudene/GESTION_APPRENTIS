@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 use App\Events\NewApprenticeAdded;
 use App\Models\assiduites;
+use App\Models\baremes;
 use App\Models\decisionapprentis;
 use App\Models\decisionmaitreapprentis;
 use App\Models\departs;
 use App\Models\evaluation_apprentis;
+use App\Models\exercices;
+use App\Models\parametres;
 use App\Models\planbesoins;
 use App\Models\supervisions;
 use Illuminate\Support\Facades\Session;
@@ -274,12 +277,18 @@ class ApprentisController extends Controller
         $structure = structures::where('id', $apprenti->structure_id)->first();
         $diplome = diplomes::where('id', $apprenti->diplome1_id)->first();
         $dossiers = dossiers::all();
+        $exercices = exercices::all();
+        $parametres = parametres::all();
+        $baremes = baremes::all();
+        $diplomes = diplomes::all();
+        $structures = structures::all();
+        $specialites = specialites::all();
         $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
         $decisionapprentis = decisionapprentis::all();
         $decisionmaitreapprentis = decisionmaitreapprentis::all();
         $maitreapprentis = maitre_apprentis::all();
         $plans = planbesoins::all();
-        return view('apprentis.details',compact('plans','user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+        return view('apprentis.details',compact('specialites','structures','diplomes','baremes','parametres','exercices','plans','user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
     }
 
     public function updatedossier(Request $request,$id){
@@ -301,6 +310,46 @@ class ApprentisController extends Controller
         }
         $apprenti->save();
         return redirect()->back()->with('success', 'Dossier modifié avec succes');
+    }
+    public function deletefichier(Request $request,$id,$fichier){
+        $dossier = Dossiers::find($id);
+
+        if ($dossier) {
+            switch ($fichier) {
+                case 'contratapprenti':
+                    $dossier->contratapprenti = '';
+                    break;
+                case 'decisionapprenti':
+                    $dossier->decisionapprenti = '';
+                    break;
+                case 'decisionmaitreapprenti':
+                    $dossier->decisionmaitreapprenti = '';
+                    break;
+                case 'pvinstallation':
+                    $dossier->pvinstallation = '';
+                    break;
+                case 'copiecheque':
+                    $dossier->copiecheque = '';
+                    break;
+                case 'extraitnaissance':
+                    $dossier->extraitnaissance = '';
+                    break;
+                case 'autorisationparentale':
+                    $dossier->autorisationparentale = '';
+                    break;
+                case 'photo':
+                    $dossier->photo = '';
+                    break;
+                case 'pieceidentite':
+                    $dossier->pieceidentite = '';
+                    break;
+                default:
+                    return redirect()->back()->with('error', 'Invalid file type.');
+            }
+            $dossier->save();
+
+            return redirect()->back()->with('success', 'File deleted successfully.');
+        }
     }
     public function consulter(){
         $user = auth::user();

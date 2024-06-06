@@ -143,6 +143,7 @@
                                 <th>Fonction premier responsable</th>
                                 <th>Civilite RH</th>
                                 <th>Civilite Fc</th>
+                                <th>Status</th>
                                 @if($user->role == 'DFP')
                                     <th>Actions</th>
                                 @endif
@@ -167,6 +168,7 @@
                                     <td>{{ $parametre->fonctionpremierresponsable }}</td>
                                     <td>{{ $parametre->civilitedrh }}</td>
                                     <td>{{ $parametre->civilitedfc }}</td>
+                                    <td>{{ $parametre->status }}</td>
                                     @if($user->role == 'DFP')
                                         <td>
                                             <button class="btn btn-primary edit-btn" data-id="{{ $parametre->id }}">Modifier</button>
@@ -210,7 +212,7 @@
         var fonctionpremierresponsable = row.find('td:eq(11)').text();
         var civilitedrh = row.find('td:eq(12)').text();
         var civilitedfc = row.find('td:eq(13)').text();
-
+        var status = row.find('td:eq(14)').text();
         // Replace html of the row with the edit form
         row.find('td:eq(1)').html(`
             <form method="POST" action="/parametres/${id}" class="edit-form">
@@ -243,6 +245,11 @@
                     <option value="Monsieur">Mr</option>
                     <option value="Madame">Mme</option>
                     <option value="Mademoiselle">Mlle</option>
+                </select>
+                <select name="status" value="${status}">
+                    <option value="">-- Choisir --</option>
+                    <option value="Actif">Actif</option>
+                    <option value="Inactif">Inactif</option>
                 </select>
                 <input type="submit" value="Enregistrer">
                 <button type="button" class="cancel-edit">Annuler</button>

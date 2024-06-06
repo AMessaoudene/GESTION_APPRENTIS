@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Precisez que le genre ne doit pas dépasser 3 genre-->
+<!-- Il est demandé d'afficher tous les données (element et attributs)-->
+<movies>
+  <movie id="1">
+    <title>The Shawshank Redemption</title>
+    <year>1994</year>
+    <director>Frank Darabont</director>
+    <cast>
+      <actor>Tim Robbins</actor>
+      <actor>Morgan Freeman</actor>
+      <actor>Clancy Brown</actor>
+    </cast>
+    <genres>
+      <genre>Drama</genre>
+      <genre>Crime</genre>
+    </genres>
+    <rating>9.3</rating>
+  </movie>
+  <movie id="2">
+    <title>The Godfather</title>
+    <year releaseDate = "March 24, 1972">1972</year>
+    <director>Francis Ford Coppola</director>
+    <cast>
+      <actor>Marlon Brando</actor>
+      <actor>Al Pacino</actor>
+    </cast>
+    <genres>
+      <genre>Crime</genre>
+      <genre>Drama</genre>
+      <genre>Mafia</genre>
+    </genres>
+    <rating>9.2</rating>
+  </movie>
+  <movie id="3">
+    <title>The Dark Knight</title>
+    <year releaseDate = "July 18, 2008">2008</year>
+    <director>Christopher Nolan</director>
+    <cast>
+      <actor>Christian Bale</actor>
+      <actor>Heath Ledger</actor>
+    </cast>
+    <genres>
+      <genre>Action</genre>
+      <genre>Thriller</genre>
+    </genres>
+  </movie>
+</movies>
