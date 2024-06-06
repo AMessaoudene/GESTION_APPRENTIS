@@ -16,12 +16,26 @@
             @endif
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4" style="background-color:white;">
                 @if (Auth::user()->role == 'DFP')         
-                <div class="container">
+                 <!-- Trigger button -->
+                <div class="container mt-5">
                     <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header">Ajouter une structure</div>
-                                <div class="card-body">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                            Ajouter une structure d'accueil
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Structure -->
+                <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des Structures</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
                                     <form id="add-form" method="POST" action="{{ route('structures.submit') }}" class="form-horizontal">
                                         @csrf
                                         <div class="form-group">
@@ -39,8 +53,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                 @endif
                 <h1 class="text-center" style="margin-top:3%;">Liste des structures</h1>
                 <table id="structures-table" class="table table-striped" style="width:100%">
@@ -122,7 +136,7 @@
             var nom = row.find('td:eq(1)').text();
             var adressecourriel = row.find('td:eq(2)').text();
             var editForm = `
-                <form method="POST" action="/structures/${id}" class="edit-form">
+                <form method="POST" action="{{ route('structures.update', $structure->id) }}" class="edit-form">
                     @csrf
                     @method('PUT')
                     <input type="text" name="nom" class="form-control" value="${nom}">

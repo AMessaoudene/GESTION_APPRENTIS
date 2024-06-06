@@ -15,12 +15,6 @@ return new class extends Migration
             $table->id();
             $table->string('reference');
             //$table->string('direction');
-            $table->string('decisionresponsable');
-            $table->date('datedecisionresponsable');
-            $table->string('nomresponsable');
-            $table->string('prenomresponsable');
-            $table->string('civiliteresponsable');
-            $table->string('fonctionresponsable');
             $table->string('typedecisiondg');
             $table->date('datedecisiondg');
             $table->string('nomprenomdg');

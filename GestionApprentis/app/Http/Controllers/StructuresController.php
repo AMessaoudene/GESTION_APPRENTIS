@@ -58,11 +58,7 @@ class StructuresController extends Controller
         }
 
         // Retrieve and update each maitre apprenti associated with the structure
-        $maitre = maitre_apprentis::where('structures_id', $id)->get();
-        foreach ($maitre as $maitre_apprenti) {
-            $maitre_apprenti->structures_id = null;
-            $maitre_apprenti->save();
-        }
+        maitre_apprentis::where('affectation', $id)->delete();
 
         planbesoins::where('structure_id',$id)->update(['structure_id' => null]);
         User::where('structures_id',$id)->update(['structures_id' => null]);

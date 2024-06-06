@@ -17,65 +17,84 @@
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH') 
-            <div class="container mt-5 mb-5">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title text-center">Ajouter un Reference salariaire</h5>
-                    </div>
-                    <div class="card-body">
-                        <form action="{{ route('refsalariaires.store') }}" method="POST">
-                            @csrf
-                            <label>version
-                                <input type="text" name="version" id="">
-                            </label>
-                            <label for="">SNMG
-                                <input type="text" pattern="[0-9]+" name="snmg" required>
-                            </label>
-                            <label for="">Salaire Reference
-                                <input type="text" pattern="[0-9]+" name="salairereference" required>
-                            </label>
-                            <input type="submit" value="Ajouter">
-                        </form>
-                    </div>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                        Ajouter un parametres
+                    </button>
                 </div>
             </div>
-            @endif
-            <table id="refs-table" class="table table-striped" style="width:100%">
-                <thead>
-                <tr>
-                    <th>id</th>
-                    <th>version</th>
-                    <th>SNMG</th>
-                    <th>Salaire Reference</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($refsalariaires as $refsalariaire)
-                <tr>
-                    <td>{{ $refsalariaire->id }}</td>
-                    <td>{{ $refsalariaire->version }}</td>
-                    <td>{{ $refsalariaire->snmg }}</td>
-                    <td>{{ $refsalariaire->salairereference }}</td>
-                    <td>{{ $refsalariaire->status }}</td>
-                    <td>
-                        <form id="deleteForm{{ $refsalariaire->id }}" action="{{ route('refsalariaires.destroy', $refsalariaire->id) }}" method="POST">
-                            @csrf
-                            @method('DELETE')
-                            <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $refsalariaire->id }})">Delete</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-                </tbody>
-            </table>
-        </main>
-    </div>
-</div>
-@endsection
 
+                <!-- Modal depart -->
+                <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des parametres</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="{{ route('refsalariaires.store') }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="version">Version</label>
+                                        <input type="text" class="form-control" name="version" id="version">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="snmg">SNMG</label>
+                                        <input type="text" pattern="[0-9]+" class="form-control" name="snmg" id="snmg" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="salairereference">Salaire Reference</label>
+                                        <input type="text" pattern="[0-9]+" class="form-control" name="salairereference" id="salairereference" required>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                <table id="refs-table" class="table table-striped" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>version</th>
+                            <th>SNMG</th>
+                            <th>Salaire Reference</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($refsalariaires as $refsalariaire)
+                        <tr>
+                            <td>{{ $refsalariaire->id }}</td>
+                            <td>{{ $refsalariaire->version }}</td>
+                            <td>{{ $refsalariaire->snmg }}</td>
+                            <td>{{ $refsalariaire->salairereference }}</td>
+                            <td>{{ $refsalariaire->status }}</td>
+                            <td>
+                                <form id="deleteForm{{ $refsalariaire->id }}" action="{{ route('refsalariaires.destroy', $refsalariaire->id) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $refsalariaire->id }})">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </main>
+            </div>
+        </div>
+        @endsection
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     function confirmDelete(id) {

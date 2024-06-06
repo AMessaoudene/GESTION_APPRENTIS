@@ -14,12 +14,25 @@
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH')         
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header">Ajouter un parametre</div>
-                                <div class="card-body">
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                        Ajouter un parametres
+                    </button>
+                </div>
+            </div>
+
+                <!-- Modal depart -->
+                <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des parametres</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
                                 <form method="POST" action="{{ route('parametres.store') }}" class="row g-3">
                                     @csrf
                                     <div class="col-md-6">
@@ -109,73 +122,73 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            @endif
-            <div class="table-responsive">
-                <table id="parametres-table" class="table table-striped mt-4" style="width:100%">
-                    <thead>
-                        <tr>
-                            <th>Reference</th>
-                            <th>Decision responsable</th>
-                            <th>Date decision responsable</th>
-                            <th>Nom responsable</th>
-                            <th>Prenom responsable</th>
-                            <th>Civilite responsable</th>
-                            <th>Fonction responsable</th>
-                            <th>Decision DG</th>
-                            <th>Date decision DG</th>
-                            <th>Nom et prenom DG</th>
-                            <th>Decision premier responsable</th>
-                            <th>Date decision premier responsable</th>
-                            <th>Nom et prenom premier responsable</th>
-                            <th>Fonction premier responsable</th>
-                            <th>Civilite RH</th>
-                            <th>Civilite Fc</th>
-                            @if($user->role == 'DFP')
-                                <th>Actions</th>
-                            @endif
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($parametres as $parametre)
+                @endif
+                <div class="table-responsive">
+                    <table id="parametres-table" class="table table-striped mt-4" style="width:100%">
+                        <thead>
                             <tr>
-                                <td>{{ $parametre->reference }}</td>
-                                <td>{{ $parametre->decisionresponsable }}</td>
-                                <td>{{ $parametre->datedecisionresponsable }}</td>
-                                <td>{{ $parametre->nomresponsable }}</td>
-                                <td>{{ $parametre->prenomresponsable }}</td>
-                                <td>{{ $parametre->civiliteresponsable }}</td>
-                                <td>{{ $parametre->fonctionresponsable }}</td>
-                                <td>{{ $parametre->typedecisiondg }}</td>
-                                <td>{{ $parametre->datedecisiondg }}</td>
-                                <td>{{ $parametre->nomprenomdg }}</td>
-                                <td>{{ $parametre->decisionpremierresponsable }}</td>
-                                <td>{{ $parametre->datedecisionpremierresponsable }}</td>
-                                <td>{{ $parametre->nomprenompremierresponsable }}</td>
-                                <td>{{ $parametre->fonctionpremierresponsable }}</td>
-                                <td>{{ $parametre->civilitedrh }}</td>
-                                <td>{{ $parametre->civilitedfc }}</td>
+                                <th>Reference</th>
+                                <th>Decision responsable</th>
+                                <th>Date decision responsable</th>
+                                <th>Nom responsable</th>
+                                <th>Prenom responsable</th>
+                                <th>Civilite responsable</th>
+                                <th>Fonction responsable</th>
+                                <th>Decision DG</th>
+                                <th>Date decision DG</th>
+                                <th>Nom et prenom DG</th>
+                                <th>Decision premier responsable</th>
+                                <th>Date decision premier responsable</th>
+                                <th>Nom et prenom premier responsable</th>
+                                <th>Fonction premier responsable</th>
+                                <th>Civilite RH</th>
+                                <th>Civilite Fc</th>
                                 @if($user->role == 'DFP')
-                                    <td>
-                                        <button class="btn btn-primary edit-btn" data-id="{{ $parametre->id }}">Modifier</button>
-                                        <form action="{{ route('parametres.destroy', $parametre->id) }}" method="POST">                  
-                                            @csrf
-                                            @method('DELETE')           
-                                            <button type="submit" class="btn btn-danger">Supprimer</button>
-                                        </form>
-                                    </td>
+                                    <th>Actions</th>
                                 @endif
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </main>
+                        </thead>
+                        <tbody>
+                            @foreach ($parametres as $parametre)
+                                <tr>
+                                    <td>{{ $parametre->reference }}</td>
+                                    <td>{{ $parametre->decisionresponsable }}</td>
+                                    <td>{{ $parametre->datedecisionresponsable }}</td>
+                                    <td>{{ $parametre->nomresponsable }}</td>
+                                    <td>{{ $parametre->prenomresponsable }}</td>
+                                    <td>{{ $parametre->civiliteresponsable }}</td>
+                                    <td>{{ $parametre->fonctionresponsable }}</td>
+                                    <td>{{ $parametre->typedecisiondg }}</td>
+                                    <td>{{ $parametre->datedecisiondg }}</td>
+                                    <td>{{ $parametre->nomprenomdg }}</td>
+                                    <td>{{ $parametre->decisionpremierresponsable }}</td>
+                                    <td>{{ $parametre->datedecisionpremierresponsable }}</td>
+                                    <td>{{ $parametre->nomprenompremierresponsable }}</td>
+                                    <td>{{ $parametre->fonctionpremierresponsable }}</td>
+                                    <td>{{ $parametre->civilitedrh }}</td>
+                                    <td>{{ $parametre->civilitedfc }}</td>
+                                    @if($user->role == 'DFP')
+                                        <td>
+                                            <button class="btn btn-primary edit-btn" data-id="{{ $parametre->id }}">Modifier</button>
+                                            <form action="{{ route('parametres.destroy', $parametre->id) }}" method="POST">                  
+                                                @csrf
+                                                @method('DELETE')           
+                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                        </td>
+                                    @endif
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
     </div>
-</div>
 @endsection
-
-@push('scripts')
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#parametres-table').DataTable();
@@ -256,4 +269,3 @@
         });
     });
 </script>
-@endpush

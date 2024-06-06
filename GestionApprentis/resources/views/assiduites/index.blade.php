@@ -12,17 +12,30 @@
             @include('layouts.drhsidenav')
             @elseif(Auth::user()->role == 'EvaluateurGradé')
             @include('layouts.egsidenav')
-            @endif
+        @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')  
-            <div class="container">
+            <!-- Trigger button -->
+            <div class="container mt-5">
+                <h1 class="text-center">Assiduités</h1>
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card mt-4">
-                            <div class="card-header">
-                                <h4>Ajouter Assiduité</h4>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAssiduitesModal">
+                        Ajouter une assiduité
+                    </button>
+                </div>
+            </div>
+
+                <!-- Modal Structure -->
+                <div class="modal fade" id="addAssiduitesModal" tabindex="-1" aria-labelledby="addAssiduitesModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAssiduitesModalLabel">Gestion Des Comptes</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
                             </div>
-                            <div class="card-body">
+                            <div class="modal-body">
                                 <form id="assiduiteForm" action="{{ route('assiduites.submit') }}" method="POST" enctype="multipart/form-data">
                                     @csrf
                                     <div class="form-group mb-3">
@@ -84,9 +97,8 @@
                         </div>
                     </div>
                 </div>
-            </div>
             @endif
-                <div class="row mt-4">
+            <div class="row mt-4">
                     <div class="col-md-12">
                         <table class="table table-striped">
                             <thead>
@@ -157,3 +169,6 @@
     });
 </script>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

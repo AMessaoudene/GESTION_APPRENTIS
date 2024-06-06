@@ -18,11 +18,25 @@
             <!-- Page Content -->
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 @if (Auth::user()->role == 'DFP')
-                <div class="row justify-content-center">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-header text-center">AJOUTER UN EXERCICE</div>
-                            <div class="card-body">
+                <!-- Trigger button -->
+                <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addExerciceModal">
+                            Ajouter un Exercice
+                        </button>
+                    </div>
+                </div>
+                <!-- Modal Structure -->
+                <div class="modal fade" id="addExerciceModal" tabindex="-1" aria-labelledby="addExerciceModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addExerciceModalLabel">Gestion Des Exercices</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
                                 <form id="add-form" action="{{ route('exercices.store') }}" method="POST">
                                     @csrf
                                     <div class="form-group">
@@ -47,7 +61,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="budget">Budget</label>
-                                        <input type="text" class="form-control" id="budget" name="budget" readonly disabled>
+                                        <input type="text" class="form-control" id="budget" name="budget" readonly>
                                     </div>
                                     <div class="text-center" style="margin-top:3%;">
                                         <button type="submit" class="btn btn-primary">Ajouter</button>
@@ -114,11 +128,12 @@
     <!-- Include jQuery and DataTables JS -->
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <!-- Your JavaScript code -->
     <script>
         function confirmDelete(id) {
-            if (confirm('Voulez-vous supprimer cet apprenti?')) {
+            if (confirm('Voulez-vous supprimer cet exercice?')) {
                 // Submit the form if confirmed
                 document.getElementById('deleteForm' + id).submit();
             } 
@@ -146,56 +161,75 @@
                 });
             });
 
-            // AJAX for editing a diplome
-            $(document).on('click', '.edit-btn', function() {
-                var id = $(this).data('id');
-                var row = $(this).closest('tr');
-                var annee = row.find('td:eq(1)').text();
-                var datedebut = row.find('td:eq(2)').text();
-                var datefin = row.find('td:eq(3)').text();
-                var nombrebesoins = row.find('td:eq(4)').text();
-                var massesalariaire = row.find('td:eq(5)').text();
-                var budget = row.find('td:eq(6)').text();
-                var status = row.find('td:eq(7)').text();
-                var editForm = `
-                    <form method="POST" action="/exercices/${id}" class="edit-form">
-                        @csrf
-                        @method('PUT')
-                        <input type="text" name="annee" pattern="[0-9]+" class="form-control" value="${annee}">
+            // AJAX for editing a structure
+        $('.edit-btn').click(function() {
+            var id = $(this).data('id');
+            var row = $(this).closest('tr');
+            var annee = row.find('td:eq(1)').text();
+            var datedebut = row.find('td:eq(2)').text();
+            var datefin = row.find('td:eq(3)').text();
+            var nombrebesoins = row.find('td:eq(4)').text();
+            var massesalariaire = row.find('td:eq(5)').text();
+            var budget = row.find('td:eq(6)').text();
+            var status = row.find('td:eq(7)').text();
+            var editForm = `
+                <form method="POST" action="/planbesoins/${id}" class="edit-form">
+                    @csrf
+                    @method('PUT')
+                    <div class="form-group">
+                        <label for="annee">Anneée</label>
+                        <input type="text" name="annee" pattern="[0-9]+"  class="form-control" value="${annee}">
+                    </div>
+                    <div class="form-group">
+                        <label for="datedebut">Date debut</label>
                         <input type="date" name="datedebut" class="form-control" value="${datedebut}">
+                    </div>
+                    <div class="form-group">
+                        <label for="datefin">Date fin</label>
                         <input type="date" name="datefin" class="form-control" value="${datefin}">
-                        <input type="text" name="nombrebesoins" pattern="[0-9]+" class="form-control" value="${nombrebesoins}">
-                        <input type="text" name="massesalariaire" pattern="[0-9]+" class="form-control" value="${massesalariaire}">
-                        <input type="text" name="budget" class="form-control" value="${budget}" readonly disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombrebesoins">Nombre besoins</label>
+                        <input type="text" name="nombrebesoins" class="form-control" value="${nombrebesoins}">
+                    </div>
+                    <div class="form-group">
+                        <label for="massesalariaire">Masse salariaire</label>
+                        <input type="text" name="massesalariaire" class="form-control" value="${massesalariaire}">
+                    </div>
+                    <div class="form-group">
+                        <label for="budget">Budget</label>
+                        <input type="text" name="budget" class="form-control" id="budget" value="${budget}">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">Status</label>
                         <select name="status" class="form-control" value="${status}">
-                            <option value="">-- Choisir un statut --</option>
-                            <option value="actif">actif</option>
+                            <option value="actif">Actif</option>
                             <option value="inactif">inactif</option>
-                        </select>
-                        <button type="submit" class="btn btn-primary">Valider</button>
-                    </form>
-                `;
-                row.find('td:eq(1)').html(editForm);
-            });
+                    </div>
+                    <input type="submit" value="Modifier" class="btn btn-primary">
+                </form>
+            `;
+            row.find('td:eq(1)').html(editForm);
+        });
 
-            // Submit edit form
-            $(document).on('submit', '.edit-form', function(event) {
-                event.preventDefault();
-                var form = $(this);
-                $.ajax({
-                    url: form.attr('action'),
-                    type: 'PUT', // Changed from POST to PUT for update
-                    data: form.serialize(),
-                    success: function(response) {
-                        // Reload the page to update the table
-                        location.reload();
-                    },
-                    error: function(xhr, textStatus, errorThrown) {
-                        // Handle error
-                        console.error('Error updating diplome:', errorThrown);
-                    }
-                });
+        // Submit edit form
+        $(document).on('submit', '.edit-form', function(event) {
+            event.preventDefault();
+            var form = $(this);
+            $.ajax({
+                url: form.attr('action'),
+                type: 'POST',
+                data: form.serialize(), // Change this to use PUT method for update
+                success: function(response) {
+                    // Reload the page to update the table
+                    location.reload();
+                },
+                error: function(xhr, textStatus, errorThrown) {
+                    // Handle error
+                    console.error('Error updating diplome:', errorThrown);
+                }
             });
+        });
 
             // Calculate budget based on masse salariaire
             $('#massesalariaire').on('input', function() {

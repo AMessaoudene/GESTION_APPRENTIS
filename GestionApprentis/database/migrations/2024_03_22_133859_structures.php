@@ -15,6 +15,13 @@ return new class extends Migration
             $table->id();
             $table->string('nom')->unique();
             $table->string('adressecourriel');
+            $table->string('referencedecisionresponsable')->nullable();
+            $table->string('decisionresponsable')->nullable();
+            $table->date('datedecisionresponsable')->nullable();
+            $table->string('nomresponsable')->nullable();
+            $table->string('prenomresponsable')->nullable();
+            $table->string('civiliteresponsable')->nullable();
+            $table->string('fonctionresponsable')->nullable();
             $table->timestamps();
         });
     }

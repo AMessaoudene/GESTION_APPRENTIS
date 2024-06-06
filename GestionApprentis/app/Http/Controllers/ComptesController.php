@@ -31,7 +31,7 @@ class ComptesController extends Controller
             'role' => ['required'],
             'structures_id' => ['required'],
         ]);
-        //user::where(['structures_id' , $request->structures_id],['role', $request->role],['status' , 'active'])->update(['status'=>'inactif']);
+        User::where('structures_id', $request->structures_id)->where('role', $request->role)->where('status', 'active')->update(['status' => 'inactive']);
         $compte = new user();
         $compte->nom = $request->nom;
         $compte->prenom = $request->prenom;
@@ -54,6 +54,7 @@ class ComptesController extends Controller
         $compte->password = Hash::make($request->password);
         $compte->role = $request->role;
         $compte->structures_id = $request->structures_id;
+        $compte->status = $request->status;
         $compte->save();
         return redirect()->back();
     }

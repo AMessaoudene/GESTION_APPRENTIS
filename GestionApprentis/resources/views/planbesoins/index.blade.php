@@ -15,12 +15,25 @@
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')         
-            <div class="container">
+            <div class="container mt-5">
                 <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="card mt-4">
-                            <div class="card-header bg-primary text-white">Ajouter un plan de besoins</div>
-                            <div class="card-body">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                        Ajouter un plan des besoins
+                    </button>
+                </div>
+            </div>
+
+                <!-- Modal depart -->
+                <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des plans des besoins</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
                             <form action="{{ route('planbesoins.store') }}" method="POST" enctype="multipart/form-data" class="p-4 shadow-sm rounded bg-light">
                                 @csrf
                                 <div class="row mb-4">
@@ -214,7 +227,8 @@
 </div>
 @endSection
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#planbesoins-table').DataTable();

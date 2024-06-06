@@ -18,33 +18,47 @@
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             @if (Auth::user()->role == 'DFP') 
-            <div class="container mt-5 mb-5">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title text-center">Ajouter un Diplome</h5>
-                    </div>
-                    <div class="card-body">
-                        <form id="add-form" action="{{ route('diplomes.store') }}" method="POST">
-                            @csrf
-                            <div class="form-group">
-                                <label for="nom">Nom</label>
-                                <input type="text" class="form-control" id="nom" name="nom" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="duree">Durée</label>
-                                <input type="text" class="form-control" id="duree" name="duree" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="description">Description</label>
-                                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-                            </div>
-                            <div class="text-center">
-                                <button type="submit" class="btn btn-primary">Ajouter</button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="container mt-5">
+                <div class="row justify-content-center">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                        Ajouter un parametres
+                    </button>
                 </div>
             </div>
+
+                <!-- Modal depart -->
+                <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des parametres</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-form" action="{{ route('diplomes.store') }}" method="POST">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="nom">Nom</label>
+                                        <input type="text" class="form-control" id="nom" name="nom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="duree">Durée</label>
+                                        <input type="text" class="form-control" id="duree" name="duree" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             @endif
             <table id="diplomes-table" class="table table-striped" style="width:100%">
                 <thead>
@@ -85,7 +99,8 @@
 @endsection
 
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     $(document).ready(function() {
         $('#diplomes-table').DataTable();

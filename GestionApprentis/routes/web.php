@@ -87,6 +87,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/maitreapprentis', [MaitreApprentisController::class, 'index'])->name('maitreapprentis.index');
     Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
     Route::put('/maitreapprentis/{id}', [MaitreApprentisController::class, 'update'])->name('maitreapprentis.update');
+    Route::delete('/maitreapprentis/{id}', [MaitreApprentisController::class, 'destroy'])->name('maitreapprentis.destroy');
 });
 //decisionsapprentis
 Route::middleware('auth')->group(function(){
@@ -97,24 +98,24 @@ Route::middleware('auth')->group(function(){
 });
 // Evaluation maitre apprentis
 Route::middleware('auth')->group(function(){
-    Route::get('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'index'])->name('evaluationMA.index');
-    Route::post('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
-    Route::put('/evaluationMA/ajouter', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
+    Route::get('/evaluationMA', [EvaluationMaitreApprentisController::class, 'index'])->name('evaluationMA.index');
+    Route::post('/evaluationMA', [EvaluationMaitreApprentisController::class, 'submit'])->name('evaluationMA.submit');
+    Route::put('/evaluationMA/{id}', [EvaluationMaitreApprentisController::class, 'update'])->name('evaluationMA.update');
+    Route::post('/evaluationMA/{id}', [EvaluationMaitreApprentisController::class, 'destroy'])->name('evaluationMA.destroy');
 });
 // Evaluation apprentis
 Route::middleware('auth')->group(function(){
     Route::get('/apprentis/Evaluer', [EvaluationApprentisController::class, 'index'])->name('evaluation_apprentis.index');
     Route::post('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
     Route::put('/apprentis/Evaluer', [EvaluationApprentisController::class, 'submit'])->name('evaluation_apprentis.submit');
-    Route::post('/apprentis/evaluer/generate-pdf', 'EvaluationCApprentisontroller@fiche')->name('evaluation_apprentis.fiche');
+    Route::post('/apprentis/evaluer/generate-pdf', 'EvaluationApprentisController@fiche')->name('evaluation_apprentis.fiche');
 });
 //Assiduites
 Route::middleware('auth')->group(function(){
     Route::get('/assiduites', [AssiduitesController::class, 'index'])->name('assiduites.index');
     Route::post('/assiduites', [AssiduitesController::class, 'submit'])->name('assiduites.submit');
-    Route::get('/assiduites/consulter', [AssiduitesController::class, 'show'])->name('assiduites.consulter');
-    Route::get('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
-    Route::post('/assiduites/details/{id}', [AssiduitesController::class, 'details'])->name('assiduites.details');
+    Route::put('/assiduites/{id}', [AssiduitesController::class, 'update'])->name('assiduites.update');
+    Route::delete('/assiduites/{id}', [AssiduitesController::class, 'destroy'])->name('assiduites.destroy');
     Route::get('/download/{id}', [AssiduitesController::class, 'pdfdownload'])->name('dossiers.pdfdownload'); 
 });
 //plan besoins
@@ -140,20 +141,24 @@ Route::middleware('auth')->group(function(){
 });
 //Baremes
 Route::middleware('auth')->group(function(){
-Route::get('/baremes', [BaremesController::class, 'index'])->name('baremes.index');
-Route::post('/baremes', [BaremesController::class, 'store'])->name('baremes.store');
-Route::put('/baremes/{id}', [BaremesController::class, 'update'])->name('baremes.update');
-Route::delete('/baremes/{id}', [BaremesController::class, 'destroy'])->name('baremes.destroy');
+    Route::get('/baremes', [BaremesController::class, 'index'])->name('baremes.index');
+    Route::post('/baremes', [BaremesController::class, 'store'])->name('baremes.store');
+    Route::put('/baremes/{id}', [BaremesController::class, 'update'])->name('baremes.update');
+    Route::delete('/baremes/{id}', [BaremesController::class, 'destroy'])->name('baremes.destroy');
 });
 //Departs
 Route::middleware('auth')->group(function(){
     Route::get('/departs', [DepartsController::class, 'index'])->name('departs.index');
     Route::post('/departs', [DepartsController::class, 'store'])->name('departs.store');
+    Route::put('/departs/{id}', [DepartsController::class, 'update'])->name('departs.update');
+    Route::delete('/departs/{id}', [DepartsController::class, 'destroy'])->name('departs.destroy');
 });
 //Avenants
 Route::middleware('auth')->group(function(){
     Route::get('/avenants', [AvenantsController::class, 'index'])->name('avenants.index');
     Route::post('/avenants', [AvenantsController::class, 'store'])->name('avenants.store');
+    Route::put('/avenants/{id}', [AvenantsController::class, 'update'])->name('avenants.update');
+    Route::delete('/avenants/{id}', [AvenantsController::class, 'destroy'])->name('avenants.destroy');
 });
 //refsalariaires
 Route::middleware('auth')->group(function(){

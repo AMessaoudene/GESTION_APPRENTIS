@@ -16,67 +16,82 @@
             @endif
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
                 @if (Auth::user()->role == 'DFP')      
-                <div class="container">
+                <!-- Trigger button -->
+                <div class="container mt-5">
                     <div class="row justify-content-center">
-                        <div class="col-md-8">
-                            <div class="card">
-                                <div class="card-header">Gestion Des Comptes</div>
-                                <div class="card-body">
-                                    <form id="add-form" action="{{ route('comptes.store') }}" method="POST" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="nom">Nom</label>
-                                            <input type="text" class="form-control" id="nom" name="nom" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="prenom">Prenom</label>
-                                            <input type="text" class="form-control" id="prenom" name="prenom" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="civilite">Civilité</label>
-                                            <select class="form-control" id="civilite" name="civilite" required>
-                                                <option value="">-- Choisir une civilite --</option>
-                                                <option value="Homme">Homme</option>
-                                                <option value="Femme">Femme</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="structures_id">Structure</label>
-                                            <select class="form-control" id="structures_id" name="structures_id" required>
-                                                <option value="">-- Choisir une structure --</option>
-                                                @foreach ($structures as $structure)
-                                                    <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="role">Role</label>
-                                            <select class="form-control" id="role" name="role" required>
-                                                <option value="">-- Choisir un role --</option>
-                                                <option value="DFP">DFP</option>
-                                                <option value="DRH">DRH</option>
-                                                <option value="SA">SA</option>
-                                                <option value="EvaluateurGradé">Evaluateur Gradé</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="email">email</label>
-                                            <input type="email" class="form-control" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="password">Mot de passe</label>
-                                            <input type="password" class="form-control" id="password" name="password" required>
-                                        </div>
-                                        <div class="text-center">
-                                            <button type="submit" class="btn btn-primary">Ajouter</button>
-                                        </div>
-                                    </form>
-                                </div>
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                            Ajouter un Compte
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Modal Structure -->
+                <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des Comptes</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="add-form" action="{{ route('comptes.store') }}" method="POST" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="nom">Nom</label>
+                                        <input type="text" class="form-control" id="nom" name="nom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prenom">Prenom</label>
+                                        <input type="text" class="form-control" id="prenom" name="prenom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="civilite">Civilité</label>
+                                        <select class="form-control" id="civilite" name="civilite" required>
+                                            <option value="">-- Choisir une civilite --</option>
+                                            <option value="Homme">Homme</option>
+                                            <option value="Femme">Femme</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="structures_id">Structure</label>
+                                        <select class="form-control" id="structures_id" name="structures_id" required>
+                                            <option value="">-- Choisir une structure --</option>
+                                            @foreach ($structures as $structure)
+                                                <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="role">Role</label>
+                                        <select class="form-control" id="role" name="role" required>
+                                            <option value="">-- Choisir un role --</option>
+                                            <option value="DFP">DFP</option>
+                                            <option value="DRH">DRH</option>
+                                            <option value="SA">SA</option>
+                                            <option value="EvaluateurGradé">Evaluateur Gradé</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="password">Mot de passe</label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                 </div>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                 @endif
+                <h1 class="text-center mt-3">Liste des Comptes</h1>
                 <table id="comptes-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
@@ -122,8 +137,9 @@
                         @endforeach
                     </tbody>
                 </table>
-                </div>
             </div>
+        </div>
+    </main>
 @endsection
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
@@ -134,7 +150,10 @@
             document.getElementById('deleteForm' + id).submit();
         }
     }
-    $(document).ready(function() {
+        $(document).ready(function() {
+            $('#comptes-table').DataTable();
+
+            $(document).ready(function() {
         $('#comptes-table').DataTable();
 
         // AJAX for editing a diplome
@@ -154,29 +173,29 @@
                     @method('PUT')
                     <input type="text" name="nom" class="form-control" value="${nom}">
                     <input type="text" name="prenom" class="form-control" value="${prenom}">
-                    <select name="civilite" class="form-control" value="${civilite}">
+                    <select name="civilite" class="form-control">
                         <option value="">-- Choisir une civilite --</option>
-                        <option value="Homme">Homme</option>
-                        <option value="Femme">Femme</option>
+                        <option value="Homme" ${civilite === 'Homme' ? 'selected' : ''}>Homme</option>
+                        <option value="Femme" ${civilite === 'Femme' ? 'selected' : ''}>Femme</option>
                     </select>
-                    <select name="structures_id" class="form-control" value="${structure}">
+                    <select name="structures_id" class="form-control">
                         <option value="">-- Choisir une structure --</option>
                         @foreach ($structures as $structure)
-                            <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                            <option value="{{ $structure->id }}" ${structure === '{{ $structure->nom }}' ? 'selected' : ''}>{{ $structure->nom }}</option>
                         @endforeach
                     </select>
-                    <select name="role" class="form-control" value="${role}">
+                    <select name="role" class="form-control">
                         <option value="">-- Choisir un role --</option>
-                        <option value="DFP">DFP</option>
-                        <option value="DRH">DRH</option>
-                        <option value="SA">SA</option>
-                        <option value="EvaluateurGrade">Evaluateur Gradé</option>
+                        <option value="DFP" ${role === 'DFP' ? 'selected' : ''}>DFP</option>
+                        <option value="DRH" ${role === 'DRH' ? 'selected' : ''}>DRH</option>
+                        <option value="SA" ${role === 'SA' ? 'selected' : ''}>SA</option>
+                        <option value="EvaluateurGrade" ${role === 'EvaluateurGrade' ? 'selected' : ''}>Evaluateur Gradé</option>
                     </select>
-                    <input type="email" name="email" emailclass="form-control" value="${email}">
-                    <select name="status" class="form-control" value="${status}">
+                    <input type="email" name="email" class="form-control" value="${email}">
+                    <select name="status" class="form-control">
                         <option value="">-- Choisir un statut --</option>
-                        <option value="actif">actif</option>
-                        <option value="inactif">inactif</option>
+                        <option value="actif" ${status === 'actif' ? 'selected' : ''}>actif</option>
+                        <option value="inactif" ${status === 'inactif' ? 'selected' : ''}>inactif</option>
                     </select>
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form>
@@ -188,19 +207,38 @@
         $(document).on('submit', '.edit-form', function(event) {
             event.preventDefault();
             var form = $(this);
+            var row = form.closest('tr');
             $.ajax({
                 url: form.attr('action'),
-                type: 'PUT', // Changed from POST to PUT for update
+                type: 'PUT',
                 data: form.serialize(),
                 success: function(response) {
-                    // Reload the page to update the table
-                    location.reload();
+                    // Extract the new values from the form
+                    var nom = form.find('input[name="nom"]').val();
+                    var prenom = form.find('input[name="prenom"]').val();
+                    var civilite = form.find('select[name="civilite"]').val();
+                    var structure = form.find('select[name="structures_id"] option:selected').text();
+                    var role = form.find('select[name="role"] option:selected').val();
+                    var email = form.find('input[name="email"]').val();
+                    var status = form.find('select[name="status"] option:selected').val();
+
+                    // Update the table row with the new values
+                    row.find('td:eq(1)').text(nom);
+                    row.find('td:eq(2)').text(prenom);
+                    row.find('td:eq(3)').text(civilite);
+                    row.find('td:eq(4)').text(structure);
+                    row.find('td:eq(5)').text(role);
+                    row.find('td:eq(6)').text(email);
+                    row.find('td:eq(7)').text(status);
+
+                    // Remove the form
+                    form.remove();
                 },
                 error: function(xhr, textStatus, errorThrown) {
-                    // Handle error
-                    console.error('Error updating diplome:', errorThrown);
+                    console.error('Error updating compte:', errorThrown);
                 }
             });
         });
     });
+});
 </script>

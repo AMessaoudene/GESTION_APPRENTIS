@@ -17,73 +17,88 @@
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA') 
-            <div class="container mt-5 mb-5">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="card-title text-center">Ajouter un Départ</h5>
-                    </div>
-                    <div class="card-body">
-                    <form id="departForm" action="{{ route('departs.store') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label for="apprenti_id" class="form-label">Apprenti</label>
-                            <select name="apprenti_id" id="apprenti_id" class="form-select" aria-label="Sélectionner un apprenti" required>
-                                <option value="">Sélectionner un apprenti</option>
-                                @foreach($apprentis as $apprenti)
-                                    @if(Auth::user()->role == 'SA' && $user->structures_id == $apprenti->structure_id && $apprenti->status == "actif")
-                                        <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
-                                            {{ $apprenti->nom }} {{ $apprenti->prenom }}
-                                        </option>
-                                    @elseif(Auth::user()->role == "DFP" && $apprenti->status == "actif")
-                                        <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
-                                            {{ $apprenti->nom }} {{ $apprenti->prenom }}
-                                        </option>
-                                    @endif
-                                @endforeach
-                            </select>
-                            <div class="invalid-feedback">
-                                Veuillez sélectionner un apprenti.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="datedepart" class="form-label">Date de départ</label>
-                            <input type="date" name="datedepart" id="datedepart" class="form-control" aria-label="Date de départ" required>
-                            <div class="invalid-feedback">
-                                Veuillez entrer une date de départ.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="motif" class="form-label">Motif</label>
-                            <select name="motif" id="motif" class="form-select" aria-label="Sélectionner un motif" required>
-                                <option value="">Sélectionner un motif</option>
-                                <option value="résiliation">Résiliation</option>
-                                <option value="transfert">Transfert</option>
-                            </select>
-                            <div class="invalid-feedback">
-                                Veuillez sélectionner un motif.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="refcourrier" class="form-label">Référence Courrier</label>
-                            <input type="text" name="refcourrier" id="refcourrier" class="form-control" aria-label="Référence Courrier" required>
-                            <div class="invalid-feedback">
-                                Veuillez entrer la référence du courrier.
-                            </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="datecourrier" class="form-label">Date Courrier</label>
-                            <input type="date" name="datecourrier" id="datecourrier" class="form-control" aria-label="Date Courrier" required>
-                            <div class="invalid-feedback">
-                                Veuillez entrer la date du courrier.
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary">Ajouter</button>
-                        </div>
-                    </form>
+            <div class="container mt-5">
+                    <div class="row justify-content-center">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
+                            Ajouter un depart
+                        </button>
                     </div>
                 </div>
-            </div>
+
+                <!-- Modal depart -->
+                <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des departs</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="departForm" action="{{ route('departs.store') }}" method="POST">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="apprenti_id" class="form-label">Apprenti</label>
+                                        <select name="apprenti_id" id="apprenti_id" class="form-select" aria-label="Sélectionner un apprenti" required>
+                                            <option value="">Sélectionner un apprenti</option>
+                                            @foreach($apprentis as $apprenti)
+                                                @if(Auth::user()->role == 'SA' && $user->structures_id == $apprenti->structure_id && $apprenti->status == "actif")
+                                                    <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
+                                                        {{ $apprenti->nom }} {{ $apprenti->prenom }}
+                                                    </option>
+                                                @elseif(Auth::user()->role == "DFP" && $apprenti->status == "actif")
+                                                    <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
+                                                        {{ $apprenti->nom }} {{ $apprenti->prenom }}
+                                                    </option>
+                                                @endif
+                                            @endforeach
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Veuillez sélectionner un apprenti.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="datedepart" class="form-label">Date de départ</label>
+                                        <input type="date" name="datedepart" id="datedepart" class="form-control" aria-label="Date de départ" required>
+                                        <div class="invalid-feedback">
+                                            Veuillez entrer une date de départ.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="motif" class="form-label">Motif</label>
+                                        <select name="motif" id="motif" class="form-select" aria-label="Sélectionner un motif" required>
+                                            <option value="">Sélectionner un motif</option>
+                                            <option value="résiliation">Résiliation</option>
+                                            <option value="transfert">Transfert</option>
+                                        </select>
+                                        <div class="invalid-feedback">
+                                            Veuillez sélectionner un motif.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="refcourrier" class="form-label">Référence Courrier</label>
+                                        <input type="text" name="refcourrier" id="refcourrier" class="form-control" aria-label="Référence Courrier" required>
+                                        <div class="invalid-feedback">
+                                            Veuillez entrer la référence du courrier.
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="datecourrier" class="form-label">Date Courrier</label>
+                                        <input type="date" name="datecourrier" id="datecourrier" class="form-control" aria-label="Date Courrier" required>
+                                        <div class="invalid-feedback">
+                                            Veuillez entrer la date du courrier.
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
             @endif
             <table id="departs-table" class="table table-striped mt-4">
                     <thead>
