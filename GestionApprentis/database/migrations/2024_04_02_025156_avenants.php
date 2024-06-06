@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('avenants', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('decisionapprenti_id');
+            $table->unsignedBigInteger('decisionapprenti_id')->nullable();
             $table->foreign('decisionapprenti_id')->references('id')->on('decisionapprentis');
             $table->enum('type',['rattrapage','passerelle']);
             $table->date('date');

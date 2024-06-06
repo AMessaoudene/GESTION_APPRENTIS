@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('baremes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('refsalariaires_id');
+            $table->unsignedBigInteger('refsalariaires_id')->nullable();
             $table->foreign('refsalariaires_id')->references('id')->on('refsalariaires');
             $table->unsignedBigInteger('diplome_id');
             $table->foreign('diplome_id')->references('id')->on('diplomes');

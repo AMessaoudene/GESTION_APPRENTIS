@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::create('planbesoins', function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            $table->unsignedBigInteger('exercice_id');
+            $table->unsignedBigInteger('exercice_id')->nullable();
             $table->foreign('exercice_id')->references('id')->on('exercices')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('structure_id');
+            $table->unsignedBigInteger('structure_id')->nullable();
             $table->foreign('structure_id')->references('id')->on('structures')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('specialites_id');
+            $table->unsignedBigInteger('specialites_id')->nullable();
             $table->foreign('specialites_id')->references('id')->on('specialites')->onDelete('cascade')->onUpdate('cascade');
             $table->date('date');
             $table->integer('nombreapprentis');

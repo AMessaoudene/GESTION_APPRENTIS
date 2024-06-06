@@ -20,11 +20,11 @@ return new class extends Migration
             $table->string('email');
             $table->string('telephonepro');
             $table->string('adresse');
-            $table->unsignedBigInteger('fonction');
+            $table->unsignedBigInteger('fonction')->nullable();
             $table->foreign('fonction')->references('id')->on('specialites')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('affectation');
+            $table->unsignedBigInteger('affectation')->nullable();
             $table->foreign('affectation')->references('id')->on('structures')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('diplome_id');
+            $table->unsignedBigInteger('diplome_id')->nullable();
             $table->foreign('diplome_id')->references('id')->on('diplomes')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('apprenti1_id')->unique()->nullable();
             $table->foreign('apprenti1_id')->references('id')->on('apprentis')->onDelete('cascade');

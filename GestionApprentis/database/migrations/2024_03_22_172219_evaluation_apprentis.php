@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluation_apprentis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('apprenti_id');
+            $table->unsignedBigInteger('apprenti_id')->nullable();
             $table->foreign('apprenti_id')->references('id')->on('apprentis')->onDelete('cascade')->onUpdate('cascade');
             $table->date('datedebut');
             $table->date('datefin');

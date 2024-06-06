@@ -55,7 +55,7 @@ class ComptesController extends Controller
         $compte->role = $request->role;
         $compte->structures_id = $request->structures_id;
         $compte->save();
-        return response()->json(['success' => true]);
+        return redirect()->back();
     }
 
     public function destroy($id)

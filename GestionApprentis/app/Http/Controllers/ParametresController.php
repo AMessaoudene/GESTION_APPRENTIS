@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Models\parametres;
+use App\Models\decisionapprentis;
+use App\Models\decisionmaitreapprentis;
 use Illuminate\Http\Request;
 use Validator;
 use Auth;
@@ -58,7 +60,7 @@ class ParametresController extends Controller
         $parametre->datedecisionresponsable = $request->datedecisionresponsable;
         $parametre->statut = $request->statut;
         $parametre->save();
-        return response()->json(['success' => true]);
+        return redirect()->back();
     }
 
     /**
@@ -66,6 +68,10 @@ class ParametresController extends Controller
      */
     public function destroy(string $id)
     {
+        // Set planbesoins_id to null for related records in decisionapprentis and decisionmaitreapprentis
+        decisionapprentis::where('parametre_id', $id)->update(['parametre_id' => null]);
+        decisionmaitreapprentis::where('parametre_id', $id)->update(['parametre_id' => null]);
+        
         parametres::destroy($id);
         return redirect()->back()->with('success');
     }

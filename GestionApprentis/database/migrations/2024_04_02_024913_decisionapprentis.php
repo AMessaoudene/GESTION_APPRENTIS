@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('decisionapprentis', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('planbesoins_id');
+            $table->unsignedBigInteger('planbesoins_id')->nullable();
             $table->foreign('planbesoins_id')->references('id')->on('planbesoins')->onDelete('cascade')->onUpdate('cascade');
             $table->string('referenceda');
             $table->date('dateda');
-            $table->unsignedBigInteger('pv_id');
+            $table->unsignedBigInteger('pv_id')->nullable();
             $table->foreign('pv_id')->references('id')->on('pv_installations')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('parametre_id');
+            $table->unsignedBigInteger('parametre_id')->nullable();
             $table->foreign('parametre_id')->references('id')->on('parametres')->onDelete('cascade')->onUpdate('cascade');
-            $table->unsignedBigInteger('bareme_id');
+            $table->unsignedBigInteger('bareme_id')->nullable();
             $table->foreign('bareme_id')->references('id')->on('baremes')->onDelete('cascade')->onUpdate('cascade');
             $table->date('datetransfert')->nullable();
             $table->date('datedebutpresalaireS1');

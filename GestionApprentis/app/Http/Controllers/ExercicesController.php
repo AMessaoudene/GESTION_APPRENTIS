@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\exercices;
+use App\Models\planbesoins;
 use Illuminate\Http\Request;
 use Auth;
 class ExercicesController extends Controller
@@ -44,6 +45,14 @@ class ExercicesController extends Controller
         $exercice->budget = $request->massesalariaire * 0.01;
         $exercice->status = $request->status;
         $exercice->save();
-        return response()->json(['success' => true]);
+        return redirect()->back();
+    }
+
+    public function destroy($id)
+    {
+        planbesoins::where('exercice_id',$id)->update(['exercice_id' => null]);
+        $exercice = exercices::findOrFail($id);
+        $exercice->delete();
+        return redirect()->back();
     }
 }

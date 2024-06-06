@@ -12,7 +12,7 @@ return new class extends Migration
         Schema::create('contrats_apprentis', function (Blueprint $table) {
             $table->id();
             $table->string('numcontrat')->unique();
-            $table->unsignedBigInteger('apprenti_id');
+            $table->unsignedBigInteger('apprenti_id')->nullable();
             $table->foreign('apprenti_id')->references('id')->on('apprentis');
             $table->date('datedebut');
             $table->date('datefin');

@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('referencedma');
             $table->date('datedma');
-            $table->unsignedBigInteger('pv_id');
+            $table->unsignedBigInteger('pv_id')->nullable();
             $table->foreign('pv_id')->references('id')->on('pv_installations')->onDelete('cascade');
-            $table->unsignedBigInteger('parametre_id');
+            $table->unsignedBigInteger('parametre_id')->nullable();
             $table->foreign('parametre_id')->references('id')->on('parametres')->onDelete('cascade');
-            $table->unsignedBigInteger('bareme_id');
+            $table->unsignedBigInteger('bareme_id')->nullable();
             $table->foreign('bareme_id')->references('id')->on('baremes')->onDelete('cascade')->onUpdate('cascade');
             $table->date('datedebutsalaireS1');
             $table->date('datefinsalaireS1');

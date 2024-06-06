@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 use App\Models\specialites;
 use Illuminate\Http\Request;
 use Validator;
-use Illuminate\Http\JsonResponse;
+use App\Models\maitre_apprentis;
+use App\Models\Apprentis;
 class SpecialitesController extends Controller
 {
     /**
@@ -71,7 +72,7 @@ class SpecialitesController extends Controller
         $specialite->nom = $request->nom;
         $specialite->description = $request->description;
         $specialite->save();
-        return new JsonResponse(['success' => true]);
+        return redirect()->back();
     }
 
     /**
@@ -79,6 +80,8 @@ class SpecialitesController extends Controller
      */
     public function destroy($id)
     {
+        Apprentis::where('specialite_id',$id)->update(['specialite_id' => null]);
+        maitre_apprentis::where('fonction',$id)->update(['fonction' => null]);
         specialites::destroy($id);
         return redirect()->back();
     }

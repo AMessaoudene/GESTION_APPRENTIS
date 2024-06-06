@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('supervisions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('apprenti_id');
+            $table->unsignedBigInteger('apprenti_id')->nullable();
             $table->foreign('apprenti_id')->references('id')->on('apprentis');
-            $table->unsignedBigInteger('maitreapprenti_id');
+            $table->unsignedBigInteger('maitreapprenti_id')->nullable();
             $table->foreign('maitreapprenti_id')->references('id')->on('maitre_apprentis');
             $table->enum('status',['actif','inactif'])->default('actif');
             $table->timestamps();

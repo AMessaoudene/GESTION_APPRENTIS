@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('departs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('apprenti_id');
+            $table->unsignedBigInteger('apprenti_id')->nullable();
             $table->foreign('apprenti_id')->references('id')->on('apprentis')->onDelete('cascade')->onUpdate('cascade');
             $table->date('datedepart');
             $table->enum('motif', ['résiliation','transfert']);

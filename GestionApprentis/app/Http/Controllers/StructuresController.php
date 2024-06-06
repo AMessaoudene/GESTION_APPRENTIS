@@ -6,7 +6,6 @@ use App\Models\maitre_apprentis;
 use App\Models\structures;
 use Illuminate\Http\Request;
 use Validator;
-use Illuminate\Http\JsonResponse;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 class StructuresController extends Controller
@@ -46,7 +45,7 @@ class StructuresController extends Controller
         $structure->nom = $request->nom;
         $structure->adresseCourriel = $request->adressecourriel;
         $structure->save();
-        return new JsonResponse(['success' => true]);
+        return redirect()->back();
     }
 
     public function destroy($id){

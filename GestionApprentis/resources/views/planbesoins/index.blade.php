@@ -197,7 +197,11 @@
                         <td>{{ $planbesoin->status }}</td>
                         <td>
                             <button class="btn btn-primary btn-sm edit-btn" data-id="{{ $planbesoin->id }}" data-bs-toggle="modal" data-bs-target="#exampleModal" data-action="edit">Editer</button>
-                            <button class="btn btn-danger btn-sm delete-btn" data-id="{{ $planbesoin->id }}">Supprimer</button>
+                            <form action="{{ route('planbesoins.destroy', $planbesoin->id) }}" method="POST">                  
+                                @csrf
+                                @method('DELETE')           
+                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                            </form>
                         </td>
                     </tr>
                     @endif

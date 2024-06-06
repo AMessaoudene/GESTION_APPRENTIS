@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\decisionapprentis;
+use App\Models\decisionmaitreapprentis;
 use App\Models\structures;
 use App\Models\exercices;
 use Illuminate\Support\Facades\Storage;
@@ -59,11 +61,16 @@ class PlanBesoinsController extends Controller
         $planbesoins->description = $request->description;
         $planbesoins->status = $request->status;
         $planbesoins->save();
-        return response()->json(['success' => true]);
+        return redirect()->back();
     }
-    public function destroy($id)
-    {
+    public function destroy($id) {
+        // Set planbesoins_id to null for related records in decisionapprentis and decisionmaitreapprentis
+        decisionapprentis::where('planbesoins_id', $id)->update(['planbesoins_id' => null]);
+        decisionmaitreapprentis::where('planbesoins_id', $id)->update(['planbesoins_id' => null]);
+    
+        // Delete the PlanBesoins record
         PlanBesoins::destroy($id);
-        return response()->json(['success' => true]);
-    }
+    
+        return redirect()->back();
+    }    
 }

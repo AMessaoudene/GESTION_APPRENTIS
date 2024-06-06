@@ -16,9 +16,9 @@ return new class extends Migration
             $table->string("reference");
             $table->string("direction");
             $table->date('datepv');
-            $table->unsignedBigInteger('apprenti_id');
+            $table->unsignedBigInteger('apprenti_id')->nullable();
             $table->foreign('apprenti_id')->references('id')->on('apprentis');
-            $table->unsignedBigInteger('maitreapprenti_id');
+            $table->unsignedBigInteger('maitreapprenti_id')->nullable();
             $table->foreign('maitreapprenti_id')->references('id')->on('maitre_apprentis');
             $table->date("dateinstallationchiffre");
             $table->string("anneeinstallationlettre");

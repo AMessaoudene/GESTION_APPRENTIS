@@ -43,7 +43,7 @@ class DiplomesController extends Controller
         $diplomes->duree = $request->duree;
         $diplomes->description = $request->description;
         $diplomes->save();
-        return response()->json(['success' => true]);
+        return redirect()->back();
     }
 
     public function destroy($id)

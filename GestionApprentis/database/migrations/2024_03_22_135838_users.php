@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('prenom');
             $table->enum('civilite', ['Homme', 'Femme']);
             $table->enum('role', ['DFP', 'DRH', 'SA', 'EvaluateurGradé']);
-            $table->unsignedBigInteger('structures_id');
+            $table->unsignedBigInteger('structures_id')->nullable();
             $table->foreign('structures_id')->references('id')->on('structures');
             $table->string('telephone')->nullable();
             $table->string('adresse')->nullable();

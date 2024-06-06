@@ -56,7 +56,7 @@ class AssiduitesController extends Controller{
                 $assiduites->datefin = $request->datefin;
                 $assiduites->motif = $request->motif;
                 $preuve = $request->file('preuve');
-                $preuvenom = 'preuve'.time().'.'.$preuve->getClientOriginalExtension();
+                $preuvenom = 'preuve-'.time().'.'.$preuve->getClientOriginalExtension();
                 $preuve->move('assets/preuves', $preuvenom);
                 $assiduites->preuve = $preuvenom;
                 $assiduites->save();
@@ -78,14 +78,13 @@ class AssiduitesController extends Controller{
         $preuve->move('assets/preuves', $preuvenom);
         $assiduites->preuve = $preuvenom;
         $assiduites->save();
-        return response()->json(['success' => true]);
+        return redirect()->back();
     }
 
     public function destroy($id)
     {
         assiduites::destroy($id);
-
-        return response()->json(['success' => true]); // Return success response
+        return redirect()->back(); // Return success response
     }
     public function pdfdownload(Request $request,$file){
         return response()->download('assets/preuves/'.$file);

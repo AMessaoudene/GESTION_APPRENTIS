@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create("dossiers", function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('apprentis_id');
+            $table->unsignedBigInteger('apprentis_id')->nullable();
             $table->foreign('apprentis_id')->references('id')->on('apprentis')->onDelete('cascade');
             $table->string('contratapprenti');
             $table->string('decisionapprenti');

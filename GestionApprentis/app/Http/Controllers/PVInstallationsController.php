@@ -5,6 +5,8 @@ use App\Models\structures;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use App\Models\pv_installations;
+use App\Models\decisionapprentis;
+use App\Models\decisionmaitreapprentis;
 use App\Models\maitre_apprentis;
 use Illuminate\Http\Request;
 
@@ -160,6 +162,11 @@ class PVInstallationsController extends Controller
      */
     public function destroy(string $id)
     {
+        // Set planbesoins_id to null for related records in decisionapprentis and decisionmaitreapprentis
+        decisionapprentis::where('pv_id', $id)->update(['pv_id' => null]);
+        decisionmaitreapprentis::where('pv_id', $id)->update(['pv_id' => null]);
         
+        pv_installations::destroy($id);
+        return redirect()->back()->with('success');
     }
 }

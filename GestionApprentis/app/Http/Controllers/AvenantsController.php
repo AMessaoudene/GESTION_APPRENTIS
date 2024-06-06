@@ -57,7 +57,6 @@ class AvenantsController extends Controller
                 $avenant->type = $request->type;
                 $avenant->date = $request->date;
                 $avenant->save();
-
                 $decision = decisionapprentis::where('id',$avenant->decisionapprenti_id)->first();
                 $pv = pv_installations::where('id',$decision->pv_id)->first();
                 $apprenti = apprentis::where('id',$pv->apprenti_id)->first();
@@ -68,13 +67,6 @@ class AvenantsController extends Controller
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
-    }
-    public function show(Request $request)
-    {
-        // Retrieve all "assiduites" associated with the selected apprentice
-        $avenants = avenants::all();
-
-        return view('avenants.consulter', compact('avenants'));
     }
     /**
      * Show the form for editing the specified resource.
