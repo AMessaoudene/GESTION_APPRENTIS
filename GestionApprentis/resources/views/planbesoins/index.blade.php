@@ -292,20 +292,20 @@
                     @csrf
                     @method('PUT')
                     <select name="exercice_id" class="form-control mb-2">
-                        <option value="{{ $exercice->id }}" ${exercice_id == '{{ $exercice->id }}' ? 'selected' : ''}>{{ $exercice->annee }}</option>
+                        <option value="" disabled selected>-- Choisir --</option>
                         @foreach($exercices as $exercice)
                             <option value="{{ $exercice->id }}" ${exercice_id == '{{ $exercice->id }}' ? 'selected' : ''}>{{ $exercice->annee }}</option>
                         @endforeach
                     </select>
                     <select name="structure_id" class="form-control mb-2">
-                        <option value="{{ $structure->id }}" ${structure_id == '{{ $structure->id }}' ? 'selected' : ''}>{{ $structure->nom }}</option>
+                        <option value="" disabled selected>-- Choisir --</option>
                         @foreach($structures as $structure)
                             <option value="{{ $structure->id }}" ${structure_id == '{{ $structure->id }}' ? 'selected' : ''}>{{ $structure->nom }}</option>
                         @endforeach
                     </select>
                     <input type="text" name="reference" class="form-control mb-2" value="${reference}">
                     <select name="specialites_id" class="form-control mb-2" required>
-                        <option value="{{ $specialite->id }}" ${specialites_id == '{{ $specialite->id }}' ? 'selected' : ''}>{{$specialite->nom}}</option>
+                        <option value="" disabled selected>-- Choisir --</option>
                         @foreach($specialites as $specialite)
                             <option value="{{$specialite->id}}" ${specialites_id == '{{ $specialite->id }}' ? 'selected' : ''}>{{$specialite->nom}}</option>
                         @endforeach

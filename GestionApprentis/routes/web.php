@@ -69,8 +69,6 @@ Route::middleware('auth')->group(function(){
 });
 //pvs
 Route::middleware('auth')->group(function(){
-    Route::get('/apprentis/pvinstallations', [PVInstallationsController::class, 'index'])->name('pvinstallations.index');
-    Route::post('/apprentis/pvinstallations', [PVInstallationsController::class, 'store'])->name('pvinstallations.store');
     Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'pv'])->name('pvinstallations.download'); 
 });
 //Dossiers 

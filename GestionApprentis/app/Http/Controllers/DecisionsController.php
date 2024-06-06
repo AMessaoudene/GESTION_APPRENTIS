@@ -35,7 +35,7 @@ class DecisionsController extends Controller
         $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
         $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
         (!is_null($maitreapprenti1)) ? $maitreapprenti = $maitreapprenti1 : $maitreapprenti = $maitreapprenti2;
-        return view('decisions.index', compact('diplomes','refs','structures','specialites','parametres','baremes','pv','apprenti','maitreapprenti','diplome','plans'));
+        return view('decisions.index', compact('apprenti','diplomes','refs','structures','specialites','parametres','baremes','pv','apprenti','maitreapprenti','diplome','plans'));
     }
 
     /**

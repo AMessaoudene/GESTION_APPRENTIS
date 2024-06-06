@@ -136,12 +136,35 @@ class ApprentisController extends Controller
                     $supervision->apprenti_id = $apprenti->id;
                     $supervision->maitreapprenti_id = $maitreApprenti->id;
                     $supervision->save();
-                    // Dispatch the event
-                    event(new NewApprenticeAdded($apprenti));
-
                     Session::put('apprenti', $apprenti);
-                    return redirect()->route('pvinstallations.index');
-                }
+
+                    $pv = new pv_installations();
+        $pv->apprenti_id = $apprenti->id;
+        $pv->reference = $request->reference;
+        $pv->datepv = $request->datepv;
+        $pv->dateinstallationchiffre = $request->dateinstallationchiffre;
+        $pv->anneeinstallationlettre = $request->anneeinstallationlettre;
+        $pv->moisinstallationlettre = $request->moisinstallationlettre;
+        $pv->jourinstallationlettre = $request->jourinstallationlettre;
+        $pv->directionaffectation = $request->directionaffectation;
+        $pv->serviceaffectation = $request->serviceaffectation;
+        $pv->dotations = $request->dotations;
+
+        // Fetch maitre_apprentis
+        $maitre_apprentis1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+        $maitre_apprentis2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+        $maitre_apprentis = $maitre_apprentis1 ?: $maitre_apprentis2;
+
+        if (!$maitre_apprentis) {
+            return redirect()->back()->with('error', 'Maitre apprenti not found.');
+        }
+
+        $pv->maitreapprenti_id = $maitre_apprentis->id;
+        $pv->save();
+
+        Session::put('pv', $pv);
+        return redirect()->route('decisions.index');
+    }
             }
             else{
                 // Create a new apprentice record
@@ -182,9 +205,34 @@ class ApprentisController extends Controller
                 $supervision->apprenti_id = $apprenti->id;
                 $supervision->maitreapprenti_id = $maitreApprenti->id;
                 $supervision->save();
-
                 Session::put('apprenti', $apprenti);
-                return redirect()->route('pvinstallations.index');
+
+                $pv = new pv_installations();
+        $pv->apprenti_id = $apprenti->id;
+        $pv->reference = $request->reference;
+        $pv->datepv = $request->datepv;
+        $pv->dateinstallationchiffre = $request->dateinstallationchiffre;
+        $pv->anneeinstallationlettre = $request->anneeinstallationlettre;
+        $pv->moisinstallationlettre = $request->moisinstallationlettre;
+        $pv->jourinstallationlettre = $request->jourinstallationlettre;
+        $pv->directionaffectation = $request->directionaffectation;
+        $pv->serviceaffectation = $request->serviceaffectation;
+        $pv->dotations = $request->dotations;
+
+        // Fetch maitre_apprentis
+        $maitre_apprentis1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+        $maitre_apprentis2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+        $maitre_apprentis = $maitre_apprentis1 ?: $maitre_apprentis2;
+
+        if (!$maitre_apprentis) {
+            return redirect()->back()->with('error', 'Maitre apprenti not found.');
+        }
+
+        $pv->maitreapprenti_id = $maitre_apprentis->id;
+        $pv->save();
+
+        Session::put('pv', $pv);
+        return redirect()->route('decisions.index');
             }
         }
         catch (\Exception $e) {
