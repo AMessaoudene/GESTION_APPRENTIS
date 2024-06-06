@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\baremes;
 use App\Models\dossiers;
 use App\Models;
+use Barryvdh\DomPDF\Facade\PDF;
 use Auth;
 use App\Models\apprentis;
 use App\Models\pv_installations;
@@ -148,9 +149,15 @@ class DossiersController extends Controller
             return redirect()->back()->with('success','');
         }
     }
-    public function pdfdownload(Request $request,$file){
-        return response()->download('assets/dossiers/'.$file);
-    }
+    public function pv_pdfDownload(Request $request, $id){
+    $apprenti = Apprentis::findOrFail($id);
+    $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+    $specialite = specialites::where('id',$apprenti->specialite_id);
+    $diplome = diplomes::where('id',$apprenti->diplome1_id);
+    $pdf = PDF::loadView('pvinstallations.fiche', compact('apprenti', 'pv','specialite','diplome'));
+    
+    return $pdf->download('pv_' . $pv->reference . $apprenti->id . '.pdf');
+}
     public function delete(Request $request,$id){
         $dossiers = dossiers::findOrFail($id);
         $dossiers->delete();

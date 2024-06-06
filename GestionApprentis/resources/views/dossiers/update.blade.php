@@ -119,7 +119,7 @@
                                     @endforeach
                                 </select>
                             </li>
-                            <li class="list-group-item">Référence <input type="text" name="referenceda" value="{{ $decisionapprenti->referenceda }}" placeholder="{{ $decisionapprenti->referenceda }}"> </li>
+                            <li class="list-group-item">Référence <input type="text" name="referenceda" value="{{ $decisionapprenti->referenceda }}" placeholder="{{ $decisionapprenti->referenceda }}"></li>
                             <li class="list-group-item">Date Decision <input type="date" name="dateda" value="{{ $decisionapprenti->dateda }}" placeholder="{{ $decisionapprenti->dateda }}"></li>
                             <li class="list-group-item">Parametre ID 
                                 <select name="parametre_id" placeholder="{{ $decisionapprenti->parametre_id }}">
@@ -189,37 +189,37 @@
                             @if($dossier->contratapprenti)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->contratapprenti) }}">Contrat</a></li>
                             @else
-                                <input type="file" accept=".pdf" name="contratapprenti" id="" required>
+                                <input type="file" accept=".pdf" name="contratapprenti" id="">
                             @endif
                             <label for="">PV</label>
                             @if($dossier->pvinstallation)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->pvinstallation) }}">PV</a></li>
                             @else
-                                <input type="file" accept=".pdf" name="pvinstallation" id="" required>
+                                <input type="file" accept=".pdf" name="pvinstallation" id="">
                             @endif
                             <label for="">Extrait de naissance</label>
                             @if($dossier->extraitnaissance)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->extraitnaissance) }}">Extrait de naissance</a></li>
                             @else
-                                <input type="file" accept=".pdf" name="extraitnaissance" id="" required>
+                                <input type="file" accept=".pdf" name="extraitnaissance" id="">
                             @endif
                             <label for="">Decision d'apprenti</label>
                             @if($dossier->decisionapprenti)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionapprenti) }}">Decision Apprenti</a></li>
                             @else
-                                <input type="file" accept=".pdf" name="decisionapprenti" id="" required>
+                                <input type="file" accept=".pdf" name="decisionapprenti" id="">
                             @endif
                             <label for="">Decision Maitre d'apprentis</label>
                             @if($dossier->decisionmaitreapprenti)
                                 <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a></li>
                             @else
-                                <input type="file" accept=".pdf" name="decisionmaitreapprenti" id="" required>
+                                <input type="file" accept=".pdf" name="decisionmaitreapprenti" id="">
                             @endif
                             <label for="">Copie cheque</label>
                             @if($dossier->copiecheque)
                             <li class="list-group-item"><a href="{{ url('/apprentis/fichiers/download', $dossier->copiecheque) }}">Copie cheque</a></li>
                             @else
-                                <input type="file" accept=".pdf" name="copiecheque" id="" required>
+                                <input type="file" accept=".pdf" name="copiecheque" id="">
                             @endif
                             <label for="">Photo</label>
                             @if($dossier->photo)

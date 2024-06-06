@@ -65,9 +65,9 @@
         <tr>
             <td>Apprenti(e)</td>
             <td>
-                <strong>Nom / Prénom :</strong> « Nom et prénom de l'apprenti »<br>
-                <strong>Spécialité de formation :</strong> « Spécialité de formation de l'apprenti »<br>
-                <strong>Diplôme :</strong> « Diplôme préparé par l'apprenti »
+                <strong>Nom / Prénom :</strong> {{ $apprenti->nom }} {{ $apprenti->prenom }}<br>
+                <strong>Spécialité de formation :</strong> {{ $specialite->nom }}<br>
+                <strong>Diplôme :</strong> {{ $diplome->nom }}
             </td>
         </tr>
         <tr>

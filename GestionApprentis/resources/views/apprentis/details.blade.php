@@ -50,6 +50,12 @@
                 <li class="list-group-item">Service d'affectation : {{ $pv->serviceaffectation }}</li>
                 <li class="list-group-item">Dotations : {{ $pv->dotations }}</li>
             </ul>
+            <div class="text-center">
+                <form action="{{ route('dossiers.pv_pdfdownload', $apprenti->id) }}" method="POST" enctype="multipart/form-data">    
+                    @csrf
+                    <button type="submit" class="btn btn-primary">Telecharger</button>
+                </form>
+            </div>
         </div>
     </div>
     <div class="row">

@@ -34,14 +34,15 @@
                                     <th scope="col">Structure</th>
                                     <th scope="col">Specialite</th>
                                     <th scope="col">Historique des MA</th>
-                                    <th scope="col">Dossier</th>
+                                    <th scope="col">Consulter dossier</th>
+                                    @if (Auth::user()->role == "SA")
+                                        <th scope="col">MAJ Dossier</th>
+                                    @endif
                                     <th scope="col">Assiduités</th>
                                     <th scope="col">Evaluations</th>
                                     <th scope="col">DDL Payement</th>
                                     <th scope="col">Statut</th>
-                                    @if (Auth::user()->role == "DFP" || Auth::user()->role == "SA")
                                     <th scope="col">Action</th>
-                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,10 +62,9 @@
                                         @endif
                                     @endforeach
                                     <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueMA">Voir</a></td>
-                                    @if ($user->role == 'SA')
-                                    <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
-                                    @elseif($user->role == 'DFP')
-                                    <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
+                                    <td><a href="/apprentis/details/{{ $apprenti->id }}/Consulter">Voir</a></td>
+                                    @if (Auth::user()->role == 'SA')
+                                        <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
                                     @endif
                                     <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueAssiduites">Voir</a></td>
                                     <td><a href="/apprentis/{{ $apprenti->id }}/Historiqueevaluations">Voir</a></td>
@@ -147,10 +147,11 @@
                                         @endif
                                     @endforeach
                                     <td><a href="/apprentis/historiqueMA/{{ $apprenti->id }}">Voir</a></td>
-                                    @if ($user->role == 'SA' && $apprenti->status == 'inactif')
-                                    <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>
-                                    @elseif($user->role == 'DFP' || (($user->role == 'DRH' || $user->role == 'SA') && $apprenti->status == 'actif'))
+                                    @if (Auth::user()->role == 'SA')
                                     <td><a href="/apprentis/details/{{ $apprenti->id }}">Voir</a></td>
+                                    @endif
+                                    @if ($user->role == 'SA' && $apprenti->status == 'inactif')
+                                    <td><a href="/apprentis/details/update/{{ $apprenti->id }}">Voir</a></td>                                    
                                     @endif
                                     <td><a href="/apprentis/{{ $apprenti->id }}/HistoriqueAssiduites">Voir</a></td>
                                     <td><a href="/apprentis/{{ $apprenti->id }}/Historiqueevaluations">Voir</a></td>
