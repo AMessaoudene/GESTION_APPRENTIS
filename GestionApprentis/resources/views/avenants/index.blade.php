@@ -26,10 +26,10 @@
 
                 <!-- Modal depart -->
                 <div class="modal fade" id="addAccountModal" tabindex="-1" aria-labelledby="addAccountModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                    <div class="modal-dialog modal-lg">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des departs</h5>
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des avenants</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -39,7 +39,7 @@
                                     @csrf
                                     <div class="form-group mb-3">
                                         <label for="decisionapprenti_id">Sélectionner une decision d'un apprenti</label>
-                                            <select name="decisionapprenti_id" id="decisionapprenti_id">
+                                        <select name="decisionapprenti_id" id="decisionapprenti_id">
                                             <option value="">-- Choisir --</option>
                                             @foreach ($apprentis as $apprenti)
                                                 @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $apprenti->structure_id))
@@ -47,11 +47,18 @@
                                                         @if ($pv->apprenti_id == $apprenti->id)
                                                             @foreach ($decisions as $decision)
                                                                 @if ($decision->pv_id == $pv->id)
-                                                                    <option value="{{ $decision->id }}">{{ $decision->referenceda }} - {{ $apprenti->nom }} - {{ $apprenti->prenom }}
-                                                                    @foreach ($specialites as $specialite)
-                                                                        @if ($specialite->id == $apprenti->specialite_id) {{ $specialite->nom }} @endif
-                                                                    @endforeach
-                                                                </option>
+                                                                    <option value="{{ $decision->id }}" data-diplome-id="{{ $apprenti->diplome1_id }}">{{ $decision->referenceda }} - {{ $apprenti->nom }} {{ $apprenti->prenom }}
+                                                                        @foreach ($specialites as $specialite)
+                                                                            @if ($specialite->id == $apprenti->specialite_id)
+                                                                                - {{ $specialite->nom }}
+                                                                            @endif
+                                                                        @endforeach
+                                                                        @foreach ($structures as $structure)
+                                                                            @if ($structure->id == $apprenti->structure_id)
+                                                                                - {{ $structure->nom }}
+                                                                            @endif
+                                                                        @endforeach
+                                                                    </option>
                                                                 @endif
                                                             @endforeach
                                                         @endif
@@ -77,7 +84,7 @@
                                         <select class="form-control" name="diplome_id" id="diplome">
                                             <option value="">-- Choisir --</option>
                                             @foreach ($diplomes as $diplome)
-                                                <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
+                                                <option value="{{ $diplome->id }}" data-duree="{{ $diplome->duree }}">{{ $diplome->nom }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -152,3 +159,52 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const avenantForm = document.getElementById('avenantForm');
+    const diplomeSelect = document.getElementById('diplome');
+    const decisionSelect = document.getElementById('decisionapprenti_id');
+    let currentDiplomeId = null;
+    let currentDiplomeDuree = null;
+
+    decisionSelect.addEventListener('change', function() {
+        const selectedOption = decisionSelect.options[decisionSelect.selectedIndex];
+        currentDiplomeId = selectedOption.getAttribute('data-diplome-id');
+
+        // Filter diplomas to exclude the current one
+        for (let i = 0; i < diplomeSelect.options.length; i++) {
+            let option = diplomeSelect.options[i];
+            if (option.value == currentDiplomeId) {
+                option.style.display = 'none';
+            } else {
+                option.style.display = 'block';
+            }
+        }
+    });
+
+    avenantForm.addEventListener('submit', function(event) {
+        const selectedDiplomeOption = diplomeSelect.options[diplomeSelect.selectedIndex];
+        const selectedDiplomeId = selectedDiplomeOption.value;
+        const selectedDiplomeDuree = parseInt(selectedDiplomeOption.getAttribute('data-duree'));
+
+        if (!selectedDiplomeId || isNaN(selectedDiplomeDuree)) {
+            alert('Veuillez sélectionner un diplôme valide.');
+            event.preventDefault();
+            return;
+        }
+
+        if (selectedDiplomeId == currentDiplomeId) {
+            alert('Veuillez sélectionner un diplôme différent.');
+            event.preventDefault();
+            return;
+        }
+
+        if (currentDiplomeDuree && selectedDiplomeDuree < currentDiplomeDuree) {
+            alert('La durée du diplôme sélectionné doit être égale ou supérieure à celle du diplôme actuel.');
+            event.preventDefault();
+            return;
+        }
+    });
+});
+</script>

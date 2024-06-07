@@ -70,6 +70,7 @@
 
                                 if (!isNaN(datedebut) && duree) {
                                     const datefin = new Date(datedebut.setMonth(datedebut.getMonth() + duree));
+                                    datefin.setDate(datefin.getDate() - 1);
                                     datefinInput.value = datefin.toISOString().split('T')[0];
                                 } else {
                                     datefinInput.value = '';

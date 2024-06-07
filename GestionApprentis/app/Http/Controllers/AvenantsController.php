@@ -7,6 +7,7 @@ use App\Models\pv_installations;
 use App\Models\specialites;
 use Illuminate\Support\Facades\Validator;
 use App\Models\apprentis;
+use App\Models\structures;
 use App\Models\avenants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,8 +25,9 @@ class AvenantsController extends Controller
         $avenants = avenants::all();
         $diplomes = diplomes::all();
         $specialites = specialites::all();
+        $structures = structures::all();
         $pvs = pv_installations::all();
-        return view('avenants.index', compact('specialites','decisions','pvs','avenants','apprentis','diplomes'));
+        return view('avenants.index', compact('structures','specialites','decisions','pvs','avenants','apprentis','diplomes'));
         }
         else{
             return redirect()->back();
