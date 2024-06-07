@@ -14,6 +14,28 @@
         @include('layouts.egsidenav')
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                    @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+            <!-- Trigger button -->
             <div class="container">
                 @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')    
                 <div class="container mt-5">
@@ -42,7 +64,7 @@
                                         <select name="decisionapprenti_id" id="decisionapprenti_id">
                                             <option value="">-- Choisir --</option>
                                             @foreach ($apprentis as $apprenti)
-                                                @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $apprenti->structure_id))
+                                                @if ((Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $apprenti->structure_id)) && !$apprenti->diplome2_id)
                                                     @foreach ($pvs as $pv)
                                                         @if ($pv->apprenti_id == $apprenti->id)
                                                             @foreach ($decisions as $decision)

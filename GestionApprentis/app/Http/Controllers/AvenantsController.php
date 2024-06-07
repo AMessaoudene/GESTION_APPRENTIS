@@ -62,7 +62,9 @@ class AvenantsController extends Controller
                 $decision = decisionapprentis::where('id',$avenant->decisionapprenti_id)->first();
                 $pv = pv_installations::where('id',$decision->pv_id)->first();
                 $apprenti = apprentis::where('id',$pv->apprenti_id)->first();
-                $apprenti->diplome2_id = $request->diplome_id;
+                if($request->diplome_id){
+                    $apprenti->diplome2_id = $request->diplome_id;
+                }
                 $apprenti->status = 'actif';
                 $apprenti->save();
                 return redirect()->back()->with('success', 'Assiduité ajoutée avec succès!');
@@ -113,12 +115,36 @@ class AvenantsController extends Controller
      * Remove the specified resource from storage.
      */
     public function destroy(string $id){
-        try{
-            $avenants = avenants::find($id);
-            $avenants->delete();
-            return redirect()->back()->with('success', 'Assiduité supprimée avec succès!');
-        }catch(\Exception $e){
+        
+        try {
+            $avenant = avenants::find($id);
+            if (!$avenant) {
+                return redirect()->back()->withErrors('Avenant not found')->withInput();
+            }
+
+            $decision = decisionapprentis::where('id', $avenant->decisionapprenti_id)->first();
+            if (!$decision) {
+                return redirect()->back()->withErrors('Decision not found')->withInput();
+            }
+
+            $pv = pv_installations::where('id', $decision->pv_id)->first();
+            if (!$pv) {
+                return redirect()->back()->withErrors('PV not found')->withInput();
+            }
+
+            $apprenti = apprentis::where('id', $pv->apprenti_id)->first();
+            if (!$apprenti) {
+                return redirect()->back()->withErrors('Apprenti not found')->withInput();
+            }
+
+            $apprenti->diplome2_id = null;
+            $apprenti->save();
+            $avenant->delete();
+
+            return redirect()->back()->with('success', 'Avenant supprimé avec succès!');
+        } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
     }
+
 }

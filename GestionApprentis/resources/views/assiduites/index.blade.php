@@ -6,11 +6,11 @@
         <!-- Sidebar -->
         @if (Auth::user()->role == 'DFP')
             @include('layouts.dfpsidenav')
-            @elseif(Auth::user()->role == 'SA')
+        @elseif(Auth::user()->role == 'SA')
             @include('layouts.sasidenav')
-            @elseif(Auth::user()->role == 'DRH')
+        @elseif(Auth::user()->role == 'DRH')
             @include('layouts.drhsidenav')
-            @elseif(Auth::user()->role == 'EvaluateurGradé')
+        @elseif(Auth::user()->role == 'EvaluateurGradé')
             @include('layouts.egsidenav')
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
@@ -104,7 +104,6 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Apprenti ID</th>
                                     <th>Nom</th>
                                     <th>Prenom</th>
                                     <th>Type</th>
@@ -112,13 +111,13 @@
                                     <th>Date de fin</th>
                                     <th>Motif</th>
                                     <th>Preuve</th>
+                                    <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach ($assiduites as $assiduite)
                                     <tr>
                                         <td>{{ $assiduite->id }}</td>
-                                        <td>{{ $assiduite->apprenti_id }}</td>
                                         @foreach ($apprentis as $apprenti)
                                             @if ($apprenti->id == $assiduite->apprenti_id)
                                                 <td>{{ $apprenti->nom }}</td>
@@ -130,6 +129,13 @@
                                         <td>{{ $assiduite->datefin }}</td>
                                         <td>{{ $assiduite->motif }}</td>
                                         <td><a href="{{ url('/download', $assiduite->preuve) }}">Fiche</a></td>
+                                        <td>
+                                            <form action="{{ route('assiduites.destroy', $assiduite->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                            </form>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>
@@ -158,11 +164,21 @@
         datefin.min = datedebut;
     });
 
+    document.getElementById('datefin').addEventListener('change', function() {
+        var datedebut = document.getElementById('datedebut').value;
+        var datefin = this.value;
+
+        if (datedebut && datefin && new Date(datedebut) >= new Date(datefin)) {
+            alert('La date de fin doit être supérieure à la date de début.');
+            this.value = '';
+        }
+    });
+
     document.getElementById('assiduiteForm').addEventListener('submit', function(event) {
         var datedebut = document.getElementById('datedebut').value;
         var datefin = document.getElementById('datefin').value;
 
-        if (datedebut && datefin && datedebut >= datefin) {
+        if (datedebut && datefin && new Date(datedebut) >= new Date(datefin)) {
             event.preventDefault();
             alert('La date de fin doit être supérieure à la date de début.');
         }
