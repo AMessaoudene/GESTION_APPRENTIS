@@ -14,7 +14,7 @@
             @include('layouts.egsidenav')
         @endif
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')  
+            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
             <!-- Trigger button -->
             <div class="container mt-5">
                 <h1 class="text-center">Assiduités</h1>
@@ -30,7 +30,7 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addAssiduitesModalLabel">Gestion Des Comptes</h5>
+                                <h5 class="modal-title" id="addAssiduitesModalLabel">Gestion Des Assiduités</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
@@ -43,7 +43,7 @@
                                         <select class="form-control" name="apprenti_id" id="apprenti_id" required>
                                             <option value="">Sélectionner un apprenti</option>
                                             @foreach ($apprentis as $apprenti)
-                                                @if ($apprenti->status == "actif" && Auth::user()->structures_id == $apprenti->structure_id)
+                                                @if ($apprenti->status == "actif" && (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $apprenti->structure_id)))
                                                 <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}" data-specialite="{{ $apprenti->specialite->nom }}">
                                                     {{ $apprenti->nom }} {{ $apprenti->prenom }}
                                                 </option>
@@ -111,7 +111,9 @@
                                     <th>Date de fin</th>
                                     <th>Motif</th>
                                     <th>Preuve</th>
-                                    <th>Actions</th>
+                                    @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
+                                        <th>Actions</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -129,13 +131,15 @@
                                         <td>{{ $assiduite->datefin }}</td>
                                         <td>{{ $assiduite->motif }}</td>
                                         <td><a href="{{ url('/download', $assiduite->preuve) }}">Fiche</a></td>
-                                        <td>
-                                            <form action="{{ route('assiduites.destroy', $assiduite->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-danger">Supprimer</button>
-                                            </form>
-                                        </td>
+                                        @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && $assiduite->apprenti_id == $apprenti->id && $apprenti->structure_id == Auth::user()->structures_id))
+                                            <td>
+                                                <form action="{{ route('assiduites.destroy', $assiduite->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                </form>
+                                            </td>
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>
