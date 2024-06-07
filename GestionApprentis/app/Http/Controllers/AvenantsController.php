@@ -19,18 +19,18 @@ class AvenantsController extends Controller
      */
     public function index()
     {
-        if(auth::user()){
-        $apprentis = apprentis::all();
-        $decisions = decisionapprentis::all();
-        $avenants = avenants::all();
-        $diplomes = diplomes::all();
-        $specialites = specialites::all();
-        $structures = structures::all();
-        $pvs = pv_installations::all();
-        return view('avenants.index', compact('structures','specialites','decisions','pvs','avenants','apprentis','diplomes'));
+        if(auth::user()->status == 'active'){
+            $apprentis = apprentis::all();
+            $decisions = decisionapprentis::all();
+            $avenants = avenants::all();
+            $diplomes = diplomes::all();
+            $specialites = specialites::all();
+            $structures = structures::all();
+            $pvs = pv_installations::all();
+            return view('avenants.index', compact('structures','specialites','decisions','pvs','avenants','apprentis','diplomes'));
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('no access');
         }
     }
     public function store(Request $request)

@@ -5,6 +5,7 @@ use App\Models\specialites;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\maitre_apprentis;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Apprentis;
 class SpecialitesController extends Controller
 {
@@ -13,8 +14,13 @@ class SpecialitesController extends Controller
      */
     public function index()
     {
-        $specialites = specialites::all();
-        return view('specialites.index', compact('specialites'));
+        if(Auth::user()->status == 'active'){
+            $specialites = specialites::all();
+            return view('specialites.index', compact('specialites'));
+        }
+        else{
+            return redirect()->back()->with('no access');
+        }
     }
 
     /**

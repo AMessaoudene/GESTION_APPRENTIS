@@ -14,13 +14,13 @@ class ParametresController extends Controller
      */
     public function index()
     {
-        if(auth::user()){
-        $user = auth::user();
-        $parametres = parametres::all();
-        return view('parametres.index', compact('parametres','user'));
+        if(auth::user()->status == 'active'){
+            $user = auth::user();
+            $parametres = parametres::all();
+            return view('parametres.index', compact('parametres','user'));
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('no access');
         }
     }
 

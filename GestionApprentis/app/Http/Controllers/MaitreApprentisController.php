@@ -15,11 +15,11 @@ class MaitreApprentisController extends Controller
 {
     public function index()
     {
-        $maitre_apprentis = maitre_apprentis::all();
-        $structures = structures::all();
-        $specialites = specialites::all();
-        $diplomes = diplomes::all();
-        if(auth::user()){
+        if(auth::user()->status == "active"){
+            $maitre_apprentis = maitre_apprentis::all();
+            $structures = structures::all();
+            $specialites = specialites::all();
+            $diplomes = diplomes::all();
             return view('maitre_apprentis.index', compact('diplomes','maitre_apprentis','structures','specialites'));
         }
         else{

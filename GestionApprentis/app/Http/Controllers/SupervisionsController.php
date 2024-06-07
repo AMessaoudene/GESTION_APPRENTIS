@@ -49,6 +49,16 @@ class SupervisionsController extends Controller
         $supervision->datefin = $request->datefin;
         $supervision->save();
     }
+    public function update(Request $request,$id){
+        $supervision = Supervisions::findOrFail($id);
+        $supervision->maitreapprenti_id = $request->maitreapprenti_id;
+        $supervision->apprenti_id = $request->apprenti_id;
+        $supervision->datedebut = $request->datedebut;
+        $supervision->datefin = $request->datefin;
+        $supervision->status = $request->status;
+        $supervision->save();
+        return redirect()->back()->with('Modifié');
+    }
     public function destroy(Request $request,$id){
         $supervision = Supervisions::find($id);
         $supervision->delete();

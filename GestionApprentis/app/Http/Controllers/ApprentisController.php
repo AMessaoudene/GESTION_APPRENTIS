@@ -29,15 +29,15 @@ class ApprentisController extends Controller
 {
     public function index()
     {
-        if(auth::user()->role == 'DFP' || auth::user()->role == 'SA'){
-        $diplomes = diplomes::all();
-        $maitre_apprentis = maitre_apprentis::all();
-        $structures = structures::all();
-        $specialites = specialites::all();
-        return view('apprentis.index', compact('maitre_apprentis','diplomes','structures','specialites')); 
+        if(auth::user()->status == 'active'){
+            $diplomes = diplomes::all();
+            $maitre_apprentis = maitre_apprentis::all();
+            $structures = structures::all();
+            $specialites = specialites::all();
+            return view('apprentis.index', compact('maitre_apprentis','diplomes','structures','specialites')); 
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('no access');
         }
     }
 

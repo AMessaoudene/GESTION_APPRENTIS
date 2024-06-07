@@ -10,10 +10,9 @@ use Illuminate\Support\Facades\Validator;
 
 class DiplomesController extends Controller
 {
-    public function index()
-    {
-        $diplomes = Diplomes::all();
-        if(auth::user()){
+    public function index(){
+        if(Auth::user()->status == 'active'){
+            $diplomes = Diplomes::all();
             return view('diplomes.index', compact('diplomes'));
         }
         else{

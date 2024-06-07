@@ -11,14 +11,14 @@ use Validator;
 class AssiduitesController extends Controller{
     public function index()
     {
-        if(auth::user()->role == 'DFP' || auth::user()->role == 'SA' || auth::user()->role == 'DRH'){
-        $apprentis = apprentis::all();
-        $assiduites = assiduites::all();
-        $specialites = specialites::all();
-        return view('assiduites.index', compact('apprentis', 'assiduites','specialites'));
+        if(auth::user()->status == 'active'){
+            $apprentis = apprentis::all();
+            $assiduites = assiduites::all();
+            $specialites = specialites::all();
+            return view('assiduites.index', compact('apprentis', 'assiduites','specialites'));
         }
         else{
-            return redirect()->back();
+            return redirect()->back()->with('no access');
         }
     }
     public function submit(Request $request)

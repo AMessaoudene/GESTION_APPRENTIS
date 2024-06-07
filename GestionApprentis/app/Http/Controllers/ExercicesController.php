@@ -9,9 +9,14 @@ class ExercicesController extends Controller
 {
     public function index()
     {
-        $user = auth::user();
-        $exercices = exercices::all();
-        return view('exercices.index', compact('exercices','user'));
+        if(Auth::user()->status == 'active'){
+            $user = auth::user();
+            $exercices = exercices::all();
+            return view('exercices.index', compact('exercices','user'));
+        }
+        else{
+            return redirect()->back()->with('no access');
+        }
     }
     public function store(Request $request)
     {

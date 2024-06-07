@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Hash;
 class ComptesController extends Controller
 {
     public function index(){
-        if(auth::user()){
+        if(auth::user()->status == 'active'){
             $comptes = user::all();
             $structures = structures::all();
             return view('comptes.index',compact('comptes','structures'));

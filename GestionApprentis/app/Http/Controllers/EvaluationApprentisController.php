@@ -10,17 +10,23 @@ use App\Models\supervisions;
 use Illuminate\Http\Request;
 use App\Models\maitre_apprentis;
 use Validator;
+use Auth;
 
 class EvaluationApprentisController extends Controller
 {
     public function index()
     {
-        $apprentis = apprentis::all();
-        $structures = structures::all();
-        $evaluations = evaluation_apprentis::all();
-        $maitreapprentis = maitre_apprentis::all();
-        $supervisions = supervisions::all();
-        return view('evaluation_apprentis.index', compact('apprentis', 'structures', 'evaluations', 'maitreapprentis', 'supervisions'));
+        if(Auth::user()->status == 'active'){
+            $apprentis = apprentis::all();
+            $structures = structures::all();
+            $evaluations = evaluation_apprentis::all();
+            $maitreapprentis = maitre_apprentis::all();
+            $supervisions = supervisions::all();
+            return view('evaluation_apprentis.index', compact('apprentis', 'structures', 'evaluations', 'maitreapprentis', 'supervisions'));
+        }
+        else{
+            return redirect()->back()->with('no access');
+        }
     }
 
     public function submit(Request $request)

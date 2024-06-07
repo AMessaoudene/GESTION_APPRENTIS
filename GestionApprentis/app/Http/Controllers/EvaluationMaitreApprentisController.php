@@ -4,13 +4,19 @@ namespace App\Http\Controllers;
 use App\Models\maitre_apprentis;
 use App\Models\evaluation_maitre_apprentis;
 use Illuminate\Http\Request;
+use Auth;
 
 class EvaluationMaitreApprentisController extends Controller
 {
     public function index()
     {
+        if(Auth::user()->status == 'active'){
+        $evaluationmaitreapprentis = evaluation_maitre_apprentis::all();
         $maitreapprentis = maitre_apprentis::all();
-        return view('evaluation_maitre_apprentis.index',compact('maitreapprentis'));
+        return view('evaluation_maitre_apprentis.index',compact('evaluationmaitreapprentis','maitreapprentis'));
+        }else{
+            return redirect()->back()->with('no access');
+        }
     }
     
     public function submit(Request $request)

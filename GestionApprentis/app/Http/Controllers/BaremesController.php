@@ -15,10 +15,10 @@ class BaremesController extends Controller
      * Display a listing of the resource.
      */
     public function index(){
-        $baremes = baremes::all();
-        $refsalaries = refsalariares::all();
-        $diplomes = diplomes::all();
-        if(auth::user()){
+        if(Auth::user()->status == 'active'){
+            $baremes = baremes::all();
+            $refsalaries = refsalariares::all();
+            $diplomes = diplomes::all();
             return view('baremes.index', compact('baremes', 'refsalaries', 'diplomes'));
         }
         else{

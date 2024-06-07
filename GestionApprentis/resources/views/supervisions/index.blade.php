@@ -111,7 +111,7 @@
                             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
                             <td>
                                 <div>
-                                    @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $apprenti->structure_id))
+                                    @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && $supervision->apprenti_id == $apprenti->id && Auth::user()->structures_id == $apprenti->structure_id))
                                         <button class="btn btn-primary edit-btn mr-2" data-id="{{ $supervision->id }}">Modifier</button>
                                     @endif
                                     @if (Auth::user()->role == 'DFP')
@@ -167,10 +167,50 @@
         $(document).on('click', '.edit-btn', function() {
             var id = $(this).data('id');
             var row = $(this).closest('tr');
+            var apprenti = row.find('td:eq(1)').text();
+            var maitre = row.find('td:eq(2)').text();
+            var datedebut = row.find('td:eq(3)').text();
+            var datefin = row.find('td:eq(4)').text();
+            var status = row.find('td:eq(5)').text();
             var editForm = `
                 <form method="POST" action="{{ route('supervisions.update', $supervision->id) }}" class="edit-form">
                     @csrf
                     @method('PUT')
+                    <div class="form-group">
+                        <label for="apprenti_id">Apprenti</label>
+                        <select name="apprenti_id" class="form-control" id="apprenti_id">
+                            <option value="">Sélectionnez un apprenti</option>
+                            @foreach($apprentis as $apprenti)
+                                <option value="{{ $apprenti->id }}" {{ $apprenti->id == $supervision->apprenti_id ? 'selected' : '' }}>{{ $apprenti->nom }} {{ $apprenti->prenom }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="maitreapprenti_id">Maitre d'apprenti</label>
+                        <select name="maitreapprenti_id" class="form-control" id="maitreapprenti_id">
+                            <option value="">Sélectionnez un maitre d'apprenti</option>
+                            @foreach($maitres as $maitre)
+                                <option value="{{ $maitre->id }}" {{ $maitre->id == $supervision->maitreapprenti_id ? 'selected' : '' }}>{{ $maitre->nom }} {{ $maitre->prenom }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="datedebut">date debut</label>
+                        <input type="date" name="datedebut" class="form-control" id="datedebut" value="{{ $supervision->datedebut }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="datefin">date fin</label>
+                        <input type="date" name="datefin" class="form-control" id="datefin" value="{{ $supervision->datefin }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="status">date debut</label>
+                        <select name="status" class="form-control" id="status" value="{{ $supervision->status }}">
+                            <option value="">Sélectionnez un status</option>
+                            <option value="actif" {{ $supervision->status == 'actif' ? 'selected' : '' }}>actif</option>
+                            <option value="inactif" {{ $supervision->status == 'inactif' ? 'selected' : '' }}>inactif</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form>
             `;

@@ -13,10 +13,14 @@ class DepartsController extends Controller
 {
     public function index()
     {
-        $user = auth::user();
-        $departs = departs::all();
-        $apprentis = apprentis::all();
-        return view('departs.index', compact('departs','apprentis','user'));
+        if(auth::user()->status == 'active'){
+            $user = auth::user();
+            $departs = departs::all();
+            $apprentis = apprentis::all();
+            return view('departs.index', compact('departs','apprentis','user'));
+        }else{
+            return redirect()->back()->with('no access');
+        }
     }
 
     public function store(Request $request)

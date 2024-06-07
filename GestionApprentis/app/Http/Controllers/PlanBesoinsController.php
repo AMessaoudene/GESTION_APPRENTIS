@@ -15,12 +15,17 @@ class PlanBesoinsController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        $planbesoins = PlanBesoins::all();
-        $specialites = specialites::all();
-        $structures = structures::all();
-        $exercices = exercices::all();
-        return view('planbesoins.index', compact('planbesoins','structures','exercices','specialites','user'));
+        if(Auth::user()->status == 'active'){
+            $user = Auth::user();
+            $planbesoins = PlanBesoins::all();
+            $specialites = specialites::all();
+            $structures = structures::all();
+            $exercices = exercices::all();
+            return view('planbesoins.index', compact('planbesoins','structures','exercices','specialites','user'));
+        }
+        else{
+            return redirect()->back()->with('no access');
+        }
     }
     public function store(Request $request){
         $specialitesIds = $request->specialites_id;

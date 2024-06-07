@@ -12,10 +12,15 @@ use Illuminate\Support\Facades\Auth;
 class StructuresController extends Controller
 {
     public function index() {
-        $structures = structures::all();
-        $users = User::all();
-        $user = Auth::user();
-        return view('structures.index', compact('structures','users','user'));
+        if(Auth::user()->status == 'active'){
+            $structures = structures::all();
+            $users = User::all();
+            $user = Auth::user();
+            return view('structures.index', compact('structures','users','user'));
+        }
+        else{
+            return redirect()->back()->with('no access');
+        }
     }
     //Ajout d'une structure
     public function submit(Request $request) {

@@ -99,7 +99,8 @@
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-<script src="//cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     function confirmDelete(id) {
         if (confirm('Voulez-vous supprimer cette structure?')) {

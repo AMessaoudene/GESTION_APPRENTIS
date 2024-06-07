@@ -98,25 +98,27 @@
                     <table id="parametres-table" class="table table-striped mt-4" style="width:100%">
                         <thead>
                             <tr>
-                                <th>Reference</th>
-                                <th>Decision DG</th>
-                                <th>Date decision DG</th>
-                                <th>Nom et prenom DG</th>
-                                <th>Decision premier responsable</th>
-                                <th>Date decision premier responsable</th>
-                                <th>Nom et prenom premier responsable</th>
-                                <th>Fonction premier responsable</th>
-                                <th>Civilite RH</th>
-                                <th>Civilite Fc</th>
-                                <th>Status</th>
+                                <th scope="col">ID</th>
+                                <th scope="col">Reference</th>
+                                <th scope="col">Decision DG</th>
+                                <th scope="col">Date decision DG</th>
+                                <th scope="col">Nom et prenom DG</th>
+                                <th scope="col">Decision premier responsable</th>
+                                <th scope="col">Date decision premier responsable</th>
+                                <th scope="col">Nom et prenom premier responsable</th>
+                                <th scope="col">Fonction premier responsable</th>
+                                <th scope="col">Civilite RH</th>
+                                <th scope="col">Civilite Fc</th>
+                                <th scope="col">Status</th>
                                 @if($user->role == 'DFP')
-                                    <th>Actions</th>
+                                    <th scope="col">Actions</th>
                                 @endif
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($parametres as $parametre)
                                 <tr>
+                                    <td>{{ $parametre->id }}</td>
                                     <td>{{ $parametre->reference }}</td>
                                     <td>{{ $parametre->typedecisiondg }}</td>
                                     <td>{{ $parametre->datedecisiondg }}</td>
@@ -164,10 +166,6 @@
     $(document).on('click', '.edit-btn', function() {
         var id = $(this).data('id');
         var row = $(this).closest('tr');
-        var nomresponsable = row.find('td:eq(1)').text();
-        var prenomresponsable = row.find('td:eq(2)').text();
-        var civiliteresponsable = row.find('td:eq(3)').text();
-        var fonctionresponsable = row.find('td:eq(4)').text();
         var typedecisiondg = row.find('td:eq(5)').text();
         var datedecisiondg = row.find('td:eq(6)').text();
         var nomprenomdg = row.find('td:eq(7)').text();
@@ -189,7 +187,6 @@
                     <option value="">-- Choisir --</option>
                     <option value="Monsieur">Mr</option>
                     <option value="Madame">Mme</option>
-                    <option value="Mademoiselle">Mlle</option>
                 </select>
                 <input type="text" name="fonctionresponsable" value="${fonctionresponsable}">
                 <input type="text" name="typedecisiondg" value="${typedecisiondg}">
@@ -203,13 +200,11 @@
                     <option value="">-- Choisir --</option>
                     <option value="Monsieur">Mr</option>
                     <option value="Madame">Mme</option>
-                    <option value="Mademoiselle">Mlle</option>
                 </select>
                 <select name="civilitedfc" value="${civilitedfc}">
                     <option value="">-- Choisir --</option>
                     <option value="Monsieur">Mr</option>
                     <option value="Madame">Mme</option>
-                    <option value="Mademoiselle">Mlle</option>
                 </select>
                 <select name="status" value="${status}">
                     <option value="">-- Choisir --</option>

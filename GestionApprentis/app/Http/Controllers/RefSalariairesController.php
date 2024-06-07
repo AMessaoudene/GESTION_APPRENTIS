@@ -14,12 +14,12 @@ class RefSalariairesController extends Controller
      */
     public function index()
     {
-        if(auth::user()){
-        $refsalariaires = refsalariares::all();
-        return view('refsalariaires.index', compact('refsalariaires'));
+        if(auth::user()->status == 'active'){
+            $refsalariaires = refsalariares::all();
+            return view('refsalariaires.index', compact('refsalariaires'));
         }
         else{
-            return redirect()->route('login');
+            return redirect()->back()->with('no access');
         }
     }
 

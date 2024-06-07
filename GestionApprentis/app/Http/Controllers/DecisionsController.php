@@ -13,6 +13,7 @@ use App\Models\refsalariares;
 use Illuminate\Http\Request;
 use App\Models\baremes;
 use Session;
+use Auth;
 class DecisionsController extends Controller
 {
     /**
@@ -20,22 +21,26 @@ class DecisionsController extends Controller
      */
     public function index()
     {
-        $plans = planbesoins::all();
-        $parametres = parametres::all();
-        $baremes = baremes::all();
-        $specialites = specialites::all();
-        $structures = structures::all();
-        $refs = refsalariares::all();
-        $diplomes = diplomes::all();
-        $pv = Session::get('pv');
-        $apprenti = Session::get('apprenti');
-        $diplome1 = diplomes::where('id', $apprenti->diplome1_id)->first();
-        $diplome2 = diplomes::where('id', $apprenti->diplome2_id)->first();
-        (!is_null($diplome1)) ? $diplome = $diplome1 : $diplome = $diplome2;
-        $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
-        $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
-        (!is_null($maitreapprenti1)) ? $maitreapprenti = $maitreapprenti1 : $maitreapprenti = $maitreapprenti2;
-        return view('decisions.index', compact('apprenti','diplomes','refs','structures','specialites','parametres','baremes','pv','apprenti','maitreapprenti','diplome','plans'));
+        if(Auth::user()->status == 'active'){
+            $plans = planbesoins::all();
+            $parametres = parametres::all();
+            $baremes = baremes::all();
+            $specialites = specialites::all();
+            $structures = structures::all();
+            $refs = refsalariares::all();
+            $diplomes = diplomes::all();
+            $pv = Session::get('pv');
+            $apprenti = Session::get('apprenti');
+            $diplome1 = diplomes::where('id', $apprenti->diplome1_id)->first();
+            $diplome2 = diplomes::where('id', $apprenti->diplome2_id)->first();
+            (!is_null($diplome1)) ? $diplome = $diplome1 : $diplome = $diplome2;
+            $maitreapprenti1 = maitre_apprentis::where('apprenti1_id', $apprenti->id)->first();
+            $maitreapprenti2 = maitre_apprentis::where('apprenti2_id', $apprenti->id)->first();
+            (!is_null($maitreapprenti1)) ? $maitreapprenti = $maitreapprenti1 : $maitreapprenti = $maitreapprenti2;
+            return view('decisions.index', compact('apprenti','diplomes','refs','structures','specialites','parametres','baremes','pv','apprenti','maitreapprenti','diplome','plans'));
+        }else{
+            return redirect()->back()->with('no access');
+        }
     }
 
     /**
