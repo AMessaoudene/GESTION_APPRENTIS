@@ -180,7 +180,10 @@ class DossiersController extends Controller
     public function details(Request $request,$id){
         $apprenti = apprentis::findOrFail($id);
         $dossier = dossiers::where('apprenti_id',$apprenti->id);
-        return view('dossiers.details',compact('apprenti'));
+        $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $decisiona = decisionapprentis::where('pv_id', $pv->id)->first();
+        $decisionm = decisionmaitreapprentis::where('pv_id', $pv->id)->first();
+        return view('dossiers.details',compact('apprenti','decisiona','decisionm'));
     }
 
     public function updateindex(Request $request,$id){
@@ -197,7 +200,10 @@ class DossiersController extends Controller
         $parametres = parametres::all();
         $baremes = baremes::all();
         $planbesoins = planbesoins::all();
-        return view('dossiers.update',compact('apprenti','user','baremes','parametres','dossiers','specialites','structures','planbesoins','pvs','diplomes','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+        $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $decisiona = decisionapprentis::where('pv_id', $pv->id)->first();
+        $decisionm = decisionmaitreapprentis::where('pv_id', $pv->id)->first();
+        return view('dossiers.update',compact('decisiona','decisionm','apprenti','user','baremes','parametres','dossiers','specialites','structures','planbesoins','pvs','diplomes','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
     }
     public function update(Request $request,$id){
         $apprenti = apprentis::findOrFail($id);

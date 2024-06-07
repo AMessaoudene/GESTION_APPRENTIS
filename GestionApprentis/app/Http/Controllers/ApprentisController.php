@@ -339,7 +339,9 @@ class ApprentisController extends Controller
         $decisionmaitreapprentis = decisionmaitreapprentis::all();
         $maitreapprentis = maitre_apprentis::all();
         $plans = planbesoins::all();
-        return view('apprentis.details',compact('refs','specialites','structures','diplomes','baremes','parametres','exercices','plans','user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+        $decisiona = decisionapprentis::where('pv_id', $pv->id)->first();
+        $decisionm = decisionmaitreapprentis::where('pv_id', $pv->id)->first();
+        return view('apprentis.details',compact('decisionm','decisiona','refs','specialites','structures','diplomes','baremes','parametres','exercices','plans','user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
     }
 
     public function updatedossier(Request $request,$id){

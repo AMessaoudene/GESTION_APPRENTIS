@@ -155,6 +155,92 @@
                 @endforeach
             </ul>
         </div>
+        <div>
+            <div>
+                <h2>Pré-Salaire d'Apprenti</h2>
+                <ul class="list-group">
+                    <div>
+                        <h3>Pre-Salaire S1</h3>
+                        <li>Date debut : {{$decisiona->datedebutpresalaireS1}}</li>
+                        <li>Date fin :{{$decisiona->datefinpresalaireS1}}</li>
+                    </div>
+                    <div>
+                        <h3>Pre-Salaire S2</h3>
+                        <li>Date debut :{{$decisiona->datedebutpresalaireS2}}</li>
+                        <li>Date fin :{{$decisiona->datefinpresalaireS2}}</li>
+                    </div>
+                    @if ($decisiona->datedebutpresalaireS3)
+                    <div>
+                        <h3>Pre-Salaire S3</h3>
+                        <li>Date debut :{{$decisiona->datedebutpresalaireS3}}</li>
+                        @if ($decisiona->datefinpresalaireS3)
+                        <li>Date fin :{{$decisiona->datefinpresalaireS3}}</li>
+                        @endif
+                    </div>
+                    @endif
+                    @if ($decisiona->datedebutpresalaireS4)
+                    <div>
+                        <h3>Pre-Salaire S4</h3>
+                        <li>Date debut :{{$decisiona->datedebutpresalaireS4}}</li>
+                        @if ($decisiona->datefinpresalaireS4)
+                        <li>Date fin :{{$decisiona->datefinpresalaireS4}}</li>
+                        @endif
+                    </div>
+                    @endif
+                    @if ($decisiona->datedebutpresalaireS5)
+                    <div>
+                        <h3>Pre-Salaire S5</h3>
+                        <li>Date debut :{{$decisiona->datedebutpresalaireS5}}</li>
+                        @if ($decisiona->datefinpresalaireS5)
+                        <li>Date fin :{{$decisiona->datefinpresalaireS5}}</li>
+                        @endif
+                    </div>
+                    @endif
+                </ul>
+            </div>
+            <div>
+                <h2>Salaire du maitre d'Apprenti</h2>
+                <ul class="list-group">
+                    <div>
+                        <h3>Salaire S1</h3>
+                        <li>Date debut :{{$decisionm->datedebutsalaireS1}}</li>
+                        <li>Date fin :{{$decisionm->datefinsalaireS1}}</li>
+                    </div>
+                    <div>
+                        <h3>Salaire S2</h3>
+                        <li>Date debut :{{$decisionm->datedebutsalaireS2}}</li>
+                        <li>Date fin :{{$decisionm->datefinsalaireS2}}</li>
+                    </div>
+                    @if ($decisionm->datedebutsalaireS3)
+                    <div>
+                        <h3>Salaire S3</h3>
+                        <li>Date debut :{{$decisionm->datedebutsalaireS3}}</li>
+                        @if ($decisionm->datefinsalaireS3)
+                        <li>Date fin :{{$decisionm->datefinsalaireS3}}</li>
+                        @endif
+                    </div>
+                    @endif
+                    @if ($decisionm->datedebutsalaireS4)
+                    <div>
+                        <h3>Salaire S4</h3>
+                        <li>Date debut :{{$decisionm->datedebutsalaireS4}}</li>
+                        @if ($decisionm->datefinsalaireS4)
+                        <li>Date fin :{{$decisionm->datefinsalaireS4}}</li>
+                        @endif
+                    </div>
+                    @endif
+                    @if ($decisionm->datedebutsalaireS5)
+                    <div>
+                        <h3>Salaire S5</h3>
+                        <li>Date debut :{{$decisionm->datedebutsalaireS5}}</li>
+                        @if ($decisionm->datefinsalaireS5)
+                        <li>Date fin :{{$decisionm->datefinsalaireS5}}</li>
+                        @endif
+                    </div>
+                    @endif
+                </ul>
+            </div>
+        </div>
         <form action="{{ route('apprentis.updatedossier',$dossier->id) }}" method="POST">
             @csrf
             <select name="status" value="{{ $dossier->status }}" required>
