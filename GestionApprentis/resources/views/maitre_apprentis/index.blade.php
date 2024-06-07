@@ -16,6 +16,27 @@
 
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+            @if(session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert alert-danger">
+                    {{ session('error') }}
+                </div>
+            @endif
+
+            @if($errors->any())
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             @if (Auth::user()->role == 'DFP') 
             <div class="container mt-5">
                 <div class="row justify-content-center">
@@ -133,12 +154,14 @@
         <table id="maitres-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
+                            <th scope="col">ID</th>
                             <th scope="col">Matricule</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Civilité</th>
                             <th scope="col">Structure</th>
                             <th scope="col">Spécialité</th>
+                            <th scope="col">Diplome</th>
                             <th scope="col">Email</th>
                             <th scope="col">Date Recrutement</th>
                             <th scope="col">Statut</th>
@@ -150,6 +173,7 @@
                     <tbody>
                         @foreach($maitre_apprentis as $maitre)
                             <tr>
+                                <td>{{ $maitre->id }}</td>
                                 <td>{{ $maitre->matricule }}</td>
                                 <td>{{ $maitre->nom }}</td>
                                 <td>{{ $maitre->prenom }}</td>
@@ -165,6 +189,13 @@
                                     @foreach ($specialites as $specialite)
                                         @if ($specialite->id == $maitre->fonction)
                                             {{ $specialite->nom }}
+                                        @endif
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach ($diplomes as $diplome)
+                                        @if ($diplome->id == $maitre->diplome_id)
+                                            {{ $diplome->nom }}
                                         @endif
                                     @endforeach
                                 </td>

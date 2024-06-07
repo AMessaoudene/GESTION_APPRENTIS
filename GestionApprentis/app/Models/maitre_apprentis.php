@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use app\Models\apprentis;
+use app\Models\diplomes;
 
 class maitre_apprentis extends Model
 {
@@ -20,7 +21,6 @@ class maitre_apprentis extends Model
         'fonction',
         'apprenti1_id',
         'apprenti2_id',
-        //'numapprentissupervises',
         'daterecrutement',
         'affectation',
         'status',
@@ -30,4 +30,8 @@ class maitre_apprentis extends Model
     {
         return $this->hasMany(Apprentis::class);
     }
+    public function diplome() {
+        return $this->belongsTo(diplomes::class, 'diplome_id');
+    }
+    
 }

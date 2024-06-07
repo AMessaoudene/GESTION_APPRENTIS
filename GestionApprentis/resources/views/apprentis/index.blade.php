@@ -163,6 +163,8 @@
                                     <option value="{{ $maitre_apprenti->id }}"
                                             data-specialite="{{ $maitre_apprenti->fonction }}"
                                             data-structure="{{ $maitre_apprenti->affectation }}"
+                                            data-diplome="{{ $maitre_apprenti->diplome_id }}"
+                                            data-duree="{{ $maitre_apprenti->diplome->duree }}"
                                             @if(is_null($maitre_apprenti->apprenti1_id) || is_null($maitre_apprenti->apprenti2_id))
                                             @endif>
                                         {{ $maitre_apprenti->nom }} {{ $maitre_apprenti->prenom }}
@@ -221,17 +223,20 @@
 document.addEventListener('DOMContentLoaded', function () {
     const specialiteSelect = document.getElementById('specialite_id');
     const structureSelect = document.getElementById('structure_id');
+    const diplomeSelect = document.getElementById('diplomeSelect');
     const maitreApprentisSelect = document.getElementById('maitre_apprentis');
 
     function filterMaitreApprentis() {
         const selectedSpecialite = specialiteSelect.value;
         const selectedStructure = structureSelect.value;
+        const selectedDiplomeDuree = parseInt(diplomeSelect.selectedOptions[0].getAttribute('data-duree'));
 
         Array.from(maitreApprentisSelect.options).forEach(option => {
             const specialite = option.getAttribute('data-specialite');
             const structure = option.getAttribute('data-structure');
+            const maitreDiplomeDuree = parseInt(option.getAttribute('data-duree'));
 
-            if (specialite === selectedSpecialite && structure === selectedStructure) {
+            if (specialite === selectedSpecialite && structure === selectedStructure && maitreDiplomeDuree >= selectedDiplomeDuree) {
                 option.style.display = '';
             } else {
                 option.style.display = 'none';
@@ -244,6 +249,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     specialiteSelect.addEventListener('change', filterMaitreApprentis);
     structureSelect.addEventListener('change', filterMaitreApprentis);
+    diplomeSelect.addEventListener('change', filterMaitreApprentis);
 
     // Call the filter function initially to set the correct state
     filterMaitreApprentis();

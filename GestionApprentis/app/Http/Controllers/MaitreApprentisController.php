@@ -31,7 +31,7 @@ class MaitreApprentisController extends Controller
     {
         // Validation rules
         $rules = [
-            'matricule' => 'required',
+            'matricule' => 'required|unique:maitre_apprentis|string|max:255',
             'nom' => 'required|string|max:255',
             'prenom' => 'required|string|max:255',
             'civilite' => 'required',
@@ -53,7 +53,8 @@ class MaitreApprentisController extends Controller
             'adresse.required' => 'The address field is required.',
             'fonction.required' => 'The work function field is required.',
             'daterecrutement.required' => 'The recruitment date field is required.',
-            'daterecrutement.date' => 'The recruitment date must be a valid date.',            
+            'daterecrutement.date' => 'The recruitment date must be a valid date.', 
+            'matricule.unique' => 'The matricule already exists.',           
         ];
 
         // Create a validator instance

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreign('apprenti_id')->references('id')->on('apprentis');
             $table->unsignedBigInteger('maitreapprenti_id')->nullable();
             $table->foreign('maitreapprenti_id')->references('id')->on('maitre_apprentis');
+            $table->date('datedebut');
+            $table->date('datefin');
             $table->enum('status',['actif','inactif'])->default('actif');
             $table->timestamps();
         });

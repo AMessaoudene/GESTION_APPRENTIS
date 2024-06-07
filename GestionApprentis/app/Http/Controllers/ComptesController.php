@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\structures;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 class ComptesController extends Controller
 {
@@ -20,17 +21,36 @@ class ComptesController extends Controller
         }
     }
     
-        public function store(Request $request)
-    {
-        $request->validate([
-            'nom' => ['required'],
-            'prenom' => ['required'],
-            'civilite' => ['required'],
-            'email' => ['required'],
-            'password' => ['required', Rules\Password::defaults()],
-            'role' => ['required'],
-            'structures_id' => ['required'],
-        ]);
+        public function store(Request $request){
+        // Validation rules
+        $rules = [
+            'nom' => 'required|string|max:255',
+            'prenom' => 'required|string|max:255',
+            'civilite' => 'required|string|max:255',
+            'email' => 'required|unique:users|email|max:255',
+            'structures_id' => 'required',
+            'password' => 'required|string|min:8',
+        ];
+
+        // Custom error messages
+        $messages = [
+            'email.unique' => 'The email already exists.',
+            'password.min' => 'The password must be at least 8 characters.',
+            'nom.required' => 'nom est requis',
+            'prenom.required' => 'prenom est requis',
+            'civilite.required' => 'civilite est requise',
+            'email.required' => 'email est requis',
+            'structures_id.required' => 'structure est requise',
+            'password.required' => 'password est requis',
+        ];
+
+        // Validate the incoming request
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        // If validation fails, return with errors
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         User::where('structures_id', $request->structures_id)->where('role', $request->role)->where('status', 'active')->update(['status' => 'inactive']);
         $compte = new user();
         $compte->nom = $request->nom;

@@ -12,6 +12,8 @@ class supervisions extends Model
         'id',
         'apprenti_id',
         'maitreapprenti_id',
+        'datedebut',
+        'datefin',
         'status',
     ];
     use HasFactory;

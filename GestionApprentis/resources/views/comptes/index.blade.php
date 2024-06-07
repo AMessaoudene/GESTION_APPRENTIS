@@ -15,6 +15,27 @@
             @include('layouts.egsidenav')
             @endif
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                @if(session('success'))
+                        <div class="alert alert-success">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+
+                    @if(session('error'))
+                        <div class="alert alert-danger">
+                            {{ session('error') }}
+                        </div>
+                    @endif
+
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                 @if (Auth::user()->role == 'DFP')      
                 <!-- Trigger button -->
                 <div class="container mt-5">
@@ -55,15 +76,6 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <label for="structures_id">Structure</label>
-                                        <select class="form-control" id="structures_id" name="structures_id" required>
-                                            <option value="">-- Choisir une structure --</option>
-                                            @foreach ($structures as $structure)
-                                                <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                    <div class="form-group">
                                         <label for="role">Role</label>
                                         <select class="form-control" id="role" name="role" required>
                                             <option value="">-- Choisir un role --</option>
@@ -71,6 +83,15 @@
                                             <option value="DRH">DRH</option>
                                             <option value="SA">SA</option>
                                             <option value="EvaluateurGradé">Evaluateur Gradé</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="structures_id">Structure</label>
+                                        <select class="form-control" id="structures_id" name="structures_id" required>
+                                            <option value="">-- Choisir une structure --</option>
+                                            @foreach ($structures as $structure)
+                                                <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -99,8 +120,8 @@
                             <th scope="col">Nom</th>
                             <th scope="col">Prénom</th>
                             <th scope="col">Civilité</th>
-                            <th scope="col">Structure</th>
                             <th scope="col">Role</th>
+                            <th scope="col">Structure</th>
                             <th scope="col">Email</th>
                             <th scope="col">Statut</th>
                             @if (Auth::user()->role == 'DFP')
@@ -115,12 +136,12 @@
                                 <td>{{ $compte->nom }}</td>
                                 <td>{{ $compte->prenom }}</td>
                                 <td>{{ $compte->civilite }}</td>
+                                <td>{{ $compte->role }}</td>
                                 @foreach($structures as $structure)
                                     @if($structure->id == $compte->structures_id)
                                         <td>{{ $structure->nom }}</td>
                                     @endif
                                 @endforeach
-                                <td>{{ $compte->role }}</td>
                                 <td>{{ $compte->email }}</td>
                                 <td>{{ $compte->status }}</td>
                                 @if (Auth::user()->role == 'DFP')

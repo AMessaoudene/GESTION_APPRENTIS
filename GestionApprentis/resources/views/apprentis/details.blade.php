@@ -146,11 +146,13 @@
                     @if ($dossier->contratapprenti || $dossier->contratapprenti !='')
                     <li class="list-group-item">
                         <a href="{{ url('/apprentis/fichiers/download', $dossier->contratapprenti) }}">Contrat</a>
-                        <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'contratapprenti']) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        @if ($dossier->status != 'valide')
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'contratapprenti']) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
                     </li>
                     @else
                     <li class="list-group-item">Aucun contrat</li>
@@ -158,11 +160,13 @@
                     @if($dossier->pvinstallation || $dossier->pvinstallation !='')
                     <li class="list-group-item">
                         <a href="{{ url('/apprentis/fichiers/download', $dossier->pvinstallation) }}">PV</a>
-                        <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'pvinstallation']) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        @if ($dossier->status != 'valide')
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'pvinstallation']) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
                     </li>
                     @else
                     <li class="list-group-item">Aucun PV</li>
@@ -170,11 +174,13 @@
                     @if($dossier->extraitnaissance || $dossier->extraitnaissance !='')
                     <li class="list-group-item">
                         <a href="{{ url('/apprentis/fichiers/download', $dossier->extraitnaissance) }}">Extrait de naissance</a>
-                        <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'extraitnaissance']) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        @if ($dossier->status != 'valide')
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'extraitnaissance']) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
                     </li>
                     @else
                     <li class="list-group-item">Aucun extrait de naissance</li>
@@ -182,11 +188,13 @@
                     @if($dossier->decisionapprenti || $dossier->decisionapprenti !='')
                     <li class="list-group-item">
                         <a href="{{ url('/apprentis/fichiers/download', $dossier->decisionapprenti) }}">Decision Apprenti</a>
-                        <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'decisionapprenti']) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        @if ($dossier->status != 'valide')
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'decisionapprenti']) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
                     </li>
                     @else
                     <li class="list-group-item">Aucune decision apprenti</li>
@@ -194,11 +202,13 @@
                     @if($dossier->decisionmaitreapprenti || $dossier->decisionmaitreapprenti !='')
                     <li class="list-group-item">
                         <a href="{{ url('/apprentis/fichiers/download', $dossier->decisionmaitreapprenti) }}">Decision Maitre d'apprentis</a>
-                        <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'decisionmaitreapprenti']) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        @if ($dossier->status != 'valide')
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'decisionmaitreapprenti']) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
                     </li>
                     @else
                     <li class="list-group-item">Aucune decision maitre d'apprentis</li>
@@ -206,11 +216,13 @@
                     @if($dossier->copiecheque || $dossier->copiecheque !='')
                     <li class="list-group-item">
                         <a href="{{ url('/apprentis/fichiers/download', $dossier->copiecheque) }}">Copie cheque</a>
-                        <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'copiecheque']) }}" method="POST" style="display:inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                        </form>
+                        @if ($dossier->status != 'valide')
+                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'copiecheque']) }}" method="POST" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
+                        @endif
                     </li>
                     @else
                     <li class="list-group-item">Aucune copie cheque</li>
@@ -218,11 +230,13 @@
                     @if($dossier->photo || $dossier->photo !='')
                         <li class="list-group-item">
                             <a href="{{ url('/apprentis/fichiers/download', $dossier->photo) }}">Photo</a>
-                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'photo']) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            @if ($dossier->status != 'valide')
+                                <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'photo']) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            @endif
                         </li>
                     @else
                     <li class="list-group-item">Aucune photo</li>
@@ -230,11 +244,13 @@
                     @if($dossier->autorisationparentele || $dossier->autorisationparentele !='')
                         <li class="list-group-item">
                             <a href="{{ url('/apprentis/fichiers/download', $dossier->autorisationparentele) }}">Autorisation parentale</a>
-                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'autorisationparentele']) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            @if ($dossier->status != 'valide')
+                                <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'autorisationparentele']) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            @endif
                         </li>
                     @else
                     <li class="list-group-item">Aucune autorisation parentale</li>
@@ -242,11 +258,13 @@
                     @if($dossier->pieceidentite || $dossier->pieceidentite !='')
                         <li class="list-group-item">
                             <a href="{{ url('/apprentis/fichiers/download', $dossier->pieceidentite) }}">Piece d'identité</a>
-                            <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'pieceidentite']) }}" method="POST" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                            </form>
+                            @if ($dossier->status != 'valide')
+                                <form action="{{ route('dossiers.deletefichier', ['id' => $dossier->id, 'fichier' => 'pieceidentite']) }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            @endif
                         </li>
                     @else
                     <li class="list-group-item">Aucune piece d'identité</li>
