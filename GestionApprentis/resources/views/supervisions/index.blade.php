@@ -20,7 +20,7 @@
                 <div class="container mt-5">
                     <div class="row justify-content-center">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
-                            Ajouter une super$supervision d'accueil
+                            Ajouter une supervision
                         </button>
                     </div>
                 </div>
@@ -30,13 +30,13 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des super$supervisions</h5>
+                                <h5 class="modal-title" id="addAccountModalLabel">Gestion Des supervisions</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                    <form id="add-form" method="POST" action="{{ route('super$supervisions.submit') }}" class="form-horizontal">
+                                    <form id="add-form" method="POST" action="{{ route('supervisions.submit') }}" class="form-horizontal">
                                         @csrf
                                         <div class="form-group">
                                             <label for="apprenti_id">Apprenti</label>
@@ -51,18 +51,18 @@
                                             <label for="maitreapprenti_id">Maitre d'apprenti</label>
                                             <select name="maitreapprenti_id" class="form-control" id="maitreapprenti_id" required>
                                                 <option value="">Sélectionnez un maitre d'apprenti</option>
-                                                @foreach($maitreapprentis as $maitreapprenti)
-                                                    <option value="{{ $maitreapprenti->id }}">{{ $maitreapprenti->nom }} {{ $maitreapprenti->prenom }}</option>
+                                                @foreach($maitres as $maitre)
+                                                    <option value="{{ $maitre->id }}">{{ $maitre->nom }} {{ $maitre->prenom }}</option>
                                                 @endforeach
                                             </select>
                                         </div>
                                         <div class="form-group">
                                             <label for="datedebut">date debut</label>
-                                            <input type="text" name="datedebut" class="form-control" id="datedebut" required>
+                                            <input type="date" name="datedebut" class="form-control" id="datedebut" required>
                                         </div>
                                         <div class="form-group">
                                             <label for="datefin">date fin</label>
-                                            <input type="email" name="datefin" class="form-control" id="datefin" required>
+                                            <input type="date" name="datefin" class="form-control" id="datefin" required>
                                         </div>
                                         <div class="form-group text-center mt-3 mb-3">
                                             <button type="submit" class="btn btn-primary">Ajouter</button>
@@ -74,7 +74,7 @@
                 </div>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                 @endif
-                <h1 class="text-center" style="margin-top:3%;">Liste des super$supervisions</h1>
+                <h1 class="text-center" style="margin-top:3%;">Liste des supervisions</h1>
                 <table id="super$supervisions-table" class="table table-striped" style="width:100%">
                     <thead>
                         <tr>
@@ -93,8 +93,18 @@
                         @foreach($supervisions as $supervision)
                         <tr>
                             <td>{{ $supervision->id }}</td>
-                            <td>{{ $supervision->apprenti->nom }} {{ $supervision->apprenti->prenom }}</td>
-                            <td>{{ $supervision->maitreapprenti->nom }} {{ $supervision->maitreapprenti->prenom }}</td>
+                            <td>
+                                @foreach ($apprentis as $apprenti)
+                                    @if ($apprenti->id == $supervision->apprenti_id)
+                                        {{ $apprenti->nom }} {{ $apprenti->prenom }}
+                                    @endif
+                                @endforeach
+                            <td>
+                            @foreach ($maitres as $maitre)
+                                @if ($maitre->id == $supervision->maitreapprenti_id)
+                                    {{ $maitre->nom }} {{ $maitre->prenom }}
+                                @endif
+                            @endforeach
                             <td>{{ $supervision->datedebut }}</td>
                             <td>{{ $supervision->datefin }}</td>
                             <td>{{ $supervision->status }}</td>
@@ -132,7 +142,7 @@
         }
     }
     $(document).ready(function() {
-        $('#super$supervisions-table').DataTable();
+        $('#supervisions-table').DataTable();
 
         // AJAX for adding a new super$supervision
         $('#add-form').submit(function(event) {
@@ -148,7 +158,7 @@
                 },
                 error: function(xhr, textStatus, errorThrown) {
                     // Handle error
-                    console.error('Error adding super$supervision:', errorThrown);
+                    console.error('Error adding supervision:', errorThrown);
                 }
             });
         });
@@ -157,14 +167,10 @@
         $(document).on('click', '.edit-btn', function() {
             var id = $(this).data('id');
             var row = $(this).closest('tr');
-            var nom = row.find('td:eq(1)').text();
-            var adressecourriel = row.find('td:eq(2)').text();
             var editForm = `
-                <form method="POST" action="{{ route('super$supervisions.update', $supervision->id) }}" class="edit-form">
+                <form method="POST" action="{{ route('supervisions.update', $supervision->id) }}" class="edit-form">
                     @csrf
                     @method('PUT')
-                    <input type="text" name="nom" class="form-control" value="${nom}">
-                    <input type="text" name="adressecourriel" class="form-control" value="${adressecourriel}">
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form>
             `;

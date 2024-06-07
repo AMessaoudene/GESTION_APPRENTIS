@@ -6,14 +6,17 @@ use App\Models\maitre_apprentis;
 use Illuminate\Http\Request;
 use App\Models\Supervisions;
 use Validator;
+use Illuminate\Support\Facades\Auth;
 
 class SupervisionsController extends Controller
 {
     public function index(){
-        $supervisions = Supervisions::all();
-        $apprentis = apprentis::all();
-        $maitres = maitre_apprentis::all();
-        return view('supervisions.index', compact('supervisions', 'apprentis','maitres'));
+        if(Auth::user()){
+            $supervisions = Supervisions::all();
+            $apprentis = apprentis::all();
+            $maitres = maitre_apprentis::all();
+            return view('supervisions.index', compact('supervisions', 'apprentis','maitres'));
+        }
     }
     public function submit(Request $request){
         $rules = [

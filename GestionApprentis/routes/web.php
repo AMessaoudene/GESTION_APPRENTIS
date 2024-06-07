@@ -28,6 +28,7 @@ use App\Http\Controllers\SA\SAsController;
 use App\Http\Controllers\DRH\DRHController;
 use App\Http\Controllers\DepartsController;
 use App\Http\Controllers\ComptesController;
+use App\Http\Controllers\SupervisionsController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -45,6 +46,13 @@ Route::middleware('auth')->group(function(){
     Route::post('/diplomes', [DiplomesController::class, 'store'])->name('diplomes.store');
     Route::put('/diplomes/{id}', [DiplomesController::class, 'update'])->name('diplomes.update');
     Route::delete('/diplomes/{id}', [DiplomesController::class, 'destroy'])->name('diplomes.destroy');
+});
+//Supervisions
+Route::middleware('auth')->group(function(){
+    Route::get('/supervisions', [supervisionsController::class, 'index'])->name('supervisions.index');
+    Route::post('/supervisions', [supervisionsController::class, 'submit'])->name('supervisions.submit');
+    Route::put('/supervisions/{id}', [supervisionsController::class, 'update'])->name('supervisions.update');
+    Route::delete('/supervisions/{id}', [supervisionsController::class, 'destroy'])->name('supervisions.destroy');
 });
 //Apprentis
 Route::middleware('auth')->group(function(){
