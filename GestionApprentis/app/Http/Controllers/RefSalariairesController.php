@@ -14,7 +14,7 @@ class RefSalariairesController extends Controller
      */
     public function index()
     {
-        if(auth::user()->role == 'DFP' || auth::user()-> role == 'DRH'){
+        if(auth::user()){
         $refsalariaires = refsalariares::all();
         return view('refsalariaires.index', compact('refsalariaires'));
         }

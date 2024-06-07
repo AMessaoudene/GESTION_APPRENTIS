@@ -11,6 +11,7 @@ use App\Models\evaluation_apprentis;
 use App\Models\exercices;
 use App\Models\parametres;
 use App\Models\planbesoins;
+use App\Models\refsalariares;
 use App\Models\supervisions;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
@@ -332,12 +333,13 @@ class ApprentisController extends Controller
         $diplomes = diplomes::all();
         $structures = structures::all();
         $specialites = specialites::all();
+        $refs = refsalariares::all();
         $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
         $decisionapprentis = decisionapprentis::all();
         $decisionmaitreapprentis = decisionmaitreapprentis::all();
         $maitreapprentis = maitre_apprentis::all();
         $plans = planbesoins::all();
-        return view('apprentis.details',compact('specialites','structures','diplomes','baremes','parametres','exercices','plans','user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
+        return view('apprentis.details',compact('refs','specialites','structures','diplomes','baremes','parametres','exercices','plans','user','apprenti','specialite','structure','diplome','dossiers','pv','decisionapprentis','decisionmaitreapprentis','maitreapprentis'));
     }
 
     public function updatedossier(Request $request,$id){

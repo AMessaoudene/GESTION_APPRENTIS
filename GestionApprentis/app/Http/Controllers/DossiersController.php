@@ -5,6 +5,7 @@ use App\Models\parametres;
 use App\Models\planbesoins;
 use App\Models\structures;
 use Validator;
+use Hash;
 use Illuminate\Http\Request;
 use App\Models\baremes;
 use App\Models\dossiers;
@@ -20,6 +21,7 @@ use App\Models\specialites;
 use App\Models\decisionapprentis;
 use App\Models\decisionmaitreapprentis;
 use App\Models\maitre_apprentis;
+use Illuminate\Support\Str;
 
 class DossiersController extends Controller
 {
@@ -149,15 +151,27 @@ class DossiersController extends Controller
             return redirect()->back()->with('success','');
         }
     }
+    public function pdfdownload(Request $request,$file){
+        return response()->download('assets/dossiers/'.$file);
+    }
     public function pv_pdfDownload(Request $request, $id){
-    $apprenti = Apprentis::findOrFail($id);
-    $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
-    $specialite = specialites::where('id',$apprenti->specialite_id);
-    $diplome = diplomes::where('id',$apprenti->diplome1_id);
-    $pdf = PDF::loadView('pvinstallations.fiche', compact('apprenti', 'pv','specialite','diplome'));
-    
-    return $pdf->download('pv_' . $pv->reference . $apprenti->id . '.pdf');
-}
+        $apprenti = Apprentis::findOrFail($id);
+        $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $specialite = specialites::where('id',$apprenti->specialite_id)->first();
+        $diplome = diplomes::where('id',$apprenti->diplome1_id)->first();
+        $maitre1 = maitre_apprentis::where('apprenti1_id',$apprenti->id)->first();
+        $maitre2 = maitre_apprentis::where('apprenti2_id',$apprenti->id)->first();
+        if($maitre1){
+            $maitre = $maitre1;
+        }
+        elseif($maitre2){
+            $maitre = $maitre2;
+        }
+        $decision = decisionapprentis::where('pv_id',$pv->id)->first();
+        $parametre = parametres::where('id',$decision->parametre_id)->first();
+        $pdf = PDF::loadView('pvinstallations.fiche', compact('parametre','decision','maitre','apprenti', 'pv','specialite','diplome'));
+        return $pdf->download('pv_' . hash::make($pv->reference) . '_' . hash::make($apprenti->id) .'_' .time().str::random(10). '.pdf');
+    }
     public function delete(Request $request,$id){
         $dossiers = dossiers::findOrFail($id);
         $dossiers->delete();

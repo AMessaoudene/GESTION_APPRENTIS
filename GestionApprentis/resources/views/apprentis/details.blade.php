@@ -89,10 +89,14 @@
                             @endif
                         @endforeach
                         </li>
-                        <li class="list-group-item">Bareme ID : 
+                        <li class="list-group-item">Bareme : 
                             @foreach ($baremes as $bareme)
                                 @if($bareme->id == $decisionapprenti->bareme_id)
-                                    {{ $bareme->refsalariaires_id }}
+                                    @foreach ($refs as $ref)
+                                        @if($ref->id == $bareme->refsalariaires_id)
+                                            {{ $ref->version }}
+                                        @endif
+                                    @endforeach
                                 @endif
                             @endforeach
                         </li>
@@ -117,7 +121,17 @@
                             @endif
                         @endforeach
                         </li>
-                        <li class="list-group-item">Bareme ID : {{ $decisionmaitreapprenti->bareme_id }}</li>
+                        <li class="list-group-item">Bareme : 
+                            @foreach ($baremes as $bareme)
+                                @if($bareme->id == $decisionapprenti->bareme_id)
+                                    @foreach ($refs as $ref)
+                                        @if($ref->id == $bareme->refsalariaires_id)
+                                            {{ $ref->version }}
+                                        @endif
+                                    @endforeach
+                                @endif
+                            @endforeach
+                        </li>
                     @endif
                 @endforeach
             </ul>

@@ -67,7 +67,9 @@
                             <th>SNMG</th>
                             <th>Salaire Reference</th>
                             <th>Status</th>
-                            <th>Actions</th>
+                            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH')
+                            <th>Action</th>
+                            @endif
                         </tr>
                         </thead>
                         <tbody>
@@ -78,6 +80,7 @@
                             <td>{{ $refsalariaire->snmg }}</td>
                             <td>{{ $refsalariaire->salairereference }}</td>
                             <td>{{ $refsalariaire->status }}</td>
+                            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'DRH')
                             <td>
                                 <form id="deleteForm{{ $refsalariaire->id }}" action="{{ route('refsalariaires.destroy', $refsalariaire->id) }}" method="POST">
                                     @csrf
@@ -85,6 +88,7 @@
                                     <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $refsalariaire->id }})">Delete</button>
                                 </form>
                             </td>
+                            @endif
                         </tr>
                         @endforeach
                         </tbody>

@@ -51,7 +51,7 @@
         <tr class="header-row">
             <td class="header-left">
                 <!-- Place pour le logo -->
-                <img class="logo" src="photo_2024-04-20_18-29-05 (2).jpg" alt="Logo">
+                <img class="logo" src="#" alt="Logo">
             </td>
             <td colspan="2" class="header-right">
                 <strong>Date :</strong> {{ $pv->datepv }}<br>
@@ -73,27 +73,27 @@
         <tr>
             <td>Contrat</td>
             <td>
-                <strong>Numéro du contrat :</strong> « Numéro de l'APC au verso du contrat d'apprentissage »<br>
-                <strong>Date de début :</strong> « Date de début du contrat d'apprentissage »<br>
-                <strong>Date de fin :</strong> « Date de fin du contrat d'apprentissage »
+                <strong>Numéro du contrat :</strong> {{ $apprenti->numcontrat }}<br>
+                <strong>Date de début :</strong> {{ $apprenti->datedebut }}<br>
+                <strong>Date de fin :</strong> {{ $apprenti->datefin }}
             </td>
         </tr>
         <tr>
             <td>Désignation du Maître d'apprentissage</td>
             <td>
-                <strong>Nom / Prénom :</strong> « Nom et prénom du maître d'apprentissage »<br>
-                <strong>Matricule :</strong> « Matricule SAGE du maître d'apprentissage »<br>
+                <strong>Nom / Prénom :</strong> {{ $maitre->nom }} {{ $maitre->prenom}}<br>
+                <strong>Matricule :</strong> {{ $maitre->matricule }}<br>
                 <strong>Affectation :</strong> « Direction d'affectation du maître d'apprentissage »<br>
                 <strong>Fonction :</strong> « Fonction du maître d'apprentissage »<br>
                 <strong>Diplôme :</strong> « Formation de base du maître d'apprentissage »<br>
-                <strong>Date de recrutement :</strong> « Date de recrutement à Algérie Poste »
+                <strong>Date de recrutement :</strong> {{ $maitre->daterecrutement }}
             </td>
         </tr>
         <tr>
             <td>Installation de l'apprenti(e)</td>
             <td>
                 <strong>Date d'installation de l'apprenti(e) :</strong><br>
-                - En chiffre : ……/………/……….<br>
+                - En chiffre : {{ $pv->dateinstallationchiffre }}<br>
                 - En lettre : L'an ……………… et le …………. du mois de …………………..<br>
                 <strong>Affectation :</strong> « Direction d'affectation » - « Service d'affectation »<br>
                 <strong>Dotations :</strong> « Equipements ou badge ou autres dotations mis à la disposition de l'apprenti »
@@ -114,7 +114,7 @@
         <tr>
             <td>Copie à titre d information</td>
             <td>
-                Copie à titre d'information à Monsieur le Directeur du Centre de Formation Professionnelle
+                Copie à titre d'information à {{ $parametre->civilitedfc }} le Directeur du Centre de Formation Professionnelle
             </td>
         </tr>
     </table>
