@@ -68,7 +68,7 @@
                         <th scope="col">Durée (mois)</th>
                         <th scope="col">Description</th>
                         @if (Auth::user()->role == "DFP")
-                        <th scope="col">Action</th>
+                            <th scope="col">Action</th>
                         @endif
                     </tr>
                 </thead>
@@ -85,7 +85,7 @@
                                 <form action="{{ route('diplomes.destroy', $diplome->id) }}" method="POST">                  
                                     @csrf
                                     @method('DELETE')           
-                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                    <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ $diplome->id }})">Supprimer</button>
                                 </form>
                             </td>
                             @endif
@@ -102,6 +102,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer cet compte?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     $(document).ready(function() {
         $('#diplomes-table').DataTable();
 

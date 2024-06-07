@@ -134,7 +134,7 @@
                                             <form action="{{ route('parametres.destroy', $parametre->id) }}" method="POST">                  
                                                 @csrf
                                                 @method('DELETE')           
-                                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ $parametre->id }})">Supprimer</button>
                                             </form>
                                         </td>
                                     @endif
@@ -151,6 +151,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer ce parametre?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     $(document).ready(function() {
         $('#parametres-table').DataTable();
     });

@@ -136,7 +136,7 @@
                                                 <form action="{{ route('assiduites.destroy', $assiduite->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                    <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ $assiduite->id }})">Supprimer</button>
                                                 </form>
                                             </td>
                                         @endif
@@ -151,6 +151,12 @@
     </div>
 </div>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer ce bareme?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     document.getElementById('apprenti_id').addEventListener('change', function() {
         var selectedOption = this.options[this.selectedIndex];
         var nom = selectedOption.getAttribute('data-nom') || '';

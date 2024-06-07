@@ -142,6 +142,9 @@
                             <th scope="col">Email</th>
                             <th scope="col">Date Recrutement</th>
                             <th scope="col">Statut</th>
+                            @if (Auth::user()->role == 'DFP' )
+                                <th scope="col">Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -168,6 +171,16 @@
                                 <td>{{ $maitre->email }}</td>
                                 <td>{{ $maitre->daterecrutement }}</td>
                                 <td>{{ $maitre->statut }}</td>
+                                @if (Auth::user()->role == 'DFP')
+                                    <td>
+                                        <button type="button" class="btn btn-primary edit-btn" data-id="{{ $maitre->id }}">Modifier</button>
+                                        <form method="POST" action="/maitreapprentis/{{ $maitre->id }}" class="delete-form">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ $maitre->id }})">Supprimer</button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -180,6 +193,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer ce parametre?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     $(document).ready(function() {
         $('#maitres-table').DataTable();
 

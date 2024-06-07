@@ -137,7 +137,6 @@
                 // Submit the form if confirmed
                 document.getElementById('deleteForm' + id).submit();
             } 
-            // No action needed if canceled
         }
         $(document).ready(function() {
             $('#exercices-table').DataTable();

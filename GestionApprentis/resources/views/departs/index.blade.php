@@ -16,7 +16,7 @@
 
         <!-- Page Content -->
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA') 
+            @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
             <div class="container mt-5">
                     <div class="row justify-content-center">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addAccountModal">
@@ -43,11 +43,7 @@
                                         <select name="apprenti_id" id="apprenti_id" class="form-select" aria-label="Sélectionner un apprenti" required>
                                             <option value="">Sélectionner un apprenti</option>
                                             @foreach($apprentis as $apprenti)
-                                                @if(Auth::user()->role == 'SA' && $user->structures_id == $apprenti->structure_id && $apprenti->status == "actif")
-                                                    <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
-                                                        {{ $apprenti->nom }} {{ $apprenti->prenom }}
-                                                    </option>
-                                                @elseif(Auth::user()->role == "DFP" && $apprenti->status == "actif")
+                                                @if((Auth::user()->role == "DFP"|| (Auth::user()->role == 'SA' && $user->structures_id == $apprenti->structure_id) && $apprenti->status == "actif"))
                                                     <option value="{{ $apprenti->id }}" data-nom="{{ $apprenti->nom }}" data-prenom="{{ $apprenti->prenom }}">
                                                         {{ $apprenti->nom }} {{ $apprenti->prenom }}
                                                     </option>
@@ -109,6 +105,9 @@
                             <th scope="col">Motif</th>
                             <th scope="col">Ref. courrier</th>
                             <th scope="col">Date courrier</th>
+                                @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA') 
+                            <th scope="col">Actions</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -120,6 +119,15 @@
                                 <td>{{ $depart->motif }}</td>
                                 <td>{{ $depart->refcourrier }}</td>
                                 <td>{{ $depart->datecourrier }}</td>
+                                @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && $depart->apprenti_id == $apprenti->id && $apprenti->structure_id == Auth::user()->structures_id))
+                                    <td>
+                                        <form id="deleteForm{{ $depart->id }}" action="{{ route('departs.destroy', $depart->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="button" class="btn btn-danger" onclick="confirmDelete({{ $depart->id }})">Supprimer</button>
+                                        </form>
+                                    </td>
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>
@@ -131,6 +139,12 @@
 <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer cet compte?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     document.getElementById('apprenti_id').addEventListener('change', function() {
         var selectedOption = this.options[this.selectedIndex];
         var nom = selectedOption.getAttribute('data-nom') || '';

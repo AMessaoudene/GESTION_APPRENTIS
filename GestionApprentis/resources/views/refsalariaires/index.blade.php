@@ -102,7 +102,7 @@
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
     function confirmDelete(id) {
-        if (confirm('Voulez-vous supprimer cet specialité?')) {
+        if (confirm('Voulez-vous supprimer cette reference salariale?')) {
             // Submit the form if confirmed
             document.getElementById('deleteForm' + id).submit();
         }

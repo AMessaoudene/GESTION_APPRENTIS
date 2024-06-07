@@ -157,7 +157,7 @@
                                                                     <form action="{{ route('avenants.destroy', $avenant->id) }}" method="POST">
                                                                         @csrf
                                                                         @method('DELETE')
-                                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                                        <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ $avenant->id }})">Supprimer</button>
                                                                     </form>
                                                                 </td>
                                                             @endif
@@ -183,6 +183,12 @@
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer ce bareme?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
 document.addEventListener('DOMContentLoaded', function() {
     const avenantForm = document.getElementById('avenantForm');
     const diplomeSelect = document.getElementById('diplome');

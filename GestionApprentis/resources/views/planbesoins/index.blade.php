@@ -213,7 +213,7 @@
                             <form action="{{ route('planbesoins.destroy', $planbesoin->id) }}" method="POST">                  
                                 @csrf
                                 @method('DELETE')           
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                <button type="submit" class="btn btn-danger" onclick="confirmDelete({{ $planbesoin->id }})">Supprimer</button>
                             </form>
                         </td>
                     </tr>
@@ -230,6 +230,12 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
 <script>
+    function confirmDelete(id) {
+        if (confirm('Voulez-vous supprimer ce plan de besoins?')) {
+            // Submit the form if confirmed
+            document.getElementById('deleteForm' + id).submit();
+        }
+    }
     $(document).ready(function() {
         $('#planbesoins-table').DataTable();
         // AJAX for adding a new structure
