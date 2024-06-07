@@ -59,6 +59,7 @@ Route::middleware('auth')->group(function(){
     Route::get('/apprentis/{id}/HistoriqueMA',[ApprentisController::class,'HistoriqueMA'])->name('apprentis.HistoriqueMA');
     Route::get('/apprentis/{id}/HistoriqueAssiduites',[ApprentisController::class,'HistoriqueAssiduites'])->name('apprentis.HistoriqueAssiduites');
     Route::get('/apprentis/{id}/Historiqueevaluations',[ApprentisController::class,'Historiqueevaluations'])->name('apprentis.Historiqueevaluations');
+    Route::get('/apprentis/{id}/Historiquepayements',[ApprentisController::class,'Historiquepayements'])->name('apprentis.Historiquepayements');
 });
 //specialites
 Route::middleware('auth')->group(function(){

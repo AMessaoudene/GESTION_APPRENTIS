@@ -286,6 +286,15 @@ class ApprentisController extends Controller
         }
     
         // Deleting related records
+        if($apprenti->status == 'actif'){
+            $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+            $decision = decisionapprentis::where('pv_id',$pv->id)->first();
+            $plan = planbesoins::where('id',$decision->planbesoins_id)->first();
+            $plan->nombreapprentisactuel--;
+            $plan->save();
+            $apprenti->status = 'inactif';
+            $apprenti->save();
+        }
         pv_installations::where('apprenti_id', $apprenti->id)->delete();
         assiduites::where('apprenti_id', $apprenti->id)->delete();
         dossiers::where('apprentis_id', $apprenti->id)->delete();
@@ -308,7 +317,7 @@ class ApprentisController extends Controller
         }
 
         if ($maitreapprenti) {
-        $maitreapprenti->save();
+            $maitreapprenti->save();
         }
 
         // Deleting related supervisions records
@@ -435,5 +444,10 @@ class ApprentisController extends Controller
     public function Historiqueevaluations(Request $request,$id){
         $evaluations = evaluation_apprentis::where('apprenti_id',$id);
         return view('apprentis.Historique_evaluations',compact('evaluations'));
+    }
+    public function Historiquepayements(Request $request,$id){
+        $pvs = pv_installations::where('apprenti_id',$id)->get();
+        $decisions = decisionapprentis::all();
+        return view('apprentis.Historique_payements',compact('decisions','pvs'));
     }
 }
