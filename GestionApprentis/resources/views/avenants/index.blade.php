@@ -42,12 +42,12 @@
                                             <select name="decisionapprenti_id" id="decisionapprenti_id">
                                             <option value="">-- Choisir --</option>
                                             @foreach ($apprentis as $apprenti)
-                                                @if (Auth::user()->structures_id == $apprenti->structure_id)
+                                                @if (Auth::user()->role == 'DFP' || (Auth::user()->role == 'SA' && Auth::user()->structures_id == $apprenti->structure_id))
                                                     @foreach ($pvs as $pv)
                                                         @if ($pv->apprenti_id == $apprenti->id)
                                                             @foreach ($decisions as $decision)
                                                                 @if ($decision->pv_id == $pv->id)
-                                                                    <option value="{{ $decision->id }}">{{ $decision->referenceda }} - {{ $apprenti->nom }} - {{ $apprenti->prenom }} - 
+                                                                    <option value="{{ $decision->id }}">{{ $decision->referenceda }} - {{ $apprenti->nom }} - {{ $apprenti->prenom }}
                                                                     @foreach ($specialites as $specialite)
                                                                         @if ($specialite->id == $apprenti->specialite_id) {{ $specialite->nom }} @endif
                                                                     @endforeach
@@ -98,6 +98,9 @@
                                     <th>Decision Apprenti ID</th>
                                     <th>Date</th>
                                     <th>Type</th>
+                                    @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
+                                        <th>Actions</th>
+                                    @endif
                                 </tr>
                             </thead>
                             <tbody>
@@ -106,6 +109,35 @@
                                         <td>{{ $avenant->decisionapprenti_id }}</td>
                                         <td>{{ $avenant->date }}</td>
                                         <td>{{ $avenant->type }}</td>
+                                        @if (Auth::user()->role == 'DFP')
+                                            <td>
+                                                <form action="{{ route('avenants.destroy', $avenant->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                </form>
+                                            </td>
+                                        @elseif(Auth::user()->role == 'SA')
+                                        @foreach($decisions as $decision)
+                                            @if($decision->id == $avenant->decisionapprenti_id)
+                                                @foreach ($pvs as $pv)
+                                                    @if ($pv->id == $decision->pv_id)
+                                                        @foreach ($apprentis as $apprenti)
+                                                            @if ($apprenti->id == $pv->apprenti_id && Auth::user()->structures_id == $apprenti->structure_id)
+                                                                <td>
+                                                                    <form action="{{ route('avenants.destroy', $avenant->id) }}" method="POST">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="btn btn-danger">Supprimer</button>
+                                                                    </form>
+                                                                </td>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                                @endforeach
+                                            @endif
+                                        @endforeach
+                                        @endif
                                     </tr>
                                 @endforeach
                             </tbody>

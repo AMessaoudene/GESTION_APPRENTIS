@@ -18,7 +18,7 @@ class AvenantsController extends Controller
      */
     public function index()
     {
-        if(auth::user()->role == 'DFP' || auth::user()->role == 'SA'){
+        if(auth::user()){
         $apprentis = apprentis::all();
         $decisions = decisionapprentis::all();
         $avenants = avenants::all();
@@ -110,8 +110,7 @@ class AvenantsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
-    {
+    public function destroy(string $id){
         try{
             $avenants = avenants::find($id);
             $avenants->delete();

@@ -49,18 +49,18 @@ class AssiduitesController extends Controller{
         }
 
         try {
-                $assiduites = new assiduites();
-                $assiduites->apprenti_id = $request->apprenti_id; // Correct property name
-                $assiduites->type = $request->type;
-                $assiduites->datedebut = $request->datedebut;
-                $assiduites->datefin = $request->datefin;
-                $assiduites->motif = $request->motif;
-                $preuve = $request->file('preuve');
-                $preuvenom = 'preuve-'.time().'.'.$preuve->getClientOriginalExtension();
-                $preuve->move('assets/preuves', $preuvenom);
-                $assiduites->preuve = $preuvenom;
-                $assiduites->save();
-                return redirect()->back()->with('success', 'Assiduité ajoutée avec succès!');
+            $assiduites = new assiduites();
+            $assiduites->apprenti_id = $request->apprenti_id;
+            $assiduites->type = $request->type;
+            $assiduites->datedebut = $request->datedebut;
+            $assiduites->datefin = $request->datefin;
+            $assiduites->motif = $request->motif;
+            $preuve = $request->file('preuve');
+            $preuvenom = 'preuve-'.time().'.'.$preuve->getClientOriginalExtension();
+            $preuve->move('assets/preuves', $preuvenom);
+            $assiduites->preuve = $preuvenom;
+            $assiduites->save();
+            return redirect()->back()->with('success', 'Assiduité ajoutée avec succès!');
         } catch (\Exception $e) {
             return redirect()->back()->withErrors($e->getMessage())->withInput();
         }
