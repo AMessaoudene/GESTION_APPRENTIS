@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\apprentis;
+use App\Models\decisionapprentis;
 use App\Models\maitre_apprentis;
+use App\Models\planbesoins;
+use App\Models\pv_installations;
 use App\Models\supervisions;
 use Illuminate\Http\Request;
 use App\Models\departs;
@@ -54,6 +57,12 @@ class DepartsController extends Controller
         // Update the status
         $apprenti->status = 'inactif';
         $apprenti->save();
+
+        $pv = pv_installations::where('apprenti_id',$apprenti->id)->first();
+        $decision = decisionapprentis::where('pv_id',$pv->id)->first();
+        $plan = planbesoins::where('id',$decision->id)->first();
+        $plan->nombreapprentisactuel--;
+        $plan->save();
 
         $maitre1 = maitre_apprentis::where('apprenti1_id',$request->apprenti_id)->first();
         $maitre2 = maitre_apprentis::where('apprenti2_id',$request->apprenti_id)->first();

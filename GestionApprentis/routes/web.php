@@ -54,6 +54,11 @@ Route::middleware('auth')->group(function(){
     Route::put('/supervisions/{id}', [supervisionsController::class, 'update'])->name('supervisions.update');
     Route::delete('/supervisions/{id}', [supervisionsController::class, 'destroy'])->name('supervisions.destroy');
 });
+Route::get('/test-email', function() {
+    Notification::route('mail', 'example@gmail.com')->notify(new \App\Notifications\NewAccountNotification(\App\Models\User::first()));
+    return 'Test email sent!';
+});
+
 //Apprentis
 Route::middleware('auth')->group(function(){
     Route::get('/apprentis', [ApprentisController::class, 'index'])->name('apprentis.index');
