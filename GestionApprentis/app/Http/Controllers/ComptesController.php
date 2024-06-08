@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\NewAccountNotification;
 class ComptesController extends Controller
 {
     public function index(){
@@ -62,7 +64,9 @@ class ComptesController extends Controller
         $compte->structures_id = $request->structures_id;
         $compte->status = "active";
         $compte->save();
-        return redirect()->back();
+        // Send notification to the admin
+        Notification::route('mail', 'amessaoudenecontact@gmail.com')->notify(new NewAccountNotification($compte));
+        return redirect()->back()->with('success');
     }
     public function update(Request $request, $id)
     {
