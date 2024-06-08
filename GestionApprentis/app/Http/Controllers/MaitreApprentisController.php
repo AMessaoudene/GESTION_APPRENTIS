@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\apprentis;
 use App\Models\diplomes;
 use App\Models\maitre_apprentis;
 use App\Models\pv_installations;
 use App\Models\specialites;
 use App\Models\structures;
+use App\Models\decisionmaitreapprentis;
+use App\Models\baremes;
+use App\Models\refsalariares;
 use App\Models\supervisions;
 use Validator;
 use Illuminate\Http\Request;
@@ -101,5 +105,21 @@ class MaitreApprentisController extends Controller
         pv_installations::where('maitreapprenti_id',$id)->update(['maitreapprenti_id' => null]);
         maitre_apprentis::destroy($id);
         return redirect()->back();
+    }
+    public function Historiquepayements(Request $request,$id){
+        $maitre = maitre_apprentis::find($id);
+        $pv = pv_installations::where('maitreapprenti_id',$maitre->id)->first();
+        $decision = decisionmaitreapprentis::where('pv_id',$pv->id)->first();
+        $baremes = baremes::all();
+        $refs = refsalariares::all();
+        return view('maitre_apprentis.Historique_payements',compact('maitre','decision','pv','baremes','refs'));
+    }
+    public function Historique(Request $request,$id){
+        $maitre = maitre_apprentis::find($id);
+        $supervisions = supervisions::where('maitreapprenti_id',$maitre->id)->get();
+        $apprentis = apprentis::all();
+        $specialites = specialites::all();
+        $structures = structures::all();
+        return view('maitre_apprentis.Historique_apprentis',compact('maitre','supervisions','apprentis','structures','specialites'));
     }
 }

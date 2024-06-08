@@ -164,6 +164,8 @@
                             <th scope="col">Diplome</th>
                             <th scope="col">Email</th>
                             <th scope="col">Date Recrutement</th>
+                            <th scope="col">Historique des supervisions</th>
+                            <th scope="col">Historique des payements</th>
                             <th scope="col">Statut</th>
                             @if (Auth::user()->role == 'DFP' )
                                 <th scope="col">Action</th>
@@ -201,6 +203,8 @@
                                 </td>
                                 <td>{{ $maitre->email }}</td>
                                 <td>{{ $maitre->daterecrutement }}</td>
+                                <td><a href="/maitreapprentis/{{$maitre->id}}/Historique">voir</a></td>
+                                <td><a href="/maitreapprentis/{{$maitre->id}}/Historiquepayements">voir</a></td>
                                 <td>{{ $maitre->statut }}</td>
                                 @if (Auth::user()->role == 'DFP')
                                     <td>

@@ -14,14 +14,9 @@ return new class extends Migration
         Schema::create("parametres", function (Blueprint $table) {
             $table->id();
             $table->string('reference');
-            //$table->string('direction');
             $table->string('typedecisiondg');
             $table->date('datedecisiondg');
             $table->string('nomprenomdg');
-            $table->string('decisionpremierresponsable');
-            $table->date('datedecisionpremierresponsable');
-            $table->string('nomprenompremierresponsable');
-            $table->string('fonctionpremierresponsable');
             $table->enum('civilitedrh',['monsieur','madame']);
             $table->enum('civilitedfc',['monsieur','madame']);
             $table->enum('status',['actif','inactif']);

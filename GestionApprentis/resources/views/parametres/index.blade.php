@@ -62,7 +62,11 @@
                                     </div>
                                     <div class="col-md-6">
                                         <label for="typedecisiondg" class="form-label">Type Decision DG</label>
-                                        <input type="text" class="form-control" id="typedecisiondg" name="typedecisiondg">
+                                        <select class="form-control" id="typedecisiondg" name="typedecisiondg">
+                                            <option value="">-- Choisir --</option>
+                                            <option value="Presidentiel">Présidentiel</option>
+                                            <option value="Ministerial">Ministérial</option>
+                                        </select>
                                     </div>
                                     <div class="col-md-6">
                                         <label for="datedecisiondg" class="form-label">Date Decision DG</label>
@@ -71,22 +75,6 @@
                                     <div class="col-md-6">
                                         <label for="nomprenomdg" class="form-label">Nom et Prenom DG</label>
                                         <input type="text" class="form-control" id="nomprenomdg" name="nomprenomdg">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="decisionpremierresponsable" class="form-label">Decision premier responsable</label>
-                                        <input type="text" class="form-control" id="decisionpremierresponsable" name="decisionpremierresponsable">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="datedecisionpremierresponsable" class="form-label">Date decision premier responsable</label>
-                                        <input type="date" class="form-control" id="datedecisionpremierresponsable" name="datedecisionpremierresponsable">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="nomprenompremierresponsable" class="form-label">Nom et Prenom premier responsable</label>
-                                        <input type="text" class="form-control" id="nomprenompremierresponsable" name="nomprenompremierresponsable">
-                                    </div>
-                                    <div class="col-md-6">
-                                        <label for="fonctionpremierresponsable" class="form-label">Fonction premier responsable</label>
-                                        <input type="text" class="form-control" id="fonctionpremierresponsable" name="fonctionpremierresponsable">
                                     </div>
                                     <div class="col-md-6">
                                         <label for="civilitedrh" class="form-label">Civilite DRH</label>

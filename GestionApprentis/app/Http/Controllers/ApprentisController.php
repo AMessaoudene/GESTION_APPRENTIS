@@ -448,8 +448,11 @@ class ApprentisController extends Controller
         return view('apprentis.Historique_evaluations',compact('evaluations'));
     }
     public function Historiquepayements(Request $request,$id){
-        $pvs = pv_installations::where('apprenti_id',$id)->get();
-        $decisions = decisionapprentis::all();
-        return view('apprentis.Historique_payements',compact('decisions','pvs'));
+        $apprenti = apprentis::find($id);
+        $pv = pv_installations::where('apprenti_id',$apprenti->id)->first();
+        $decision = decisionapprentis::where('pv_id',$pv->id)->first();
+        $baremes = baremes::all();
+        $refs = refsalariares::all();
+        return view('apprentis.Historique_payements',compact('apprenti','decision','pv','baremes','refs'));
     }
 }

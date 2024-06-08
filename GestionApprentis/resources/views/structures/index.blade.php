@@ -57,23 +57,51 @@
                                 </button>
                             </div>
                             <div class="modal-body">
-                                    <form id="add-form" method="POST" action="{{ route('structures.submit') }}" class="form-horizontal">
-                                        @csrf
-                                        <div class="form-group">
-                                            <label for="nom">Nom</label>
-                                            <input type="text" name="nom" class="form-control" id="nom" required>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="adressecourriel">Adresse courriel</label>
-                                            <input type="text" name="adressecourriel" class="form-control" id="adressecourriel" required>
-                                        </div>
-                                        <div class="form-group text-center mt-3 mb-3">
-                                            <button type="submit" class="btn btn-primary">Ajouter</button>
-                                        </div>
-                                    </form>
-                                </div>
+                                <form id="add-form" method="POST" action="{{ route('structures.submit') }}" class="form-horizontal">
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="nom">Nom</label>
+                                        <input type="text" name="nom" class="form-control" id="nom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="adressecourriel">Adresse courriel</label>
+                                        <input type="text" name="adressecourriel" class="form-control" id="adressecourriel" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="referencedecisionresponsable">referencedecisionresponsable</label>
+                                        <input type="text" name="referencedecisionresponsable" class="form-control" id="referencedecisionresponsable">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="decisionresponsable">decisionresponsable</label>
+                                        <input type="text" name="decisionresponsable" class="form-control" id="decisionresponsable">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="datedecisionresponsable">datedecisionresponsable</label>
+                                        <input type="date" name="datedecisionresponsable" class="form-control" id="datedecisionresponsable">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="nomresponsable">nomresponsable</label>
+                                        <input type="text" name="nomresponsable" class="form-control" id="nomresponsable">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="prenomresponsable">prenomresponsable</label>
+                                        <input type="text" name="prenomresponsable" class="form-control" id="prenomresponsable">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="civilitéresponsable">civilitéresponsable</label>
+                                        <input type="text" name="civilitéresponsable" class="form-control" id="civilitéresponsable">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fonctionresponsable">fonctionresponsable</label>
+                                        <input type="text" name="fonctionresponsable" class="form-control" id="fonctionresponsable">
+                                    </div>
+                                    <div class="form-group text-center mt-3 mb-3">
+                                        <button type="submit" class="btn btn-primary">Ajouter</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
+                    </div>
                 </div>
                 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
                 @endif

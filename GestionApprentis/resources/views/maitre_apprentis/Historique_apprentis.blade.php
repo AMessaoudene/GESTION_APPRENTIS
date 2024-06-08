@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title','Historique des maitre apprentis')
+@section('title','Historique des apprentis')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -28,18 +28,18 @@
                     </thead>
                     <tbody>
                         @foreach($supervisions as $supervision)
-                            @foreach ($maitres as $maitre)
-                                @if ($maitre->id == $supervision->maitreapprenti_id)                      
+                            @foreach ($apprentis as $apprenti)
+                                @if ($apprenti->id == $supervision->apprenti_id)                      
                                     <tr>
-                                        <td>{{ $maitre->nom }}</td>
-                                        <td>{{ $maitre->prenom }}</td>
+                                        <td>{{ $apprenti->nom }}</td>
+                                        <td>{{ $apprenti->prenom }}</td>
                                         @foreach ($structures as $structure)
-                                            @if ($maitre->affectation == $structure->id)
+                                            @if ($apprenti->structure_id == $structure->id)
                                                 <td>{{ $structure->nom }}</td>
                                             @endif
                                         @endforeach
                                         @foreach ($specialites as $specialite)
-                                            @if ($maitre->fonction == $specialite->id)
+                                            @if ($apprenti->specialite_id == $specialite->id)
                                                 <td>{{ $specialite->nom }}</td>
                                             @endif
                                         @endforeach

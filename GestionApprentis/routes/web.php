@@ -104,6 +104,8 @@ Route::middleware('auth')->group(function(){
     Route::post('/maitreapprentis', [MaitreApprentisController::class, 'submit'])->name('maitreapprentis.submit');
     Route::put('/maitreapprentis/{id}', [MaitreApprentisController::class, 'update'])->name('maitreapprentis.update');
     Route::delete('/maitreapprentis/{id}', [MaitreApprentisController::class, 'destroy'])->name('maitreapprentis.destroy');
+    Route::get('/maitreapprentis/{id}/Historique',[MaitreApprentisController::class,'Historique'])->name('maitreapprentis.Historique');
+    Route::get('/maitreapprentis/{id}/Historiquepayements',[MaitreApprentisController::class,'Historiquepayements'])->name('maitreapprentis.Historiquepayements');
 });
 //decisionsapprentis
 Route::middleware('auth')->group(function(){
