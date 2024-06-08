@@ -22,6 +22,11 @@
                         </a>
                     </li>
                     <li class="nav-item mb-5">
+                        <a class="nav-link" href="{{ route('supervisions.index') }}">
+                            Supervisions
+                        </a>
+                    </li>
+                    <li class="nav-item mb-5">
                         <a class="nav-link dropdown-toggle" href="#" id="EducationsDropdown" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Education
                         </a>

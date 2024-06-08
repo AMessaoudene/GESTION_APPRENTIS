@@ -13,6 +13,7 @@ use App\Models\refsalariares;
 use Illuminate\Http\Request;
 use App\Models\baremes;
 use Session;
+use Validator;
 use Auth;
 class DecisionsController extends Controller
 {
@@ -46,8 +47,36 @@ class DecisionsController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        $rules = [
+            'referenceda' => 'required|unique:decisionapprentis',
+            'planbesoins_id' => 'required',
+            'parametre_id' => 'required',
+            'bareme_id' => 'required',
+            'datedecision' => 'required',
+            'pv_id' => 'required',
+            'referencedma' => 'required',
+            'datedma' => 'required',
+            'dateda' =>'required'
+        ];
+        $messages = [
+            'referenceda.required' => 'Le champ reference est obligatoire.',
+            'referenceda.unique' => 'Le champ reference doit etre unique.',
+            'planbesoins_id.required' => 'Le champ plan de besoin est obligatoire.',
+            'parametre_id.required' => 'Le champ parametre est obligatoire.',
+            'bareme_id.required' => 'Le champ bareme est obligatoire.',
+            'datedecision.required' => 'Le champ date de decision est obligatoire.',
+            'pv_id.required' => 'Le champ pv est obligatoire.',
+            'referencedma.required' => 'Le champ reference est obligatoire.',
+            'datedma.required' => 'Le champ date de decision est obligatoire.',
+            'dateda.required' => 'Le champ date de decision est obligatoire.',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
         $pv = Session::get('pv');
         $decisiona = new decisionapprentis();
         $decisiona->planbesoins_id = $request->planbesoins_id;

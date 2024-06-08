@@ -74,6 +74,17 @@ class SpecialitesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $rules = [
+            'nom' => 'required|unique:specialites|string|max:255',
+        ];
+        $messages = [
+            'nom.required' => 'Le champ nom est obligatoire.',
+            'nom.unique' => 'Le champ nom doit etre unique.',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         $specialite = specialites::findOrFail($id);
         $specialite->nom = $request->nom;
         $specialite->description = $request->description;

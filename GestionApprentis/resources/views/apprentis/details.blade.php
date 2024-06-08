@@ -103,6 +103,12 @@
                         @if($decisionapprenti->datetransfert)
                             <li class="list-group-item">Date Transfert : {{ $decisionapprenti->datetransfert }}</li>
                         @endif
+                        <div class="text-center">
+                            <form action="{{ route('dossiers.decisiona_pdfdownload',$apprenti->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Telecharger</button>
+                            </form>
+                        </div>
                     @endif
                 @endforeach
             </ul>
@@ -132,6 +138,12 @@
                                 @endif
                             @endforeach
                         </li>
+                        <div class="text-center">
+                            <form action="{{ route('dossiers.decisionma_pdfdownload',$apprenti->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="btn btn-primary">Telecharger</button>
+                            </form>
+                        </div>
                     @endif
                 @endforeach
             </ul>

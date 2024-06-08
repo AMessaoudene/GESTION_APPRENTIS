@@ -42,12 +42,32 @@ class SupervisionsController extends Controller
         Supervisions::where('apprenti_id',$request->apprenti_id)->update(
             ['datefin' => $request->datedebut , 'status' => 'inactif']
         );
+        $maitre1 = maitre_apprentis::where('apprenti1_id',$request->apprenti_id)->first();
+        $maitre2 = maitre_apprentis::where('apprenti2_id',$request->apprenti_id)->first();
+        if($maitre1){
+            $maitre1->apprenti1_id = null;
+            $maitre1->save();
+        }
+        elseif($maitre2){
+            $maitre2->apprenti2_id = null;
+            $maitre2->save();
+        }
+        $maitre = maitre_apprentis::where('id',$request->maitreapprenti_id)->first();
+        if($maitre->apprenti1_id){
+            $maitre->apprenti2_id = $request->apprenti_id;
+        }
+        else{
+            $maitre->apprenti1_id = $request->apprenti_id;
+        }
+        $maitre->save();
         $supervision = new supervisions();
         $supervision->maitreapprenti_id = $request->maitreapprenti_id;
         $supervision->apprenti_id = $request->apprenti_id;
         $supervision->datedebut = $request->datedebut;
         $supervision->datefin = $request->datefin;
+        $supervision->status = 'actif';
         $supervision->save();
+        return redirect()->back()->with('success');
     }
     public function update(Request $request,$id){
         $supervision = Supervisions::findOrFail($id);
@@ -62,5 +82,6 @@ class SupervisionsController extends Controller
     public function destroy(Request $request,$id){
         $supervision = Supervisions::find($id);
         $supervision->delete();
+        return redirect()->back()->with('deleted successfully');
     }
 }

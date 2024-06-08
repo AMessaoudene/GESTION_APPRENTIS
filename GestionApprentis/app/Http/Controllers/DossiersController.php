@@ -172,6 +172,24 @@ class DossiersController extends Controller
         $pdf = PDF::loadView('pvinstallations.fiche', compact('parametre','decision','maitre','apprenti', 'pv','specialite','diplome'));
         return $pdf->download('pv_' . hash::make($pv->reference) . '_' . hash::make($apprenti->id) .'_' .time().str::random(10). '.pdf');
     }
+    public function decisiona_pdfDownload(Request $request, $id){
+        $apprenti = Apprentis::findOrFail($id);
+        $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $decision = decisionapprentis::where('pv_id',$pv->id)->first();
+        $bareme = baremes::where('id',$decision->baremes_id)->first();
+        $parametre = parametres::where('id',$decision->parametre_id)->first();
+        $pdf = PDF::loadView('decisions.ficheA', compact('parametre','decision','apprenti', 'pv'));
+        return $pdf->download('decisionapprenti_' . hash::make($decision->reference) . '_' . hash::make($apprenti->id) .'_' .time().str::random(10). '.pdf');
+    }
+    public function decisionma_pdfDownload(Request $request, $id){
+        $apprenti = Apprentis::findOrFail($id);
+        $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $decision = decisionmaitreapprentis::where('pv_id',$pv->id)->first();
+        $bareme = baremes::where('id',$decision->baremes_id)->first();
+        $parametre = parametres::where('id',$decision->parametre_id)->first();
+        $pdf = PDF::loadView('decisions.ficheMA', compact('parametre','decision','apprenti', 'pv'));
+        return $pdf->download('decsionmaitreapprenti_' . hash::make($decision->reference) . '_' . hash::make($apprenti->id) .'_' .time().str::random(10). '.pdf');
+    }
     public function delete(Request $request,$id){
         $dossiers = dossiers::findOrFail($id);
         $dossiers->delete();

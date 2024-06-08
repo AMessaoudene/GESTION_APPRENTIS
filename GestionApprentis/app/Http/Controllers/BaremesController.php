@@ -8,6 +8,7 @@ use App\Models\refsalariares;
 use App\Models\diplomes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class BaremesController extends Controller
 {
@@ -29,8 +30,44 @@ class BaremesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        $rules = [
+            'diplome_id' => 'required',
+            'tauxs1_apprentis' => 'required',
+            'montantchiffres1_apprentis' => 'required',
+            'montantlettres1_apprentis' => 'required',
+            'tauxs2_apprentis' => 'required',
+            'montantchiffres2_apprentis' => 'required',
+            'montantlettres2_apprentis' => 'required',
+            'tauxs1_maitreapprentis' => 'required',
+            'montantchiffres1_maitreapprentis' => 'required',
+            'montantlettres1_maitreapprentis' => 'required',
+            'tauxs2_maitreapprentis' => 'required',
+            'montantchiffres2_maitreapprentis' => 'required',
+            'montantlettres2_maitreapprentis' => 'required',
+            'refsalariaires_id' => 'required',
+        ];
+        $messages = [
+            'diplome_id.required' => 'Diplome est requis',
+            'tauxs1_apprentis.required' => 'Taux S1 apprentis est requis',
+            'montantchiffres1_apprentis.required' => 'Montant S1 apprentis est requis',
+            'montantlettres1_apprentis.required' => 'Montant S1 apprentis est requis',
+            'tauxs2_apprentis.required' => 'Taux S2 apprentis est requis',
+            'montantchiffres2_apprentis.required' => 'Montant S2 apprentis est requis',
+            'montantlettres2_apprentis.required' => 'Montant S2 apprentis est requis',
+            'tauxs1_maitreapprentis.required' => 'Taux S1 maitre apprentis est requis',
+            'montantchiffres1_maitreapprentis.required' => 'Montant S1 maitre apprentis est requis',
+            'montantlettres1_maitreapprentis.required' => 'Montant S1 maitre apprentis est requis',
+            'tauxs2_maitreapprentis.required' => 'Taux S2 maitre apprentis est requis',
+            'montantchiffres2_maitreapprentis.required' => 'Montant S2 maitre apprentis est requis',
+            'montantlettres2_maitreapprentis.required' => 'Montant S2 maitre apprentis est requis',
+            'refsalariaires_id.required' => 'Reference salariale est requise',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         baremes::where('statut', 'actif')->where('diplome_id', $request->diplome_id)->update(['statut' => 'inactif']);
         $referencesalariaires = refsalariares::find($request->refsalariaires_id);
         $baremes = new baremes();

@@ -1,5 +1,5 @@
 @extends('layouts.layout')
-@section('title','Historique des maitre apprentis')
+@section('title','Apprentis | Historique des paiements')
 @section('content')
 <div class="container-fluid">
     <div class="row">
@@ -19,11 +19,24 @@
             <table id="departs-table" class="table table-striped mt-4">
                     <thead>
                         <tr>
-                            <th scope="col">Nom</th>
-                            <th scope="col">Prenom</th>
-                            <th scope="col">Structure</th>
-                            <th scope="col">Specialité</th>
-                            <th scope="col">Statut</th>
+                            <th scope="col">Version</th>
+                            <th scope="col">SNMG</th>
+                            <th scope="col">Salaire Reference</th>
+                            <th scope="col">Taux S1 Apprentis</th>
+                            <th scope="col">Date debut S1</th>
+                            <th scope="col">Date fin S1</th>
+                            <th scope="col">Taux S2 Apprentis</th>
+                            <th scope="col">Date debut S2</th>
+                            <th scope="col">Date fin S2</th>
+                            <th scope="col">Taux S3 Apprentis</th>
+                            <th scope="col">Date debut S3</th>
+                            <th scope="col">Date fin S3</th>
+                            <th scope="col">Taux S4 Apprentis</th>
+                            <th scope="col">Date debut S4</th>
+                            <th scope="col">Date fin S4</th>
+                            <th scope="col">Taux S5 Apprentis</th>
+                            <th scope="col">Date debut S5</th>
+                            <th scope="col">Date fin S5</th>
                         </tr>
                     </thead>
                     <tbody>

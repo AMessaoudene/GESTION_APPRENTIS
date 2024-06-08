@@ -6,6 +6,7 @@ use App\Models\decisionapprentis;
 use App\Models\refsalariares;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class RefSalariairesController extends Controller
 {
@@ -24,18 +25,23 @@ class RefSalariairesController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        $rules = [
+            'version' => 'required',
+            'snmg' => 'required',
+            'salairereference' => 'required',
+        ];
+        $messages = [
+            'version.required' => 'Version est requise',
+            'snmg.required' => 'SNMG est requise',
+            'salairereference.required' => 'Salaire est requise',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         refsalariares::where('status','actif')->update(['status'=>'inactif']);
         $refsalariares = new refsalariares();
         $refsalariares->version = $request->version;

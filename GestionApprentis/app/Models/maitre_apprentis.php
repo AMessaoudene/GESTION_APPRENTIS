@@ -4,10 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use app\Models\apprentis;
-use app\Models\diplomes;
+use App\Models\Apprentis;
+use App\Models\Diplomes;
 
-class maitre_apprentis extends Model
+class Maitre_Apprentis extends Model
 {
     protected $table = 'maitre_apprentis';
     protected $fillable = [
@@ -25,13 +25,15 @@ class maitre_apprentis extends Model
         'affectation',
         'status',
     ];
+
     use HasFactory;
+
     public function apprentis()
     {
         return $this->hasMany(Apprentis::class);
     }
+
     public function diplome() {
-        return $this->belongsTo(diplomes::class, 'diplome_id');
+        return $this->belongsTo(Diplomes::class, 'diplome_id');
     }
-    
 }

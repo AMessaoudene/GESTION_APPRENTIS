@@ -25,12 +25,13 @@ class StructuresController extends Controller
     //Ajout d'une structure
     public function submit(Request $request) {
         $rules = [
-            'nom' => 'required',
+            'nom' => 'required|unique:structures|string|max:255',
             'adressecourriel' => 'required',
         ];
         $messages = [
             'nom.required' => 'Le nom est obligatoire',
             'adressecourriel.required' => 'Le courriel est obligatoire',
+            'nom.unique' => 'La structure existe déjà',
         ];
 
         $validate=Validator::make($request->all(), $rules, $messages);

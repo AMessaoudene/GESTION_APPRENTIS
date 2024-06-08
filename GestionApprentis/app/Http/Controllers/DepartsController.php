@@ -8,6 +8,7 @@ use App\Models\supervisions;
 use Illuminate\Http\Request;
 use App\Models\departs;
 use Auth;
+use Validator;
 
 class DepartsController extends Controller
 {
@@ -23,8 +24,23 @@ class DepartsController extends Controller
         }
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request){
+        $rules = [
+            'apprenti_id' => 'required',
+            'datedepart' => 'required',
+            'refcourrier' => 'required',
+            'datecourrier' => 'required',
+        ];
+        $messages = [
+            'apprenti_id.required' => 'Le champ apprenti est obligatoire.',
+            'datedepart.required' => 'Le champ date depart est obligatoire.',
+            'refcourrier.required' => 'Le champ reference courrier est obligatoire.',
+            'datecourrier.required' => 'Le champ date courrier est obligatoire.',
+        ];
+        $validator = Validator::make($request->all(), $rules, $messages);
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
         $departs = new departs();
         $departs->apprenti_id = $request->apprenti_id;
         $departs->datedepart = $request->datedepart;
