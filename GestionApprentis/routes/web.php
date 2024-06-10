@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DecisionsApprentisController;
+use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\baremesController;
 use App\Http\Controllers\EvaluateurGrade\EvaluateurGradeController;
 use App\Http\Controllers\RefSalariairesController;
@@ -84,6 +85,12 @@ Route::middleware('auth')->group(function(){
 //pvs
 Route::middleware('auth')->group(function(){
     Route::get('/apprentis/pvinstallations/fiche', [FicheController::class, 'pv'])->name('pvinstallations.download'); 
+});
+//Reports
+Route::middleware('auth')->group(function(){
+    Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
+    Route::post('/reports', [ReportsController::class, 'store'])->name('reports.store');
+    Route::delete('/reports/{id}', [ReportsController::class, 'destroy'])->name('reports.destroy');
 });
 //Dossiers 
 Route::middleware('auth')->group(function(){

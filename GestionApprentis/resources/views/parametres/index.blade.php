@@ -82,7 +82,6 @@
                                             <option value="">-- Choisir --</option>
                                             <option value="Monsieur">Mr</option>
                                             <option value="Madame">Mme</option>
-                                            <option value="Mademoiselle">Mlle</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -91,7 +90,6 @@
                                             <option value="">-- Choisir --</option>
                                             <option value="Monsieur">Mr</option>
                                             <option value="Madame">Mme</option>
-                                            <option value="Mademoiselle">Mlle</option>
                                         </select>
                                     </div>
                                     <div class="col-md-6">
@@ -100,7 +98,6 @@
                                             <option value="">-- Choisir --</option>
                                             <option value="Monsieur">Mr</option>
                                             <option value="Madame">Mme</option>
-                                            <option value="Mademoiselle">Mlle</option>
                                         </select>
                                     </div>
                                     <div class="col-12">
@@ -121,10 +118,7 @@
                                 <th scope="col">Decision DG</th>
                                 <th scope="col">Date decision DG</th>
                                 <th scope="col">Nom et prenom DG</th>
-                                <th scope="col">Decision premier responsable</th>
-                                <th scope="col">Date decision premier responsable</th>
-                                <th scope="col">Nom et prenom premier responsable</th>
-                                <th scope="col">Fonction premier responsable</th>
+                                <th scope="col">Civilite DG</th>
                                 <th scope="col">Civilite RH</th>
                                 <th scope="col">Civilite Fc</th>
                                 <th scope="col">Status</th>
@@ -141,10 +135,7 @@
                                     <td>{{ $parametre->typedecisiondg }}</td>
                                     <td>{{ $parametre->datedecisiondg }}</td>
                                     <td>{{ $parametre->nomprenomdg }}</td>
-                                    <td>{{ $parametre->decisionpremierresponsable }}</td>
-                                    <td>{{ $parametre->datedecisionpremierresponsable }}</td>
-                                    <td>{{ $parametre->nomprenompremierresponsable }}</td>
-                                    <td>{{ $parametre->fonctionpremierresponsable }}</td>
+                                    <td>{{ $parametre->civilitedg }}</td>
                                     <td>{{ $parametre->civilitedrh }}</td>
                                     <td>{{ $parametre->civilitedfc }}</td>
                                     <td>{{ $parametre->status }}</td>
