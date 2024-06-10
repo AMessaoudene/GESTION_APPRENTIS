@@ -150,9 +150,17 @@
                             <label class="form-label">Structure</label>
                             <select name="structure_id" class="form-select" required id="structure_id">
                                 <option value="">-- Choisir une structure --</option>
-                                @foreach($structures as $structure)
-                                    <option value="{{$structure->id}}">{{ $structure->nom }}</option>
-                                @endforeach
+                                @if (Auth::user()->role=='DFP')
+                                    @foreach($structures as $structure)
+                                        <option value="{{$structure->id}}">{{ $structure->nom }}</option>
+                                    @endforeach
+                                @else
+                                    @foreach($structures as $structure)
+                                        @if ($structure->id == Auth::user()->structures_id)
+                                            <option value="{{$structure->id}}">{{ $structure->nom }}</option>
+                                        @endif
+                                    @endforeach
+                                @endif
                             </select>
                         </div>
                         <div class="mb-3">

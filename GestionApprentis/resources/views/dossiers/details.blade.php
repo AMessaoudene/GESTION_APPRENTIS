@@ -241,16 +241,18 @@
                 </ul>
             </div>
         </div>
-        <form action="{{ route('apprentis.updatedossier',$dossier->id) }}" method="POST">
-            @csrf
-            <select name="status" value="{{ $dossier->status }}" required>
-                <option value="#">Choisir</option>
-                <option value="valide">Valide</option>
-                <option value="refuse">Refuse</option>
-            </select>
-            <input type="text" name="motif" id="">
-            <button type="submit">Valider</button>
-        </form>
+        @if(Auth::user()->role != 'SA')
+            <form action="{{ route('apprentis.updatedossier',$dossier->id) }}" method="POST">
+                @csrf
+                <select name="status" value="{{ $dossier->status }}" required>
+                    <option value="#">Choisir</option>
+                    <option value="valide">Valide</option>
+                    <option value="refuse">Refuse</option>
+                </select>
+                <input type="text" name="motif" id="">
+                <button type="submit">Valider</button>
+            </form>
+        @endif
         @if ($apprenti->status == "actif")
         <p style="text-align:center;">Statut de l'apprenti : <span style="color:green;">{{ $apprenti->status }}</span></p>
         @elseif($apprenti->status == "inactif")

@@ -48,7 +48,7 @@ class DecisionsController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request){
-        $rules = [
+        /*$rules = [
             'referenceda' => 'required|unique:decisionapprentis',
             'planbesoins_id' => 'required',
             'parametre_id' => 'required',
@@ -75,7 +75,7 @@ class DecisionsController extends Controller
 
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
-        }
+        }*/
 
         $pv = Session::get('pv');
         $decisiona = new decisionapprentis();

@@ -73,7 +73,11 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="decisionresponsable">decisionresponsable</label>
-                                        <input type="text" name="decisionresponsable" class="form-control" id="decisionresponsable">
+                                        <select name="decisionresponsable" class="form-control" id="decisionresponsable">
+                                            <option value="">-- Choisir --</option>
+                                            <option value="Presidentiel">Présidentiel</option>
+                                            <option value="Ministerial">Ministérial</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="datedecisionresponsable">datedecisionresponsable</label>
@@ -88,8 +92,12 @@
                                         <input type="text" name="prenomresponsable" class="form-control" id="prenomresponsable">
                                     </div>
                                     <div class="form-group">
-                                        <label for="civilitéresponsable">civilitéresponsable</label>
-                                        <input type="text" name="civilitéresponsable" class="form-control" id="civilitéresponsable">
+                                        <label for="civiliteresponsable">civilitéresponsable</label>
+                                        <select name="civiliteresponsable" class="form-control" id="civiliteresponsable">
+                                            <option value="">-- Choisir --</option>
+                                            <option value="M">M.</option>
+                                            <option value="Mme">Mme</option>
+                                        </select>
                                     </div>
                                     <div class="form-group">
                                         <label for="fonctionresponsable">fonctionresponsable</label>
@@ -112,6 +120,13 @@
                             <th scope="col">ID</th>
                             <th scope="col">Nom</th>
                             <th scope="col">Adresse Courriel</th>
+                            <th scope="col">referencedecisionresponsable</th>
+                            <th scope="col">decisionresponsable</th>
+                            <th scope="col">datedecisionresponsable</th>
+                            <th scope="col">nomresponsable</th>
+                            <th scope="col">prenomresponsable</th>
+                            <th scope="col">civilitéresponsable</th>
+                            <th scope="col">fonctionresponsable</th>
                             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
                                 <th scope="col">Actions</th>
                             @endif
@@ -123,6 +138,13 @@
                             <td>{{ $structure->id }}</td>
                             <td>{{ $structure->nom }}</td>
                             <td>{{ $structure->adressecourriel }}</td>
+                            <td>{{ $structure->referencedecisionresponsable }}</td>
+                            <td>{{ $structure->decisionresponsable }}</td>
+                            <td>{{ $structure->datedecisionresponsable }}</td>
+                            <td>{{ $structure->nomresponsable }}</td>
+                            <td>{{ $structure->prenomresponsable }}</td>
+                            <td>{{ $structure->civiliteresponsable }}</td>
+                            <td>{{ $structure->fonctionresponsable }}</td>
                             @if (Auth::user()->role == 'DFP' || Auth::user()->role == 'SA')
                             <td>
                                 <div>
@@ -185,12 +207,61 @@
             var row = $(this).closest('tr');
             var nom = row.find('td:eq(1)').text();
             var adressecourriel = row.find('td:eq(2)').text();
+            var referencedecisionresponsable = row.find('td:eq(3)').text();
+            var decisionresponsable = row.find('td:eq(4)').text();
+            var datedecisionresponsable = row.find('td:eq(5)').text();
+            var nomresponsable = row.find('td:eq(6)').text();
+            var prenomresponsable = row.find('td:eq(7)').text();
+            var civiliteresponsable = row.find('td:eq(8)').text();
+            var fonctionresponsable = row.find('td:eq(9)').text();
             var editForm = `
                 <form method="POST" action="{{ route('structures.update', $structure->id) }}" class="edit-form">
                     @csrf
                     @method('PUT')
-                    <input type="text" name="nom" class="form-control" value="${nom}">
-                    <input type="text" name="adressecourriel" class="form-control" value="${adressecourriel}">
+                    <div class="form-group">
+                        <label for="nom">Nom</label>
+                        <input type="text" name="nom" class="form-control" value=${nom} id="nom">
+                    </div>
+                    <div class="form-group">
+                        <label for="adressecourriel">Adresse courriel</label>
+                        <input type="text" name="adressecourriel" class="form-control" value=${adressecourriel} id="adressecourriel">
+                    </div>
+                    <div class="form-group">
+                        <label for="referencedecisionresponsable">referencedecisionresponsable</label>
+                        <input type="text" name="referencedecisionresponsable" class="form-control" value=${referencedecisionresponsable} id="referencedecisionresponsable">
+                    </div>
+                    <div class="form-group">
+                        <label for="decisionresponsable">decisionresponsable</label>
+                        <select name="decisionresponsable" class="form-control" value=${decisionresponsable} id="decisionresponsable">
+                            <option value="">-- Choisir --</option>
+                            <option value="Presidentiel">Présidentiel</option>
+                            <option value="Ministerial">Ministérial</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="datedecisionresponsable">datedecisionresponsable</label>
+                        <input type="date" name="datedecisionresponsable" class="form-control" value=${datedecisionresponsable} id="datedecisionresponsable">
+                    </div>
+                    <div class="form-group">
+                        <label for="nomresponsable">nomresponsable</label>
+                        <input type="text" name="nomresponsable" class="form-control" value=${nomresponsable} id="nomresponsable">
+                    </div>
+                    <div class="form-group">
+                        <label for="prenomresponsable">prenomresponsable</label>
+                        <input type="text" name="prenomresponsable" class="form-control" value=${prenomresponsable} id="prenomresponsable">
+                    </div>
+                    <div class="form-group">
+                        <label for="civiliteresponsable">civilitéresponsable</label>
+                        <select name="civiliteresponsable" class="form-control" value=${civiliteresponsable} id="civiliteresponsable">
+                            <option value="">-- Choisir --</option>
+                            <option value="M">M.</option>
+                            <option value="Mme">Mme</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fonctionresponsable">fonctionresponsable</label>
+                        <input type="text" name="fonctionresponsable" class="form-control" value=${fonctionresponsable} id="fonctionresponsable">
+                    </div>
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form>
             `;

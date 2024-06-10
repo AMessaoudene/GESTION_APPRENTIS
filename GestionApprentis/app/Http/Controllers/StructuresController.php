@@ -42,6 +42,13 @@ class StructuresController extends Controller
             $structure = new structures();
             $structure->nom = $request->nom;
             $structure->adresseCourriel = $request->adressecourriel;
+            $structure->referencedecisionresponsable = $request->referencedecisionresponsable;
+            $structure->decisionresponsable = $request->decisionresponsable;
+            $structure->datedecisionresponsable = $request->datedecisionresponsable;
+            $structure->nomresponsable = $request->nomresponsable;
+            $structure->prenomresponsable = $request->prenomresponsable;
+            $structure->civiliteresponsable = $request->civiliteresponsable;
+            $structure->fonctionresponsable = $request->fonctionresponsable;
             $structure->save();
             return redirect()->back();
         }

@@ -77,6 +77,15 @@
                                         <input type="text" class="form-control" id="nomprenomdg" name="nomprenomdg">
                                     </div>
                                     <div class="col-md-6">
+                                        <label for="civilitedg" class="form-label">Civilité DG</label>
+                                        <select class="form-select" id="civilitedg" name="civilitedg">
+                                            <option value="">-- Choisir --</option>
+                                            <option value="Monsieur">Mr</option>
+                                            <option value="Madame">Mme</option>
+                                            <option value="Mademoiselle">Mlle</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-6">
                                         <label for="civilitedrh" class="form-label">Civilite DRH</label>
                                         <select class="form-select" id="civilitedrh" name="civilitedrh">
                                             <option value="">-- Choisir --</option>

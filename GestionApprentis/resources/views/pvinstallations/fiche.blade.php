@@ -51,7 +51,7 @@
         <tr class="header-row">
             <td class="header-left">
                 <!-- Place pour le logo -->
-                <img class="logo" src="#" alt="Logo">
+                <p>Algerie Poste</p>
             </td>
             <td colspan="2" class="header-right">
                 <strong>Date :</strong> {{ $pv->datepv }}<br>
@@ -83,9 +83,9 @@
             <td>
                 <strong>Nom / Prénom :</strong> {{ $maitre->nom }} {{ $maitre->prenom}}<br>
                 <strong>Matricule :</strong> {{ $maitre->matricule }}<br>
-                <strong>Affectation :</strong> « Direction d'affectation du maître d'apprentissage »<br>
-                <strong>Fonction :</strong> « Fonction du maître d'apprentissage »<br>
-                <strong>Diplôme :</strong> « Formation de base du maître d'apprentissage »<br>
+                <strong>Affectation :</strong> {{$structure->nom}}<br>
+                <strong>Fonction :</strong> {{$specialite->nom}}<br>
+                <strong>Diplôme :</strong> {{$diplome->nom}}<br>
                 <strong>Date de recrutement :</strong> {{ $maitre->daterecrutement }}
             </td>
         </tr>
@@ -94,9 +94,9 @@
             <td>
                 <strong>Date d'installation de l'apprenti(e) :</strong><br>
                 - En chiffre : {{ $pv->dateinstallationchiffre }}<br>
-                - En lettre : L'an ……………… et le …………. du mois de …………………..<br>
-                <strong>Affectation :</strong> « Direction d'affectation » - « Service d'affectation »<br>
-                <strong>Dotations :</strong> « Equipements ou badge ou autres dotations mis à la disposition de l'apprenti »
+                - En lettre : L'an {{$pv->anneeinstallationlettre}} et le {{$pv->moisinstallationlettre}} du mois de {{$pv->jourinstallationlettre}}<br>
+                <strong>Affectation :</strong> {{$structure->nom}} - {{$pv->serviceaffectation}}<br>
+                <strong>Dotations :</strong> {{$pv->dotations}}
             </td>
         </tr>
         <tr class="signature-row">

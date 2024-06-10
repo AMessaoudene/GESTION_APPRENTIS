@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('typedecisiondg');
             $table->date('datedecisiondg');
             $table->string('nomprenomdg');
+            $table->enum('civilitedg',['monsieur','madame']);
             $table->enum('civilitedrh',['monsieur','madame']);
             $table->enum('civilitedfc',['monsieur','madame']);
             $table->enum('status',['actif','inactif']);

@@ -63,23 +63,23 @@
             <h2>Decision Apprenti</h2>
             <ul class="list-group">
                 @foreach($decisionapprentis as $decisionapprenti)
-                    <li class="list-group-item">Plan Besoin : 
-                        @foreach ($plans as $plan)
-                            @if($plan->id == $decisionapprenti->planbesoins_id)
-                                {{ $plan->reference }} - 
-                                @foreach($exercices as $exercice)
-                                    @if($exercice->id == $plan->exercice_id)
-                                        {{ $exercice->annee }}
-                                    @endif
-                                @endforeach
-                                 -  
-                                {{ $structure->nom }}    
-                                 - 
-                                {{ $specialite->nom }}
-                            @endif
-                        @endforeach
-                    </li>
                     @if($decisionapprenti->pv_id == $pv->id)
+                        <li class="list-group-item">Plan Besoin : 
+                            @foreach ($plans as $plan)
+                                @if($plan->id == $decisionapprenti->planbesoins_id && $plan->status == 'accepté')
+                                    {{ $plan->reference }} - 
+                                    @foreach($exercices as $exercice)
+                                        @if($exercice->id == $plan->exercice_id)
+                                            {{ $exercice->annee }}
+                                        @endif
+                                    @endforeach
+                                    -  
+                                    {{ $structure->nom }}    
+                                    - 
+                                    {{ $specialite->nom }}
+                                @endif
+                            @endforeach
+                        </li>
                         <li class="list-group-item">Référence : {{ $decisionapprenti->referenceda }}</li>
                         <li class="list-group-item">Date Decision : {{ $decisionapprenti->dateda }}</li>
                         <li class="list-group-item">Parametre : 
@@ -281,7 +281,7 @@
                     @else
                     <li class="list-group-item">Aucune piece d'identité</li>
                     @endif
-                    @if ($dossier->status == 'en cours')
+                    @if ($dossier->status == 'en cours' && Auth::user()->role == 'DFP')
                         <form action="{{ route('apprentis.updatedossier',$dossier->id) }}" method="POST">
                             @csrf
                             <label for="">Status du dossier</label>

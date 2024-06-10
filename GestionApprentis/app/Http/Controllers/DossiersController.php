@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Models\parametres;
 use App\Models\planbesoins;
+use App\Models\refsalariares;
 use App\Models\structures;
 use Validator;
 use Hash;
@@ -156,6 +157,7 @@ class DossiersController extends Controller
     }
     public function pv_pdfDownload(Request $request, $id){
         $apprenti = Apprentis::findOrFail($id);
+        $structure = structures::where('id',$apprenti->structure_id)->first();
         $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
         $specialite = specialites::where('id',$apprenti->specialite_id)->first();
         $diplome = diplomes::where('id',$apprenti->diplome1_id)->first();
@@ -169,25 +171,38 @@ class DossiersController extends Controller
         }
         $decision = decisionapprentis::where('pv_id',$pv->id)->first();
         $parametre = parametres::where('id',$decision->parametre_id)->first();
-        $pdf = PDF::loadView('pvinstallations.fiche', compact('parametre','decision','maitre','apprenti', 'pv','specialite','diplome'));
+        $pdf = PDF::loadView('pvinstallations.fiche', compact('structure','parametre','decision','maitre','apprenti', 'pv','specialite','diplome'));
         return $pdf->download('pv_' . hash::make($pv->reference) . '_' . hash::make($apprenti->id) .'_' .time().str::random(10). '.pdf');
     }
     public function decisiona_pdfDownload(Request $request, $id){
         $apprenti = Apprentis::findOrFail($id);
+        $structure = structures::where('id',$apprenti->structure_id)->first();
         $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $maitre = maitre_apprentis::where('id',$pv->maitreapprenti_id)->first();
         $decision = decisionapprentis::where('pv_id',$pv->id)->first();
-        $bareme = baremes::where('id',$decision->baremes_id)->first();
+        $bareme = baremes::where('id',$decision->bareme_id)->first();
         $parametre = parametres::where('id',$decision->parametre_id)->first();
-        $pdf = PDF::loadView('decisions.ficheA', compact('parametre','decision','apprenti', 'pv'));
+        $pdf = PDF::loadView('decisions.ficheA', compact('bareme','maitre','structure','parametre','decision','apprenti', 'pv'));
         return $pdf->download('decisionapprenti_' . hash::make($decision->reference) . '_' . hash::make($apprenti->id) .'_' .time().str::random(10). '.pdf');
     }
     public function decisionma_pdfDownload(Request $request, $id){
         $apprenti = Apprentis::findOrFail($id);
+        $structure = structures::where('id',$apprenti->structure_id)->first();
         $pv = pv_installations::where('apprenti_id', $apprenti->id)->first();
+        $diplome = null;
+        $diplome2 = diplomes::where('id',$apprenti->diplome2_id)->first();
+        if($diplome2){
+            $diplome = $diplome2;
+        }
+        else{
+            $diplome1 = diplomes::where('id',$apprenti->diplome1_id)->first();
+            $diplome = $diplome1;
+        }
+        $maitre = maitre_apprentis::where('id',$pv->maitreapprenti_id)->first();
         $decision = decisionmaitreapprentis::where('pv_id',$pv->id)->first();
-        $bareme = baremes::where('id',$decision->baremes_id)->first();
+        $bareme = baremes::where('id',$decision->bareme_id)->first();
         $parametre = parametres::where('id',$decision->parametre_id)->first();
-        $pdf = PDF::loadView('decisions.ficheMA', compact('parametre','decision','apprenti', 'pv'));
+        $pdf = PDF::loadView('decisions.ficheMA', compact('structure','bareme','diplome','maitre','parametre','decision','apprenti', 'pv'));
         return $pdf->download('decsionmaitreapprenti_' . hash::make($decision->reference) . '_' . hash::make($apprenti->id) .'_' .time().str::random(10). '.pdf');
     }
     public function delete(Request $request,$id){

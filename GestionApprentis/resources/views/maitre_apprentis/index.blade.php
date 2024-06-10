@@ -164,9 +164,9 @@
                             <th scope="col">Diplome</th>
                             <th scope="col">Email</th>
                             <th scope="col">Date Recrutement</th>
+                            <th scope="col">Statut</th>
                             <th scope="col">Historique des supervisions</th>
                             <th scope="col">Historique des payements</th>
-                            <th scope="col">Statut</th>
                             @if (Auth::user()->role == 'DFP' )
                                 <th scope="col">Action</th>
                             @endif
@@ -203,12 +203,11 @@
                                 </td>
                                 <td>{{ $maitre->email }}</td>
                                 <td>{{ $maitre->daterecrutement }}</td>
+                                <td>{{ $maitre->statut }}</td>
                                 <td><a href="/maitreapprentis/{{$maitre->id}}/Historique">voir</a></td>
                                 <td><a href="/maitreapprentis/{{$maitre->id}}/Historiquepayements">voir</a></td>
-                                <td>{{ $maitre->statut }}</td>
                                 @if (Auth::user()->role == 'DFP')
                                     <td>
-                                        <button type="button" class="btn btn-primary edit-btn" data-id="{{ $maitre->id }}">Modifier</button>
                                         <form method="POST" action="/maitreapprentis/{{ $maitre->id }}" class="delete-form">
                                             @csrf
                                             @method('DELETE')
@@ -241,17 +240,21 @@
         $(document).on('click', '.edit-btn', function() {
             var id = $(this).data('id');
             var row = $(this).closest('tr');
-            var nom = row.find('td:eq(1)').text();
-            var prenom = row.find('td:eq(2)').text();
-            var civilite = row.find('td:eq(3)').text();
-            var structure = row.find('td:eq(4)').text();
-            var role = row.find('td:eq(5)').text();
-            var email = row.find('td:eq(6)').text();
-            var status = row.find('td:eq(7)').text();
+            var matricule = row.find('td:eq(1)').text();
+            var nom = row.find('td:eq(2)').text();
+            var prenom = row.find('td:eq(3)').text();
+            var civilite = row.find('td:eq(4)').text();
+            var structure = row.find('td:eq(5)').text();
+            var fonction = row.find('td:eq(6)').text();
+            var diplome = row.find('td:eq(7)').text();
+            var email = row.find('td:eq(8)').text();
+            var daterecrutement = row.find('td:eq(9)').text();
+            var statut = row.find('td:eq(10)').text();
             var editForm = `
                 <form method="POST" action="/maitres/${id}" class="edit-form">
                     @csrf
                     @method('PUT')
+                    <input type="text" name="matricule" class="form-control" value="${matricule}">
                     <input type="text" name="nom" class="form-control" value="${nom}">
                     <input type="text" name="prenom" class="form-control" value="${prenom}">
                     <select name="civilite" class="form-control" value="${civilite}">
@@ -265,18 +268,24 @@
                             <option value="{{ $structure->id }}">{{ $structure->nom }}</option>
                         @endforeach
                     </select>
-                    <select name="role" class="form-control" value="${role}">
-                        <option value="">-- Choisir un role --</option>
-                        <option value="DFP">DFP</option>
-                        <option value="DRH">DRH</option>
-                        <option value="SA">SA</option>
-                        <option value="EvaluateurGrade">Evaluateur Gradé</option>
+                    <select name="fonction" class="form-control" value="${fonction}">
+                        <option value="">-- Choisir une fonction --</option>
+                        @foreach ($specialites as $specialite)
+                            <option value="{{ $specialite->id }}">{{ $specialite->nom }}</option>
+                        @endforeach
+                    </select>
+                    <select name="diplome_id" class="form-control" value="${diplome_id}">
+                        <option value="">-- Choisir un diplome --</option>
+                        @foreach ($diplomes as $diplome)
+                            <option value="{{ $diplome->id }}">{{ $diplome->nom }}</option>
+                        @endforeach
                     </select>
                     <input type="email" name="email" emailclass="form-control" value="${email}">
-                    <select name="status" class="form-control" value="${status}">
+                    <input type="date" name="daterecrutement" class="form-control" value="${daterecrutement}">
+                    <select name="statut" class="form-control" value="${statut}">
                         <option value="">-- Choisir un statut --</option>
-                        <option value="actif">actif</option>
-                        <option value="inactif">inactif</option>
+                        <option value="formé">formé</option>
+                        <option value="non formé">non formé</option>
                     </select>
                     <button type="submit" class="btn btn-primary">Valider</button>
                 </form>
