@@ -83,7 +83,7 @@
             </li>-->
             <li>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST">
-                            @csrf
+                    @csrf
                     <button type="submit" class="btn btn-link nav-link">Logout</button>
                 </form>
             </li>
