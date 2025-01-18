@@ -1,9 +1,8 @@
 <?php
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+
 return new class extends Migration
 {
     /**
@@ -11,43 +10,33 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Trigger for INSERT
         DB::unprepared('
             CREATE TRIGGER update_apprentis_status
             AFTER INSERT ON assiduites
             FOR EACH ROW
             BEGIN
-                DECLARE now DATE;
-                SET now = CURDATE();
-                
-                IF NEW.datefin < now THEN
-                    UPDATE apprentis
-                    SET status = "actif"
-                    WHERE id = NEW.apprenti_id;
-                ELSE
-                    UPDATE apprentis
-                    SET status = "inactif"
-                    WHERE id = NEW.apprenti_id;
-                END IF;
+                UPDATE apprentis
+                SET status = CASE
+                    WHEN NEW.datefin < DATE("now") THEN "actif"
+                    ELSE "inactif"
+                END
+                WHERE id = NEW.apprenti_id;
             END;
         ');
 
+        // Trigger for UPDATE
         DB::unprepared('
             CREATE TRIGGER update_apprentis_status_on_update
             AFTER UPDATE ON assiduites
             FOR EACH ROW
             BEGIN
-                DECLARE now DATE;
-                SET now = CURDATE();
-                
-                IF NEW.datefin < now THEN
-                    UPDATE apprentis
-                    SET status = "actif"
-                    WHERE id = NEW.apprenti_id;
-                ELSE
-                    UPDATE apprentis
-                    SET status = "inactif"
-                    WHERE id = NEW.apprenti_id;
-                END IF;
+                UPDATE apprentis
+                SET status = CASE
+                    WHEN NEW.datefin < DATE("now") THEN "actif"
+                    ELSE "inactif"
+                END
+                WHERE id = NEW.apprenti_id;
             END;
         ');
     }
